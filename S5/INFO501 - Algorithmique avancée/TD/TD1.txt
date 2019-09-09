@@ -1,0 +1,7 @@
+Exercice 1 - Correction
+a)
+
+rechercherListe(l,k){
+  x = l.tête;
+  TantQue()
+}
