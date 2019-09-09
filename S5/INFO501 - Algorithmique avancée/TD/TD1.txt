@@ -1,7 +1,41 @@
 Exercice 1 - Correction
-a)
+1) Sur feuille
 
-rechercherListe(l,k){
-  x = l.tête;
-  TantQue()
-}
+2)
+  a)
+    rechercherListe(l,k){
+      x = l.tête;
+      TantQue(x!=NIL ET x.clé!=k){
+        x = x.succ;
+      }
+      retourner x;
+    }
+
+    TE : O(n) n étant la taille de la liste
+
+  b)
+    insérerListe(l,x){
+      x.succ = l.tête;
+      Si (l.tête != NULL){
+        l.tête.prec = x;
+      }
+      l.tête = x;
+      x.prec = NULL;
+    }
+
+    TE: O(1) car tout est constant
+
+  c)
+    supprimerListe(l,x){
+      Si(x.pred != NULL){
+        x.prec.succ = x.succ;
+      }
+      Sinon{
+        l.tête = x.succ;
+      }
+      Si(x.succ!=NULL){
+        x.succ.prec = x.prec;
+      }
+    }
+
+    TE : O(1)
