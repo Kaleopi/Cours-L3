@@ -1,12 +1,13 @@
 #ifndef LISTE_H
 #define LISTE_H
 
-struct Liste{
+typedef struct Liste{
   Cellule *tete;
   Cellule *queue;
-}
+}Liste;
 
-Cellule* rechercherListe(Liste l, int k);
-void insererListe(Liste l, Cellule x);
-void supprimerListe(Liste l, Cellule x);
+int initListe(Liste *l);
+Cellule* rechercherListe(Liste *l, int k);
+void insererListe(Liste *l, Cellule x);
+void supprimerListe(Liste *l, Cellule **x);
 #endif //LISTE_H
