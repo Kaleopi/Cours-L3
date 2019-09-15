@@ -23,5 +23,20 @@ Class Options{
   public boolean getGPS(){
     return GPS;
   }
-  public boolean
+  public boolean getVitre(){
+    return Vitre;
+  }
+  public boolean getClim(){
+    return clim;
+  }
+  //setter
+  void setGPS(bool b){
+    this.GPS=b;
+  }
+  void setVitre(bool b){
+    this.Vitre=b;
+  }
+  void setClim(bool b){
+    this.clim=b;
+  }
 }
