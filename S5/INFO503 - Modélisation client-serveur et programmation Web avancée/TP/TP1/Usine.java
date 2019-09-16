@@ -13,7 +13,13 @@ Class Usine{
   }
   //getter
 public String getNomUsine(){
-  return nomUsine;
+  return this.nomUsine;
   }
+public Parking getParking(){
+  return this.Parking
+}
+void setNomUsine(String nomUsine){
+  this.nomUsine=nomUsine;
+}
 
 }

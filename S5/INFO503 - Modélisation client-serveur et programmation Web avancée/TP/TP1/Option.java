@@ -1,4 +1,4 @@
-Class Options{
+class Options{
   //attributs
   protected boolean GPS;
   protected boolean Vitre;
