@@ -8,10 +8,9 @@ void initListe(Liste *l){
 }
 //libère si nécessaire les ressources mémoire d'une liste
 void supprimerListe(Liste *l){
-  if(l->tete!=NULL){
-    l->tete = NULL;
-    free(l);
-  }
+  printf("Liste supprimee !\n");
+  l->tete = NULL;
+  free(l);
 }
 //Prend un paramètre un pointeur sur une cellule et insère cette cellule au début d'une liste
 void insererListe(Liste *l, Cellule *x){
@@ -27,10 +26,13 @@ void afficherListe(Liste *l){
   Cellule *c = malloc(sizeof(Cellule));
   if(l->tete!=NULL){
     c = l->tete;
+    while(c!=NULL){
+      printf(" -> %d" ,c->id);
+      c = c->succ;
+    }
   }
-  while(c!=NULL){
-    printf(" -> %d" ,c->id);
-    c = c->succ;
+  else{
+    printf("Erreur ! La liste que vous essayez d'afficher est vide\n");
   }
   printf("\n");
 }
