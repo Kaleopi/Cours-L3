@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "graphe.h"
 #include "cellule.h"
 #include "liste.h"
-#include "graphe.h"
 
-int main(){
-  Graphe g;
-  initialiser_graphe(&g,"graphe1.txt");
+int main(int argc, char *argv[]){
+  Graphe *g = malloc(sizeof(Graphe));
+  initialiser_graphe(g,argv[1]);
+  printf("test");
+  afficher_graphe(g);
   return 0;
 }
 

@@ -9,7 +9,6 @@ struct Graphe{
 	int value; //0=non value 1=value
 	Liste* l_adj;
 	int** m_adj;
-	int* m_stock; //nb_sommet*nb_sommet
 };
 
 void initialiser_graphe(Graphe *g, char* nomFichier);
