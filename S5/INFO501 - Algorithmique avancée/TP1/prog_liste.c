@@ -7,8 +7,6 @@
 int main(int argc, char *argv[]){
   Graphe *g = malloc(sizeof(Graphe));
   initialiser_graphe(g,argv[1]);
-  printf("test");
-  afficher_graphe(g);
   return 0;
 }
 

@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "liste.h"
+#include "cellule.h"
 #include "graphe.h"
 
 #define MAX 100
@@ -28,13 +30,12 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
   fscanf(f,"%d",&value);
   //récupération "DEBUT_DEF_ARETES"
   fscanf(f,"%s",chaine);
-  // fscanf(f,"%s",chaine);
+  fscanf(f,"%s",chaine);
 
   g->l_adj = malloc(sizeof(Liste)*sommet); //allocation liste / nombre de sommet
   for(int i=0 ; i<sommet ; ++i){
     initListe(&g->l_adj[i]);
   }
-
 
   if(oriente!=0){
     while(strcmp(chaine,"FIN_DEF_ARETES")!=0){
@@ -60,10 +61,11 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       fscanf(f,"%s",chaine);
     }
   }
-  g->nbSommet=sommet,
+  g->nbSommet=sommet;
   g->oriente=oriente;
   g->value=value;
   fclose(f);
+  afficher_graphe(g);
 }
 
 void afficher_graphe(Graphe *g){
@@ -75,8 +77,8 @@ void afficher_graphe(Graphe *g){
   if(g->value==0){printf("Non value\n");}
   else{printf("Value\n");}
 
-  for(int i=0 ; g->nbSommet ; i++){
-    printf("%d --> ",i);
+  for(int i=0 ; i<g->nbSommet ; i++){
+    printf("%d -->",i);
     afficherListe(&g->l_adj[i]);
   }
 

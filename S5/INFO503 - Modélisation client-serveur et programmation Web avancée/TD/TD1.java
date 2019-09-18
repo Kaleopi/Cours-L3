@@ -1,3 +1,5 @@
+
+
 public class Media{
   //Déclarations
   Static String _nom;
@@ -141,5 +143,38 @@ Public class Film extends Media{
     super(Media f);
     this.annee = f.annee;
     this.realisateur = f.realisateur;
+  }
+}
+
+class Mediatheque{
+  private String proprietaire;
+  private String Vector<Media> catalogue;
+
+  public Mediatheque(){
+    proprietaire=null;
+    catalogue=null;
+  }
+
+  public Mediatheque(Mediatheque m){
+    this.proprietaire=m.proprietaire;
+    this.catalogue=m.catalogue.clone();
+  }
+
+  public void setProprietaire(String p){
+      this.proprietaire = p;
+  }
+  public void setCatalogue(Vector<Media> c){
+    this.catalogue = addAPP(c);
+  }
+
+  void add(Media m){
+    if(n!=null){
+      Catalogue.add(m);
+    }
+  }
+
+  @Override String toString(){
+    return "Mediatheque : "+ this.proprietaire +
+    "Catalogue : "+ this.catalogue.toString();
   }
 }

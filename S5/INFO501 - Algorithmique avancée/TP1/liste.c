@@ -27,7 +27,7 @@ void afficherListe(Liste *l){
   if(l->tete!=NULL){
     c = l->tete;
     while(c!=NULL){
-      printf(" -> %d" ,c->id);
+      printf(" %d" ,c->id);
       c = c->succ;
     }
   }
