@@ -33,6 +33,11 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
   fscanf(f,"%s",chaine);
 
   g->l_adj = malloc(sizeof(Liste)*sommet); //allocation liste / nombre de sommet
+
+  g->m_adj = malloc(sizeof(int*)*sommet); //allocation matrice carrée
+  for(int i=0 ; i<sommet ; i++){
+    g->m_adj[i] = malloc(sizeof(int)*sommet);
+  }
   for(int i=0 ; i<sommet ; ++i){
     initListe(&g->l_adj[i]);
   }
@@ -65,6 +70,19 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
   g->oriente=oriente;
   g->value=value;
   fclose(f);
+
+  //Remplissage de la matrice
+  for(int i=0; i<sommet ; i++){
+    for(int j=0 ; j<sommet ; j++){
+      if(rechercherCellule(&g->l_adj[i],j)){
+        g->m_adj[i][j] = 1;
+      }
+      else{
+        g->m_adj[i][j] = 0;
+      }
+    }
+  }
+
   afficher_graphe(g);
 }
 
@@ -77,9 +95,15 @@ void afficher_graphe(Graphe *g){
   if(g->value==0){printf("Non value\n");}
   else{printf("Value\n");}
 
-  for(int i=0 ; i<g->nbSommet ; i++){
+  for(int i=0 ; i<g->nbSommet ; i++){ //Listes d'adjacence
     printf("%d -->",i);
     afficherListe(&g->l_adj[i]);
   }
-
+  printf("\nMatrice d'adjacences : \n");
+  for(int i=0 ; i<g->nbSommet ; i++){     //Matrice d'adjacence
+    for(int j=0 ; j<g->nbSommet ; j++){
+      printf(" %d",g->m_adj[i][j]);
+    }
+    printf("\n");
+  }
 }

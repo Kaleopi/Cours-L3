@@ -1,0 +1,10 @@
+-> Echecs
+  > Niveaux de difficultés
+    =/= changer les fonctionnalités
+
+Modifications niveaux <=> fonctionnalités
+-> gérer les mouvements des pièces
+  > (règles)
+
+
+Les fichiers, les raccourcis et les répertoires sont contenus dans des répertoires et possèdent un nom; un raccouri peut concerner un fichier ou un répertoire; au sein d'un répertoire donné, un nom ne peut identifier qu'un seul élément/fichier sur un répertoire ou un raccourci.

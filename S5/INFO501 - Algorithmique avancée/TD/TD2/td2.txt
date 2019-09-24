@@ -1,0 +1,96 @@
+Afficher_chemin(G,S,V){
+  Si(V==S)
+    afficher S
+  Sinon
+    Si V.père == NIL
+      afficher("il n'existe aucun chemin de S à V")
+    Sinon
+      Afficher_chemin(G,S,V.père)
+      afficher V
+}
+
+
+Pour chaque sommet :
+-> couleur (BLANC,GRIS,NOIR)
+-> père
+-> d (date de découverte)
+-> f (date de fin de traitement)
+
+PARCOURS PROFONDEUR RÉCURSIF{
+  parcours_profondeur(G){
+    Pour chaque sommet u € G.S
+      u.couleur = BLANC;
+      u.père = NIL;
+    date = 0;
+    Pour chaque sommet u € G.S
+      Si u.couleur == BLANC
+        visiter_pp(G,u);
+  }
+  visiter_pp(G,u){
+    date++;
+    u.d = date
+    u.couleur = GRIS
+    Pour chaque sommet V € G.adj[u]
+      Si couleur == BLANC
+        visiter_pp(G,V);
+      FinSi
+    FinPour
+    date++;
+    u.f = date;
+    u.couleur = NOIR;
+  }
+}
+
+
+PARCOURS PROFONDEUR ITÉRATIF
+parcours_profondeur_iteratif(G){
+  Pour chaque sommet u € G.S
+    u.couleur = BLANC;
+    u.père = NIL;
+  FinPour
+  p = Ø
+  Pour chaque sommet u € G.S
+    Si u.couleur == BLANC
+      u.couleur=GRIS;
+      empiler(p,u);
+      TQ p!=Ø
+        v = dépiler(p);
+        afficher(v);
+    Pour chaque sommet w € G.adj[v]
+      Si w.couleur == BLANC;
+        w.couleur = GRIS;
+        w.pere = v;
+        empiler(p,w);
+    v.couleur = NOIR;
+}
+
+PARCOURS PROFONDEUR ITÉRATIF 2
+parcours_profondeur_iteratif_2(G){
+  Pour chaque sommet u € G.S
+    u.couleur = BLANC;
+    u.pere = NIL;
+  FinPour
+  date =0;
+  p = Ø;
+  Pour chaque sommet u € G.S
+    u.couleur == BLANC
+      empiler(p,u);
+      TantQue p!=Ø
+        v=sommet(p);
+        Si v.couleur == BLANC
+          v.couleur = GRIS;
+          date++;
+          v.d = date;
+          Pour chaque w € G.adj[v] pris en ordre inverse
+            Si w.couleur == BLANC
+              w.pere = v;
+              empiler(p,w);
+          FinPour
+        Sinon
+          Si v.couleur==GRIS
+            v.couleur = NOIR;
+            date++;
+            v.f = date;
+          Sinon Si v.couleur==NOIR
+            depiler(p)
+}
