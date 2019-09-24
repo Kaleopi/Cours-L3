@@ -8,9 +8,12 @@ void initListe(Liste *l){
 }
 //libère si nécessaire les ressources mémoire d'une liste
 void supprimerListe(Liste *l){
+  while(l->tete!=NULL){
+    supprimerCellule(l,l->tete);
+  }
   printf("Liste supprimee !\n");
-  l->tete = NULL;
-  free(l);
+
+  // free(l);
 }
 //Prend un paramètre un pointeur sur une cellule et insère cette cellule au début d'une liste
 void insererListe(Liste *l, Cellule *x){
@@ -62,4 +65,5 @@ void supprimerCellule(Liste *l, Cellule *c){
       }
     }
   }
+  printf("Cellule supprimee\t");
 }

@@ -82,8 +82,6 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       }
     }
   }
-
-  afficher_graphe(g);
 }
 
 void afficher_graphe(Graphe *g){
@@ -106,4 +104,16 @@ void afficher_graphe(Graphe *g){
     }
     printf("\n");
   }
+}
+
+void detruire_graphe(Graphe *g){
+  printf("\n\nDestruction du graphe !\n");
+  for(int i=0 ; i<(g->nbSommet) ; i++){
+    supprimerListe(&g->l_adj[i]);
+    free(g->m_adj[i]);
+  }
+  free(g->m_adj);
+  g->nbSommet = 0;
+  g->oriente = 0;
+  g->value = 0;
 }
