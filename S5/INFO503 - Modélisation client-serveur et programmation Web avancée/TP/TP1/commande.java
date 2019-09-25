@@ -1,19 +1,11 @@
 class commande{
   //attributs
-  protected Modele modele;
-  protected COULEUR couleur;
-  protected Moteur moteur;
-  protected Options Option;
-  protected Date date;
+  protected Voiture voiture;
+  protected Date dateAchat;
   //constructeur
-  commande(){
-    this.modele=Modele();
-    this.couleur=Couleur();
-    this.moteur=Moteur();
-    this.options=Options();
-    this.date=null;
+  commande(Voiture voiture){
+    dateAchat=date("Y-m-d H:i:s");
+    this.voiture=voiture
   }
-  commande(){
-    
-  }
+
 }
