@@ -1,0 +1,6 @@
+Compilation
+javac -cp classes (ou lib) -d classes -cp src src/Test.java
+
+Exécution
+java -cp classes:etc:etc Test    (LINUX)
+java -cp "classes;etc;etc"       (WINDOWS)
