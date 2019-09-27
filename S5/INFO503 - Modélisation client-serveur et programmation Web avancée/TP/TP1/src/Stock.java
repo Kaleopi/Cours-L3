@@ -11,7 +11,7 @@ class Stock{
   }
   Stock(Voiture v,Place p){
     this.id=v.id;
-    this.numPlace=p.numPlace;
+    this.numPlace=p.num;
     this.rangee=p.rangee;
   }
   //methodes
@@ -20,7 +20,8 @@ class Stock{
   }
   public char getRangee(){
     return this.rangee;
-  public int GetNumPlace(){
+  }
+  public int getNumPlace(){
     return this.numPlace;
   }
   void setID(String id){

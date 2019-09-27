@@ -12,7 +12,7 @@ class Modele{
   public String getModele(){
     return this.modele;
   }
-  public setModele(String modele){
+  public void setModele(String modele){
     this.modele=modele;
   }
 }

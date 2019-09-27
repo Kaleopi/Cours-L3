@@ -1,11 +1,10 @@
-class Constucteur{
+class Constructeur{
   //Attributs
   protected String nom;
 
   //Constucteur
   Constructeur(){
     this.nom = "DefaultMotors";
-
   }
 
   Constructeur(String nom){

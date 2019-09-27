@@ -1,4 +1,4 @@
-Class Usine{
+class Usine{
   //attributs
   protected String nomUsine;
   protected Parking parking;
@@ -16,7 +16,7 @@ public String getNomUsine(){
   return this.nomUsine;
   }
 public Parking getParking(){
-  return this.Parking
+  return this.Parking;
 }
 void setNomUsine(String nomUsine){
   this.nomUsine=nomUsine;

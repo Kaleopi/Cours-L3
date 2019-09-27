@@ -1,10 +1,9 @@
 class Place{
   //static
   static int cpt = 0;
-  static char rangee='A'
+  static char rangee='A';
   //Attributs
   protected int num;
-  protected char rangee;
   protected boolean estVide;
 
   //Constructeur
@@ -14,5 +13,16 @@ class Place{
       rangee++;
       cpt = 0;
     }
+  }
+
+  //Getters
+  public char getRangee(){
+    return this.rangee;
+  }
+  public int getNum(){
+    return this.num;
+  }
+  public boolean estVide(){
+    return this.estVide;
   }
 }
