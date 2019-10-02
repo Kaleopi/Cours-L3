@@ -1,0 +1,12 @@
+//augmenter le salaire
+TOTO ECXEPTION
+NUMBER SELECT COUNT(*) INFO FROM HR.EMPLOYE
+  UPDATE EMPLOYE2
+  SET SALARY=SALARY*1.0125;
+    EXCEPTION
+    WHEN TOTO THEN
+    [...]
+
+//EXERCICE 2
+Reprendre la table HR.EMPLOYE
+Afficher les 7 nom des EMPLOYER AYANT
