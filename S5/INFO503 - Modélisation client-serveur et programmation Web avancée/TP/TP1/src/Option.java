@@ -2,14 +2,14 @@ class Options{
   //attributs
   protected boolean GPS;
   protected boolean Vitre;
-  protected boolean Clim;
+  protected boolean clim;
   //Constructeur
   Options(){
     GPS=false;
     Vitre=false;
     clim=false;
   }
-  Options(Boolean GPS,boolean Vitre,boolean Clim){
+  Options(boolean GPS,boolean Vitre,boolean Clim){
     this.GPS=GPS;
     this.Vitre=Vitre;
     this.clim=clim;
@@ -30,13 +30,13 @@ class Options{
     return clim;
   }
   //setter
-  void setGPS(bool b){
+  void setGPS(boolean b){
     this.GPS=b;
   }
-  void setVitre(bool b){
+  void setVitre(boolean b){
     this.Vitre=b;
   }
-  void setClim(bool b){
+  void setClim(boolean b){
     this.clim=b;
   }
 }

@@ -1,0 +1,9 @@
+{
+  "conteneur":{},
+  "SystemeRefroidissement":{
+    "temperature":-10,
+    "dateMiseEnRoute":"date",
+    "dureeMax": "duree"
+  },
+  "ListeMarchandises":[{},{}]
+}

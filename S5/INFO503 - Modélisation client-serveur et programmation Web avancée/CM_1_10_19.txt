@@ -1,0 +1,16 @@
+Modélisation d'un modèle de véhicule en JSON
+Un véhicule :
+  - n° identification unique (lettres chiffres)
+  - Moteur (id, carburation, puissance)
+  - Date fabrication
+  - Couleur (unie)
+  - Options (vitres électriques, radar de recul, GPS, ...)
+
+Questions :
+  - Fichiers nécessaires ?
+  - Donnez la représentation au format JSON d'un véhicule
+
+
+- Voiture.json, Moteur.json,
+
+Ajax :

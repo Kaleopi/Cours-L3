@@ -1,0 +1,1 @@
+1) L'API Java nous propose des modules, des packages, des class, des méthodes associées aux packages et aux classes, des interfaces, et tout ça documenté, sans exemples.

@@ -1,0 +1,11 @@
+{
+  "id": "",
+  "moteur": {
+    "id": "",
+    "carburation": "Diesel",
+    "puissance": "115"
+  },
+  "dateFabric": "dd-mm-yy",
+  "couleur": "color",
+  "options": ["Option1", "Option2"]
+}

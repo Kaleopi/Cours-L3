@@ -1,0 +1,15 @@
+{
+  "id": "AB...",
+  "poids": 1000,
+  "proprio":{
+    "nom":"...",
+    "prenom": "...",
+    "adresse": "adresse..."
+  },
+  "feuilleDeRoute": {
+    [
+      "adresse": "adresse",
+      "proprio": "proprio"
+    ]
+  }
+}
