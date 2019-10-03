@@ -1,0 +1,28 @@
+Rappels :
+Le père doit être plus grand que chacun de ses fils
+
+|16|14|10|8|7|9|3|2|4|1|
+
+2)
+parent(i){
+  retourner i/2
+}
+
+gauche(i){
+  retourner 2*i
+}
+
+droite(i){
+  retourner 2*i +1
+}
+
+3)
+                          4
+              1                      3
+      2            16           9        10
+  14    8       7
+
+entasser_max(t,i){
+  
+}
+construire_tas_max(t)
