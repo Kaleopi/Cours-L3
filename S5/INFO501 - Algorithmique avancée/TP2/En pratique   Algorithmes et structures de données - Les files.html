@@ -1,0 +1,1196 @@
+<html><head>
+  <title>En pratique&nbsp;: Algorithmes et structures de données - Les files</title>
+  <meta http-equiv="Content-type" content="text/html; charset=windows-1252">
+  <meta name="keywords" content="assembleur, listes, chainees, algorithmes, files, programmation, amiga">
+  <meta name="author" content="David Brunet - obligement -at- free -dot- fr">
+ </head>
+
+<body vlink="#778899" topmargin="0" text="#cccccc" marginwidth="0" marginheight="0" link="#99aabb" leftmargin="0" bgcolor="#223344" alink="#cccccc">
+
+<table summary="" width="100%" cellspacing="8" cellpadding="0" border="0" align="center">
+
+ <tbody><tr bgcolor="#223344">
+  <td colspan="3" height="100">
+   <table summary="" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+    <tbody><tr height="1"> 
+  <td colspan="2" bgcolor="#405060"></td>
+ </tr>
+
+ <tr>
+  <td bgcolor="#273e55"><a href="http://obligement.free.fr/"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/obligement_top.png" alt="Obligement - L'Amiga au maximum" width="464" height="100" border="0"></a></td>
+  <td valign="middle" bgcolor="#273e55" align="right"><br>
+
+<!-- Search Google -->
+<form method="GET" action="http://www.google.fr/custom">
+<table cellspacing="0" border="0">
+<tbody><tr valign="top">
+<td>
+<input type="hidden" name="cof" value="GL:0;GALT:#99aabb;DIV:#336699;VLC:778899;AH:center;BGC:223344;LBGC:778899;ALC:99aabb;LC:99aabb;T:cccccc;GFNT:99aabb;GIMP:99aabb;FORID:1;">
+<input type="hidden" name="client" value="">
+<input type="text" name="q" size="22" maxlength="255">
+<input type="submit" name="sa" value="Chercher">
+<input type="hidden" name="sitesearch" value="obligement.free.fr">
+</td></tr></tbody></table>
+</form>
+<!-- Search Google -->
+
+<p>
+<font size="2" color="#cccccc"><b>
+ Jeudi 03 octobre 2019 - 17:03 &nbsp;
+</b></font>
+
+  </p></td>
+ </tr>
+ <tr height="1"> 
+  <td colspan="2" bgcolor="#000000"></td>
+ </tr>
+   </tbody></table>
+  </td>
+ </tr>
+
+ <tr>
+  <td width="175" valign="top" align="left">
+   <table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>Translate</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%">
+
+   <br>
+   <div align="center">
+   <a href="http://translate.google.fr/translate?u=http://obligement.free.fr/articles/algorithmes_files.php&amp;sl=fr&amp;tl=en&amp;hl=fr&amp;ie=UTF-8"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/traduc_anglais.png" alt="En" vspace="1" border="0"></a>
+   <a href="http://translate.google.fr/translate?u=http://obligement.free.fr/articles/algorithmes_files.php&amp;sl=fr&amp;tl=de&amp;hl=fr&amp;ie=UTF-8"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/traduc_allemand.png" alt="De" vspace="1" border="0"></a>
+   <a href="http://translate.google.fr/translate?u=http://obligement.free.fr/articles/algorithmes_files.php&amp;sl=fr&amp;tl=nl&amp;hl=fr&amp;ie=UTF-8"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/traduc_neerlandais.png" alt="Nl" vspace="1" border="0"></a>
+   <a href="http://translate.google.fr/translate?u=http://obligement.free.fr/articles/algorithmes_files.php&amp;sl=fr&amp;tl=pl&amp;hl=fr&amp;ie=UTF-8"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/traduc_polonais.png" alt="Nl" vspace="1" border="0"></a><br>
+   <a href="http://translate.google.fr/translate?u=http://obligement.free.fr/articles/algorithmes_files.php&amp;sl=fr&amp;tl=es&amp;hl=fr&amp;ie=UTF-8"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/traduc_espagnol.png" alt="Es" vspace="1" border="0"></a>
+   <a href="http://translate.google.fr/translate?u=http://obligement.free.fr/articles/algorithmes_files.php&amp;sl=fr&amp;tl=pt&amp;hl=fr&amp;ie=UTF-8"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/traduc_portugais.png" alt="Pt" vspace="1" border="0"></a>
+   <a href="http://translate.google.fr/translate?u=http://obligement.free.fr/articles/algorithmes_files.php&amp;sl=fr&amp;tl=it&amp;hl=fr&amp;ie=UTF-8"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/traduc_italien.jpg" alt="It" vspace="1" border="0"></a>
+   <a href="http://translate.google.fr/translate?u=http://obligement.free.fr/articles/algorithmes_files.php&amp;sl=fr&amp;tl=sv&amp;hl=fr&amp;ie=UTF-8"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/traduc_suedois.png" alt="Nl" vspace="1" border="0"></a><br>
+   </div>
+   <br>
+
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<br>
+
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#43617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>Rubriques</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%">
+
+   <br>
+   <font size="-1">
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/articles/actuenbref07082019.php"><font color="#cccc33">Actualité (récente)</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/actualite.php"><font color="#cccc33">Actualité (archive)</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/comparatifs.php"><font color="#cccc33">Comparatifs</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/dossiers.php"><font color="#cccc33">Dossiers</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/entrevues.php"><font color="#cccc33">Entrevues</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/materiel.php"><font color="#cccc33">Matériel (tests)</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/bidouilles_materielles.php"><font color="#cccc33">Matériel (bidouilles)</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/pointsdevue.php"><font color="#cccc33">Points de vue</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/enpratique.php"><font color="#cccc33">En pratique</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/programmation.php"><font color="#cccc33">Programmation</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/reportages.php"><font color="#cccc33">Reportages</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/quizz.php"><font color="#cccc33">Quizz</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/testsjeux.php"><font color="#cccc33">Tests de jeux</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/testslogiciels.php"><font color="#cccc33">Tests de logiciels</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/testscompilations.php"><font color="#cccc33">Tests de compilations</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/trucsastuces/0.php"><font color="#cccc33">Trucs et astuces</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/divers.php"><font color="#cccc33">Articles divers</font></a><br><br>
+
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/articles_english.php"><font size="-1" color="#cccc33">Articles in english</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/articles_other_languages.php"><font size="-1" color="#cccc33">Articles en d'autres langues</font></a><br><br>
+   </font>
+   
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<br>
+
+
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#43617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>Twitter</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%" align="center">
+  <br>
+
+<table width="90%" align="center">
+<tbody><tr><td>
+<font size="-1">
+<center>
+Suivez-nous sur Twitter<br><br>
+<a href="https://twitter.com/obligement"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/twitter.png"></a><br><br>
+</center>
+</font>
+
+</td></tr></tbody></table>
+   
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<br>
+
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#43617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>Liste des jeux Amiga</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%">
+
+   <br>
+   <div align="center">
+   <font size="-1">
+   <a href="http://obligement.free.fr/articles/listejeuxamiga.php"><font color="#cccc33">0</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigaa.php"><font color="#cccc33">A</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigab.php"><font color="#cccc33">B</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigac.php"><font color="#cccc33">C</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigad.php"><font color="#cccc33">D</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigae.php"><font color="#cccc33">E</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigaf.php"><font color="#cccc33">F</font></a>,<br>
+   <a href="http://obligement.free.fr/articles/listejeuxamigag.php"><font color="#cccc33">G</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigah.php"><font color="#cccc33">H</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigai.php"><font color="#cccc33">I</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigaj.php"><font color="#cccc33">J</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigak.php"><font color="#cccc33">K</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigal.php"><font color="#cccc33">L</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigam.php"><font color="#cccc33">M</font></a>,<br>
+   <a href="http://obligement.free.fr/articles/listejeuxamigan.php"><font color="#cccc33">N</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigao.php"><font color="#cccc33">O</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigap.php"><font color="#cccc33">P</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigaq.php"><font color="#cccc33">Q</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigar.php"><font color="#cccc33">R</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigas.php"><font color="#cccc33">S</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigat.php"><font color="#cccc33">T</font></a>,<br>
+   <a href="http://obligement.free.fr/articles/listejeuxamigau.php"><font color="#cccc33">U</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigav.php"><font color="#cccc33">V</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigaw.php"><font color="#cccc33">W</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigax.php"><font color="#cccc33">X</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigay.php"><font color="#cccc33">Y</font></a>,
+   <a href="http://obligement.free.fr/articles/listejeuxamigaz.php"><font color="#cccc33">Z</font></a><br><br>
+   </font>
+   </div>
+
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<br>
+
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#43617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>Trucs et astuces</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%">
+
+   <br>
+   <div align="center">
+   <font size="-1">
+   <a href="http://obligement.free.fr/trucsastuces/0.php"><font color="#cccc33">0</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/a.php"><font color="#cccc33">A</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/b.php"><font color="#cccc33">B</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/c.php"><font color="#cccc33">C</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/d.php"><font color="#cccc33">D</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/e.php"><font color="#cccc33">E</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/f.php"><font color="#cccc33">F</font></a>,<br>
+   <a href="http://obligement.free.fr/trucsastuces/g.php"><font color="#cccc33">G</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/h.php"><font color="#cccc33">H</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/i.php"><font color="#cccc33">I</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/j.php"><font color="#cccc33">J</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/k.php"><font color="#cccc33">K</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/l.php"><font color="#cccc33">L</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/m.php"><font color="#cccc33">M</font></a>,<br>
+   <a href="http://obligement.free.fr/trucsastuces/n.php"><font color="#cccc33">N</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/o.php"><font color="#cccc33">O</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/p.php"><font color="#cccc33">P</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/q.php"><font color="#cccc33">Q</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/r.php"><font color="#cccc33">R</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/s.php"><font color="#cccc33">S</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/t.php"><font color="#cccc33">T</font></a>,<br>
+   <a href="http://obligement.free.fr/trucsastuces/u.php"><font color="#cccc33">U</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/v.php"><font color="#cccc33">V</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/w.php"><font color="#cccc33">W</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/x.php"><font color="#cccc33">X</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/y.php"><font color="#cccc33">Y</font></a>,
+   <a href="http://obligement.free.fr/trucsastuces/z.php"><font color="#cccc33">Z</font></a><br><br>
+   </font>
+   </div>
+
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<br>
+
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#43617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>Glossaire</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%">
+
+   <br>
+   <div align="center">
+   <font size="-1">
+   <a href="http://obligement.free.fr/glossaire/0.php"><font color="#cccc33">0</font></a>,
+   <a href="http://obligement.free.fr/glossaire/a.php"><font color="#cccc33">A</font></a>,
+   <a href="http://obligement.free.fr/glossaire/b.php"><font color="#cccc33">B</font></a>,
+   <a href="http://obligement.free.fr/glossaire/c.php"><font color="#cccc33">C</font></a>,
+   <a href="http://obligement.free.fr/glossaire/d.php"><font color="#cccc33">D</font></a>,
+   <a href="http://obligement.free.fr/glossaire/e.php"><font color="#cccc33">E</font></a>,
+   <a href="http://obligement.free.fr/glossaire/f.php"><font color="#cccc33">F</font></a>,<br>
+   <a href="http://obligement.free.fr/glossaire/g.php"><font color="#cccc33">G</font></a>,
+   <a href="http://obligement.free.fr/glossaire/h.php"><font color="#cccc33">H</font></a>,
+   <a href="http://obligement.free.fr/glossaire/i.php"><font color="#cccc33">I</font></a>,
+   <a href="http://obligement.free.fr/glossaire/j.php"><font color="#cccc33">J</font></a>,
+   <a href="http://obligement.free.fr/glossaire/k.php"><font color="#cccc33">K</font></a>,
+   <a href="http://obligement.free.fr/glossaire/l.php"><font color="#cccc33">L</font></a>,
+   <a href="http://obligement.free.fr/glossaire/m.php"><font color="#cccc33">M</font></a>,<br>
+   <a href="http://obligement.free.fr/glossaire/n.php"><font color="#cccc33">N</font></a>,
+   <a href="http://obligement.free.fr/glossaire/o.php"><font color="#cccc33">O</font></a>,
+   <a href="http://obligement.free.fr/glossaire/p.php"><font color="#cccc33">P</font></a>,
+   <a href="http://obligement.free.fr/glossaire/q.php"><font color="#cccc33">Q</font></a>,
+   <a href="http://obligement.free.fr/glossaire/r.php"><font color="#cccc33">R</font></a>,
+   <a href="http://obligement.free.fr/glossaire/s.php"><font color="#cccc33">S</font></a>,
+   <a href="http://obligement.free.fr/glossaire/t.php"><font color="#cccc33">T</font></a>,<br>
+   <a href="http://obligement.free.fr/glossaire/u.php"><font color="#cccc33">U</font></a>,
+   <a href="http://obligement.free.fr/glossaire/v.php"><font color="#cccc33">V</font></a>,
+   <a href="http://obligement.free.fr/glossaire/w.php"><font color="#cccc33">W</font></a>,
+   <a href="http://obligement.free.fr/glossaire/x.php"><font color="#cccc33">X</font></a>,
+   <a href="http://obligement.free.fr/glossaire/y.php"><font color="#cccc33">Y</font></a>,
+   <a href="http://obligement.free.fr/glossaire/z.php"><font color="#cccc33">Z</font></a><br><br>
+   </font>
+   </div>
+
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<br>
+
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#43617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>Galeries</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%">
+
+   <br>
+   <font size="-1">
+
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries.php"><font color="#cccc33">Menu des galeries</font></a><br><br>
+
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_amiga_special.php"><font color="#cccc33">BD d'Amiga Spécial</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_dudai.php"><font color="#cccc33">Caricatures Dudai</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_jetdail.php"><font color="#cccc33">Caricatures Jet d'ail</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_diagrammes_jayminer.php"><font color="#cccc33">Diagrammes de Jay Miner</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_insolite.php"><font color="#cccc33">Images insolites</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_jeuxfin_a-e.php"><font color="#cccc33">Fin de jeux (de A à E)</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_jeuxfin_f-o.php"><font color="#cccc33">Fin de Jeux (de F à O)</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_jeuxfin_p-z.php"><font color="#cccc33">Fin de jeux (de P à Z)</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_mikedafunk.php"><font color="#cccc33">Galerie de Mike Dafunk</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_logo_obligement.php"><font color="#cccc33">Logos d'Obligement</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_systemes_exploitation.php"><font color="#cccc33">Systèmes d'exploitation</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_trombi_alchimie.php"><font color="#cccc33">Trombinoscope Alchimie 7</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/galeries_videos.php"><font color="#cccc33">Vidéos</font></a><br><br>
+   </font>
+   
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<br>
+
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#43617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>Téléchargement</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%">
+
+   <br>
+   <font size="-1">
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/telechargements.php#docs"><font color="#cccc33">Documents</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/telechargements.php#jeux"><font color="#cccc33">Jeux</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/telechargements.php#logiciels"><font color="#cccc33">Logiciels</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/telechargements.php#magazines"><font color="#cccc33">Magazines</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/telechargements.php#divers"><font color="#cccc33">Divers</font></a><br><br>
+   </font>
+   
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<br>
+
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#43617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>Liens</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%">
+
+   <br>
+   <font size="-1">
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#telechargement"><font color="#cccc33">Sites de téléchargements</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#association"><font color="#cccc33">Associations</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#pageperso"><font color="#cccc33">Pages Personnelles</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#materiel"><font color="#cccc33">Matériel</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#reparateur"><font color="#cccc33">Réparateurs</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#revendeur"><font color="#cccc33">Revendeurs</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#presse"><font color="#cccc33">Presse et médias</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#programmation"><font color="#cccc33">Programmation</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#logiciel"><font color="#cccc33">Logiciels</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#jeu"><font color="#cccc33">Jeux</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#demo"><font color="#cccc33">Scène démo</font></a><br>
+    &nbsp;<b>·</b> <a href="http://obligement.free.fr/liens.php#divers"><font color="#cccc33">Divers</font></a><br><br>
+   </font>
+   
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<br>
+
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#43617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>Partenaires</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%">
+
+   <br>
+   <div align="center">
+    <a href="http://www.annuaire-amiga.org/"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/banniere_annuaire.jpg" alt="Annuaire Amiga" width="120" height="51" border="0"></a><br><br>
+    <a href="https://www.amedia-computer.com/fr/"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/banniere_amedia.jpg" alt="Amedia Computer" width="120" height="51" border="0"></a><br><br>
+    <a href="http://www.relec.ch/"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/banniere_relec.jpg" alt="Relec" width="120" height="51" border="0"></a><br><br>
+    <a href="http://www.hit-parade.com/hp.asp?site=a424432" target="_top"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/logohp1.gif" title="Hit-Parade" alt="Hit Parade" width="77" height="15" border="0"></a><br><br>
+   </div>
+
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<br>
+
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#43617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>A Propos</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%">
+
+   <br>
+   <div align="center">
+   A propos d'Obligement<br><br>
+   <a href="http://obligement.free.fr/apropos.php"><img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/obligement_apropos.png" alt="A Propos" width="119" height="24"></a><br><br>
+   </div>
+
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<br>
+
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#43617b" background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/fondtitre.png">
+ <tbody><tr>
+  <td height="22" align="center"><b>Contact</b>
+  </td>
+ </tr>
+</tbody></table>
+
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#26435b" align="center">
+ <tbody><tr>
+  <td width="100%">
+
+   <br>
+   <div align="center">
+   David Brunet<br><br>
+   <img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/email.jpg" alt="Courriel" width="119" height="25"><br><br>
+   </div>
+
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+
+<table width="176" bgcolor="#223344">
+<tbody><tr><td height="12">
+<img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/barre190.png" alt="">
+</td></tr>
+</tbody></table>
+  </td>
+  <td width="10"> &nbsp;</td>
+  <td valign="top" align="left">
+
+ 
+<br><br>
+<a name="haut"></a>
+<table summary="" width="100%" cellspacing="0" cellpadding="1" border="0" bgcolor="#334455" align="center"><tbody><tr><td>
+<table summary="" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#293a4b" align="center">
+ <tbody><tr background="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/gradienttitre.jpg">
+  <td><br>
+   <center>
+    <font size="5" color="#5599bb">En pratique&nbsp;: Algorithmes et structures de données - Les files</font><br>
+    <font size="3" color="#5599bb">(Article écrit par Lucien Turski-Marcon et Bruno Bailluet et extrait d'Amiga News Tech - mars 1992)</font><br>
+   </center><br>
+  </td>
+ </tr>
+</tbody></table>
+</td></tr></tbody></table><br>
+
+
+Petite définition&nbsp;: une file est une structure de données représentée par un vecteur, où tout ajout d'élément
+se fait en queue de file et tout retrait, en tête de file.<br><br>
+
+Nous avons donc affaire à une structure de données de type FIFO (First In, First Out), contrairement à
+la pile qui, comme nous l'avons <a href="http://obligement.free.fr/articles/algorithmes_piles.php">vu précédemment</a>, est de type LIFO.
+La file peut être représentée soit par un tableau, soit par une liste chaînée. Sa gestion n'est pas aussi
+simple que celle de la pile, pour la bonne et simple raison qu'il existe plusieurs méthodes d'implantation&nbsp;:
+la gestion contiguë, la gestion contiguë avec décalage et la gestion circulaire.<br><br>
+
+Nous allons donc étudier successivement ces trois méthodes, en décrivant pour chacune d'elles ses primitives&nbsp;:
+initialisation de la file, ajout d'un élément (enfiler), retrait d'un élément (défiler), ainsi que les
+grandes classiques booléennes que nous ne présentons plus&nbsp;: file_vide et file_pleine. Toutes les primitives
+sont données pour les tableaux, afin que nous puissions effectuer des comparaisons valables entre les différentes méthodes.<br><br>
+
+Commençons par la plus simple&nbsp;: la gestion contiguë de la file. Partant d'une file vide nous devons déterminer
+une valeur pour chacune de nos bornes (TETE et QUEUE). Ces valeurs ne peuvent pas être choisies au hasard,
+puisqu'elles doivent vérifier le test file_vide. Il est hors de question de les initialiser n'importe comment
+et d'utiliser une variable booléenne qui nous indiquerait l'état de la file. Dans ce premier cas, TETE vaut
+1 et QUEUE vaut 0&nbsp;: la file est vide si TETE = QUEUE + 1, ou plus simplement si TETE&gt;QUEUE.<br><br>
+
+<div align="center">
+<img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/algo_files.png" alt="Algorithmes"><br><br>
+</div>
+
+Si nous exécutons manuellement les différentes procédures et fonctions, nous constatons que les deux bornes
+sont constamment incrémentées. Et je vous assure qu'il n'y a pas d'erreur&nbsp;: en effet, lorsque l'on enfile un
+nouvel élément, il est tout à fait légitime de voir la QUEUE s'éloigner de la TETE. Il en est de même lorsque
+l'on défile un élément&nbsp;: la TETE doit pointer sur la case suivant l'élément défilé. En fait, ce phénomène est
+tout à fait normal. Lorsque nous posons un livre sur une pile, il ne bouge pas. Maintenant, si nous retirons celui qui se 
+trouve tout en dessous, les autres ne vont pas rester en suspension, ils vont descendre.<br><br>
+
+Le problème ne vient pas de la file mais du tableau. De ce fait, si nous n'opérons pas le décalage nous-mêmes,
+nous risquons d'atteindre très rapidement les limites que nous nous étions fixées pour le tableau. Cette méthode a
+le seul mérite d'être pédagogique, car elle permet d'aborder les files de manière simple et naturelle, et de
+soulever quelques problèmes d'implantation. En pratique, elle est à proscrire&nbsp;!<br><br>
+
+<table summary="" width="100%" border="1" bgcolor="#c0c0c0">
+<tbody><tr><td><font color="#000000"><pre>Algorithme Recherche_Occurence ;
+(* version pour les tableaux *)
+Constante
+   Tete        &lt;- 1 ;
+   Max_Tableau &lt;- 3 ;
+
+Declaration
+   mafile        : Tableau [1..3] De Caractere ; 
+   motif         : Chaine [3] ;
+   Trouve        : Booleen ;
+   Phrase        : Tableau [1..100] De Caractere ;
+   Sert_A_Rien   : Caractere ;
+   Queue, Indice, Defil_NbFois, Defil_Cpt, Position : Entier ;
+
+Fonction Cherche : Booleen
+Debut
+   Si (mafile = motif) Alors
+      Cherche &lt;- Vrai ;
+   Sinon
+      Cherche &lt;- Faux ;
+   Fsi ;
+Fin ; 
+
+Fonction File_Pleine : Booleen 
+Debut
+   Si (Queue = Max_Tableau) Alors
+      File_Pleine &lt;- Vrai ;
+   Sinon
+      File_Pleine &lt;- Faux ;
+   Fsi ;
+Fin ;
+
+Fonction File_Vide : Booleen
+Debut
+   Si (Tete = (Queue + 1)) Alors
+      File_Vide &lt;- Vrai ;
+   Sinon
+      File_Vide &lt;- Faux ;
+   Fsi ;
+Fin ;
+
+Procedure Enfiler (lettre : Caractere)
+Debut
+   Si non (File_Pleine) Alors
+      Queue &lt;- Queue + 1 ;
+      mafile [Queue] &lt;- lettre ;
+   Sinon
+      Afficher ("File Pleine") ;
+      Quitter () ;
+   Fsi ;
+Fin ;
+
+Fonction Defiler : Caractere 
+Declaration
+   compteur : Entier ;
+
+Debut
+   Si non (File_Vide) Alors
+
+      Defiler &lt;- mafile [Queue] ;
+      compteur &lt;- 1 ;
+
+      Tant Que (compteur &lt; Queue) Faire
+         mafile [compteur] &lt;- mafile[compteur + 1] ;
+         compteur &lt;- compteur + 1 ;
+      Ftq ;
+
+      Queue &lt;- Queue - 1 ;
+
+   Sinon
+      Afficher ("File Vide") ;
+      Quitter () ;
+   Fsi ;
+Fin ;
+
+Debut
+(* nous aurions pu aussi saisir cette phrase ainsi que *)
+(* le motif a rechercher. Encore un bon petit exercice *)
+   Phrase = "Only AMIGA makes it possible !!!" ;
+   motif  = "le " ;
+
+(* ces 2 lignes font office de Procedure Init *)
+   Queue  = 0 ;
+   Indice = 1 ;
+
+   Tant Que non(File_Pleine) Faire
+      Enfiler (Phrase [Indice]) ;
+      Indice &lt;- Indice + 1 ;
+   Ftq ;
+
+   Trouve &lt;- Cherche() ;
+
+   Tant Que non(Trouve) Et (Indice &lt; Longueur(Phrase)) Faire
+(* Cette fonction Emplacement a pour but de renvoyer *)
+(* la position de motif[1] dans la file en ignorant  *)
+(* le premier element de celle-ci. Si cet element    *)
+(* n'est pas trouve la fonction renvoie 0.           *)
+      Position &lt;- Emplacement (mafile + 1, motif[1]);
+
+      Si (Position = 0) Alors
+         Defil_NbFois  &lt;- Max_Tableau ;
+      Sinon
+         Defile_NbFois &lt;- Position - 1 ;
+      Fsi ;
+
+(* pour une fois nous n'utilisons pas les elements que     *)
+(* nous retourne la fonction defile car nous n'avons nul   *)
+(* besoin des caracteres qui n'appartiennent pas au motif. *) 
+      Defil_Cpt &lt;- 0 ;
+      Tant  Que (Defil_Cpt &lt; Defil_NbFois) Faire
+         Sert_A_Rien &lt;- Defiler () ;
+         Defile_Cpt  &lt;- Defile_Cpt + 1 ;
+      Ftq ;
+
+(* et l'on recommence en enfilant de nouveau autant de *)
+(* caracteres qu'il en a ete precedemment defiles *)
+      Tant Que non(File_Pleine) Faire
+         Enfiler (Phrase [Indice]) ;
+         Indice &lt;- Indice + 1 ;
+      Ftq ;
+
+      Trouve &lt;- Cherche() ;
+   Ftq ;
+
+   Si (Trouve = Vrai) Alors
+      Afficher ("Trouve\n") ;
+   Sinon
+      Afficher ("Non trouve\n") ;
+   Fsi ;
+Fin ;
+</pre></font></td></tr></tbody></table><br>
+
+<b>Listing 2 : l'implémentation en C</b><br><br>
+
+<table summary="" width="100%" border="1" bgcolor="#c0c0c0">
+<tbody><tr><td><font color="#000000"><pre>/* Compile avec LC -L -O */
+/* Quelques mots sur le programme qui suit. */
+/* Le but est de rechercher une sous-chaine dans une chaine
+   plus grande. Ici, la longueur de la sous-chaine est 3
+   et elle contient "le ".
+   Vous pouvez modifier la sous-chaine a travers la variable
+   motif (N'OUBLIEZ PAS DE MODIFIER LA CONSTANTE MAX QUI DOIT
+   ETRE EGALE A LA LONGUEUR DE motif).
+*/
+/* Je vais maintenant vous exposer l'algorithme retenu pour
+   effectuer cette recherche.
+   L'algorithme est extremement simple comme vous allez pouvoir
+   le constater et ceci pour deux raisons :
+      1. Le but de l'article n'etant pas axe sur l'apparition
+         de motif mais sur la file, il fallait que l'exemple
+         soit a la portee de chacun (tout en n'etant pas 
+         totalement inutile)
+
+      2. La seconde raison est que cet algorithme sort tout 
+         droit de nos cerveaux embrumes.
+
+   Pour nous simplifier la tache nous avons pris une file de meme 
+   taille que notre motif.
+   Algo :
+    On commence par remplir la file puis tant que la sous-chaine 
+    n'est pas trouvee on regarde dans la file si on trouve la 
+    premiere lettre de la sous-chaine recherchee.
+    Si cette lettre n'est pas dans la file, on n'a aucune chance 
+    de trouver notre sous-chaine donc on vide la file et on la 
+    remplit de nouveau puis on recommence au debut.
+    Si cette lettre existe dans notre file, elle est susceptible 
+    d'etre suivie par les autres lettres de notre motif. Pour le 
+    savoir, il suffit de defiler jusqu'a ce que cette lettre se 
+    trouve en premiere position dans notre file et de remplir la 
+    file.
+    Apres cela, il nous reste a tester si la file contient la 
+    sous-chaine.
+    Si c'est le cas, c'est GAGNE !!!.
+    Sinon on recommence au debut.
+*/
+/* Bon assez parle, voila qui devrait regaler votre compilateur
+   prefere. Si vous avez des questions, n'hesitez pas nous ferons
+   de notre mieux pour vous repondre.
+*/
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+#define TETE 0
+/* L'indice TETE est une constante initialisee a 0 
+   car en C les tableaux commencent a l'indice 0 
+*/
+
+#define MAX 3 /* On indique ici la taille de notre file */
+
+int cherche (void);
+void enfiler (char);
+char defiler (void);
+int file_pleine (void);
+int file_vide (void);
+
+char *mafile = NULL, *motif = "le ";
+/* La variable motif contient la sous-chaine a rechercher
+   Le pointeur mafile contient l'adresse de base de notre file 
+*/
+
+int trouve, queue; /* Declaration d'une sentinelle (trouve) nous
+                      indiquant si la sous-chaine a ete trouvee
+                      ou pas, et de la variable queue nous 
+                      permettant de savoir ou se trouve la fin 
+                      de notre file dans notre tableau 
+                   */
+
+void main()
+{
+    char *chaine = "Only AMIGA makes it possible !!!", *courant;
+    /* Le pointeur chaine contient l'adresse de base de la chaine
+       dans laquelle doit s'effectuer la recherche 
+    */
+
+    char *adr_a;
+    int j, compteur;
+
+    courant = chaine;
+    queue = -1; /* Initialisation de notre queue de file */
+
+    /* Allocation de MAX elements pour notre file */
+    mafile = (char *) malloc (MAX);
+    if (mafile == NULL)
+    {
+        puts ("Probleme d'allocation memoire !!!");
+        exit (5);
+    }
+
+    /* Remplissage de notre file */
+    while (file_pleine() == 0)
+    {
+        enfiler (*courant);
+        courant++;
+    }
+
+    trouve = cherche(); /* Test si le contenu de notre file est
+                           le meme que celui de la sous-chaine
+                           recherchee 
+                        */
+
+    /* Tant que la sous-chaine n'est pas trouvee et que l'on n'a
+       pas atteint la fin de la chaine 
+    */
+    while ((trouve == 0) &amp;&amp; ((courant-chaine) &lt; strlen(chaine)))
+    {
+
+        /* Recherche dans la file (en ignorant le premier element
+           sinon si l'occurrence existe bien en premiere position
+           dans notre file mais que la sous-chaine n'est pas 
+           trouvee ON BOUCLE)
+           si une occurrence du premier caractere de notre 
+           sous-chaine existe et si c'est le cas, on stocke son 
+           adresse dans adr_a 
+        */
+        adr_a = strchr (mafile+1,*motif);
+        if (adr_a == NULL)
+            /* Si adr_a = NULL alors notre file ne contient pas 
+               le premier caractere de notre sous-chaine.
+               Par consequent, nous pouvons vider la file 
+               completement
+            */
+            compteur = MAX;
+        else
+           /* Si, au contraire, le premier caractere de notre
+              sous-chaine est trouve dans notre file, il faut 
+              defiler jusqu'a ce caractere
+           */
+            compteur = adr_a - mafile;
+
+        for (j = 0; j &lt; compteur; j++)
+            defiler();
+
+        /* Remplissage de la file afin de pouvoir tester a 
+           nouveau si la sous-chaine a ete trouvee
+        */
+        while (file_pleine() == 0)
+        {
+            enfiler (*courant);
+            courant++;
+        }
+
+        trouve = cherche();
+    }
+
+    /* Ce test parle de lui-meme */
+    if (trouve == 1)
+        printf ("Trouve\n");
+    else
+        printf ("Non trouve\n");
+
+    free (mafile); /* Soyons fair-play, liberons la memoire */
+}
+
+int cherche (void)
+{
+    /* Si la file contient la sous-chaine recherchee
+       renvoie 1
+       Sinon
+       renvoie 0
+    */
+    if (strncmp (mafile,motif,MAX) == 0)
+        return (1);
+    else
+        return (0);
+}
+
+int file_pleine (void)
+{
+    /* Le test doit porter sur MAX - 1
+       puisque les tableaux commencent en 0
+    */
+    if (queue == (MAX - 1))
+        return (1);
+    else
+        return (0);
+}
+
+/* Si vous desirez plus de details quant aux fonctions ci-dessous
+   referez vous aux primitives donnees plus haut
+*/
+int file_vide (void)
+{
+    if (TETE == (queue + 1))
+        return (1);
+    else
+        return (0);
+}
+
+void enfiler (char carac)
+{
+    if (file_pleine() == 0)
+    {
+        queue++;
+        mafile[queue] = carac;
+    }
+    else
+        puts ("File PLEINE");
+}
+
+char defiler (void)
+{
+    char val = '\0';
+    int i;
+
+    if (file_vide() == 0)
+    {
+        val = mafile[queue];
+        i = 0;
+        while (i &lt; queue)
+        {
+            mafile[i] = mafile[i + 1];
+            i++;
+        }
+        queue--;
+    }
+    else
+        puts ("File VIDE");
+
+    return (val);
+}
+</pre></font></td></tr></tbody></table><br>
+
+
+Pour remédier au problème posé par la gestion contigüe des files, une alternative nous est offerte, la
+gestion contigüe de la file avec décalage&nbsp;: nous devons nous-mêmes effectuer l'opération de décalage. Pour cela,
+nous devons imposer certaines règles&nbsp;: la tête devient une constante et seule la queue varie au fur et à mesure
+des appels aux procédures d'enfilement et de défilement. Voyons ensemble l'unique procédure à modifier.<br><br>
+
+<div align="center">
+<img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/algo_files_2.png" alt="Algorithmes"><br><br>
+</div>
+
+Comme nous le constatons, peu de modifications sont à apporter. En contrepartie, nous remarquons que notre file est
+mieux gérée puisque seule une des deux bornes bouge. De ce fait, nous occupons réellement chacune des cases du
+tableau (la file ne sera pleine que lorsque toutes les cases du tableau seront utilisées). Cependant, il reste
+tout de même un inconvénient, qui est le temps de permutation de chaque case. Sur une file de grande taille, le
+temps consacré à la permutation peut s'avérer excessivement long. Ceci nous amène à considérer une troisième méthode
+appelée gestion circulaire de la file.<br><br>
+
+
+<font size="+1" color="#ccbb33">Les files circulaires</font><br><br>
+
+La file circulaire se propose de remédier à ces inconvénients (merci la file circulaire) en faisant varier ses
+deux pointeurs (tête et queue) sans que la notion de borne du tableau n'intervienne. Éclaircissons un peu les
+choses par un exemple graphique&nbsp;:<br><br>
+
+<div align="center">
+<img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/algo_files_3.png" alt="Algorithmes"><br><br>
+</div>
+
+Nous avons rempli notre file avec les 8 premières lettres de l'alphabet. A l'étape (1) nous décidons de défiler
+un élément, en l'occurrence, le "A". Le pointeur "Tete" est donc incrémenté et pointe maintenant sur la seconde
+case du tableau. A l'étape (2), nous enfilons la lettre "I". Comme la "Queue" pointe sur la dernière case du
+tableau, nous la ramenons en première position (la place de la case 1 étant maintenant libre).<br><br>
+
+Le schéma (2) est le résultat de ces deux opérations.<br><br>
+
+Notre exemple n'a pas été choisi au hasard. Nous avons vu plus haut que le test filevide() était vérifié si Tete&gt;Queue.
+Or, dans le second schéma, la "Tete" est bien supérieure à la "Queue", mais notre file est pleine... Déjà, nous
+sentons arriver les prémices des premières ambiguïtés. En effet, les deux pointeurs sont désormais gérés de la même
+manière et la notion de tête et de queue apparaît différemment. La "Tete" peut ne pas être inférieure à la "Queue"
+(comme dans l'exemple). Voyons sans plus tarder les primitives.<br><br>
+
+<div align="center">
+<img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/algo_files_4.png" alt="Algorithmes"><br><br>
+</div>
+
+Nous ne saurons trop vous conseiller de tester le déroulement de ces primitives sur un petit exemple de votre choix.
+La difficulté réside dans les tests d'évaluation de l'état de la file...<br><br>
+
+<table summary="" width="100%" border="1" bgcolor="#c0c0c0">
+<tbody><tr><td><font color="#000000"><pre>#include &lt;exec/types.h&gt;
+
+#define MAX 3
+
+int tete, queue ;
+BOOL filevide, filepleine ;
+
+VOID enfile    (char) ;
+VOID batimotif (VOID) ;
+VOID defile    (VOID) ;
+BOOL cherche   (VOID) ;
+
+/* File d'origine qui subira toutes les primitives et a partir
+   de laquelle nous construirons buildmotif. La file etant 
+   geree de maniere circulaire, nous ne pouvons pas la tester 
+   comme un motif a rechercher. Car bien que toutes les lettres 
+   y soient presentes, ces dernieres sont en desordres */ 
+char file[MAX+1] = {'*', '*', '*', '\0'} ;
+
+/* chaine a parcourir */
+char *chaine = "Only AMIGA makes it possible !!!" ;
+
+/* motif que l'on souhaite retrouver, et pointeur de parcours
+   sur la chaine de depart */
+char *motif = "!! ", *courant = NULL ;
+
+/* le motif qui sera construit a partir de la file et qui 
+    servira pour tous les tests */
+char buildmotif[sizeof(motif)] =  {'*', '*', '*', '\0'} ;
+
+main (char **argv, int argc)
+{
+   BOOL trouve = FALSE ;
+   int  cptdefile = 0 ;
+
+   tete = 0 ;
+   queue = -1 ;
+
+/* ces 2 booleens nous permettent de connaitre les differents 
+   etats de notre file. Ils sont combines dans les tests afin 
+   d'eviter que notre queue (ou la votre, mais cela ne nous   
+   regarde pas !!) ne morde la tete */
+   filevide = TRUE ;
+   filepleine = FALSE ;
+
+/* cette ligne permet de voir le cheminement des lettres dans
+   la file ainsi que les differents etats de cette derniere. 
+   Elle est facultative mais peut aider a comprender le
+   mecanisme. */
+   printf ("file : %s \t tete : %d \t queue : %d \t filevide :
+            %d \t filepleine : %d \n", file, tete, queue, 
+            filevide, filepleine) ; 
+
+   courant = chaine ;
+
+/* remplissage initial de la file a partir de la chaine */
+   while (!filepleine)
+   {
+      enfile (*courant) ;
+      courant++ ;   
+   }
+
+/* remettre les lettres dans le bon ordre afin d'effectuer 
+   un test coherent avec le motif a rechercher. La file etant   
+   etant geree de maniere circulaire, les lettres ne sont pas
+   redecalees a partir de la tete mais enfilees les unes a la 
+   suite des autres. */
+
+   batimotif () ;
+
+   trouve = cherche () ;
+
+   while ((!trouve) &amp;&amp; ((courant - chaine) &lt; strlen (chaine)))
+   {
+
+/* puisque cherche n'a pas trouve notre motif nous pouvons 
+   defiler le premier caractere sans risque. Mais pas les
+   suivants car il se peut que le motif debute un peu plus 
+   loin. Exple : motif = "mad" et buildmotif = "mma".
+   cherche () nous dit que les deux chaines sont differentes.
+   Or il se peut qu'apres "mma" il y ait un 'd'. Donc dans tous
+   les cas nous defilons le premier caracteres et autant qu'il
+   y en a de differents apres. Dans notre exemple nous ne defi
+   lerons que le premier 'm'. Si la premiere lettre avait ete
+   conservee nous aurions boucle a l'infinie. En effet n'ayant 
+   rien defile nous nous retrouvons avec la chaine de depart
+   "mma". Nous ne pourrions plu enfiler et par la meme occasion
+   avance dans la chaine a parcourir */
+
+      defile () ;
+      cptdefile = 1 ;
+      while ((buildmotif[cptdefile] != motif[0]) &amp;&amp; 
+            (cptdefile != MAX))
+      {
+         cptdefile ++ ;
+         defile () ;
+      }
+
+      while (!filepleine)
+      {
+         enfile (*courant) ;
+         courant ++ ; 
+      }
+
+      batimotif () ;
+
+      trouve = cherche () ;
+   }
+
+   if (trouve)
+      printf ("le motif [%s] est present dans :\n%s\n\n", 
+               motif, chaine);
+   else
+      printf ("le motif [%s] n'existe pas.\n", motif);
+
+   exit (0) ;
+}
+
+VOID enfile (char symbol)
+{
+   if (!filepleine)
+   {
+      if (queue == MAX - 1)
+         queue = 0 ;
+      else
+         queue++ ;
+      
+      file [queue] = symbol ;
+      filevide = FALSE ;
+      if ( ((tete == 0) &amp;&amp; (queue == MAX - 1)) || 
+           ((queue &lt; MAX - 1) &amp;&amp; (tete == queue + 1)) )
+         filepleine = TRUE ;
+   }
+   else 
+      printf ("file pleine \n") ;
+
+/* encore une ligne d'aide a la comprehension */
+   printf ("file : %s \t tete : %d \t queue : %d \t filevide :
+            %d \t filepleine : %d \n", file, tete, queue, 
+            filevide, filepleine) ; 
+}      
+
+VOID defile (VOID)
+{
+   if (!filevide)
+   {
+      file [tete] = '*' ;
+      if (tete == MAX - 1)
+         tete = 0 ;
+      else
+         tete++ ;
+      
+      filepleine = FALSE ;
+
+      if ( ((tete == 0) &amp;&amp; (queue == MAX - 1)) || 
+           ((queue &lt; MAX - 1) &amp;&amp; (tete == queue + 1)) )
+         filevide = TRUE ;
+   }
+   else 
+      printf ("file vide \n") ;
+
+/* toujours elle */
+   printf ("file : %s \t tete : %d \t queue : %d \t filevide :
+            %d \t filepleine : %d \n", file, tete, queue, 
+            filevide, filepleine) ; 
+}
+
+BOOL cherche (VOID)
+{
+   if (strncmp (buildmotif,motif,MAX) == 0)
+      return (TRUE);
+   else
+      return (FALSE);
+}
+
+VOID batimotif (VOID)
+{
+   int cptfile, cptbuild ;
+   
+   cptbuild = 0 ;
+
+/* nous recuperons d'abord toutes les lettres de la tete */
+/* a la fin de la file. */
+   for (cptfile = tete ; cptfile &lt; MAX ; cptfile ++, cptbuild ++)
+      buildmotif[cptbuild] = file[cptfile] ;
+
+/* puis de la queue jusqu'a la tete */
+   for (cptfile = 0 ; cptfile &lt; tete ; cptfile ++, cptbuild ++)
+      buildmotif[cptbuild] = file[cptfile] ;
+}
+</pre></font></td></tr></tbody></table>
+
+
+
+
+
+
+<br><br>
+<table summary="" width="100%" cellspacing="1" cellpadding="1" border="0" bgcolor="#46617b" align="right"><tbody><tr><td>
+<table summary="" valign="top" width="100%" cellspacing="0" cellpadding="2" border="0" bgcolor="#26435b" align="center">
+<tbody><tr><td>
+<img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/ob_fleche_droite2.png">
+<a href="#haut"><font color="#cccccc">[Retour en haut]</font></a> /
+<a href="http://obligement.free.fr/articles.php"><font color="#cccccc">[Retour aux articles]</font></a>
+</td>
+<td align="right">
+<img src="En%20pratique%C2%A0%20%20Algorithmes%20et%20structures%20de%20donn%C3%A9es%20-%20Les%20files_fichiers/ob_fleche_droite2.png">
+<a href="http://obligement.free.fr/articles/algorithmes_piles.php"><font color="#cccccc">[Article précédent]</font></a> /
+<a href="http://obligement.free.fr/articles/algorithmes_arbres.php"><font color="#cccccc">[Article suivant]</font></a>
+</td></tr></tbody></table></td></tr></tbody></table>
+<br><br>
+
+    </td>
+   </tr>
+  </tbody></table>
+ 
+
+</body></html>
