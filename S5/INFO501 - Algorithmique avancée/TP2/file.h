@@ -8,7 +8,7 @@ struct File{
   Sommet *sommet;
 };
 
-File initialiser_file(); //initialise une file vide de capacité maximale fixe
+void initialiser_file(File *); //initialise une file vide de capacité maximale fixe
 void detruire_file(File*); //détruit une file en libérant ses ressources mémoires
 int file_vide(File*); //retourne 0 si vide, 1 si non vide
 int file_pleine(File*); //retourne 0 si pleine, 1 sinon

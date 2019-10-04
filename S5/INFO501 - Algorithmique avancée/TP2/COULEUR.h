@@ -3,4 +3,4 @@ enum COULEUR{
   BLANC,
   GRIS,
   NOIR
-}
+};
