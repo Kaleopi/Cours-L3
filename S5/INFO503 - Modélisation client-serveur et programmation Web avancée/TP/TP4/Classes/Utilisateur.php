@@ -1,17 +1,17 @@
 <?php
-public class Utilisateur{
+class Utilisateur{
   protected $id;
   protected $login;
   protected $mdp;
 
   function __construct(int $id, string $login, string $mdp){
     $this->id = $id;
-    $this->login=$login;
-    $this->mdp=$mdp;
+    $this->login = $login;
+    $this->mdp = $mdp;
   }
 
   function __toString():string{
-    return "ID : ".$id."\nLogin : ".$login."\nMot de passe : ".$mdp;
+    return "ID : ".$this->getId()."\nLogin : ".$this->getLogin()."\nMot de passe : ".$this->getMdp();
   }
 
   function getId():int{

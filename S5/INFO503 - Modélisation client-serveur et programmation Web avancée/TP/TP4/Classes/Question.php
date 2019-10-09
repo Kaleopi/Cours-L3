@@ -1,14 +1,14 @@
 <?php
-public class Question{
+class Question{
   protected $intitule;
   protected $choix; //tableau de choix
 
-  function __construct(string $intitule, array $choix){
+  function __construct($intitule, $choix){
     $this->intitule = $intitule;
     $this->choix = $choix;
   }
 
   function __toString(){
-    return "Intitulé : ".$intitule."\n".implode(" - ",$choix);
+    return "Intitulé : ".$this->intitule."</br>".implode(" - ",$this->choix);
   }
 }

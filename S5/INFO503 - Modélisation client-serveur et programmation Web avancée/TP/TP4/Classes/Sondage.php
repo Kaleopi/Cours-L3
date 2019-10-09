@@ -1,16 +1,20 @@
 <?php
-public class Sondage{
+class Sondage{
+  protected $id;
+  protected $titre;
   protected $questions;
 
-  function __construct(){
+  function __construct(int $id, string $titre){
+    $this->id = $id;
+    $this->titre = $titre;
     $this->questions = array();
   }
 
-  // function __toString(){
-  //
-  // }
-
   function getQuestions(){
     return $this->questions;
+  }
+
+  function addQuestion(Question $question){
+    array_push($questions,$question);
   }
 }
