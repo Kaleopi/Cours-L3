@@ -16,7 +16,7 @@ void detruire__file(File *f){
 int file_vide(File *f){
   if(f==NULL){
     return 0;
-  }else{1;}
+  }else{return 1;}
 }
 //retourne 0 si pleine, 1 sinon
 int file_pleine(File *f){
@@ -30,12 +30,13 @@ int file_pleine(File *f){
 }
 //ajoute un élément en queue de file;
 void enfiler(File *f, Sommet *s){
+  Sommet *elementDefile = f->sommet;
   if(file_pleine(f)){
     printf("File pleine, impossible d'ajouter\n");
   }
   if(file_vide(f)==1){
     while(f->sommet==NULL){
-      f->sommet = f->sommet->pere;
+      f->sommet->pere = elementDefile->pere;
     }
     f->sommet = s;
   }else{
@@ -43,8 +44,7 @@ void enfiler(File *f, Sommet *s){
   }
 }
 //enlève un élément en tête de file s'il en existe un et retourne sa valeur.
-int defiler(File *f)
-{
+Sommet* defiler(File *f){
   int nb;
     if (file_vide(f));{exit(EXIT_FAILURE);}
 
@@ -52,41 +52,50 @@ int defiler(File *f)
     if (f->sommet != NULL)
     {
       Sommet *elementDefile = f->sommet;
-
-      nb = elementDefile->id;
-      f->sommet = elementDefile->pere;
+      f->sommet->pere = elementDefile->pere;
+      return elementDefile;
       free(elementDefile);
     }
-
-    return nb;
 }
 //parcours en largeur
-void ParcoursLargeur(Graphe* g,Sommet* s ){
+void ParcoursLargeur(Graphe* g,Sommet* s){
+  printf("test");
     File *f;
+    printf("test");
     initialiser_file(f);
+    printf("test");
     enfiler(f,s);
+    printf("test");
     for(int i=0;i<g->nbSommet;i++){
-      s->c=0
+      s->c=BLANC;
       s->pere=NULL;
+      s++;
     }
-    s.c=1;
-    s.pere=NULL;
-    s.d=0;
+    s->c=GRIS;
+    s->pere=NULL;
+    s->id=0;
     while(file_vide!=0){
-      sommet *u=defiler(f);
+      Sommet *u=defiler(f);
       for(int i=0;i<g->nbSommet;i++){
-          if(s->c=0){
-            s->c=1;
-            s->pere=u;
+        printf("%d",s->id);
+          if(s->c=BLANC){
+            s->c=GRIS;
+            s->pere=u->pere;
             s->distance=u->distance+1;
             enfiler(f,s);
           }
-          s->c=2;
-      }
+          if(s->c=GRIS){
+            s->c=NOIR;
+            s->pere=u->pere;
+            s->distance=u->distance+1;
+          }
+
       }
     }
+    printf("testfin");
+  }
 
-}
+
 //afficher le chemin d'un sommet "s" à "v"
 void afficher_chemin(Graphe* g, Sommet* s, Sommet* v){
   if(s==v){
@@ -97,7 +106,7 @@ void afficher_chemin(Graphe* g, Sommet* s, Sommet* v){
       printf("Il n'existe aucun chemin de S à V");
     }
     else{
-      afficher_chemin(g,s,v->pere);
+      afficher_chemin(g,s,v);
       afficher_sommet(v);
     }
   }
@@ -105,7 +114,7 @@ void afficher_chemin(Graphe* g, Sommet* s, Sommet* v){
 
 //parcours en profondeur récursif
 void parcours_profondeur_recursif(Graphe *g){
-  File *f =
+  File *f = NULL;
   for(int i=0 ; i<g->nbSommet ; i++){
 
   }

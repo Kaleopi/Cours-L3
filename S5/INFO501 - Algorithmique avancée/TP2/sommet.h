@@ -10,7 +10,7 @@ struct Sommet{
   COULEUR c;
   int id;
   int distance;
-  Cellule *pere;
+  Sommet *pere;
 };
 
 void initSommet(Sommet*);

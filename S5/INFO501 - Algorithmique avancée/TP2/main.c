@@ -6,14 +6,14 @@
 #include "file.h"
 #include "sommet.h"
 
+
 int main(int argc, char* argv[]){
   Graphe *g = malloc(sizeof(Graphe));
+  Sommet *s = malloc(sizeof(Sommet));
   initialiser_graphe(g,argv[1]);
-
-  File *f ;
-  initialiser_file(f);
 
   afficher_graphe(g);
   detruire_graphe(g);
+  ParcoursLargeur(g,g->l_adj[0]);
   return 0;
 }
