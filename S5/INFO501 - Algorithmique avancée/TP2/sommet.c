@@ -3,9 +3,9 @@
 #include "sommet.h"
 
 void initSommet(Sommet *s){
-  s->pere = malloc(sizeof(Cellule));
+  s->pere = malloc(sizeof(Sommet));
   s->distance = 0;
-  s->c=0;
+  s->c=BLANC;
   s->id=0;
 }
 
