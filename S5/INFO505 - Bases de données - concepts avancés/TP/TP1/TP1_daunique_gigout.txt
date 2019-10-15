@@ -5,4 +5,6 @@ Exercice 1 - Requêtes
       	(SELECT DEPTNO FROM
           (SELECT COUNT(*) AS c,d.DEPTNO from SCOTT.EMP e , SCOTT.DEPT d where d.DEPTNO = e.DEPTNO group by d.DEPTNO) WHERE C=
               (SELECT MIN(c) FROM
-                    (SELECT count(*) as c,d.DNAME from SCOTT.EMP e , SCOTT.DEPT d where d.DEPTNO = e.DEPTNO group by d.DNAME))));
+
+
+							(SELECT count(*) as c,d.DNAME from SCOTT.EMP e , SCOTT.DEPT d where d.DEPTNO = e.DEPTNO group by d.DNAME))));
