@@ -1,0 +1,28 @@
+acpm_prim_tableau(G,p,r){
+  pour i allant de 1 à |S|
+    d[i] = infini;
+    père[i] = NIL;
+    couvert[i] = FAUX;
+  d[r] = 0;
+  Pour i allant de 1 à |S|-1
+    u = min(d,couvert) //Donne le sommet de plus petite distance
+    couvert[u] = vrai;
+    Pour chaque sommet v E G.adj[u]
+      Si NON couvert[v] ET p[u,v] < d[v]
+        d[v] = p(u,v)
+        père(v)=u
+}
+
+acpm_prim_file_activite(G,p,r){
+  Pour chaque sommet u E G.S
+    u.clé = infini;
+    u.père = NIL;   /construire_tas_min
+  r.clé = 0;
+  F = G.S;
+  TantQue F!=0
+    u = extraire_min(F);      /extraire_min
+    Pour chaque sommet v E G.adj[u]
+      Si v E F ET p(u,v) < v.clé
+        v.père = u
+        v.clé = p(u,v)
+}
