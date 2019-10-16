@@ -1,0 +1,25 @@
+CREATE OR REPLACE TRIGGER t_hiredate
+before insert or update or delete OF HIRE_DATE on EMPLOYEES
+BEGIN
+    raise_application_error(-9999, 'Erreur');
+END;
+
+
+create or replace trigger t_eachrow
+before insert or update or delete on EMPLOYEES
+
+for each row
+begin
+    raise_application_error(-20402, 'Vous ne pouvez pas modifier les colonnes de cette table');
+end;
+/
+UPDATE EMPLOYEES
+SET FIRST_NAME = 'testtest';
+ERREUR :
+ORA-20402: Vous ne pouvez pas modifier les colonnes de cette table ORA-06512: at "SQL_EZAZBALAQXILSXQDIVZWAFTRI.T_EACHROW", line 2
+ORA-06512: at "SYS.DBMS_SQL", line 1721
+
+
+SELECT LAST_NAME FROM EMPLOYEES WHERE HIRE_DATE > '17-JUN-03';
+
+DECLARE p_emp_empid_type HR.employees.employee_id%TYPE;CURSOR c_jobh_csr IS SELECT MONTHS_BETWEEN(end_date, start_date)/12 v_years_in_jobFROM   HR.job_historyWHERE  employee_id = 101;v_years_service NUMBER(2) := 0;v_years_in_job  NUMBER(2) := 0;BEGINp_emp_empid_type :=101;FOR jobh_rec IN c_jobh_csrLOOPEXIT WHEN c_jobh_csr%NOTFOUND;v_years_service := v_years_service + jobh_rec.v_years_in_job;END LOOP;SELECT MONTHS_BETWEEN(SYSDATE, hire_date)/12 INTO v_years_in_jobFROM   HR.employeesWHERE  employee_id = p_emp_empid_type;v_years_service := v_years_service + v_years_in_job;DBMS_OUTPUT.PUT_LINE(ROUND(v_years_service));EXCEPTIONWHEN NO_DATA_FOUND THENRAISE_APPLICATION_ERROR(-20348, 'Employee ID'|| p_emp_empid_type ||' inexistant.');END;

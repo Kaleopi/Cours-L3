@@ -10,7 +10,7 @@ class Test{
 	JSONObject j2=L1.toJSON();
 	JSONObject j3=m.toJSON();
 	System.out.println(m.getLivre(0));
-	System.out.println("Auteur :");
+	System.out.println("\nAuteur :");
 	System.out.println(j1);
 	System.out.println("\nLivre :");
 	System.out.println(j2);
