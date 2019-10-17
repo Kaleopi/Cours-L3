@@ -7,6 +7,8 @@
 // initialise  une  file  vide  de  capacité  maximale  fixe  en  allouant  la  mémoire nécessaire
 void initialiser_file(File *f){
   f = malloc(sizeof(Sommet)*TAILLE);
+  f->tete =-1;
+  f->queue=-1;
 }
 //détruit une file en libérant ses ressources mémoires
 void detruire__file(File *f){
