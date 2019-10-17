@@ -1,6 +1,7 @@
 #ifndef GRAPHE_H
 #define GRAPHE_H
 #include "liste.h"
+#include "sommet.h"
 
 typedef struct Graphe Graphe;
 struct Graphe{
@@ -9,6 +10,7 @@ struct Graphe{
 	int value; //0=non value 1=value
 	Liste* l_adj;
 	int** m_adj;
+  Sommet* l_sommet;
 };
 
 void initialiser_graphe(Graphe *g, char* nomFichier);

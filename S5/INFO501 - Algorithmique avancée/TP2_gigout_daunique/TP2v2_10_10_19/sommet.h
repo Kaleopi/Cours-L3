@@ -8,9 +8,11 @@
 typedef struct Sommet Sommet;
 struct Sommet{
   COULEUR c;
+  Sommet *pere;
   int id;
   int distance;
-  Sommet *pere;
+  int debut;
+  int fin;
 };
 
 void initSommet(Sommet*);

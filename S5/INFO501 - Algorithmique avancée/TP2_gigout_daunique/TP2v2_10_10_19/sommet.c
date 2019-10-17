@@ -3,10 +3,12 @@
 #include "sommet.h"
 
 void initSommet(Sommet *s){
-  s->pere = malloc(sizeof(Sommet));
-  s->distance = 0;
-  s->c=BLANC;
   s->id=0;
+  s->c=BLANC;
+  s->pere = NULL;
+  s->distance = 999999;
+  s->debut = -1;
+  s->fin = -1;
 }
 
 void afficher_sommet(Sommet *s){

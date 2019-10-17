@@ -33,6 +33,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
   fscanf(f,"%s",chaine);
 
   g->l_adj = malloc(sizeof(Liste)*sommet); //allocation liste / nombre de sommet
+  g->l_sommet = malloc(sizeof(Sommet)*sommet);// allocation liste sommets / nombre de sommets
 
   g->m_adj = malloc(sizeof(int*)*sommet); //allocation matrice carrée
   for(int i=0 ; i<sommet ; i++){

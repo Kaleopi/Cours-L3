@@ -6,7 +6,10 @@
 
 typedef struct File File;
 struct File{
-  Sommet *sommet;
+  Sommet *sommets;
+  int tete;
+  int queue;
+  int longueur;
 };
 
 void initialiser_file(File *); //initialise une file vide de capacité maximale fixe
@@ -18,4 +21,8 @@ Sommet* defiler(File*); //enlève un élément en tête de file s'il en existe u
 
 void ParcoursLargeur(Graphe*, Sommet*); // parcours en largeur à partir d'un sommet du graphe
 void afficher_chemin(Graphe*, Sommet*, Sommet*);
+
+void parcours_profondeur_recur(Graphe* g);
+int visiter_pp(Graphe* g , Sommet* s);
+void afficher_parcours_profondeur(Graphe* p);
 #endif //FILE_H
