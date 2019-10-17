@@ -7,4 +7,5 @@ void initCellule(Cellule *c, int id){
   c->id = id;
   c->succ = NULL;
   c->prec = NULL;
+
 }

@@ -4,7 +4,7 @@
 #include "liste.h"
 #include "cellule.h"
 #include "graphe.h"
-
+#include "Arcs.h"
 #define MAX 100
 
 void initialiser_graphe(Graphe *g, char* nomFichier){
@@ -12,6 +12,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
   char chaine[MAX]="";
   int sommet, value, oriente, j;
   char char_sommet[MAX];
+  char char_poids[MAX];
 
   f=fopen(nomFichier,"r+");
   if(f==NULL){
@@ -53,9 +54,14 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
     }
   }
   else{
+    int i=0;
     while(strcmp(chaine,"FIN_DEF_ARETES")!=0){
+      //initialisation cellule et arcs
       Cellule *c = malloc(sizeof(Cellule));
       Cellule *c2 = malloc(sizeof(Cellule));
+      Arcs *a=malloc(sizeof(Arcs));
+      Arcs **tab=malloc(sizeof(Arcs)*MAX);
+      //recupération des sommet
       fscanf(f,"%s",char_sommet);
       initCellule(c,atoi(char_sommet));
       j=atoi(chaine);
@@ -63,8 +69,24 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       initCellule(c2,atoi(chaine));
       j=atoi(char_sommet);
       insererListe(&g->l_adj[j],c2);
+
+      //création des Arcs
+      fscanf(f,"%s",char_poids);
+      //printf("%s\n",char_poids);
+      j=atoi(char_poids);
+      initArcs(a,c2,c,j);
+      tab[i]=a;
+      //triInsertion(tab);
+      afficher_arcs(tab[i]);
+      i++;
+
+      //printf("%d",i);
       fscanf(f,"%s",chaine);
+      //printf("%s\n",chaine);
+
+
     }
+    printf("\n");
   }
   g->nbSommet=sommet;
   g->oriente=oriente;

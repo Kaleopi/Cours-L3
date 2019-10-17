@@ -1,5 +1,5 @@
 CC=gcc -Wall -O3
-OBJETS=prog_liste.o graphe.o liste.o cellule.o
+OBJETS=prog_liste.o graphe.o liste.o cellule.o Arcs.o
 
 prog_liste: $(OBJETS)
 	$(CC) -o prog_liste $(OBJETS)
@@ -12,6 +12,9 @@ graphe.o : graphe.c
 
 liste.o : liste.c liste.h cellule.h
 	$(CC) -c liste.c
+	
+	Arcs.o :Arcs.c Arcs.h
+	$(CC) -c Arcs.c
 
 cellule.o : cellule.c cellule.h
 	$(CC) -c cellule.c

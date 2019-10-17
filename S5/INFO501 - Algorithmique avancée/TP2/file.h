@@ -7,6 +7,8 @@
 typedef struct File File;
 struct File{
   Sommet *sommet;
+  int *tete;
+  int *queue;
 };
 
 void initialiser_file(File *); //initialise une file vide de capacité maximale fixe
