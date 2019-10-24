@@ -60,7 +60,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       Cellule *c = malloc(sizeof(Cellule));
       Cellule *c2 = malloc(sizeof(Cellule));
       Arcs *a=malloc(sizeof(Arcs));
-      Arcs **tab=malloc(sizeof(Arcs)*MAX);
+      g->tab=malloc(sizeof(Arcs)*MAX);
       //recupération des sommet
       fscanf(f,"%s",char_sommet);
       initCellule(c,atoi(char_sommet));
@@ -75,19 +75,20 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       //printf("%s\n",char_poids);
       j=atoi(char_poids);
       initArcs(a,c2,c,j);
-      tab[i]=a;
-      //triInsertion(tab);
-      afficher_arcs(tab[i]);
+      g->tab[i]=a;
+
+      afficher_arcs(g->tab[i]);
       i++;
 
       //printf("%d",i);
       fscanf(f,"%s",chaine);
       //printf("%s\n",chaine);
-
-
     }
     printf("\n");
+
+
   }
+
   g->nbSommet=sommet;
   g->oriente=oriente;
   g->value=value;

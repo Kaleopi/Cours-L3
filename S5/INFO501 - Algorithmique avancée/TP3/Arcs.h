@@ -1,5 +1,6 @@
 #ifndef ARCS_H
 #define ARCS_H
+#include "graphe.h"
 #include "cellule.h"
 
 typedef struct Arcs Arcs;
@@ -10,5 +11,5 @@ struct Arcs{
 };
 void initArcs(Arcs *a,Cellule *x,Cellule *y , int poids);
 void afficher_arcs(Arcs *a);
-void triInsertion(Arcs **t);
+void triInsertion(Arcs *a);
 #endif
