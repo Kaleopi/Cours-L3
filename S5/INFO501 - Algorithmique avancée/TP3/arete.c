@@ -1,22 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Arcs.h"
+#include "arete.h"
 
-void initArcs(Arcs *a,Cellule *x,Cellule *y,int poids){
+void initArete(Arete *a,int x,int y,int poids){
   a->poids=poids;
   a->x=x;
   a->y=y;
 }
-void afficher_arcs(Arcs *a){
+void afficher_Arete(Arete *a){
 
-  printf("X : %d /",a->x->id);
-  printf("Y : %d /",a->y->id);
+  printf("X : %d /",a->x);
+  printf("Y : %d /",a->y);
   printf("poids :%d \n",a->poids);
 }
 
-void triInsertion(Arcs **t){
+void triInsertion(Arete **t){
   int i=2;
-  Arcs *cle;
+  Arete *cle;
   while (t!=NULL){
     cle = t[i];
     while(i>0 && t[i]->poids>cle->poids){

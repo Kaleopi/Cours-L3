@@ -4,7 +4,7 @@
 #include "liste.h"
 #include "cellule.h"
 #include "graphe.h"
-#include "Arcs.h"
+#include "arete.h"
 #define MAX 100
 
 void initialiser_graphe(Graphe *g, char* nomFichier){
@@ -59,8 +59,8 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       //initialisation cellule et arcs
       Cellule *c = malloc(sizeof(Cellule));
       Cellule *c2 = malloc(sizeof(Cellule));
-      Arcs *a=malloc(sizeof(Arcs));
-      Arcs **tab=malloc(sizeof(Arcs)*MAX);
+      Arete *a=malloc(sizeof(Arete));
+      Arete **tab=malloc(sizeof(Arete)*MAX);
       //recupération des sommet
       fscanf(f,"%s",char_sommet);
       initCellule(c,atoi(char_sommet));
@@ -74,10 +74,10 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       fscanf(f,"%s",char_poids);
       //printf("%s\n",char_poids);
       j=atoi(char_poids);
-      initArcs(a,c2,c,j);
+      initArete(a,c2->id,c->id,j);
       tab[i]=a;
-      //triInsertion(tab);
-      afficher_arcs(tab[i]);
+      triInsertion(tab);
+      afficher_Arete(tab[i]);
       i++;
 
       //printf("%d",i);
