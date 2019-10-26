@@ -15,14 +15,16 @@ void afficher_Arete(Arete *a){
 }
 
 void triInsertion(Arete **t){
-  int i=2;
-  Arete *cle;
-  while (t!=NULL){
+  Arete *cle=malloc(sizeof(Arete));
+  for (int i=2;i<23;i++){
     cle = t[i];
-    while(i>0 && t[i]->poids>cle->poids){
+  
+    while(i>-1 && t[i]->poids>cle->poids){
+      printf("yolo\n");
       t[i+1]=t[i];
       i=i-1;
       }
       t[i+1]=cle;
+      //printf("yolo\n");
   }
 }

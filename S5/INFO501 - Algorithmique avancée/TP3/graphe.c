@@ -76,7 +76,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       j=atoi(char_poids);
       initArete(a,c2->id,c->id,j);
       tab[i]=a;
-      triInsertion(tab);
+
       afficher_Arete(tab[i]);
       i++;
 
@@ -86,6 +86,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
 
 
     }
+    
     printf("\n");
   }
   g->nbSommet=sommet;
@@ -104,6 +105,8 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       }
     }
   }
+
+
 }
 
 void afficher_graphe(Graphe *g){
