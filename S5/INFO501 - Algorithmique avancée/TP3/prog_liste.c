@@ -10,6 +10,9 @@ int main(int argc, char *argv[]){
   afficher_graphe(g);
   detruire_graphe(g);
   afficher_graphe(g);
-
+  triInsertion(g->t);
+  for(int i=0;i<23;i++){
+    afficher_Arete(g->t[i]);
+  }
   return 0;
 }

@@ -15,10 +15,12 @@ void afficher_Arete(Arete *a){
 }
 
 void triInsertion(Arete **t){
-  Arete *cle=malloc(sizeof(Arete));
+  Arete *cle;
   for (int i=2;i<23;i++){
-    cle = t[i];
-  
+    cle->poids = t[i]->poids;
+    cle->x=t[i]->x;
+    cle->y=t[i]->y;
+    printf("clef d'origine %d\n", cle->poids);
     while(i>-1 && t[i]->poids>cle->poids){
       printf("yolo\n");
       t[i+1]=t[i];

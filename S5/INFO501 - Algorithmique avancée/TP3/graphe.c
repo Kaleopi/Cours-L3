@@ -60,7 +60,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       Cellule *c = malloc(sizeof(Cellule));
       Cellule *c2 = malloc(sizeof(Cellule));
       Arete *a=malloc(sizeof(Arete));
-      g->t=malloc(sizeof(Arete)*MAX);
+      g->t=malloc(sizeof(Arete)*sommet);
       //recupération des sommet
       fscanf(f,"%s",char_sommet);
       initCellule(c,atoi(char_sommet));
@@ -76,7 +76,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       j=atoi(char_poids);
       initArete(a,c2->id,c->id,j);
       g->t[i]=a;
-      triInsertion(g->t[i]);
+      //triInsertion(g->t);
       afficher_Arete(g->t[i]);
       i++;
 
