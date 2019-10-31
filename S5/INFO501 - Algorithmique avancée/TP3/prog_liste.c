@@ -3,7 +3,7 @@
 #include "graphe.h"
 #include "cellule.h"
 #include "liste.h"
-#include "Arcs.h"
+#include "arete.h"
 
 int main(int argc, char *argv[]){
   int i=0;

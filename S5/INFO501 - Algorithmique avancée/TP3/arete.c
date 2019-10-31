@@ -16,7 +16,7 @@ for (int i=0;i<23;i++){
 }
 
 void triInsertion(Arete **t){
-  Arete *cle;
+  Arete *cle=malloc(sizeof(Arete));
   for (int i=2;i<23;i++){
     cle->poids = t[i]->poids;
     cle->x=t[i]->x;
