@@ -84,12 +84,13 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       //printf("%d",i);
       fscanf(f,"%s",chaine);
       //printf("%s\n",chaine);
-
-
     }
 
     printf("\n");
+
+
   }
+
   g->nbSommet=sommet;
   g->oriente=oriente;
   g->value=value;
