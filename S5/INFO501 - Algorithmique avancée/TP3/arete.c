@@ -15,16 +15,15 @@ for (int i=0;i<23;i++){
 }
 }
 
-void triInsertion(Arete **t){
+void triInsertion(Arete **t,int size){
   Arete *cle=malloc(sizeof(Arete));
   int j;
-  for (int i=0;i<23;i++){
-    cle->poids = t[i]->poids;
-    cle->x=t[i]->x;
-    cle->y=t[i]->y;
-    printf("poids clef %d\n", cle->poids);
+  printf("Apres tri:\n");
+  for (int i=0;i<size;i++){
+    cle=t[i];
+    //printf("poids clef %d\n", cle->poids);
     j=i-1;
-    while(j>-1 && t[j]->poids>=cle->poids){
+    while(j>-1 && t[j]->poids>cle->poids){
       t[j+1]=t[j];
       j=j-1;
       }

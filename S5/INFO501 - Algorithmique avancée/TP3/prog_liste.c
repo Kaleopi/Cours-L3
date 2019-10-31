@@ -11,7 +11,7 @@ int main(int argc, char *argv[]){
   afficher_graphe(g);
   printf("\nAretes:\n" );
   afficher_Arete(g->t);
-  triInsertion(g->t);
+  triInsertion(g->t,23);
   afficher_Arete(g->t);
   detruire_graphe(g);
   afficher_graphe(g);
