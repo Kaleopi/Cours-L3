@@ -7,11 +7,12 @@ void initArete(Arete *a,int x,int y,int poids){
   a->x=x;
   a->y=y;
 }
-void afficher_Arete(Arete *a){
-
-  printf("X : %d /",a->x);
-  printf("Y : %d /",a->y);
-  printf("poids :%d \n",a->poids);
+void afficher_Arete(Arete **a){
+for (int i=0;i<23;i++){
+  printf("X : %d /",a[i]->x);
+  printf("Y : %d /",a[i]->y);
+  printf("poids :%d \n",a[i]->poids);
+}
 }
 
 void triInsertion(Arete **t){

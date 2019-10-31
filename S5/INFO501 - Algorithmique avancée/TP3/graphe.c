@@ -14,6 +14,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
   char char_sommet[MAX];
   char char_poids[MAX];
 
+
   f=fopen(nomFichier,"r+");
   if(f==NULL){
     printf("[ERREUR] Impossible d'ouvrir le fichier.");
@@ -32,7 +33,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
   //récupération "DEBUT_DEF_ARETES"
   fscanf(f,"%s",chaine);
   fscanf(f,"%s",chaine);
-
+  g->t=malloc(sizeof(Arete)*sommet);
   g->l_adj = malloc(sizeof(Liste)*sommet); //allocation liste / nombre de sommet
 
   g->m_adj = malloc(sizeof(int*)*sommet); //allocation matrice carrée
@@ -60,7 +61,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       Cellule *c = malloc(sizeof(Cellule));
       Cellule *c2 = malloc(sizeof(Cellule));
       Arete *a=malloc(sizeof(Arete));
-      g->t=malloc(sizeof(Arete)*sommet);
+
       //recupération des sommet
       fscanf(f,"%s",char_sommet);
       initCellule(c,atoi(char_sommet));
@@ -77,7 +78,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       initArete(a,c2->id,c->id,j);
       g->t[i]=a;
       //triInsertion(g->t);
-      afficher_Arete(g->t[i]);
+
       i++;
 
       //printf("%d",i);

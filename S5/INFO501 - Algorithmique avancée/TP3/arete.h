@@ -9,6 +9,6 @@ struct Arete{
   int y;
 };
 void initArete(Arete *a,int x,int y , int poids);
-void afficher_Arete(Arete *a);
+void afficher_Arete(Arete **a);
 void triInsertion(Arete **t);
 #endif
