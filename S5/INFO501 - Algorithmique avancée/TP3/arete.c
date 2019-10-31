@@ -17,17 +17,24 @@ for (int i=0;i<23;i++){
 
 void triInsertion(Arete **t){
   Arete *cle=malloc(sizeof(Arete));
-  for (int i=2;i<23;i++){
+  Arete *tmp=malloc(sizeof(Arete));
+
+  for (int i=0;i<22;i++){
     cle->poids = t[i]->poids;
     cle->x=t[i]->x;
     cle->y=t[i]->y;
-    printf("clef d'origine %d\n", cle->poids);
-    while(i>-1 && t[i]->poids>cle->poids){
-      printf("yolo\n");
-      t[i+1]=t[i];
-      i=i-1;
+    printf("poids clef %d\n", cle->poids);
+    int j=i;
+    while(j>-1 && t[j]->poids>=cle->poids){
+      //printf("%d /",t[j]->poids);
+      //printf("%d /",t[j+1]->poids);
+      //printf("%d\n",j);
+      tmp=t[j+1];
+      t[j+1]=t[j];
+      t[j]=tmp;
+      j=j-1;
       }
-      t[i+1]=cle;
+      t[j+1]=cle;
       //printf("yolo\n");
   }
 }
