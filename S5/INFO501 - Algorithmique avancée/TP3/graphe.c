@@ -4,7 +4,7 @@
 #include "liste.h"
 #include "cellule.h"
 #include "graphe.h"
-#include "Arcs.h"
+#include "arete.h"
 #define MAX 100
 
 void initialiser_graphe(Graphe *g, char* nomFichier){
@@ -13,6 +13,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
   int sommet, value, oriente, j;
   char char_sommet[MAX];
   char char_poids[MAX];
+
 
   f=fopen(nomFichier,"r+");
   if(f==NULL){
@@ -32,7 +33,7 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
   //récupération "DEBUT_DEF_ARETES"
   fscanf(f,"%s",chaine);
   fscanf(f,"%s",chaine);
-
+  g->t=malloc(sizeof(Arete)*sommet);
   g->l_adj = malloc(sizeof(Liste)*sommet); //allocation liste / nombre de sommet
 
   g->m_adj = malloc(sizeof(int*)*sommet); //allocation matrice carrée
@@ -59,8 +60,8 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       //initialisation cellule et arcs
       Cellule *c = malloc(sizeof(Cellule));
       Cellule *c2 = malloc(sizeof(Cellule));
-      Arcs *a=malloc(sizeof(Arcs));
-      g->tab=malloc(sizeof(Arcs)*MAX);
+      Arete *a=malloc(sizeof(Arete));
+
       //recupération des sommet
       fscanf(f,"%s",char_sommet);
       initCellule(c,atoi(char_sommet));
@@ -74,16 +75,17 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       fscanf(f,"%s",char_poids);
       //printf("%s\n",char_poids);
       j=atoi(char_poids);
-      initArcs(a,c2,c,j);
-      g->tab[i]=a;
+      initArete(a,c2->id,c->id,j);
+      g->t[i]=a;
+      //triInsertion(g->t);
 
-      afficher_arcs(g->tab[i]);
       i++;
 
       //printf("%d",i);
       fscanf(f,"%s",chaine);
       //printf("%s\n",chaine);
     }
+
     printf("\n");
 
 
@@ -105,6 +107,8 @@ void initialiser_graphe(Graphe *g, char* nomFichier){
       }
     }
   }
+
+
 }
 
 void afficher_graphe(Graphe *g){
