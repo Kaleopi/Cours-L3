@@ -7,6 +7,7 @@ struct Tas{
   Arete *parent;
   Arete *gauche;
   Arete *droite;
+  int tas[]
 };
 void initialiser_tas(Arete **t);
 //entasser_max: entasse l’élément d’indice iafin de rétablir la propriété de tas ;

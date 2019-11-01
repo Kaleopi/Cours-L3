@@ -4,11 +4,13 @@
 
 void initialiser_tas(Arete **t,int size){
   Tas *tas = malloc(sizeof (Tas)*size);
-  for (int j;j<size;j++){
-    tas[i]=t[i];
-  }
-
-
+  int i=0;
+  for (int j;j<size/2;j=j){
+    tas->parent=t[j];
+    tas->gauche=t[j+1];
+    tas->droite=t[j+2];
+    tas->tas[j]=t[i]->poids;
+    }
 
 }
 void detruire_tas(Tas *tas,int Size){
