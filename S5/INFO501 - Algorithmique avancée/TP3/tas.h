@@ -10,6 +10,7 @@ struct Tas{
 };
 void initialiser_tas(Arete **t);
 //entasser_max: entasse l’élément d’indice iafin de rétablir la propriété de tas ;
-void entasser_max(Tas tas,Arete a,int i);
-void detruire_tas(Tas tas);
+void entasser_max(Tas *tas,int i);
+void detruire_tas(Tas *tas);
+void tri(Tas *tas);
 #endif
