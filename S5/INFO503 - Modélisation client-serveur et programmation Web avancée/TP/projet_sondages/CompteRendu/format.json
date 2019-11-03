@@ -1,0 +1,43 @@
+{
+    "Utilisateurs": [{
+            "id": 1,
+            "login": "login1",
+            "password": "password1"
+        },
+        {
+            "id": 2,
+            "login": "login2",
+            "password": "password2"
+        },
+    ]
+}
+
+{
+    "Sondage":[{
+        "idSondage":1,
+        "responsableLogin":"login1",
+        "titre":"titre",
+        "questions":[{
+            "intitule":"question?",
+            "choix":[
+                "choix1",
+                "choix2",
+                "choix3",
+            ]
+        },
+        {
+            "intitule":"question2",
+            "choix": [
+                "choix1",
+                "choix2",
+                "choix3",
+                     ]
+        }],
+        "reponses":[{
+            "utilisateur":"login",
+            "reponse":[{
+                TABLEAU DE REPONSES SELON LE NOMBRE DE QUESTIONS ET DE CHOIX PAR QUESTIONS
+            }]
+        }]
+    }
+}
