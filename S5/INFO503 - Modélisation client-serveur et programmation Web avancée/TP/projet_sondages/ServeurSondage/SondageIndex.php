@@ -22,7 +22,7 @@ $options = [
     $sondage = new Sondage($_POST['responsable'],$_POST['titre'],$_POST['questions'],$_POST['choix']);
     // var_dump($sondage->getQuestions());
     // var_dump( $sondage);
-    $monfichier = fopen('sondage.txt', 'r+');
+    $monfichier = fopen('sondage.txt', 'w+');
     // 2 : on écrit
     fputs($monfichier, $_POST['responsable'].$_POST['titre'].$_POST['questions'].$_POST['choix']);
     // 3 : quand on a fini de l'utiliser, on ferme le fichier
