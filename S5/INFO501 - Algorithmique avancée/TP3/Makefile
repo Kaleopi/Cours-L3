@@ -13,14 +13,13 @@ graphe.o : graphe.c
 liste.o : liste.c liste.h cellule.h
 	$(CC) -c liste.c
 
-tas.o :tas.c tas.h
+tas.o : tas.c tas.h
 	$(CC) -c tas.c
 
-arete.o :arete.c arete.h
+arete.o : arete.c arete.h
 	$(CC) -c arete.c
 
 cellule.o : cellule.c cellule.h
 	$(CC) -c cellule.c
-
 
 clean:rm prog_liste $(OBJETS)
