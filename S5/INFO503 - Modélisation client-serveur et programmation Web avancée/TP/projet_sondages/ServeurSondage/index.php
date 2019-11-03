@@ -20,8 +20,6 @@ $options = [
       $URL = "http://localhost:8080/create.php";
     }
   }
-  // Envoi de la requête et lecture du JSON reçu
-  // Remplacez l'URL par l'adresse locale vers generateur.php
     $contexte  = stream_context_create($options);
     
 
@@ -29,8 +27,8 @@ $options = [
     if(($jsonTexte = @file_get_contents($URL, false, $contexte)) !== false) {
       // Analyse du JSON reçu
         $tableau = json_decode($jsonTexte, true);
-        if($tableau['code'] == "OKconnexion"){echo "<p>Bravo !!! Vous êtes connecté !!!</p>";}
-        elseif($tableau['code'] == "OKinscription"){echo "<p>Bravo, vous êtes inscrit et vous pouvez maintenant vous connecter.</p>";}
+        if($tableau['code'] == "OKconnexion"){echo /*"<p>Bravo !!! Vous êtes connecté !!!</p>"*/ $tableau['code'];}
+        elseif($tableau['code'] == "OKinscription"){echo /*"<p>Bravo, vous êtes inscrit et vous pouvez maintenant vous connecter.</p>"*/$tableau['code'];}
         else{echo "<p>Erreur de connexion ! L'erreur est <strong>".$tableau['message']."</strong></p>";}
     }
     else
