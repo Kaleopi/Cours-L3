@@ -13,7 +13,7 @@ $options = [
     'content' => $_POST
     ]
   ];
-  
+
   if($_POST['donnees']=="createSondage"){
     // var_dump($_POST);
      $_POST['questions'] = json_decode($_POST['questions']);
@@ -28,6 +28,6 @@ $options = [
     fputs($monfichier, $sondage);
     // 3 : quand on a fini de l'utiliser, on ferme le fichier
     fclose($monfichier);
-    
+
    }
 ?>

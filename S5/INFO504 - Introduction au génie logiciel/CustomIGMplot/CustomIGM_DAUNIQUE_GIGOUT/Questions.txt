@@ -1,0 +1,15 @@
+I. Comment changer facilement de compilateur à la compilation ?
+
+On utilise -DCMAKE_CXX_COMPILER
+
+On prend alors g++ comme compilateur :
+$ cmake ../CustomIGMPlot/source/ -DCMAKE_CXX_COMPILER=g++
+
+
+II. Faut-il gérer statiquement les options de compilation suivant le compilateur utilisé ? Si oui, comment faire ?
+
+Oui, on utilise target_compile_options.
+
+III. Comment avez-vous géré l'activation ou non du parallélisme ?
+
+cmake -jn fonctionne, le parametre n représente le nombre de jobs en parallèle.
