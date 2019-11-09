@@ -1,0 +1,5 @@
+A : 6 est un nombre pair
+B : 2 n'est pas un carré
+C : 1729 est la somme de deux cubes
+D : Aucune somme de deux cubes n'est un cube
+E : 5 est un nombre premier
