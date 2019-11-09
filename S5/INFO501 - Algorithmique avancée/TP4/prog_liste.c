@@ -14,9 +14,9 @@ int main(int argc, char *argv[]){
   printf("\nAretes:\n" );
   afficher_Arete(g->t);
   triInsertion(g->t,23);
+  afficher_Arete(g->t);
   Arete **tab = malloc(sizeof(Arete)*23);
   tab=generer_acpm_kruskal_tableau(g->t);
-  afficher_Arete(g->t);
   printf("kek\n" );
   afficher_Arete(tab);
   Tas *tas=malloc(sizeof(Tas));
