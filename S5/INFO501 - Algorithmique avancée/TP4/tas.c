@@ -10,8 +10,6 @@ Tas* initialiser_tas(Arete **t,int size){
     tas->parent=t[j/2];
     tas->gauche=t[2*j];
     tas->droite=t[2*j+1];
-
-
     }
     return tas;
 
