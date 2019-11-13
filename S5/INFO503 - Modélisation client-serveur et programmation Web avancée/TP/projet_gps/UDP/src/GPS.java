@@ -6,6 +6,8 @@ public class GPS{
 
 
     public GPS() {
+        this.longitude = "NaN";
+        this.latitude = "NaN";
     }
 
     public GPS(String longitude, String latitude) {
@@ -23,23 +25,6 @@ public class GPS{
     }
     public void setLatitude(String latitude) {
         this.latitude = latitude;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof GPS)) {
-            return false;
-        }
-        GPS gPS = (GPS) o;
-        return Objects.equals(longitude, gPS.longitude) && Objects.equals(latitude, gPS.latitude);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(longitude, latitude);
     }
 
     @Override
