@@ -43,3 +43,15 @@ mere(X,Y):-enfant(Y,X),femelle(X).
 
 grandpere(X,Y):-pere(X,Z),pere(Z,Y).
 grandpere(X,Y):-pere(X,Z),mere(Z,Y).
+
+parent(X,Y):-enfant(Y,X).
+
+ancetre1(X,Y):parent(X,Y).
+ancetre1(X,Y):-parent(X,Z),ancetre1(Z,Y).
+
+ancetre2(X,Y):-parent(X,Y).
+ancetre2(X,Y):-ancetre2(Z,Y),parent(X,Z).
+
+famille(X):-famille(X,Y).
+famille(X,Y):-pere(X,Y), write(X), write(" est le pere de "),write(Y),nl.
+famille(X,Y):-mere(X,Y), write(X), write(" est la mere de "),write(Y),nl.

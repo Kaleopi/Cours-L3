@@ -5,7 +5,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
 import java.lang.Math;
-
+import org.json.*;
 import java.net.Socket;
 
 /**
@@ -44,11 +44,12 @@ public class ThreadConnexion extends Thread {
             System.exit(-1);
         }
         System.out.println("Lu: " + messageLu);
-        
+
         // Envoi de 'Bonjour'
         int rand = (int)(Math.random()*3)+1;
         String message = Integer.toString(rand);
 
+        JSONObject json = message.toJSON();
         //Verification valeurs 1:Pierre 2:Feuille 3:Ciseaux
         switch(message){
             case "1":
@@ -100,7 +101,7 @@ public class ThreadConnexion extends Thread {
             System.exit(-1);
         }
         System.out.println("Lu: " + message);
-        
+
         // Envoi de 'Au revoir'
         message = "Au revoir";
         System.out.println("Envoi: " + message);
@@ -116,5 +117,5 @@ public class ThreadConnexion extends Thread {
             System.exit(-1);
         }
     }
-    
+
 }
