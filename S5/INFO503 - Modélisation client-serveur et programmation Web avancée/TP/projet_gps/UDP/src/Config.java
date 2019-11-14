@@ -151,8 +151,8 @@ public class Config {
 
         //Création d'un objet JSON
         this.config = new JSONObject(json);
-        System.out.println("Contenu JSON : ");
-        System.out.println(json);
+        // System.out.println("Contenu JSON : ");
+        // System.out.println(json);
     }
 
     /**

@@ -1,4 +1,4 @@
-
+import org.json.*;
 
 public class GPS{
     protected String longitude;
@@ -33,6 +33,11 @@ public class GPS{
             " longitude='" + getLongitude() + "'" +
             ", latitude='" + getLatitude() + "'" +
             "}";
+    }
+
+    public JSONObject toJSON() {
+        JSONObject j = new JSONObject(this);
+        return j;
     }
 
 }

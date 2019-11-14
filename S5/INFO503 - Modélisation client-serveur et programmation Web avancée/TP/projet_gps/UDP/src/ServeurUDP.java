@@ -16,6 +16,10 @@ import java.lang.invoke.MethodHandles;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 import org.json.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 
 /**
  * Classe correspondant à un serveur UDP. La chaine de caractères "Bonjour" est
@@ -94,6 +98,23 @@ public class ServeurUDP {
             socket.receive(msg);
             String texte = new String(msg.getData(), 0, msg.getLength());
             System.out.println("Lu: " + texte);
+            JSONObject json = new JSONObject(texte);
+            String nom = json.getString("idSportif");
+
+            File fs = new File("./activites/"+nom+"Activite.json");
+            FileWriter fr = null;
+            try {
+                fr = new FileWriter(fs);
+                fr.write(texte);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    fr.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         } catch (IOException e) {
             System.err.println("Erreur lors de la réception du message : " + e);
             System.exit(-1);

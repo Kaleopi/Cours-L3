@@ -79,6 +79,15 @@ public class Activite {
             ", coords='" + getCoords() + "'" +
             "}";
     }
+    
+    public JSONObject toJSON() {
+        JSONObject j = new JSONObject(this);
+        return j;
+    }
+
+    public void addCoord(GPS obj){
+        this.coords.add(obj);
+    }
 
     public void startActivity(){
         Scanner clavier = new Scanner(System.in);
@@ -115,9 +124,14 @@ public class Activite {
         Timestamp time = new Timestamp(System.currentTimeMillis());
         String timestamp = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(time);
         this.heureDeb = timestamp;
-        this.coords.add(new GPS());
-        this.coords.add(new GPS());
-        System.out.println(this);
+        System.out.println("Activite demarree !");
+        // System.out.println(this);
+    }
 
+    public void stopActivity(){
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        String timestamp = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(time);
+        this.heureFin = timestamp;
+        System.out.println("Fin de l'activite");
     }
 }

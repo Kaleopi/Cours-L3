@@ -39,7 +39,45 @@ public class ClientUDP {
         return config;
     }
 
-    // Le port d'écoute du serveur
+    public static DatagramSocket createSocket(){
+        // Création de la socket
+        DatagramSocket socket = null;
+        try {
+            socket = new DatagramSocket();
+        } catch (SocketException e) {
+            System.err.println("Erreur lors de la création de la socket : " + e);
+            System.exit(-1);
+        }
+        return socket;
+    }
+
+    public static DatagramPacket createMsg(String donnee){
+        // Création du message
+        DatagramPacket msg = null;
+        try {
+            InetAddress adresse = InetAddress.getByName(null);
+            String message = donnee;
+            byte[] tampon = message.getBytes();
+            msg = new DatagramPacket(tampon, tampon.length, adresse, portEcoute);
+
+        } catch (UnknownHostException e) {
+            System.err.println("Erreur lors de la création du message : " + e);
+            System.exit(-1);
+        }
+        return msg;
+    }
+
+    public static void envoiMsg(DatagramSocket socket, DatagramPacket msg){
+        // Envoi du message
+        try {
+            socket.send(msg);
+        } catch (IOException e) {
+            System.err.println("Erreur lors de l'envoi du message : " + e);
+            System.exit(-1);
+        }
+        System.out.println("Message envoyé au serveur.");
+    }
+
     public static int portEcoute;
     public static String adresse;
     public static Config config;
@@ -68,8 +106,7 @@ public class ClientUDP {
         }
         portEcoute = config.getInt("port");
         adresse = config.getString("adresse");
-
-
+        
         do{
             System.out.println("Bienvenue sur SportGPS\n"+
             "1) Se connecter\n"+
@@ -84,59 +121,73 @@ public class ClientUDP {
                 password = clavier.nextLine();
                 Utilisateur user = new Utilisateur(login,password);
                 GestionnaireUtilisateurs gest = new GestionnaireUtilisateurs("users.json");
+                Activite act = new Activite();
                 // gest.addUser("thomas","gigout");
                 boolean trouve = gest.search(user.getLogin(),user.getPassword());
+                int choixx = 0;
                 if(trouve){
-                    System.out.println("Bienvenue "+user.getLogin()+" !\n");
-                    Activite act = new Activite();
-                    act.setIdSportif(user.getLogin());
-                    act.startActivity();
+                    System.out.println("Bienvenue "+user.getLogin()+" !");
+                    do{
+                        System.out.println("1) Commencer l'activite\n2) Quitter");
+                        choixx = clavier.nextInt();clavier.nextLine();
+                        if(choixx==1){
+                            act.setIdSportif(user.getLogin());
+                            act.startActivity();
+                            String longitude="", latitude="";
+                            int ok=0;
+                            do{
+                                System.out.println("1) Nouvelle coordonnee\n2) Envoyer et quitter\n3) Annuler et quitter");
+                                ok = clavier.nextInt();clavier.nextLine();
+                                if(ok==1){
+                                    GPS coord = new GPS();
+                                    System.out.println("Saisie nouvelle coordonnee \nLongitude : ");
+                                    longitude = clavier.nextLine();
+                                    System.out.println("Latitude : ");
+                                    latitude = clavier.nextLine();
+                                    coord.setLongitude(longitude);
+                                    coord.setLatitude(latitude);
+                                    act.addCoord(coord);
+                                }
+                                else if(ok==2){
+                                    act.stopActivity();
+                                    System.out.println("Envoi des donnees de l'activite...");
+                                    DatagramSocket socket = createSocket();
+                                    DatagramPacket msg = createMsg(act.toJSON().toString());
+                                    envoiMsg(socket, msg);
+                                    socket.close();
+                                    System.exit(0);
+                                }
+                                else if(ok==3){
+                                    System.out.println("Envoi des donnees annule");
+                                    System.exit(0);
+                                }
+                                else{
+                                    System.out.println("Veuillez entrer un chiffre parmi la liste"); 
+                                }
+                            }while(ok==1);
+                        }
+                        else if(choixx==2){
+                            System.out.println("Creation activite annulee");
+                            System.exit(0);
+                        }
+                        else{
+                            System.out.println("Veuillez entrer un chiffre parmi la liste");
+                        }
+                    }while(choixx<1 || choixx>2);
                     choix = 2;
+                }
+                else{
+                    System.out.println("Desole, vous n'etes pas inscrit.");
                 }
             }
             else if(choix == 2){
-                System.exit(0);;
+                System.out.println("Connexion annulee");
+                System.exit(0);
             }
             else{
                 System.out.println("Veuillez entrer un chiffre parmi la liste.");
             }
+            choix = 1;
         }while(choix!=2);
-        
-
-        
-        DatagramSocket socket = null;
-        // Création de la socket
-        try {
-            socket = new DatagramSocket();
-        } catch (SocketException e) {
-            System.err.println("Erreur lors de la création de la socket : " + e);
-            System.exit(-1);
-        }
-
-        // Création du message
-        DatagramPacket msg = null;
-        try {
-            InetAddress adresse = InetAddress.getByName(null);
-            String message = "Bonjour";
-            byte[] tampon = message.getBytes();
-            msg = new DatagramPacket(tampon, tampon.length, adresse, portEcoute);
-
-        } catch (UnknownHostException e) {
-            System.err.println("Erreur lors de la création du message : " + e);
-            System.exit(-1);
-        }
-
-        // Envoi du message
-        try {
-            socket.send(msg);
-        } catch (IOException e) {
-            System.err.println("Erreur lors de l'envoi du message : " + e);
-            System.exit(-1);
-        }
-        System.out.println("Message envoyé au serveur.");
-
-        // Fermeture de la socket
-        socket.close();
     }
-
 }
