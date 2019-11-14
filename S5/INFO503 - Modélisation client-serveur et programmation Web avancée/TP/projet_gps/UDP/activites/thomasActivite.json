@@ -1,19 +1,10 @@
 {
+    "heureDeb": "14-11-2019 12:00:56",
     "idSportif": "thomas",
-    "heureDeb": "14-11-2019 11:52:35",
-    "heureFin": "14-11-2019 11:52:49",
-    "sport": "Natation",
+    "heureFin": "14-11-2019 12:00:59",
+    "sport": "Course a pied",
     "coords": [{
-        "latitude": "0",
-        "longitude": "0"
-    }, {
-        "latitude": "0",
-        "longitude": "1"
-    }, {
-        "latitude": "0",
-        "longitude": "2"
-    }, {
-        "latitude": "1",
-        "longitude": "2"
+        "latitude": "qfdqf",
+        "longitude": "fsdfdf"
     }]
 }
