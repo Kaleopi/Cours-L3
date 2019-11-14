@@ -1,9 +1,10 @@
 import org.json.*;
 
-public class GPS {
+public class GPS{
     protected String longitude;
     protected String latitude;
     protected String timestamp;
+
 
     public GPS() {
         this.longitude = "NaN";
@@ -16,35 +17,32 @@ public class GPS {
         this.latitude = latitude;
         this.timestamp = timestamp;
     }
-
     public String getLongitude() {
         return this.longitude;
     }
-
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
-
     public String getLatitude() {
         return this.latitude;
     }
-
     public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
-
-    public String getTimestamp() {
+    public String getTimestamp(){
         return this.timestamp;
     }
-
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
     @Override
     public String toString() {
-        return "{" + " longitude='" + getLongitude() + "'" + ", latitude='" + getLatitude() + "'" + ", timestamp='"
-                + getTimestamp() + "'" + "}";
+        return "{" +
+            " longitude='" + getLongitude() + "'" +
+            ", latitude='" + getLatitude() + "'" +
+            ", timestamp='" + getTimestamp() + "'" +
+            "}";
     }
 
     public JSONObject toJSON() {

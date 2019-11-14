@@ -146,6 +146,11 @@ public class ClientUDP {
                                     latitude = clavier.nextLine();
                                     coord.setLongitude(longitude);
                                     coord.setLatitude(latitude);
+                                    Timestamp time = new Timestamp(System.currentTimeMillis());
+                                    String timestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(time);
+                                    coord.setLongitude(longitude);
+                                    coord.setLatitude(latitude);
+                                    coord.setTimestamp(timestamp);
                                     act.addCoord(coord);
                                 }
                                 else if(ok==2){
@@ -155,7 +160,7 @@ public class ClientUDP {
                                     DatagramPacket msg = createMsg(act.toJSON().toString());
                                     envoiMsg(socket, msg);
                                     socket.close();
-                                    System.exit(0);
+                                    // System.exit(0);
                                 }
                                 else if(ok==3){
                                     System.out.println("Envoi des donnees annule");
@@ -187,7 +192,30 @@ public class ClientUDP {
             else{
                 System.out.println("Veuillez entrer un chiffre parmi la liste.");
             }
-            choix = 1;
+            choix = 2;
         }while(choix!=2);
+
+        DatagramSocket socketrecu = null;
+        try {
+            socketrecu = new DatagramSocket(2000);
+        } catch (SocketException e) {
+            System.err.println("Erreur lors de la création de la socket : " + e);
+            System.exit(-1);
+        }
+
+        // Création du message
+        byte[] tampon = new byte[1024];
+        DatagramPacket msg = new DatagramPacket(tampon, tampon.length);
+
+        // Lecture du message du client
+        try {
+            socketrecu.receive(msg);
+            String texte = new String(msg.getData(), 0, msg.getLength());
+            System.out.println("Lu: " + texte);
+        }catch(IOException e){
+            System.err.println("Erreur lors de la réception du message : " + e);
+            System.exit(-1);
+        }
+        socketrecu.close();
     }
 }

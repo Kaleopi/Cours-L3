@@ -119,9 +119,36 @@ public class ServeurUDP {
             System.err.println("Erreur lors de la réception du message : " + e);
             System.exit(-1);
         }
-
         // Fermeture de la socket
         socket.close();
+
+        // Création de la socket
+        DatagramSocket socketenvoi = null;
+        try {
+            socket = new DatagramSocket();
+        } catch (SocketException e) {
+            System.err.println("Erreur lors de la création de la socket : " + e);
+            System.exit(-1);
+        }
+        // Création du message
+        DatagramPacket msgenvoi = null;
+        try {
+            InetAddress adresse = InetAddress.getByName(null);
+            String message = "Les donnees de votre activite ont bien ete enregistrees.";
+            byte[] tamponenvoi = message.getBytes();
+            msgenvoi = new DatagramPacket(tamponenvoi, tamponenvoi.length, adresse, 2000);
+
+        } catch (UnknownHostException e) {
+            System.err.println("Erreur lors de la création du message : " + e);
+            System.exit(-1);
+        }
+        // Envoi du message
+        try {
+            socket.send(msgenvoi);
+        } catch (IOException e) {
+            System.err.println("Erreur lors de l'envoi du message : " + e);
+            System.exit(-1);
+        }
     }
 
 }
