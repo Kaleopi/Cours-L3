@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.net.ServerSocket;
 import java.net.Socket;
+import org.json.*;
 
 /**
  * Classe correspondant à un serveur TCP multithreadé.
@@ -27,9 +28,9 @@ import java.net.Socket;
 
             return config;
         }
-        public static Config config; 
+        public static Config config;
         public static int portEcoute;
-        
+
         public static void main(String[] args) {
             // Vérification des arguments
             Config config;
@@ -52,13 +53,13 @@ import java.net.Socket;
             portEcoute = config.getInt("port");
             // Création de la socket serveur
             ServerSocket socketServeur = null;
-            try {    
+            try {
                 socketServeur = new ServerSocket(portEcoute);
             } catch(IOException e) {
                 System.err.println("Création de la socket impossible : " + e);
                 System.exit(-1);
             }
-            
+
             // Attente des connexions des clients
             try {
                 Socket socketClient;
@@ -72,7 +73,7 @@ import java.net.Socket;
                 System.err.println("Erreur lors de l'attente d'une connexion : " + e);
                 System.exit(-1);
             }
-            
+
             // Fermeture de la socket
             // Le code suivant n'est pas exécuté à cause de la boucle infinie
             try {
@@ -81,5 +82,5 @@ import java.net.Socket;
                 System.err.println("Erreur lors de la fermeture de la socket : " + e);
                 System.exit(-1);
             }
-        }   
+        }
     }

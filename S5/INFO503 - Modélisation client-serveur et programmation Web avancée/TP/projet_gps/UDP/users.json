@@ -1,0 +1,20 @@
+{
+    "Utilisateurs": [
+
+        {
+            "password": "gigout",
+            "id": 2,
+            "login": "thomas"
+        },
+        {
+            "password": "daunique",
+            "id": 0,
+            "login": "wilfried"
+        },
+        {
+            "password":"rossie",
+            "id":1,
+            "login":"juliete"
+        }
+    ]
+}

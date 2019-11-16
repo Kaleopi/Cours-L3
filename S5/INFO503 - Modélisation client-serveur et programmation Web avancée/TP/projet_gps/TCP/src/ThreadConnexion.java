@@ -4,9 +4,13 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
-import java.lang.Math;
-import org.json.*;
 import java.net.Socket;
+import org.json.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+
 
 /**
  * Classe correspondant au thread associe à chaque connexion d'un client.
@@ -35,60 +39,34 @@ public class ThreadConnexion extends Thread {
 
     @Override
     public void run() {
-        // Lecture de 'Bonjour'
-        String messageLu = "";
+        // Lecture des donnees
+        String message = "";
         try {
-            messageLu = input.readLine();
+            message = input.readLine();
         } catch(IOException e) {
             System.err.println("Erreur lors de la lecture : " + e);
             System.exit(-1);
         }
-        System.out.println("Lu: " + messageLu);
-
-        // Envoi de 'Bonjour'
-        int rand = (int)(Math.random()*3)+1;
-        String message = Integer.toString(rand);
-
-        JSONObject json = message.toJSON();
-        //Verification valeurs 1:Pierre 2:Feuille 3:Ciseaux
-        switch(message){
-            case "1":
-                if(messageLu.equals("1")){
-                    message += "\tegalite...";
-                }
-                else if(messageLu.equals("2")){
-                    message += "\tt'as gagne!";
-                }
-                else if(messageLu.equals("3")){
-                    message += "\tt'as perdu";
-                }
-                else{message+="\tErreur, chiffre faux";}
-            break;
-            case "2":
-            if (messageLu.equals("2")) {
-                message += "\tegalite...";
-            } else if (messageLu.equals("1")) {
-                message += "\tt'as perdu!";
-            } else if (messageLu.equals("3")) {
-                message += "\tt'as gagne";
-            } else {
-                message += "\tErreur, chiffre faux";
+        System.out.println("Lu: " + message);
+        JSONObject json = new JSONObject(message);
+        String nom = json.getString("idSportif");
+        File fs = new File("./activites/" + nom + "Activite.json");
+        FileWriter fr = null;
+        try {
+            fr = new FileWriter(fs);
+            fr.write(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            break;
-            case "3":
-            if (messageLu.equals("3")) {
-                message += "\tegalite...";
-            } else if (messageLu.equals("2")) {
-                message += "\tt'as perdu!";
-            } else if (messageLu.equals("1")) {
-                message += "\tt'as gagne";
-            } else {
-                message += "\tErreur, chiffre faux";
-            }
-            break;
-            default:
-            break;
         }
+        
+        // Envoi de confirmation
+        message = "Vos donnees sont bien enregistrees";
         System.out.println("Envoi: " + message);
         output.println(message);
 
@@ -101,7 +79,7 @@ public class ThreadConnexion extends Thread {
             System.exit(-1);
         }
         System.out.println("Lu: " + message);
-
+        
         // Envoi de 'Au revoir'
         message = "Au revoir";
         System.out.println("Envoi: " + message);
@@ -117,5 +95,5 @@ public class ThreadConnexion extends Thread {
             System.exit(-1);
         }
     }
-
+    
 }

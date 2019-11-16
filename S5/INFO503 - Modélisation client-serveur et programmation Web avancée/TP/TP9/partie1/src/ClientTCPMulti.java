@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.lang.invoke.MethodHandles;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import org.json.*;
 
 /**
  * Classe correspondant à un client TCP.
@@ -32,7 +33,7 @@ public class ClientTCPMulti {
 
         return config;
     }
-    
+
     public static Config config;
     public static int portEcoute;
 

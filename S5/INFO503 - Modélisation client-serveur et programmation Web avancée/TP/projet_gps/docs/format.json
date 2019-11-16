@@ -1,0 +1,12 @@
+{
+  "Message":{
+    "idUser":"login",
+    "Début":"HH:MM:SS",
+    "Fin":"HH:MM:SS",
+    "sport":"intitule",
+    "Coordonnees":{
+      "longitude":"string",
+      "lattitude":"string"
+    }
+  }
+}
