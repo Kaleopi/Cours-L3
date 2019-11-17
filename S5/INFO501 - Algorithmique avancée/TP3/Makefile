@@ -15,7 +15,7 @@ liste.o : liste.c liste.h cellule.h
 
 kruskal.o : kruskal.c kruskal.h
 	$(CC) -c kruskal.c
-	
+
 tas.o : tas.c tas.h
 	$(CC) -c tas.c
 

@@ -4,7 +4,53 @@
 #include "arete.h"
 #define MAX 100;
 
-Arete** generer_acpm_kruskal_tableau(Arete ** t){
+arete_t** generer_acpm_kruskal_tableau(graphe_t *g){
+  // DECLARATIONS
+  arete_t **a = NULL;
+  int i, j, u, v, w, iCC;
+  int *CC;
+  arete_t **E;
+  int cpt = 0;
+
+  // INITIALISATIONS
+  E = (arete_t**)malloc(sizeof(arete_t*) * g->n_sommets * g->n_sommets);
+  for (i = 0 ; i < g->n_sommets * g->n_sommets ; i++){
+    E[i] = (arete_t*)malloc(sizeof(arete_t));
+  }
+  a = (arete_t**)malloc(sizeof(arete_t*) * g->n_sommets * g->n_sommets);
+  for (i = 0 ; i < g->n_sommets * g->n_sommets ; i++){
+    a[i] = (arete_t*)malloc(sizeof(arete_t));
+  }
+  CC = (int*)malloc(sizeof(int) * g->n_sommets);
+
+  // KRUSKAL
+  //recuperer_aretes(g,a);
+  //tri_insertion(a);
+  printf("\n");
+  for (i = 0 ; i < g->n_sommets ; i++){
+    CC[i] = i;
+  }
+  printf("\n");
+  for (i = 0 ; a[i]->poids > 0 ; i++){
+    u = a[i]->x;
+    v = a[i]->y;
+    w = a[i]->poids;
+    if (CC[u] != CC[v]){
+      E[cpt]->x = u;
+      E[cpt]->y = v;
+      E[cpt]->poids = w;
+      cpt++;
+      iCC = CC[v];
+      for (j = 0 ; j < g->n_sommets ; j++){
+        if (CC[j] == iCC){
+          CC[j] = CC[u];
+        }
+      }
+    }
+  }
+  return E;
+}
+Arete** generer_acpm_kruskal_tableauv1(Arete ** t){
   Arete **tab = malloc(sizeof(Arete)*23);
   int tabint[24];
   int temp=2;
