@@ -22,8 +22,6 @@ Arete** generer_acpm_kruskal_tableau(Arete ** t){
       bool=0;
       j=0;
       while(bool!=1&&j<24){
-
-
         printf("|%d|",j );
         if((t[i]->x!=tabint[j]&&t[i]->y!=tabint[j])&&(val<24)){
           printf("%d/",t[i]->x );
@@ -43,7 +41,7 @@ Arete** generer_acpm_kruskal_tableau(Arete ** t){
       }
 
       j++;
-      printf("%d\n",val );
+      //printf("%d\n",val );
     }
     printf("\n" );
   }
