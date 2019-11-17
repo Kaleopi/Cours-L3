@@ -1,1 +1,15 @@
-{"heureDeb":"14-11-2019 21:13:00","idSportif":"thomas","heureFin":"14-11-2019 21:13:03","sport":"Natation","coords":[{"latitude":"dsf","longitude":"dsg","timestamp":"14-11-2019 21:13:03"}]}
+{
+    "idSportif": "thomas",
+    "heureDeb": "15-11-2019 14:32:42",
+    "heureFin": "15-11-2019 14:32:47",
+    "sport": "Natation",
+    "coords": [{
+        "latitude": "dfdf",
+        "timestamp": "15-11-2019 14:32:44",
+        "longitude": "dfs"
+    }, {
+        "latitude": "dfssdf",
+        "timestamp": "15-11-2019 14:32:46",
+        "longitude": "sdfdfs"
+    }]
+}

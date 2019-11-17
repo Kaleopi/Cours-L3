@@ -1,1 +1,11 @@
-{"idSportif":"wilfried","heureDeb":"14-11-2019 21:13:19","heureFin":"14-11-2019 21:13:23","sport":"Autre","coords":[{"latitude":"hgjffds","timestamp":"14-11-2019 21:13:22","longitude":"dfdqsfqs"}]}
+{
+    "heureDeb": "15-11-2019 14:32:56",
+    "idSportif": "wilfried",
+    "heureFin": "15-11-2019 14:33:01",
+    "sport": "Course a pied",
+    "coords": [{
+        "latitude": "fdsfs",
+        "timestamp": "15-11-2019 14:33:00",
+        "longitude": "dsfdsf"
+    }]
+}

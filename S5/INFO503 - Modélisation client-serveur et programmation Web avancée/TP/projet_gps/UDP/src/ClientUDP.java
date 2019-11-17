@@ -192,7 +192,7 @@ public class ClientUDP {
             else{
                 System.out.println("Veuillez entrer un chiffre parmi la liste.");
             }
-            choix = 2;
+            choix = 1;
         }while(choix!=2);
 
         DatagramSocket socketrecu = null;
@@ -202,7 +202,7 @@ public class ClientUDP {
             System.err.println("Erreur lors de la création de la socket : " + e);
             System.exit(-1);
         }
-
+1
         // Création du message
         byte[] tampon = new byte[1024];
         DatagramPacket msg = new DatagramPacket(tampon, tampon.length);
