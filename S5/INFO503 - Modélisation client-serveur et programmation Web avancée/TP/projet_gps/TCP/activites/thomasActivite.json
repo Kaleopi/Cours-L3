@@ -4,12 +4,13 @@
     "heureFin": "15-11-2019 14:32:47",
     "sport": "Natation",
     "coords": [{
-        "latitude": "dfdf",
         "timestamp": "15-11-2019 14:32:44",
+        "latitude": "dfdf",
         "longitude": "dfs"
-    }, {
-        "latitude": "dfssdf",
+    },
+    {
         "timestamp": "15-11-2019 14:32:46",
+        "latitude": "dfssdf",
         "longitude": "sdfdfs"
     }]
 }
