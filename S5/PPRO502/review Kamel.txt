@@ -1,0 +1,26 @@
+NOMS & PRÉNOMS : Kamel Sahnine et Samuel These
+Titre : 5G
+Résumé :
+Évalutation des présentateurs : Très bien, rien à redire
+Évaluation du support : couleurs clairs, bien structuré et schématisé. Peut être un peu trop d'informations parfois
+  Nombre de slides : /5
+  Lisibilité : 5/5
+  Texte : 5/5
+  Nombre de figures : 3
+  Lisibilité des figures : 5/5
+  Utilité des figures : 4/5
+Évaluation du contenu
+  Compréhension sujet : 5/5
+  Intérêt du contenu : 5/5
+  Charge des slides : 4/5
+  Plan : 5/5
+  Slides "obligatoires": 5/5
+  Remarques :
+Questions posées :
+  - Quels sont concrétement les 5 innovations de la 5G ?
+  - les ondes poseraient pas problème si elles finissaient en micro-ondes ?
+Réponse (et évaluation) :
+  - SmartSet, double bande passante, info directe à l'utilisateur, etc
+  - Les ondes ne passent plus le corps après une certains longueur d'ondes, mais chauffent. Aucun problème pour l'homme en soit, sauf pour divers insectes plus petits.
+Remarques générales :
+Note : 19/20
