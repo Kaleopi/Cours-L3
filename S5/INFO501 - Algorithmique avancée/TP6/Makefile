@@ -1,11 +1,11 @@
 CC=gcc -Wall -O3
-OBJETS=prog_liste.o liste.o cellule.o
+OBJETS=prog.o liste.o cellule.o
 
-prog_liste: $(OBJETS)
-	$(CC) -o prog_liste $(OBJETS)
+prog: $(OBJETS)
+	$(CC) -o prog $(OBJETS)
 
-prog_liste.o : prog_liste.c liste.h
-	$(CC) -c prog_liste.c
+prog.o : prog.c liste.h
+	$(CC) -c prog.c
 
 liste.o : liste.c liste.h cellule.h
 	$(CC) -c liste.c
