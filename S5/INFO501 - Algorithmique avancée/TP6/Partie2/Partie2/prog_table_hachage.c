@@ -6,22 +6,27 @@
 
 
 int main(int argc, char *argv[]){
-  int i, m=MAX;
+  int m=MAX;
   char chaine[MAX]="";
   table_hachage *tabH = NULL;
   cellule_t *c, *c1;
   c = (cellule_t*)malloc(sizeof(cellule_t));
-  c1 = (cellule_t*)malloc(sizeof(cellule_t));
+  //c1 = (cellule_t*)malloc(sizeof(cellule_t));
   c->pred = NULL;
   c->succ = NULL;
   FILE* fichier=NULL;
-  fichier =fopen(argv[0],"r+");
+  fichier =fopen(argv[1],"r+");
   tabH = (table_hachage*)malloc(sizeof(table_hachage));
   initialiser_table_hachage(tabH,m);
- 
-while (!feof(fichier)) // test
-{
-  printf("fine");
+   printf("START");
+  
+  int ch = getc(fichier); 
+  while (ch != EOF)  
+  { 
+    putchar(ch);  
+  
+    ch = getc(fichier); 
+  //printf("fine");
   fscanf(fichier,"%s",chaine);//lecture 
   printf("%s",chaine);
   initialiser_cellule(c,chaine);//init la cellule contenant la chaine
@@ -30,13 +35,10 @@ while (!feof(fichier)) // test
   inserer_hachage(tabH, c);//insert;
 }
 if (feof(fichier)) 
-{
-  printf("fine");
-}
-else
-{
-  printf("well");
-}
+     printf("\n End of file reached."); 
+  else 
+     printf("\n Something went wrong."); 
+  fclose(fichier); 
 
 afficher_table_hachage(tabH);
 detruire_table_hachage(tabH);
