@@ -1,3 +1,7 @@
+//https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/
+//https://gist.github.com/brijeshb42/11312064
+//https://fr.wikipedia.org/wiki/Algorithme_de_Bellman-Ford
+
 #include <stdio.h>
 #include <stdlib.h>
 
