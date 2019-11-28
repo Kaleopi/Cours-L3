@@ -15,5 +15,7 @@ unsigned long long convertir_ch_entier(char *c);
 int hachage(table_hachage *tabH, unsigned long long k);
 void inserer_hachage(table_hachage *tabH, cellule_t *k);
 cellule_t* rechercher_hachage(table_hachage *tabH, char *c);
+void supprimer_hachage(table_hachage *tabh ,cellule_t* c);
+
 
 #endif

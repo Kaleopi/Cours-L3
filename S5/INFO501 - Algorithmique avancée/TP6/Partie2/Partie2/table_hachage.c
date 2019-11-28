@@ -66,3 +66,6 @@ cellule_t* rechercher_hachage(table_hachage *tabH, char *c){
   }
   return cell;
 }
+void supprimer_hachage(table_hachage *tabh ,cellule_t* c){
+  free(c);
+}
