@@ -16,8 +16,7 @@ void BellmanFord(struct Graphe* g, int src){
     }
     dist[src] = 0;
 
-    //2: Mettre toutes les arêtes |V|-1 fois
-    for(int i=1 ; i<=V-1 ;i++){
+    //2: relachement     for(int i=1 ; i<=V-1 ;i++){
         for(int j=0 ; j<E ; j++){
             int u = g->edge[j].src; //g->edge = tableau d'arêtes du graphe
             int v = g->edge[j].dest;
