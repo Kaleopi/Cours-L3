@@ -7,6 +7,7 @@
 
 int main(int argc, char *argv[]){
   int m=MAX;
+  long long unsigned kek;
   char chaine[MAX]="";
   table_hachage *tabH = NULL;
   cellule_t *c, *c1;
@@ -21,7 +22,8 @@ int main(int argc, char *argv[]){
    printf("START");
   
   int ch = getc(fichier); 
-  while (ch != EOF)  
+  
+  while (ch!= EOF)  
   { 
     putchar(ch);  
   
@@ -30,7 +32,7 @@ int main(int argc, char *argv[]){
   fscanf(fichier,"%s",chaine);//lecture 
   printf("%s",chaine);
   initialiser_cellule(c,chaine);//init la cellule contenant la chaine
-  long long unsigned kek=convertir_ch_entier(c);//converti la chaine pour h(k);
+  kek=convertir_ch_entier(c);//converti la chaine pour h(k);
   hachage(tabH,kek);
   inserer_hachage(tabH, c);//insert;
 }
@@ -40,8 +42,8 @@ if (feof(fichier))
      printf("\n Something went wrong."); 
   fclose(fichier); 
 
-afficher_table_hachage(tabH);
-detruire_table_hachage(tabH);
+//afficher_table_hachage(tabH);
+//detruire_table_hachage(tabH);
 
 
 
