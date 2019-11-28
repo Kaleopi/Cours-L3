@@ -3,11 +3,11 @@
 
 typedef struct Cellule Cellule;
 struct Cellule{
-  char chaine[50];
+  char chaine[26];
   Cellule* succ;
   Cellule* prec;
 };
 
-void initCellule(Cellule *, char[]);
+void initCellule(Cellule *c, char[]);
 
 #endif //CELLULE_H

@@ -1,0 +1,19 @@
+-- La création d'utilisateur se fait à partir de CREATE_USER
+
+CREATE_USER nom_util IDENTIFIED BY
+    password;
+
+-- La vérification d'utilisateur par ALTER_USER
+
+ALTER_USER nom_util IDENTIFIED BY
+    password;
+;
+
+CREATE OR REPLACE PROCEDURE CREATE_USER(
+    nom_util VARCHAR2, pw_util VARCHAR2;
+    --déclaration d'une variable
+    tmp_requete VARCHAR2(500);
+
+    BEGIN tmp_requete:='CREATE USER ' ||nom_util|| 'IDENTIFIED BY ' ||pw_util||;
+    EXECUTE IMMEDIATE tmp_requete; 
+)
