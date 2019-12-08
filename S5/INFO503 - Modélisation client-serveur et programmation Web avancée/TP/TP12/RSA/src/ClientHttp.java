@@ -27,8 +27,8 @@ public class ClientHttp {
          */
         config.ajouterValeur("URLserveur", "http://localhost:8080/index.html");
         config.ajouterValeur("Chiffrement","RSA");
-        config.ajouterValeur("cleprivee", "privee");
-        config.ajouterValeur("clepublique","publique");
+        config.ajouterValeur("cleprivee", "privee.bin");
+        config.ajouterValeur("clepublique","publique.bin");
 
         // Sauvegarde du fichier de configuration
         config.sauvegarder();
@@ -45,7 +45,7 @@ public class ClientHttp {
         if (args.length == 0) {
             // Pas d'argument : on ouvre le fichier json par défaut (nom de la classe)
 
-            String className = MethodHandles.lookup().lookupClass().getSimpleName() + ".json";
+            String className = MethodHandles.lookup().lookupClass().getSimpleName() + "Config.json";
             if (Config.fichierExiste(className))
                 config = new Config(className);
             else

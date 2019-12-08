@@ -1,0 +1,15 @@
+=     deux expressions similaires
+    > cst = cst         T/F
+    > var = cst         var = cst
+    > cst = var         var = cst
+    > var1 = var2       var1 = var2
+==
+    >
+    >
+    >
+    >
+=:=
+    >
+    >
+    >
+    >
