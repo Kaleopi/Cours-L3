@@ -25,7 +25,7 @@ public class Chiffrement {
      * @param args[1] message à chiffrer
      * @param args[2] nom du fichier dans lequel sauvegarder le message chiffré
      */
-    public static void main(String[] args) {
+    public static void Chiffrage(String[] args) {
         // Vérification des arguments
         if(args.length != 3) {
             System.err.println("Utilisation :");
