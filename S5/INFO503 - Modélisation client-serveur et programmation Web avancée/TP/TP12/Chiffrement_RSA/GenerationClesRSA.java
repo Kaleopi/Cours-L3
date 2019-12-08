@@ -23,7 +23,7 @@ public class GenerationClesRSA {
      * @param args[0] nom du fichier dans lequel sauvegarder la clé privée
      * @param args[1] nom du fichier dans lequel sauvegarder la clé publique
      */
-    public static void GénérationRSA(String clePriv,String clePub) {
+    public static void main(String[] args) {
         // Vérification des arguments
         if(args.length != 2) {
             System.err.println("Utilisation :");
@@ -48,10 +48,10 @@ public class GenerationClesRSA {
         KeyPair paireCles = generateurCles.generateKeyPair();
 
         // Sauvegarde de la clé privée
-        GestionClesRSA.sauvegardeClePrivee(paireCles.getPrivate(), clePriv);
+        GestionClesRSA.sauvegardeClePrivee(paireCles.getPrivate(), args[0]);
 
         // Sauvegarde de la clé publique
-        GestionClesRSA.sauvegardeClePublique(paireCles.getPublic(), clePub);
+        GestionClesRSA.sauvegardeClePublique(paireCles.getPublic(), args[1]);
 
         System.out.println("Clés sauvegardées.");
     }

@@ -24,7 +24,7 @@ public class Dechiffrement {
      * @param args[0] nom du fichier dans lequel se trouve la clé privée
      * @param args[1] message à déchiffrer
      */
-    public static void Dechiffrage(String clePriv,JSONObject message) {
+    public static void main(String[] args) {
         // Vérification des arguments
         if(args.length != 2) {
             System.err.println("Utilisation :");
@@ -36,12 +36,12 @@ public class Dechiffrement {
         }
 
         // Récupération de la clé privée
-        PrivateKey clePrivee = GestionClesRSA.lectureClePrivee(clePriv);
+        PrivateKey clePrivee = GestionClesRSA.lectureClePrivee(args[0]);
 
         // Chargement du message chiffré
         byte[] messageCode = null;
         try {
-            FileInputStream fichier = new FileInputStream(message);
+            FileInputStream fichier = new FileInputStream(args[1]);
             messageCode = new byte[fichier.available()]; 
             fichier.read(messageCode);
             fichier.close();

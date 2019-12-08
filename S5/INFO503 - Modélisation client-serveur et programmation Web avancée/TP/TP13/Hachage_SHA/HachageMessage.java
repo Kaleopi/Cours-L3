@@ -1,5 +1,8 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+// javac -d .\classes\ -sourcepath .\src\ -cp .\lib\json-20190722.jar .\src\Test.java
+// java -cp ".\classes\;.\lib\json-20190722.jar" Test
+
 
 /**
  * Classe permettant de tester le hachage avec SHA-256.

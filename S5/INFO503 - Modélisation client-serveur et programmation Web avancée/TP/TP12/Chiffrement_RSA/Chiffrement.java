@@ -25,7 +25,7 @@ public class Chiffrement {
      * @param args[1] message à chiffrer
      * @param args[2] nom du fichier dans lequel sauvegarder le message chiffré
      */
-    public static void chiffrage(String clepub,JSONObject message,String clePriv) {
+    public static void main(String[] args) {
         // Vérification des arguments
         if(args.length != 3) {
             System.err.println("Utilisation :");
@@ -37,16 +37,16 @@ public class Chiffrement {
             System.exit(0);        
         }
 
-        System.out.println("Message à chiffrer : " + message);
+        System.out.println("Message à chiffrer : " + args[1]);
 
         // Recuperation de la cle publique
-        PublicKey clePublique = GestionClesRSA.lectureClePublique(clepub);
+        PublicKey clePublique = GestionClesRSA.lectureClePublique(args[0]);
 
         // Chiffrement du message
         byte[] bytes = null;
         try {
             Cipher chiffreur = Cipher.getInstance("RSA");
-            chiffreur.init(Cipher.ENCRYPT_MODE, clePub);
+            chiffreur.init(Cipher.ENCRYPT_MODE, clePublique);
             bytes = chiffreur.doFinal(args[1].getBytes());
         } catch(NoSuchAlgorithmException e) {
             System.err.println("Erreur lors du chiffrement : " + e);
@@ -67,14 +67,14 @@ public class Chiffrement {
         
         // Sauvegarde du message chiffré
         try {
-            FileOutputStream fichier = new FileOutputStream(clePriv);
+            FileOutputStream fichier = new FileOutputStream(args[2]);
             fichier.write(bytes);
             fichier.close();    
         } catch(IOException e) {
             System.err.println("Erreur lors de la sauvegarde du message chiffré : " + e);
             System.exit(0);
         }  
-        System.out.println("Message code enregistré dans '" + clePriv + "'");
+        System.out.println("Message code enregistré dans '" + args[2] + "'");
     }
 
 }
