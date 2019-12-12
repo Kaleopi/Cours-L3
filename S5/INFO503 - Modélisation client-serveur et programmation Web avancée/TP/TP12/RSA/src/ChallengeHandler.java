@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URLDecoder;
+import java.util.Base64;
 
 /**
  * Classe correspondant au handler sur le contexte 'index.html'.
@@ -15,10 +16,11 @@ import java.net.URLDecoder;
  * @version 2019/10/11
  */
 class AccueilHandler implements HttpHandler {
-
+    Base64 encoder = Base64.getEncoder();
+    Base64 decoder = Base64.getEncoder();
+    
+    String reponse ="";
     public void handle(HttpExchange t) {
-        String reponse = "";
-
         // Récupération des données
         URI requestedUri = t.getRequestURI();
         String query = requestedUri.getRawQuery();
@@ -31,7 +33,7 @@ class AccueilHandler implements HttpHandler {
             System.err.println("Erreur lors de la récupération du flux " + e);
             System.exit(-1);
         }
-    
+ 
         // Récupération des données en POST
         try {
             query = br.readLine();
@@ -39,31 +41,31 @@ class AccueilHandler implements HttpHandler {
             System.err.println("Erreur lors de la lecture d'une ligne " + e);
             System.exit(-1);
         }
-        
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        JSONObject json;
+        int code_retour;
+        String message_retour ="";
+
         // Affichage des données
         reponse += "Données : ";
         if(query == null)
             reponse += "Aucune";
         else {
-            try {
-                query = URLDecoder.decode(query, "UTF-8");
-            } catch(UnsupportedEncodingException e) {
-                query = "";
-            }            
-            reponse += query;
+            
         }            
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Envoi de l'en-tête Http
         try {
             Headers h = t.getResponseHeaders();
-            h.set("Content-Type", "text/html; charset=utf-8");
+            h.set("Content-Type", "application/json; charset=utf-8");
             t.sendResponseHeaders(200, reponse.getBytes().length);
         } catch(IOException e) {
             System.err.println("Erreur lors de l'envoi de l'en-tête : " + e);
             System.exit(-1);
         }
 
-        // Envoi du corps (données HTML)
+        // Envoi du corps (données Json)
         try {
             OutputStream os = t.getResponseBody();
             os.write(reponse.getBytes());
