@@ -1,0 +1,9 @@
+male(X):
+  - Pierre
+    - Jules
+      - Marc
+    - Paul
+      - Albert
+    - Leo
+      - Arthur
+      - Leopold

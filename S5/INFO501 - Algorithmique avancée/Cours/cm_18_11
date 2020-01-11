@@ -1,8 +1,0 @@
-Chemin, Chemin élémentaire et circuit.
-
-Un chemin est une suite de sommets S et d'arcs A.
-Poids du chemin : somme du poids de ses arcs
-
-Chemin élémentaire : n'utilise pas 2 fois le même sommet
-circuit : chemin dont les extrémités coicindent 
-

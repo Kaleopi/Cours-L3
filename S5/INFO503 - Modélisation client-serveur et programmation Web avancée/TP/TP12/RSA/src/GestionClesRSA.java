@@ -3,6 +3,14 @@ import java.security.PublicKey;
 import java.security.PrivateKey;
 import java.security.NoSuchAlgorithmException;
 
+import java.security.KeyPairGenerator;
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.SecureRandom;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+
 import java.security.spec.X509EncodedKeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.InvalidKeySpecException;
@@ -19,6 +27,29 @@ import java.nio.file.Files;
  * @version 05/11/2019
  */
 public class GestionClesRSA {
+
+    public static void generateKey(String privee, String publique){
+        // Création d'un générateur RSA
+        KeyPairGenerator generateurCles = null;
+        try {
+            generateurCles = KeyPairGenerator.getInstance("RSA");
+            generateurCles.initialize(2048);
+        } catch(NoSuchAlgorithmException e) {
+            System.err.println("Erreur lors de l'initialisation du générateur de clés : " + e);
+            System.exit(-1);
+        }
+
+        // Génération de la paire de clés
+        KeyPair paireCles = generateurCles.generateKeyPair();
+
+        // Sauvegarde de la clé privée
+        sauvegardeClePrivee(paireCles.getPrivate(), privee);
+
+        // Sauvegarde de la clé publique
+        sauvegardeClePublique(paireCles.getPublic(), publique);
+
+        System.out.println("Clés sauvegardées.");
+    }    
 
     /**
      * Sauvegarde de la clé publique dans un fichier.

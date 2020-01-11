@@ -11,7 +11,6 @@ import java.net.InetSocketAddress;
  * @version 2019/10/11
  */
 public class ServeurHttp {
-
     public static void main(String[] args) {    
         HttpServer serveur = null;
         try {
@@ -21,7 +20,7 @@ public class ServeurHttp {
             System.exit(-1);
         }
 
-        serveur.createContext("/index.html", new AccueilHandler());
+        serveur.createContext("/index.html", new ChallengeHandler());
         serveur.setExecutor(null);
         serveur.start();
 
