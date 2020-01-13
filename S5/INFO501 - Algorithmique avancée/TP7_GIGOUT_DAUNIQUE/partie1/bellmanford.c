@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "graphe.h"
 void BellmanFord(struct Graphe* g, int src){
     int V = g->V; //V = nombre de sommets
     int E = g->E; //E = nombre d'arêtes

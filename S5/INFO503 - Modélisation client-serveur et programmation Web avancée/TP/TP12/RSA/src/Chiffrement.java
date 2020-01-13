@@ -25,6 +25,24 @@ public class Chiffrement {
         // Récupération de la clé privée
         PrivateKey clePrivee = GestionClesRSA.lectureClePrivee(nomFichierPrivee);
 
+<<<<<<< HEAD
+    /**
+     * Méthode principale.
+     * @param args[0] nom du fichier dans lequel se trouve la clé publique
+     * @param args[1] message à chiffrer
+     * @param args[2] nom du fichier dans lequel sauvegarder le message chiffré
+     */
+    public static void Chiffrage(String[] args) {
+        // Vérification des arguments
+        if(args.length != 3) {
+            System.err.println("Utilisation :");
+            System.err.println("  java Chiffrement clePublique message output");
+            System.err.println("    où :");
+            System.err.println("      - clePublique : nom du fichier qui contient la clé publique");
+            System.err.println("      - message     : message à chiffrer");
+            System.err.println("      - output      : fichier contenant le message chiffré");
+            System.exit(0);        
+=======
         // Chargement du message chiffré
         byte[] messageCode = null;
         try {
@@ -35,6 +53,7 @@ public class Chiffrement {
         } catch (IOException e) {
             System.err.println("Erreur lors de la lecture du message : " + e);
             System.exit(0);
+>>>>>>> 1aa285df3005c71229ccf7e00b36d96845125a22
         }
 
         // Déchiffrement du message
