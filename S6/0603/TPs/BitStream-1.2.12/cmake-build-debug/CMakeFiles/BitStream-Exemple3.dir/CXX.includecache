@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+E:/0603/TPs/BitStream-1.2.12/BitBase.h
+cstdint
+-
+type_traits
+-
+cassert
+-
+iostream
+-
+algorithm
+-
+typeinfo
+-
+stdio.h
+-
+
+E:/0603/TPs/BitStream-1.2.12/BitFloat.h
+cstdint
+-
+iostream
+-
+BitBase.h
+E:/0603/TPs/BitStream-1.2.12/BitBase.h
+
+E:/0603/TPs/BitStream-1.2.12/Exemple3.cpp
+iostream
+-
+iomanip
+-
+limits
+-
+BitFloat.h
+E:/0603/TPs/BitStream-1.2.12/BitFloat.h
+

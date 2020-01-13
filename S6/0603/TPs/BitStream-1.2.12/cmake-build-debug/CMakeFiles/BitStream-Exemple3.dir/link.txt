@@ -1,0 +1,3 @@
+"D:\JetBrains\CLion 2018.3.3\bin\cmake\win\bin\cmake.exe" -E remove -f CMakeFiles\BitStream-Exemple3.dir/objects.a
+C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\ar.exe cr CMakeFiles\BitStream-Exemple3.dir/objects.a @CMakeFiles\BitStream-Exemple3.dir\objects1.rsp
+C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE -Wall -g -D_DEBUG -Wall -Wconversion -Wextra -Wsign-conversion -g   -Wl,--whole-archive CMakeFiles\BitStream-Exemple3.dir/objects.a -Wl,--no-whole-archive  -o BitStream-Exemple3.exe -Wl,--out-implib,libBitStream-Exemple3.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\BitStream-Exemple3.dir\linklibs.rsp
