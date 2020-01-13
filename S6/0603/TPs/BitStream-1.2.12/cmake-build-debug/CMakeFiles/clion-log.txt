@@ -1,0 +1,4 @@
+"D:\JetBrains\CLion 2018.3.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" E:\0603\TPs\BitStream-1.2.12
+-- Configuring done
+-- Generating done
+-- Build files have been written to: E:/0603/TPs/BitStream-1.2.12/cmake-build-debug
