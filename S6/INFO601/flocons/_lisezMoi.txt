@@ -1,0 +1,11 @@
+Project : Tomb Raider Snowflakes Edition
+Author : GIGOUT Thomas & DAUNIQUE Wilfried
+
+1 - Éxecuter "make".
+    Suite à ça, deux éxecutables sont créés : ./simulation et ./editeur
+    ./simulation "" permet d'ouvrir la simulation si elle existe
+    ./editeur "" permet d'ouvrir et d'éditer un fichier existant
+    ./editeur "" "" 
+
+2 - Lorsque vous êtes en mode édition, cliquez dans la fenêtre simulation pour ajouter/enlever des obstacles. Pressez F2 pour quitter.
+3 - Lorsque vous êtes en mode simulation, pressez F2 lorsque vous voulez terminer. Selon l'énoncé de TP, le programme tourne tant que vous n'avez pas pressé F2.

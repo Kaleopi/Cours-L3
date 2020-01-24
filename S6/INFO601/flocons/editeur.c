@@ -5,11 +5,13 @@
 #include <time.h>
 #include "define.h"
 
-int main(){
+int main(int argc, char* argv[]){
     /* Initialisation de ncurses */
     ncurses_initialiser();
     ncurses_souris();
     ncurses_couleurs(); 
+    wbkgd(stdscr, COLOR_PAIR(4));
+    refresh();
 
 	/* Vérification des dimensions du terminal */
   	if((COLS < POSX + COLONNE) || (LINES < POSY + HAUTEUR)) {
@@ -19,10 +21,9 @@ int main(){
             COLS, LINES, POSX + COLONNE, POSY + HAUTEUR);
       exit(EXIT_FAILURE);
     }
-
     WINDOW *info, *sous_info, *simulation, *sous_simulation, *etat, *sous_etat;
     srand(time(NULL));
-    int i=0, nbFlocons=0, taille=LIGNE*COLONNE, col=0, row=0;
+    int i=0, taille=LIGNE*COLONNE, sourisX, sourisY, bouton;
     int *mat;
     mat = (int*)malloc(sizeof(int)*taille);
     for(i=0 ; i<taille ; i++){
@@ -44,11 +45,6 @@ int main(){
   	
 
     /* Écriture légendes */
-	mvwprintw(info,0,2, "Informations");
-	mvwprintw(simulation,0,1, "Simulation");
-	mvwprintw(etat,0,1, "Etat");
-    wattron(sous_etat,COLOR_PAIR(3));
-    mvwprintw(sous_etat,1,1,"Flocons : %d ",nbFlocons);
     wattron(sous_etat,COLOR_PAIR(2));
     mvwprintw(sous_etat,3,1," ");
     wattroff(sous_etat,COLOR_PAIR(2));
@@ -76,7 +72,17 @@ int main(){
     init_obstacles(sous_simulation,mat);
     timeout(5);
     while((i = getch()) != KEY_F(2)) {
-        updateSimulation(sous_info, sous_simulation, sous_etat, &col, &row, &nbFlocons, mat);
+        if(i==KEY_MOUSE && souris_getpos(&sourisX, &sourisY, &bouton)==OK) {
+            if(bouton & BUTTON1_CLICKED){
+                int col = sourisX-21;
+                int row = sourisY-11;
+                if((col>=0)&&(col<30)&&(row>=0)&&(row<15)){
+                    mvwprintw(sous_info,2,0,"Clic bouton 1 a la position (%d, %d)\n", sourisX-21, sourisY-11);
+                    wrefresh(sous_info);
+                    clickObstacles(sous_simulation,&col,&row,mat);
+                }
+            }
+        }
     }
     free(mat);
 

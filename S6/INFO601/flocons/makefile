@@ -2,7 +2,7 @@
 # CONFIGURATION GENERALE
 #
 
-EXEC = main
+EXEC = simulation editeur
 OBJETS = ncurses.o functions.o
 NOM_PROJET = Flocons
 
@@ -24,7 +24,7 @@ OBJETS_O = $(OBJETS) $(EXEC_O)
 #
 
 CC = gcc
-CCFLAGS_STD = -Wall -O3 -Werror -ansi -pedantic -std=c99
+CCFLAGS_STD = -Wall -O3 -Werror -ansi -pedantic -std=c99 
 CCFLAGS_DEBUG = -D _DEBUG_
 CCFLAGS = $(CCFLAGS_STD)
 CCLIBS = -lncurses
@@ -90,4 +90,5 @@ archive: clean
 # DEPENDANCES
 ncurses.o: ncurses.c ncurses.h
 functions.o: functions.c functions.h
-main.o: main.c ncurses.h functions.h
+editeur.o: editeur.c ncurses.h functions.h
+simulation.o: simulation.c ncurses.h functions.h
