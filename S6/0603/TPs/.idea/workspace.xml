@@ -23,13 +23,7 @@
     <option name="FILTER_BY_CURRENT_PROJECT" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated>
-      <config projectName="BitStream" targetName="BitStream-Exercice1" />
-      <config projectName="BitStream" targetName="BitStream-Exemple2" />
-      <config projectName="BitStream" targetName="BitStream-Exemple1" />
-      <config projectName="BitStream" targetName="BitStream-Exemple3" />
-      <config projectName="BitStream" targetName="BitStream-Exercice2" />
-    </generated>
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -37,11 +31,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef0e89aa-b3b9-4ce1-bd14-19112ceead7b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/TPs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TPs.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ef0e89aa-b3b9-4ce1-bd14-19112ceead7b" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,12 +39,11 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -83,13 +72,8 @@
         <subPane>
           <expand>
             <path>
-              <item name="BitStream" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TPs" type="b2602c69:ProjectViewProjectNode" />
               <item name="TPs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BitStream" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TPs" type="462c0819:PsiDirectoryNode" />
-              <item name="TP1_GIGOUT_DAUNIQUE" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -99,7 +83,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/CMakeLists.txt" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../tp-n01-daunique_gigout" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -115,40 +99,6 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.BitStream-Exercice2">
-    <configuration name="BitStream-Exemple1" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="BitStream" TARGET_NAME="BitStream-Exemple1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="BitStream" RUN_TARGET_NAME="BitStream-Exemple1">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BitStream-Exemple2" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="BitStream" TARGET_NAME="BitStream-Exemple2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="BitStream" RUN_TARGET_NAME="BitStream-Exemple2">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BitStream-Exemple3" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="BitStream" TARGET_NAME="BitStream-Exemple3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="BitStream" RUN_TARGET_NAME="BitStream-Exemple3">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BitStream-Exercice1" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="BitStream" TARGET_NAME="BitStream-Exercice1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="BitStream" RUN_TARGET_NAME="BitStream-Exercice1">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BitStream-Exercice2" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="BitStream" TARGET_NAME="BitStream-Exercice2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="BitStream" RUN_TARGET_NAME="BitStream-Exercice2">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Application.BitStream-Exemple1" />
-      <item itemvalue="Application.BitStream-Exemple2" />
-      <item itemvalue="Application.BitStream-Exemple3" />
-      <item itemvalue="Application.BitStream-Exercice1" />
-      <item itemvalue="Application.BitStream-Exercice2" />
-    </list>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -162,16 +112,17 @@
       <workItem from="1578737786204" duration="12470000" />
       <workItem from="1578823274114" duration="7183000" />
       <workItem from="1578929298468" duration="164000" />
+      <workItem from="1578929493412" duration="137000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19817000" />
+    <option name="totallyTimeSpent" value="19954000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18120806" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18389262" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -184,10 +135,10 @@
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="TeamCity" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.34776536" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.34776536" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32960895" />
-      <window_info anchor="bottom" id="CMake" order="13" />
+      <window_info anchor="bottom" id="CMake" order="13" visible="true" weight="0.32960895" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -199,91 +150,18 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/BitStream.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1224" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/data.bin">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/BitFloat.h">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Exemple1.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Exemple2.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="12" selection-start-line="50" selection-start-column="12" selection-end-line="50" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/BitBlock.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
-          <folding>
-            <element signature="e#1098#1100#0" expanded="true" />
-            <element signature="e#1163#1165#0" expanded="true" />
-            <element signature="e#1228#1230#0" expanded="true" />
-            <element signature="e#1293#1295#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Exercice2.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="18" />
-          <folding>
-            <element signature="e#54#73#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Exercice1.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/BitBase.h">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="63" selection-start-line="4" selection-start-column="63" selection-end-line="4" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Huffman.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="27" column="24" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Exemple3.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" selection-start-line="12" selection-end-line="14" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/BitStream.h" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/data.bin" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/BitFloat.h" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Exemple1.cpp" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Exemple2.cpp" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/BitBlock.h" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/makefile" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Exercice2.cpp" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Exercice1.cpp" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/BitBase.h" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/CMakeLists.txt" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Huffman.h" />
+    <entry file="file://$PROJECT_DIR$/TP1_GIGOUT_DAUNIQUE/Exemple3.cpp" />
   </component>
 </project>
