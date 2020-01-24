@@ -21,6 +21,7 @@ void toLeft(WINDOW*, int*, int*, int*);
 void toRight(WINDOW*, int*, int*, int*);
 
 /*EDITOR FUNCTIONS*/
+void renduObstacles(WINDOW*,int*);
 void clickObstacles(WINDOW*,int*,int*,int*);
 int exist(const char*);
 

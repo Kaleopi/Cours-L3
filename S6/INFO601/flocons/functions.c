@@ -16,6 +16,7 @@ void init_obstacles(WINDOW* w, int* mat){
 		wattroff(w,COLOR_PAIR(2));
 	}
 }
+
 int finSimulation(int* mat){
 	int j=0;
 	for(int i=0 ; i<COLONNE-1 ; i++){
@@ -78,7 +79,7 @@ void createFlocon(WINDOW* info, WINDOW* simulation, WINDOW* etat, int* col, int*
 	(*nbFlocons)++;
     mvwprintw(etat,1,1, "Flocons : %d", *nbFlocons);
     wrefresh(etat);
-
+	wclear(info);
 	mvwprintw(info, 0, 0, "Nouveau flocon colonne : %d", *col);
 	wrefresh(info);
 }
@@ -112,6 +113,19 @@ void toRight(WINDOW* simulation, int* row, int* col, int* mat){
 }
 
 /* EDITOR FUNCTIONS */
+void renduObstacles(WINDOW* w, int* mat){
+	for(int x=0 ; x<COLONNE ; x++){
+		for(int y=0 ; y<LIGNE ; y++){
+			if(mat[COLONNE*y+x]){
+				wattron(w,COLOR_PAIR(2));
+				mvwprintw(w,y,x," ");
+				wrefresh(w);
+				wattroff(w,COLOR_PAIR(2));
+			}
+		}
+	}		
+}
+
 void clickObstacles(WINDOW* simulation, int* col, int* row, int* mat){
 	if(mat[COLONNE*(*row)+(*col)]==1){
 		mat[COLONNE*(*row)+(*col)]=0;
@@ -132,7 +146,7 @@ int exist(const char* fname){
     int res;
     int file = open(fname, O_WRONLY);
     if(file==-1){
-        printf("Erreur : le fichier \"%s\" n'existe pas.\n",fname);
+        // printf("Erreur : le fichier \"%s\" n'existe pas.\n",fname);
         res = EXIT_FAILURE;
     }else{
         // printf("Le fichier "%s" existe.\n",fname);

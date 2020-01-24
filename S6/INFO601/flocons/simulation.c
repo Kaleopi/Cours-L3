@@ -24,12 +24,8 @@ int main(int argc, char* argv[]){
 
     WINDOW *info, *sous_info, *simulation, *sous_simulation, *etat, *sous_etat;
     srand(time(NULL));
-    int i=0, nbFlocons=0, taille=LIGNE*COLONNE, col=0, row=0;
-    int *mat;
-    mat = (int*)malloc(sizeof(int)*taille);
-    for(i=0 ; i<taille ; i++){
-        mat[i]=0;
-    }
+    int i=0, nbFlocons=0, /*taille=LIGNE*COLONNE,*/ col=0, row=0;
+    int mat[COLONNE*LIGNE]={0};
 
     /*Initialisation des fenêtres principales*/
 	info = newwin(H_INFO+2, COLONNE+30, POSY, POSX);
@@ -76,11 +72,10 @@ int main(int argc, char* argv[]){
     printw("Cliquez dans la info ; pressez F2 pour quitter...");
 
     init_obstacles(sous_simulation,mat);
-    timeout(500);
+    timeout(100);
     while((i = getch()) != KEY_F(2)) {
         updateSimulation(sous_info, sous_simulation, sous_etat, &col, &row, &nbFlocons, mat);
     }
-    free(mat);
 
     /* Suppression des fenêtres */
     delwin(sous_info);
