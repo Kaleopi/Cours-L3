@@ -28,13 +28,13 @@ public class moverobot : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             Vector3 robotPosition = transform.position;
-            robotPosition.x += 0.1f;
+            robotPosition.x += -0.1f;
             transform.position = robotPosition;
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
             Vector3 robotPosition = transform.position;
-            robotPosition.x += -0.1f;
+            robotPosition.x += 0.1f;
             transform.position = robotPosition;
         }
     }
