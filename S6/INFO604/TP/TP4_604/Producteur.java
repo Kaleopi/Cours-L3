@@ -18,7 +18,7 @@ public class Producteur implements Runnable{
             if(boite.getVide()){
                 deposer(boite, tabMsg[i]);
                 i++;
-            }
+            }                                                   // FAIRE AVEC NOTIFY ET PAS SLEEP()
             try {
                 Thread.sleep(4000);
             } catch(InterruptedException ex) {
