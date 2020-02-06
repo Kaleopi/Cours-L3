@@ -13,25 +13,25 @@ public class moverobot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.Z))
         {
             Vector3 robotPosition = transform.position;
             robotPosition.z += 0.1f;
             transform.position = robotPosition;
         }
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.S))
         {
             Vector3 robotPosition = transform.position;
             robotPosition.z += -0.1f;
             transform.position = robotPosition;
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.Q))
         {
             Vector3 robotPosition = transform.position;
             robotPosition.x += -0.1f;
             transform.position = robotPosition;
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D))
         {
             Vector3 robotPosition = transform.position;
             robotPosition.x += 0.1f;
