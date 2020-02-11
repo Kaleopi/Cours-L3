@@ -86,6 +86,4 @@ archive: clean
 	@echo "Termine."
 
 # DEPENDANCES
-fileServeur.o: fileServeur.c structures.h
-fileClient.o: fileClient.c structures.h
-fileSupprime.o: fileSupprime.c structures.h
+Prog.o = Prog.c
