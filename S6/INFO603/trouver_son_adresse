@@ -1,0 +1,39 @@
+ip addr show = son adresse
+ip rout shwow = son routage 
+
+TTL du paquet au depart : 0-255 depend du systeme d'exploitation
+
+Pour ping le reseaux : nmap -sP 10.22.9.0-255
+
+Pour voir les paquets : Wireshark
+
+Wireshark : Permet de visualiser les echanges entre les adresses (dns , icmp..)
+
+TYPE A =  recuperer l'adresse ip 
+
+valort@valort-HP-ProBook-450-G3:~$ nmap  10.22.9.169
+
+Starting Nmap 7.60 ( https://nmap.org ) at 2020-02-06 15:16 CET
+Nmap scan report for 10.22.9.169
+Host is up (0.0061s latency).
+Not shown: 995 closed ports
+PORT     STATE SERVICE
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+1025/tcp open  NFS-or-IIS
+5000/tcp open  upnp
+
+Nmap done: 1 IP address (1 host up) scanned in 0.14 seconds
+valort@valort-HP-ProBook-450-G3:~$ nmap  10.22.9.85
+
+Starting Nmap 7.60 ( https://nmap.org ) at 2020-02-06 15:16 CET
+Nmap scan report for 10.22.9.85
+Host is up (0.00093s latency).
+Not shown: 997 closed ports
+PORT   STATE SERVICE
+21/tcp open  ftp
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 0.10 seconds
