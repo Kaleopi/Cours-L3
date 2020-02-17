@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "string.h": "c",
-        "ncurses.h": "c",
-        "curses.h": "c",
-        "fonctions.h": "c",
-        "unistd.h": "c"
-    }
-}

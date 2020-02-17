@@ -7,6 +7,22 @@ TagManager:
   - RedQuad
   - BlueQuad
   - GreenQuad
+  - CameraMain
+  - CameraCube
+  - CameraRobot
+  - Robot
+  - Cube
+  - Main
+  - spot
+  - spot1
+  - spot2
+  - Robot2
+  - ring
+  - sumo1
+  - sumo2
+  - RedQuad1
+  - RedQuad2
+  - RedQuad3
   layers:
   - Default
   - TransparentFX
