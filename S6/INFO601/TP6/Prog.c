@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
         printf("ERROR : Arguments manquants.\n\tCLE : clé de la file de messages.\n\t-R : recevoir message\n\t-S : supprimer message.\n\t-E \"message\" : envoyer \"message\".\n\nExemples :\n\t./Prog CLE -R|-S\n\t./Prog CLE -E \"message\"\n");
         return(EXIT_FAILURE);
     }
-    else if(argc==3){
+    else if(argc==2){
         if(strcmp(argv[2],"-R")==0){
             /*recevoirmsg();*/
         }
@@ -26,9 +26,9 @@ int main(int argc, char* argv[]){
             printf("Argument %s inconnu.",argv[2]);
         }
     }
-    else if(argc==3){
-        if(strcmp(argv[1],"-E")==0){
-            /*envoyermsg();*/
+    else if(argc==4){
+        if(strcmp(argv[2],"-E")==0){
+            printf("envoi du message %s avec la clé %s\n",argv[3], argv[1]);
         }
         else{
             printf("Argument %s inconnu.",argv[1]);
