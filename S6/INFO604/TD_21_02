@@ -1,0 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread>
+
+typdef struct serveurAff{
+  int requete;
+  pthread_mutex_t mutex;
+  pthread_cond_t termine;
+  pthread_
+} serveurAff_t;
