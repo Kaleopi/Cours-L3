@@ -204,8 +204,8 @@ int main(int argc, char *argv[]) {
       erreur = 0;
       switch(msg.num) {
       case A1:
-	erreur = (etats[B2] == DEBUT) || (etats[A3] == DEBUT);
-	break;
+      erreur = (etats[B2] == DEBUT) || (etats[A3] == DEBUT);
+      break;
       case A3:
 	erreur = (etats[A1] == DEBUT) || (etats[B2] == DEBUT);
 	break;
