@@ -1,0 +1,9 @@
+start controleur : 
+	initialise l'ipc
+		message
+		shared memory
+		sémaphores
+	attacher le signal initialisé
+
+	attente message voiture
+	
