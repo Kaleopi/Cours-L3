@@ -74,13 +74,13 @@ public class changeColor : MonoBehaviour
         if ((transform.position.x > xminRed && transform.position.x < xmaxRed) && (transform.position.z > zminRed && transform.position.z < zmaxRed)||(transform.position.x > xminRed1&& transform.position.x < xmaxRed1) && (transform.position.z > zminRed1 && transform.position.z < zmaxRed1)|| (transform.position.x > xminRed2 && transform.position.x < xmaxRed2) && (transform.position.z > zminRed2 && transform.position.z < zmaxRed2)||(transform.position.x > xminRed3 && transform.position.x < xmaxRed3) && (transform.position.z > zminRed3 && transform.position.z < zmaxRed3))
         {
 
-            CubeRenderer.material.SetColor("_Color", Color.red);
+            CubeRenderer.material.SetColor("_Color", Color.red); //Le cube devient rouge au dessus du robot qui a perdu
 
         }
 
         else
         {
-            CubeRenderer.material.SetColor("_Color", Color.white);
+            CubeRenderer.material.SetColor("_Color", Color.green); 
         }
     }
 }

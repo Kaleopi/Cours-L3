@@ -1,0 +1,8 @@
+MARLEY;Bob;12,rue du joint;432344;JAMAIQUE;0326000001;bob.marley@jamaique.ja;
+JACKSON;Michael;14545, 3ème avenue;34455;LOS ANGELES;0326000002;michael.jackson@state.eu;  
+CARREY;Maria;12345621, 5ème avenue;34542;NEW-YORK;0326000003;maria.carrey@states.eu;  
+DION;Céline;34, avenue du Québec;5110032432;MONTREAL;0326000004;celine.dion@quebec.ca;  
+TEL;Guillaume;32, rue de la flêche;75000;PARIS;0226000005;guillaume.tel@paris.fr;   
+BOULEY;Isabelle;34, rue de la statue;56753;QUEBEC;0345432123;isabelle.bouley@montreal.ca;  
+BRUNI;Carla;23b, boulevard du président;59000;LILLE;0126000006;bruni.carla@elysee.it;    
+GAROU;;345, avenue de la cathédrale;45675;MONTREAL;032343443;garou@hotmail.ca;     
