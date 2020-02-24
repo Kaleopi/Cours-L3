@@ -22,12 +22,19 @@ int main(int argc, char *argv[]){
     int i=0;
 
     /*Initialisation des fenêtres*/
-    bordure = newwin(COL+2,LINE+2,0,0);
-    carte = subwin(bordure, COL,LINE,1,1);
+    bordure = newwin(COL+2,LINE+2,1,0);
+    box(bordure, 0,0);
+    carte = subwin(bordure, COL,LINE,2,1);
 
     wrefresh(bordure);
     wrefresh(carte);
-    scrollok()
+    scrollok(carte,TRUE);
+    printw("Pressez F2 pour quitter...");
+    while((i = getch()) != KEY_F(2)){
+
+    };
+    delwin(carte);
+    delwin(bordure);
     ncurses_stopper();
 
     return EXIT_SUCCESS;
