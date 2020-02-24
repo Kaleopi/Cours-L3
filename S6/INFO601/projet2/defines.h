@@ -20,11 +20,11 @@
 #include <sys/stat.h>
 
 /*Tailles simulation*/
-#define LINES 30
-#define COLS 15
+#define LINE 30
+#define COL 15
 
-#define POSX 20
-#define POSY 5
+#define POSX 0
+#define POSY 0
 
 /*Clés*/
 #define CLE_MSG 1056

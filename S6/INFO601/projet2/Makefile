@@ -27,7 +27,8 @@ CLE_MSG = 1056
 CLE_SHM = 2056
 CLE_SEM = 3056
 CC = gcc
-CCFLAGS = -Wall -O3 -Werror -ansi -pedantic -D _XOPEN_SOURCE -D CLE_MSG=$(CLE_MSG) -D CLE_SEM=$(CLE_SEM) -D CLE_SHM=$(CLE_SHM)
+CCFLAGS = -Wall -O3 -ansi -pedantic -D _XOPEN_SOURCE -D CLE_MSG=$(CLE_MSG) -D CLE_SEM=$(CLE_SEM) -D CLE_SHM=$(CLE_SHM)
+#-Werror
 CCLIBS =  -lncurses
 
 #

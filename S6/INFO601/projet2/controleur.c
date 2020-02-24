@@ -1,5 +1,5 @@
 #include "ncurses.h"
-#include "constantes.h"
+#include "defines.h"
 #include "fonctionsControleur.h"
 
 int main(int argc, char *argv[]){
@@ -11,11 +11,24 @@ int main(int argc, char *argv[]){
     refresh();
 
 	/* Vérification des dimensions du terminal */
-  	if((COLS < POSX) || (LINES < POSY)) {
+  	if((COLS < COL+5) || (LINES < LINE+5)) {
         ncurses_stopper();
-        fprintf(stderr, "Les dimensions du terminal sont insufisantes : l=%d,h=%d au lieu de l=%d,h=%d\n", COLS, LINES, POSX, POSY);
+        fprintf(stderr, "Les dimensions du terminal sont insufisantes : l=%d,h=%d au lieu de l=%d,h=%d\n", COLS, LINES, COL+5, LINE+5);
         exit(EXIT_FAILURE);
     }
+
+    WINDOW *carte, *bordure;
+    srand(time(NULL));
+    int i=0;
+
+    /*Initialisation des fenêtres*/
+    bordure = newwin(COL+2,LINE+2,0,0);
+    carte = subwin(bordure, COL,LINE,1,1);
+
+    wrefresh(bordure);
+    wrefresh(carte);
+    scrollok()
+    ncurses_stopper();
 
     return EXIT_SUCCESS;
 }

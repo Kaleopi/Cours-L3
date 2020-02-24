@@ -1,9 +1,9 @@
 #ifndef SHMMAP_H
 #define SHMMAP_H
-#include "constantes.h"
+#include "defines.h"
 
 typedef struct{
-    unsigned char carte[LINES][COLS];
+    unsigned char carte[LINE][COL];
 }carte_t;
 
 typedef struct{
