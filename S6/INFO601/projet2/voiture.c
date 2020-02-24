@@ -1,6 +1,7 @@
 #include "constantes.h"
-#include "voiture.h"
+#include "fonctionsVoiture.h"
 
-int main(){
+int main(int argc, char *argv[]){
+
     return EXIT_SUCCESS;
 }

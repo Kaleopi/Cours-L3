@@ -7,6 +7,7 @@
 #include <signal.h>
 #include <ncurses.h>
 #include <errno.h>
+#include <time.h>
 #include <fcntl.h>
 
 #include <sys/types.h>
@@ -21,6 +22,9 @@
 /*Tailles simulation*/
 #define LINES 30
 #define COLS 15
+
+#define POSX 20
+#define POSY 5
 
 /*Clés*/
 #define CLE_MSG 1056

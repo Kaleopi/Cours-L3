@@ -3,7 +3,7 @@
 #
 
 EXEC = voiture controleur
-OBJETS = 
+OBJETS = ncurses.o
 NOM_PROJET = Projet 2 GIGOUT DAUNIQUE
 
 #
@@ -28,7 +28,7 @@ CLE_SHM = 2056
 CLE_SEM = 3056
 CC = gcc
 CCFLAGS = -Wall -O3 -Werror -ansi -pedantic -D _XOPEN_SOURCE -D CLE_MSG=$(CLE_MSG) -D CLE_SEM=$(CLE_SEM) -D CLE_SHM=$(CLE_SHM)
-CCLIBS = 
+CCLIBS =  -lncurses
 
 #
 # REGLES
@@ -89,5 +89,7 @@ archive: clean
 
 # DEPENDANCES
 ncurses.o: ncurses.c ncurses.h
-controleur.o: ncurses.o controleur.c
-voiture.o: voiture.c
+fonctionsVoiture.o: fonctionsVoiture.c fonctionsVoiture.h
+fonctionsControleur.o: fonctionsControleur.c fonctionsControleur.h
+controleur.o: controleur.c ncurses.h fonctionsControleur.h
+voiture.o: voiture.c fonctionsVoiture.h
