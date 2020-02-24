@@ -7,7 +7,8 @@ typedef struct{
 }carte_t;
 
 typedef struct{
-
+    int x;
+    int y;
 }coords_t;
 
 typedef struct{
