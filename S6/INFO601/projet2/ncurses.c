@@ -40,7 +40,7 @@ void ncurses_couleurs() {
   init_pair(0, COLOR_BLACK, COLOR_BLACK);  /*vide*/
   init_pair(1, COLOR_WHITE, COLOR_WHITE);  /*route*/
   init_pair(2, COLOR_GREEN, COLOR_GREEN);  /*voiture*/
-  init_pair(4, COLOR_WHITE, COLOR_BLACK);
+  init_pair(3, COLOR_BLACK, COLOR_CYAN);  /*printw erreur, infos etc*/
 
   }
 

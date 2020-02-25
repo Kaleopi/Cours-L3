@@ -21,8 +21,8 @@
 #include <sys/stat.h>
 
 /*Tailles simulation*/
-#define LINE 30
-#define COL 15
+#define LINE 15
+#define COL 30
 
 #define POSX 0
 #define POSY 0

@@ -1,13 +1,30 @@
+#include "shm_map.h"
 #include "ncurses.h"
-#include "defines.h"
+#include "messages.h"
 #include "fonctionsControleur.h"
+#include "defines.h"
+
+static carte_t carte;
 
 int main(int argc, char *argv[]){
+    int msqid;
+    message_t msg;
+    reponse_t rep;
+    /* Création de la file si elle n'existe pas */
+    if((msqid = msgget((key_t)CLE_MSG, S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
+        if(errno == EEXIST)
+            fprintf(stderr, "Erreur : file (cle=%d) existante\n", CLE_MSG);
+        else
+           perror("Erreur lors de la creation de la file ");
+    exit(EXIT_FAILURE);
+  }
+
+    initialiser_carte(&carte);
     /*Initialisation de ncurses*/
     ncurses_initialiser();
     ncurses_souris();
     ncurses_couleurs();
-    wbkgd(stdscr, COLOR_PAIR(4));
+    wbkgd(stdscr, COLOR_PAIR(3));
     refresh();
 
 	/* Vérification des dimensions du terminal */
@@ -17,25 +34,30 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
     }
 
-    WINDOW *carte, *bordure;
+    WINDOW *sim, *bordure;
     srand(time(NULL));
     int i=0;
 
     /*Initialisation des fenêtres*/
-    bordure = newwin(COL+2,LINE+2,1,0);
+    bordure = newwin(LINE+2,COL+2,1,0);
     box(bordure, 0,0);
-    carte = subwin(bordure, COL,LINE,2,1);
+    sim = subwin(bordure,LINE+1,COL,2,1);
+    scrollok(sim,TRUE);
+
+    charger_carte("reims.bin", bordure, sim, &carte);
+    /* afficher_carte(&carte);*/
 
     wrefresh(bordure);
-    wrefresh(carte);
-    scrollok(carte,TRUE);
+    wrefresh(sim);
     printw("Pressez F2 pour quitter...");
     while((i = getch()) != KEY_F(2)){
+        if(msgrcv(msqid, &msg, sizeof(message_t) - sizeof(long), IPC_NOWAIT)){
 
+        }
     };
-    delwin(carte);
+    delwin(sim);
     delwin(bordure);
     ncurses_stopper();
 
-    return EXIT_SUCCESS;
+    exit(EXIT_SUCCESS);
 }

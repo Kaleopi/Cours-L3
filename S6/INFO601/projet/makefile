@@ -2,9 +2,9 @@
 # CONFIGURATION GENERALE
 #
 
-EXEC = voiture controleur
-OBJETS = ncurses.o shm_map.o fonctionsControleur.o fonctionsVoiture.o
-NOM_PROJET = Projet 2 GIGOUT DAUNIQUE
+EXEC = controleur voiture
+OBJETS = 
+NOM_PROJET = file
 
 #
 # SUFFIXES
@@ -24,12 +24,9 @@ OBJETS_O = $(OBJETS) $(EXEC_O)
 #
 
 CLE_MSG = 1056
-CLE_SHM = 2056
-CLE_SEM = 3056
 CC = gcc
-CCFLAGS = -Wall -O3 -ansi -pedantic -D _XOPEN_SOURCE -D CLE_MSG=$(CLE_MSG) -D CLE_SEM=$(CLE_SEM) -D CLE_SHM=$(CLE_SHM)
-#-Werror
-CCLIBS =  -lncurses
+CCFLAGS = -Wall -O3 -Werror -ansi -pedantic -D _XOPEN_SOURCE -D CLE=$(CLE_MSG)
+CCLIBS = 
 
 #
 # REGLES
@@ -63,7 +60,7 @@ clean:
 
 cleanIPC:
 	@echo "Suppression de la file de messages..."
-	@ipcrm -Q $(CLE_MSG) -M $(CLE_SHM) -S $(CLE_SEM)
+	@ipcrm -Q $(CLE_MSG)
 	@echo "File supprimée."
 
 depend:
@@ -89,9 +86,5 @@ archive: clean
 	@echo "Termine."
 
 # DEPENDANCES
-shm_map.o: shm_map.c shm_map.h
-ncurses.o: ncurses.c ncurses.h
-fonctionsVoiture.o: fonctionsVoiture.c fonctionsVoiture.h
-fonctionsControleur.o: fonctionsControleur.c fonctionsControleur.h
-controleur.o: controleur.c ncurses.h shm_map.h fonctionsControleur.h
-voiture.o: voiture.c fonctionsVoiture.h
+controleur.o: controleur.c structures.h
+voiture.o: voiture.c structures.h

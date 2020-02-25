@@ -7,14 +7,24 @@ typedef struct{
 }carte_t;
 
 typedef struct{
+    int num_voiture;
     int x;
     int y;
-}coords_t;
+}voiture_t;
+
 
 typedef struct{
+    unsigned char *L;
+    unsigned char *H;
     carte_t *carte;
-    coords_t *coords;
+    voiture_t *voitures;
 }shmmap_t;
 
+/*
+ * Initialise la carte passée en paramètre à '0'
+ */
+void initialiser_carte(carte_t *);
+
 #endif /*SHMMAP_H*/
+
  

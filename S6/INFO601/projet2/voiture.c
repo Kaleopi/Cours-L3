@@ -1,7 +1,8 @@
-#include "defines.h"
 #include "fonctionsVoiture.h"
+#include "messages.h"
+#include "defines.h"
 
 int main(int argc, char *argv[]){
 
-    return EXIT_SUCCESS;
+    exit(EXIT_SUCCESS);
 }
