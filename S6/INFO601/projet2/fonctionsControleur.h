@@ -5,3 +5,4 @@
 
 void charger_carte(char *, WINDOW *, WINDOW *, carte_t *);
 void afficher_carte(carte_t *);
+int creer_file();

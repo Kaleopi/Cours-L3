@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 199309L
+
 #include "shm_map.h"
 #include "ncurses.h"
 #include "messages.h"
@@ -5,19 +7,33 @@
 #include "defines.h"
 
 static carte_t carte;
+short sigintRecu = 0;
+
+void handler(int signum){
+  if(signum == SIGINT) sigintRecu = 1;
+}
 
 int main(int argc, char *argv[]){
+    /*declarations de variables*/
     int msqid;
+    int i;
+    int voitures_i = 0;
+
+    key_t cle_msg = CLE_MSG;
+    key_t cle_sem = CLE_SEM;
+    key_t cle_shm = CLE_SHM;
+    pid_t tab_pid[MAX_VOITURES];
     message_t msg;
     reponse_t rep;
+
+    struct sigaction sa;
+    sa.sa_handler = handler;
+    sa.sa_flags = 0;
+
+    sigaction(SIGINT, &sa, NULL);
+
     /* Création de la file si elle n'existe pas */
-    if((msqid = msgget((key_t)CLE_MSG, S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
-        if(errno == EEXIST)
-            fprintf(stderr, "Erreur : file (cle=%d) existante\n", CLE_MSG);
-        else
-           perror("Erreur lors de la creation de la file ");
-    exit(EXIT_FAILURE);
-  }
+    msqid = creer_file();
 
     initialiser_carte(&carte);
     /*Initialisation de ncurses*/
@@ -35,8 +51,6 @@ int main(int argc, char *argv[]){
     }
 
     WINDOW *sim, *bordure;
-    srand(time(NULL));
-    int i=0;
 
     /*Initialisation des fenêtres*/
     bordure = newwin(LINE+2,COL+2,1,0);
@@ -51,9 +65,7 @@ int main(int argc, char *argv[]){
     wrefresh(sim);
     printw("Pressez F2 pour quitter...");
     while((i = getch()) != KEY_F(2)){
-        if(msgrcv(msqid, &msg, sizeof(message_t) - sizeof(long), IPC_NOWAIT)){
-
-        }
+        
     };
     delwin(sim);
     delwin(bordure);

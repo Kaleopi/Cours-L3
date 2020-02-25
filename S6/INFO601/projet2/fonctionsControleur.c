@@ -68,3 +68,15 @@ void afficher_carte(carte_t *carte){
         printf("\n");
     }
 }
+
+int creer_file(key_t cle_msg){
+    int msqid;
+    if((msqid = msgget(cle_msg, S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
+        if(errno == EEXIST)
+            fprintf(stderr, "Erreur : file (cle=%d) existante\n", CLE_MSG);
+        else
+           perror("Erreur lors de la creation de la file ");
+    exit(EXIT_FAILURE);
+  }
+  return msqid;
+}

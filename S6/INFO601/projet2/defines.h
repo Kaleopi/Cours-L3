@@ -24,8 +24,7 @@
 #define LINE 15
 #define COL 30
 
-#define POSX 0
-#define POSY 0
+#define MAX_VOITURES 10
 
 /*Clés*/
 #define CLE_MSG 1056

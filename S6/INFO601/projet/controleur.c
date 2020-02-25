@@ -73,7 +73,8 @@ int main() {
 
   for(i=0; i<cpt_voitures; i++){
     printf("CONTROLEUR : envoie signal arrêt au processus %d\n", pids[i]);
-    sigqueue(pids[i], SIGRTMIN, messageArret);
+    sigqueue(pids[i], SIGRTMIN, messageArret)
+    /*kill(pid_t, int signal)*/
   }
 
   /* Suppression de la file */

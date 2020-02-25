@@ -12,7 +12,6 @@ typedef struct{
     int y;
 }voiture_t;
 
-
 typedef struct{
     unsigned char *L;
     unsigned char *H;
