@@ -7,7 +7,7 @@
 typedef struct {
     long type;
     pid_t pid;
- }message_t;
+ }requete_t;
 
 typedef struct {
     long type;

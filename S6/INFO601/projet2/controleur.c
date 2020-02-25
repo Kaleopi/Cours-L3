@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
     key_t cle_sem = CLE_SEM;
     key_t cle_shm = CLE_SHM;
     pid_t tab_pid[MAX_VOITURES];
-    message_t msg;
+    requete_t req;
     reponse_t rep;
 
     struct sigaction sa;
@@ -65,7 +65,9 @@ int main(int argc, char *argv[]){
     wrefresh(sim);
     printw("Pressez F2 pour quitter...");
     while((i = getch()) != KEY_F(2)){
-        
+        while(!sigintRecu){
+            
+        }
     };
     delwin(sim);
     delwin(bordure);
