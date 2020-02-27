@@ -32,3 +32,9 @@
 #define CLE_SEM 3056
 
 #endif /*CONSTANTES_H*/
+
+/**
+ * 
+ * @param 
+ * @return 
+ */

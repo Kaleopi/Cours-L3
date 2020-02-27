@@ -1,5 +1,13 @@
 #include "fonctionsControleur.h"
 
+/**
+ * Ouvre la carte passée en paramètres pour l'appliquer au ncurses
+ * @param nom_fichier nom du fichier .bin qui contient les infos de la carte
+ * @param bordure WINDOW ncurses de la bordure (pour le titre)
+ * @param sim WINDOW ncurses pour la fenêtre en elle même
+ * @param carte carte du segment partagé à remplir avec les infos du fichier
+ * @return void
+ */
 void charger_carte(char *nom_fichier, WINDOW * bordure, WINDOW * sim, carte_t *carte){
     int i = 0, fd, j = 0, v = 0;
     size_t taille;
@@ -9,7 +17,10 @@ void charger_carte(char *nom_fichier, WINDOW * bordure, WINDOW * sim, carte_t *c
 
     /* ouverture du fichier */
     if((fd = open(nom_fichier, O_RDONLY)) == -1){
-        printw("Erreur lors de l'ouverture du fichier \"%s\"", strerror(errno));
+        printf("Erreur lors de l'ouverture du fichier \"%s\"\n", strerror(errno));
+        delwin(sim);
+        delwin(bordure);
+        ncurses_stopper();
         exit(EXIT_FAILURE);
     }
 
@@ -58,6 +69,11 @@ void charger_carte(char *nom_fichier, WINDOW * bordure, WINDOW * sim, carte_t *c
     }
 }
 
+/**
+ * affiche la carte du segment partagé
+ * @param carte carte_t du segment partagé
+ * @return affichage
+ */
 void afficher_carte(carte_t *carte){
     int i;
     int j;
@@ -69,14 +85,23 @@ void afficher_carte(carte_t *carte){
     }
 }
 
+/**
+ * 
+ * @param cle_msg
+ * @return identifiant de la file de messages associée à la clé cle_msg.
+ */
 int creer_file(key_t cle_msg){
     int msqid;
     if((msqid = msgget(cle_msg, S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
         if(errno == EEXIST)
-            fprintf(stderr, "Erreur : file (cle=%d) existante\n", CLE_MSG);
+            fprintf(stderr, "Erreur : file (cle=%d) existante\n", cle_msg);
         else
            perror("Erreur lors de la creation de la file ");
     exit(EXIT_FAILURE);
   }
   return msqid;
+}
+
+void error_args(){
+    printf("[ERROR ARGS]\n\t./controleur nomFichier.bin nbVoitureMax KEY_MSG KEY_SHM KEY_SEM\n\t\tnomFichier.bin : nom du fichier contenant les informations de la carte\n\t\tnbVoitureMax : nombre maximum de voitures\n\t\tKEY_MSG : clé de la file de messages\n\t\tKEY_SHM : clé de la mémoire partagée\n\t\tKEY_SEM : clé du tableau de sémaphores\n\nExemple d'utilisation : \n\t./controleur reims.bin 10 1056 2056 3056\n");
 }

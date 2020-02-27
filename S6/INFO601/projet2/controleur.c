@@ -9,20 +9,34 @@
 static carte_t carte;
 short sigintRecu = 0;
 
+/**
+ * Écoute la réception d'un signal
+ * @param signum le signal à écouter
+ * @return void
+ */
 void handler(int signum){
   if(signum == SIGINT) sigintRecu = 1;
 }
 
+/**
+ * Programme principal du contrôleur 
+ * @param argv[1] nom_fichier.bin
+ * @param argv[2] nombre maximum de voitures
+ * @param argv[3] cle file de message
+ * @param argv[4] cle mémoire partagée
+ * @param argv[5] cle tableau de sémaphore
+ */
 int main(int argc, char *argv[]){
     /*declarations de variables*/
     int msqid;
     int i;
-    int voitures_i = 0;
-
-    key_t cle_msg = CLE_MSG;
-    key_t cle_sem = CLE_SEM;
-    key_t cle_shm = CLE_SHM;
-    pid_t tab_pid[MAX_VOITURES];
+    int voitures_i;
+    int nbMaxVoitures;
+    char *nom_fichier;
+    key_t cle_msg;
+    key_t cle_sem;
+    key_t cle_shm;
+    pid_t *tab_pid;
     requete_t req;
     reponse_t rep;
 
@@ -32,8 +46,21 @@ int main(int argc, char *argv[]){
 
     sigaction(SIGINT, &sa, NULL);
 
+    voitures_i = 0;
+    if(argc==6){
+        nom_fichier = argv[1];
+        nbMaxVoitures = atoi(argv[2]);
+        cle_msg = atoi(argv[3]);
+        cle_shm = atoi(argv[4]);
+        cle_sem = atoi(argv[5]);
+    }
+    else{
+        error_args();
+        exit(EXIT_FAILURE);
+    }
+
     /* Création de la file si elle n'existe pas */
-    msqid = creer_file();
+    msqid = creer_file(cle_msg);
 
     initialiser_carte(&carte);
     /*Initialisation de ncurses*/
@@ -58,12 +85,13 @@ int main(int argc, char *argv[]){
     sim = subwin(bordure,LINE+1,COL,2,1);
     scrollok(sim,TRUE);
 
-    charger_carte("reims.bin", bordure, sim, &carte);
+    charger_carte(nom_fichier, bordure, sim, &carte);
     /* afficher_carte(&carte);*/
 
     wrefresh(bordure);
     wrefresh(sim);
     printw("Pressez F2 pour quitter...");
+    /*à inverser */
     while((i = getch()) != KEY_F(2)){
         while(!sigintRecu){
             

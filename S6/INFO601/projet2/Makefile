@@ -63,7 +63,9 @@ clean:
 
 cleanIPC:
 	@echo "Suppression de la file de messages..."
-	@ipcrm -Q $(CLE_MSG) -M $(CLE_SHM) -S $(CLE_SEM)
+	@ipcrm -Q $(CLE_MSG)
+	@ipcrm -M $(CLE_SHM) 
+	@ipcrm -S $(CLE_SEM)
 	@echo "File supprimée."
 
 depend:
