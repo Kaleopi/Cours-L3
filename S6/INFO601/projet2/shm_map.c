@@ -22,6 +22,10 @@ void initialiser_carte(carte_t *carte){
 
 
 // Création du sémaphore;
+//penser à passer la grille en param 
+//penser à passer la window
+//penser à vérifier les coords
+//
 
 int semid;
 struct sembuf op;
@@ -41,7 +45,7 @@ void * job_voiture(void * args) {
         attente(op);
 		// On attend la disponibilité du sémaphore
         if(semop(semid, &op, 1) == -1) {
-         perror("Erreur lors de l'opération sur le sémaphore ");
+         perror("Erreur lors de l'opération op sur le sémaphore ");
          exit(EXIT_FAILURE);
         }else{
         //choix de la direction  
@@ -69,13 +73,22 @@ void * job_voiture(void * args) {
                 break;
         }
         //attente
-		sem_wait(&op);
+		if(sem_wait(&op) == -1){
+         perror("Erreur lors de l'opération wait sur le sémaphore ");
+         exit(EXIT_FAILURE);
+        }
 		// Section critique
 		printf("Je suis la voiture [%i] et je vais dormir \n", tid);
-		sleepnano(tim,time2);
+		if (sleepnano(tim,time2) == -1) {
+         perror("Erreur lors de l'opération sur le sémaphore ");
+         exit(EXIT_FAILURE);
+        }
 		printf("Je suis le voiture [%i] et j'ai fini ma sieste\n", tid);
 		// On relache le sémaphore
-		liberation(op);
+		if (liberation(op) == -1) {
+         perror("Erreur lors de la liberation sur le sémaphore ");
+         exit(EXIT_FAILURE);
+        };
 		i++;
         }
 	}
