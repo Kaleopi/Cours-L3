@@ -161,7 +161,7 @@ void *semaphore_serveur(void*arg){
 //libere le semaphore
 int  liberation(void *arg){
     int retour;
-    printf("Serveur : libération du semaphore Sn -> V(Sn)\n");
+    printf(" libération du semaphore Sn -> V(Sn)\n");
     op.sem_num = 0;
     op.sem_op = 1;
     op.sem_flg = 0;
@@ -175,7 +175,7 @@ int  liberation(void *arg){
 //se met en attente du semaphore puis fait l'action
 int attente(void *arg){
     int retour;
-    printf("Serveur : attente du sémaphore Sn -> P(Sn)\n");
+    printf("  attente du sémaphore Sn -> P(Sn)\n");
     op.sem_num = 1;
     op.sem_op = -1;
     op.sem_flg = 0;
@@ -219,6 +219,10 @@ int sleepnano(timespec tim, timespec time){
    return 0;
 }
 
+////
+///A intégrer au serveur
+///ENSUITE tu fais des files de messages
+////
 // int main() {
 // 	// Création d'un tableau de thread
 // 	pthread_t threads[NB_THREAD];
