@@ -49,19 +49,23 @@ void * job_voiture(void * args) {
         randomValue = rand() % N;
         // 
         //manque les arguments des to something
+        //à parametrer 
         //
         switch( randomValue ){
             case 0:
-                toLeft();
+                toLeft(WINDOW* simulation, int* row, int* col, int* carte);
                 break;
             case 1:
-                toRight();
+                toRight(WINDOW* simulation, int* row, int* col, int* carte);
                 break;
             case 2 :
-                toUp();
+                toUp(WINDOW* simulation, int* row, int* col, int* carte);
                 break;
             case 3 :
-                toDown();
+                toDown(WINDOW* simulation, int* row, int* col, int* carte);
+                break;
+            default:
+                printf("plop");
                 break;
         }
         //attente
