@@ -4,7 +4,7 @@
 
 #define NB_THREAD 4
 #define LIMIT 2
-#define N 4
+#define N 3
 
 /**
  * initialise la carte du segment partagé à '0'
@@ -45,7 +45,6 @@ int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t taille, 
     strcpy(segment->titre, titre);
     segment->shmid = shmid;
     segment->addr = shmat(shmid, NULL,0);
-    segment->carte = 
     return shmid;
 }
 
@@ -152,7 +151,7 @@ void * job_voiture(void * args) {
         //manque les arguments des to something
         //à parametrer 
         //
-        switch( randomValue ){
+        switch(randomValue){
             case 0:
                 toLeft(WINDOW* simulation, int *row, int* col, int* carte);
                 break;
@@ -167,21 +166,21 @@ void * job_voiture(void * args) {
                 break;
             default:
                 printf("plop");
-                break;
+            break;
         }
-        //attente
-		if(sem_wait(&op) == -1){
-         perror("Erreur lors de l'opération wait sur le sémaphore ");
-         exit(EXIT_FAILURE);
+        /*attente*/
+		if(sem_wait(&op)==-1){
+            perror("Erreur lors de l'opération wait sur le sémaphore ");
+            exit(EXIT_FAILURE);
         }
-		// Section critique
+		/*Section critique*/
 		printf("Je suis la voiture [%i] et je vais dormir \n", tid);
 		if (sleepnano(tim,time2) == -1) {
-         perror("Erreur lors de l'opération sur le sémaphore ");
-         exit(EXIT_FAILURE);
+            perror("Erreur lors de l'opération sur le sémaphore ");
+            exit(EXIT_FAILURE);
         }
 		printf("Je suis le voiture [%i] et j'ai fini ma sieste\n", tid);
-		// On relache le sémaphore
+		/*On relache le sémaphore*/
 		if (liberation(op) == -1) {
          perror("Erreur lors de la liberation sur le sémaphore ");
          exit(EXIT_FAILURE);
@@ -248,28 +247,9 @@ void toDown(WINDOW* simulation, int* row, int* col, int* mat){
 	wattroff(simulation, COLOR_PAIR(1));
 }
 
-//initialise le tableau de semaphore du serveur
-void *semaphore_serveur(void*arg){
-    int semid;
-    unsigned short val[2] = {0, 0};
-    struct sembuf op;
 
-  /* Création du tableau de sémaphore */
-  if((semid = semget((key_t)CLE, 2, S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
-    if(errno == EEXIST)
-      fprintf(stderr, "Tableau de sémaphores (cle=%d) existant\n", CLE);
-    else
-      perror("Erreur lors de la création du tableau de sémaphores ");
-    exit(EXIT_FAILURE);
-  }
-    if(semctl(semid, 0, SETALL, val) == -1) {
-    perror("Erreur lors de l'initialisation des sémaphores ");
-    exit(EXIT_FAILURE);
-  }
-
-}
 //libere le semaphore
-int  liberation(void *arg){
+int  liberation(struct sembuf op){
     int retour;
     printf(" libération du semaphore Sn -> V(Sn)\n");
     op.sem_num = 0;
@@ -283,7 +263,7 @@ int  liberation(void *arg){
     return retour;
 }
 //se met en attente du semaphore puis fait l'action
-int attente(void *arg){
+int attente(vstruct sembuf opoid *arg){
     int retour;
     printf("  attente du sémaphore Sn -> P(Sn)\n");
     op.sem_num = 1;
@@ -297,7 +277,7 @@ int attente(void *arg){
     return retour;
 }
 
-void* suppression(void *arg){
+void* suppression(struct sembuf op){
      int semid;
 
   /* Récupération du tableau de sémaphores */
@@ -317,38 +297,184 @@ void* suppression(void *arg){
   return EXIT_SUCCESS;
 }
 
-int sleepnano(timespec tim, timespec time){
-   if(nanosleep(&tim , &time) < 0 )   
-   {
-      printf("Failed \n");
-      return -1;
-   }
 
-   printf("Sleep\n");
 
-   return 0;
+// Création du sémaphore;
+//penser à passer la grille en param 
+//penser à passer la window
+//penser à vérifier les coords
+//
+
+int semid;
+struct sembuf op;
+
+void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
+	// Récupération de l'identifiant du thread
+	int i = 0;
+    int booleen=-1;
+    if((semid = semget((key_t)CLE, 0, 0)) == -1) {
+    perror("Erreur lors de la récupération du tableau de sémaphores ");
+    exit(EXIT_FAILURE);
+    }
+	while (i < LIMIT) {
+        attente(op);
+		// On attend la disponibilité du sémaphore
+        if(semop(semid, &op, 1) == -1) {
+         perror("Erreur lors de l'opération op sur le sémaphore ");
+         exit(EXIT_FAILURE);
+        }else{
+        //choix de la direction  
+        int randomValue;
+
+        // 
+        //déplacement
+        //
+        //
+ 
+        switch(cardinal){
+            case 0:
+                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
+                    toLeft(WINDOW* simulation, v->x, v->y, int* carte);
+                }else{
+                    while(booleen!=1){
+                        randomValue = rand() % N;
+                        switch(randomValue){
+                            case 0:
+                                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
+                                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
+                                booleen=1
+                                }
+                            break;
+                            case 1:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
+                                  toUp(WINDOW* simulation, v.x, v.y, int* carte);
+                                  booleen=1;
+                                }
+                            break;
+                            case 2:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
+                                     toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                                     booleen=1;
+                                }
+                            break;
+                        }
+                    }
+                    booleen=-1;
+                }
+                break;
+            case 1:
+                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
+                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
+                }
+                else{
+                     while(booleen!=1){
+                        randomValue = rand() % N;
+                        switch(randomValue){
+                            case 0:
+                                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
+                                    toLeft(WINDOW* simulation, v.x, v.y, int* carte);
+                                booleen=1
+                                }
+                            break;
+                            case 1:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
+                                  toUp(WINDOW* simulation, v.x, v.y, int* carte);
+                                  booleen=1;
+                                }
+                            break;
+                            case 2:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
+                                     toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                                     booleen=1;
+                                }
+                            break;
+                        }
+                    }
+                     booleen=-1;
+                }
+                break;
+            case 2 :
+                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
+                    toUp(WINDOW* simulation, v.x, v.y, int* carte);
+                }
+                else{
+                     while(booleen!=1){
+                        randomValue = rand() % N;
+                        switch(randomValue){
+                            case 0:
+                                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
+                                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
+                                booleen=1
+                                }
+                            break;
+                            case 1:
+                                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
+                                  toLeft(WINDOW* simulation, v.x, v.y, int* carte);
+                                  booleen=1;
+                                }
+                            break;
+                            case 2:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
+                                    toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                                booleen=1;
+                                }
+                            break;
+                        }
+                    }
+                     booleen=-1;
+                }
+                break;
+            case 3 :
+                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
+                    toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                }else{
+                     while(booleen!=1){
+                        randomValue = rand() % N;
+                        switch(randomValue){
+                            case 0:
+                                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
+                                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
+                                booleen=1
+                                }
+                            break;
+                            case 1:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
+                                  toUp(WINDOW* simulation, v.x, v.y, int* carte);
+                                  booleen=1;
+                                }
+                            break;
+                            case 2:
+                                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
+                                     toLeft(WINDOW* simulation, v.x, v.y, int* carte);
+                                     booleen=1;
+                                }
+                            break;
+                        }
+                    }
+                     booleen=-1;
+                }
+                break;
+            default:
+                printf("plop");
+                break;
+            }
+        
+      
+		// Section critique
+		printf(" je vais dormir \n");
+		if (sleepnano(tim,time2) == -1) {
+         perror("Erreur lors de l'opération sur le sémaphore ");
+         exit(EXIT_FAILURE);
+        }
+		printf(" j'ai fini ma sieste\n");
+		// On relache le sémaphore
+		if (liberation(op) == -1) {
+         perror("Erreur lors de la liberation sur le sémaphore ");
+         exit(EXIT_FAILURE);
+        }
+        }
+        
+	}
+	pthread_exit(EXIT_SUCCESS);
+
 }
-
-////
-///A intégrer au serveur
-///ENSUITE tu fais des files de messages
-////
-// int main() {
-// 	// Création d'un tableau de thread
-// 	pthread_t threads[NB_THREAD];
-// 	// Initialisation du sémaphore
-// 	sem_init(&semaphore, PTHREAD_PROCESS_SHARED, 1);
-// 	for (int i = 0; i < NB_THREAD; i++) {
-// 		int err;
-// 		if ((err = pthread_create(&threads[i], NULL, job_semaphore, NULL)) != 0) {
-// 			printf("Echec de la création du thread: [%s]", strerror(err));
-// 			return EXIT_FAILURE;;
-// 		}
-// 		printf("Création du thread numéro %i\n", i);
-// 	}
-// 	for (int i = 0; i < NB_THREAD; i++) {
-// 		pthread_join(threads[i], NULL);
-// 	}
-// 	sem_destroy(&semaphore);
-// 	return EXIT_SUCCESS;
-// }

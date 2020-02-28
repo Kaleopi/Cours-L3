@@ -39,14 +39,37 @@ int main(int argc, char *argv[]){
     requete_t req;
     reponse_t rep;
     WINDOW *sim, *bordure;
+    int semid;
 
     sa.sa_handler = handler;
 
     sa.sa_flags = 0;
     voitures_i = 0;
+    //semaphore
+    unsigned short val[2];
+    val[0] = 0;
+    val[1] = 0;
+    struct sembuf op;
 
+  
     sigaction(SIGINT, &sa, NULL);
+    
+    /* Création du tableau de sémaphore */
+    if((semid = semget(cle_sem, 2, S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
+        if(errno == EEXIST)
+        fprintf(stderr, "Tableau de sémaphores (cle=%d) existant\n", cle_sem);
+        else
+        perror("Erreur lors de la création du tableau de sémaphores ");
+        exit(EXIT_FAILURE);
+    }
 
+    /* Initialisation des sémaphores */
+    if(semctl(semid, 0, SETALL, val) == -1) {
+        perror("Erreur lors de l'initialisation des sémaphores ");
+        exit(EXIT_FAILURE);
+    }
+    
+    voitures_i = 0;
     if(argc==6){
         nom_fichier = argv[1];
         nbMaxVoitures = atoi(argv[2]);

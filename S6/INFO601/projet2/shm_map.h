@@ -23,6 +23,7 @@ typedef struct{
 
 void initialiser_carte(carte_t *);
 int creer_segment(shmmap_t*, key_t, char*, size_t, int);
+void charger_carte(char *nom_fichier, WINDOW * bordure, WINDOW * sim, carte_t *carte, size_t taille);
 
 #endif /*SHMMAP_H*/
 

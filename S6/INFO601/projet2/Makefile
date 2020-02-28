@@ -23,6 +23,9 @@ OBJETS_O = $(OBJETS) $(EXEC_O)
 # ARGUMENTS ET COMPILATEUR
 #
 
+CONFIG = 1
+STOP=-1
+DEPLACEMENT=2
 CC = gcc
 CCFLAGS = -Wall -O3 -ansi -pedantic -D _XOPEN_SOURCE
 #-Werror
