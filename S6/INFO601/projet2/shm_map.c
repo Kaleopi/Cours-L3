@@ -20,7 +20,7 @@ void initialiser_carte(carte_t *carte){
     }
 }
 
-//Deplacement a gauche
+/*Deplacement a gauche*/
 void toLeft(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
@@ -34,7 +34,7 @@ void toLeft(WINDOW* simulation, int* row, int* col, int* mat){
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
-//deplacement a droite
+/*deplacement a droite*/
 void toRight(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
@@ -48,7 +48,7 @@ void toRight(WINDOW* simulation, int* row, int* col, int* mat){
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
-//deplacement en haut
+/*deplacement en haut*/
 void toUp(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
@@ -62,7 +62,7 @@ void toUp(WINDOW* simulation, int* row, int* col, int* mat){
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
-//deplacement en bas 
+/*deplacement en bas */
 void toDown(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
@@ -78,7 +78,7 @@ void toDown(WINDOW* simulation, int* row, int* col, int* mat){
 }
 
 
-//libere le semaphore
+/*libere le semaphore*/
 int  liberation(struct sembuf op){
     int retour;
     printf(" libération du semaphore Sn -> V(Sn)\n");
@@ -92,7 +92,7 @@ int  liberation(struct sembuf op){
     retour =semop(semid, &op, 1);
     return retour;
 }
-//se met en attente du semaphore puis fait l'action
+/*se met en attente du semaphore puis fait l'action*/
 int attente(vstruct sembuf opoid *arg){
     int retour;
     printf("  attente du sémaphore Sn -> P(Sn)\n");
@@ -129,17 +129,17 @@ void* suppression(struct sembuf op){
 
 
 
-// Création du sémaphore;
-//penser à passer la grille en param 
-//penser à passer la window
-//penser à vérifier les coords
-//
+/* Création du sémaphore;*/
+/*penser à passer la grille en param */
+/*penser à passer la window*/
+/*penser à vérifier les coords*/
+/**/
 
 int semid;
 struct sembuf op;
 
 void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
-	// Récupération de l'identifiant du thread
+	/* Récupération de l'identifiant du thread*/
 	int i = 0;
     int booleen=-1;
     if((semid = semget((key_t)CLE, 0, 0)) == -1) {
@@ -148,18 +148,18 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
     }
 	while (i < LIMIT) {
         attente(op);
-		// On attend la disponibilité du sémaphore
+		/* On attend la disponibilité du sémaphore*/
         if(semop(semid, &op, 1) == -1) {
          perror("Erreur lors de l'opération op sur le sémaphore ");
          exit(EXIT_FAILURE);
         }else{
-        //choix de la direction  
+        /*choix de la direction  */
         int randomValue;
 
-        // 
-        //déplacement
-        //
-        //
+        /* */
+        /*déplacement*/
+        /**/
+        /**/
  
         switch(cardinal){
             case 0:
@@ -279,14 +279,14 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
             }
         
       
-		// Section critique
+		/* Section critique*/
 		printf(" je vais dormir \n");
 		if (sleepnano(tim,time2) == -1) {
          perror("Erreur lors de l'opération sur le sémaphore ");
          exit(EXIT_FAILURE);
         }
 		printf(" j'ai fini ma sieste\n");
-		// On relache le sémaphore
+		/* On relache le sémaphore*/
 		if (liberation(op) == -1) {
          perror("Erreur lors de la liberation sur le sémaphore ");
          exit(EXIT_FAILURE);
