@@ -1,5 +1,3 @@
-#define _POSIX_C_SOURCE 199309L
-
 #include "shm_map.h"
 #include "ncurses.h"
 #include "messages.h"
@@ -31,7 +29,6 @@ int main(int argc, char *argv[]){
     int msqid, shmid, i, voitures_i, nbMaxVoitures;
     char *nom_fichier;
     struct sigaction sa;
-    union sigval sigval;
     shmmap_t segment;
     size_t taille_titre;
     key_t cle_msg, cle_sem, cle_shm;
@@ -40,35 +37,17 @@ int main(int argc, char *argv[]){
     reponse_t rep;
     WINDOW *sim, *bordure;
     int semid;
+    unsigned short val[2];
+    /*struct sembuf op;*/
 
     sa.sa_handler = handler;
 
     sa.sa_flags = 0;
     voitures_i = 0;
-    //semaphore
-    unsigned short val[2];
     val[0] = 0;
     val[1] = 0;
-    struct sembuf op;
-
   
     sigaction(SIGINT, &sa, NULL);
-    
-    /* Création du tableau de sémaphore */
-    if((semid = semget(cle_sem, 2, S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
-        if(errno == EEXIST)
-        fprintf(stderr, "Tableau de sémaphores (cle=%d) existant\n", cle_sem);
-        else
-        perror("Erreur lors de la création du tableau de sémaphores ");
-        exit(EXIT_FAILURE);
-    }
-
-    /* Initialisation des sémaphores */
-    if(semctl(semid, 0, SETALL, val) == -1) {
-        perror("Erreur lors de l'initialisation des sémaphores ");
-        exit(EXIT_FAILURE);
-    }
-    
     voitures_i = 0;
     if(argc==6){
         nom_fichier = argv[1];
@@ -85,11 +64,28 @@ int main(int argc, char *argv[]){
         error_args();
         exit(EXIT_FAILURE);
     }
+    
+    /* Création du tableau de sémaphore */
+    if((semid = semget(cle_sem, 2, S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
+        if(errno == EEXIST)
+        fprintf(stderr, "Tableau de sémaphores (cle=%d) existant\n", cle_sem);
+        else
+        perror("Erreur lors de la création du tableau de sémaphores ");
+        exit(EXIT_FAILURE);
+    }
+
+    /* Initialisation des sémaphores */
+    if(semctl(semid, 0, SETALL, val) == -1) {
+        perror("Erreur lors de l'initialisation des sémaphores ");
+        exit(EXIT_FAILURE);
+    }
+    
 
     /* Création de la file si elle n'existe pas */
     msqid = creer_file(cle_msg);
     /* Création du segment */
-    shmid = creer_segment(&segment, cle_shm, nom_fichier, taille_titre, nbMaxVoitures);
+    shmid = creer_segment(&segment, cle_shm, nom_fichier, &taille_titre, nbMaxVoitures);
+    printf("%d",shmid);
 
     initialiser_carte(&carte);
     /*Initialisation de ncurses*/
@@ -106,8 +102,6 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
     }
 
-
-
     /*Initialisation des fenêtres*/
     bordure = newwin(LINE+2,COL+2,1,0);
     box(bordure, 0,0);
@@ -120,7 +114,6 @@ int main(int argc, char *argv[]){
     wrefresh(bordure);
     wrefresh(sim);
     printw("Pressez F2 pour quitter...");
-    /*à inverser */
     while((!sigintRecu) && (i=getch()!=KEY_F(2))){
         printf("CONTROLEUR : en attente d'une requête\n");
         if((msgrcv(msqid , &req, sizeof(requete_t)-sizeof(long), -2, 0)==-1) && !sigintRecu){

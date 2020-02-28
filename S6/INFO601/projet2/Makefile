@@ -3,7 +3,7 @@
 #
 
 EXEC = voiture controleur
-OBJETS = ncurses.o shm_map.o fonctionsControleur.o fonctionsVoiture.o
+OBJETS = ncurses.o shm_map.o fonctionsControleur.o
 NOM_PROJET = Projet 2 GIGOUT DAUNIQUE
 
 #
@@ -23,12 +23,10 @@ OBJETS_O = $(OBJETS) $(EXEC_O)
 # ARGUMENTS ET COMPILATEUR
 #
 
-CONFIG = 1
 STOP=-1
-DEPLACEMENT=2
 CC = gcc
-CCFLAGS = -Wall -O3 -ansi -pedantic -D _XOPEN_SOURCE
-#-Werror
+CCFLAGS = -Wall -Werror -O3 -ansi -pedantic -D _XOPEN_SOURCE
+
 CCLIBS =  -lncurses
 
 #
@@ -60,6 +58,13 @@ clean:
 	@rm -f $(EXEC)
 	@rm -f dependances
 	@echo "Terminé."
+	
+cleanIPC: 
+	@echo "Suppression des ipcs..."
+	@ipcrm -Q 1056
+	@ipcrm -S 3056
+	@ipcrm -M 2056
+	@echo "Suppression ipcs terminée..."
 
 depend:
 	@echo "Création des dépendances..."
@@ -86,7 +91,6 @@ archive: clean
 # DEPENDANCES
 shm_map.o: shm_map.c shm_map.h
 ncurses.o: ncurses.c ncurses.h
-fonctionsVoiture.o: fonctionsVoiture.c fonctionsVoiture.h
 fonctionsControleur.o: fonctionsControleur.c fonctionsControleur.h
 controleur.o: controleur.c ncurses.h shm_map.h fonctionsControleur.h
-voiture.o: voiture.c fonctionsVoiture.h
+voiture.o: voiture.c 

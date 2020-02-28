@@ -1,6 +1,6 @@
-#ifndef CONSTANTES_H
-#define CONSTANTES_H
-
+#ifndef DEFINES_H
+#define DEFINES_H
+#define _POSIX_C_SOURCE 199309L
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -32,10 +32,4 @@
 #define CLE_SHM 2056
 #define CLE_SEM 3056
 
-#endif /*CONSTANTES_H*/
-
-/**
- * 
- * @param 
- * @return 
- */
+#endif /*DEFINES_H*/

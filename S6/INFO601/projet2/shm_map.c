@@ -1,5 +1,6 @@
-#include "shm_map.h"
 #include <semaphore.h>
+#include "shm_map.h"
+#include "ncurses.h"
 #include "defines.h"
 
 #define NB_THREAD 4
@@ -31,9 +32,9 @@ void initialiser_carte(carte_t *carte){
  * @param nbVoitures nombre de voiture maximum
  * @return id segment partagé
  */
-int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t taille, int nbVoitures){
+int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t *taille, int nbVoitures){
     int shmid;
-    if((shmid = shmget(cle_shm, sizeof(int)+(sizeof(char)*taille+1)+sizeof(carte_t)+(sizeof(voiture_t)*nbVoitures), S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
+    if((shmid = shmget(cle_shm, sizeof(int)+(sizeof(char)*(*taille+1))+sizeof(carte_t)+(sizeof(voiture_t)*nbVoitures), S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
         if(errno == EEXIST)
             fprintf(stderr, "Segment (cle=%d) existant\n", cle_shm);
         else if(errno == EINVAL)
@@ -46,7 +47,7 @@ int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t taille, 
             perror("Erreur inconnue lors de la creation du segment ");
         exit(EXIT_FAILURE);
     }
-    if((segment->titre = malloc(sizeof(char)*taille))==NULL){
+    if((segment->titre = malloc(sizeof(char)*(*taille)))==NULL){
         printf("Erreur allocation segment->titre\n");
     };
     strcpy(segment->titre, titre);
@@ -124,9 +125,7 @@ void charger_carte(char *nom_fichier, WINDOW * bordure, WINDOW * sim, carte_t *c
     }
 }
 
-
-/*Deplacement a gauche*/
-void toLeft(WINDOW* simulation, int* row, int* col, int* mat){
+/*void toLeft(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
 	wrefresh(simulation);
@@ -139,7 +138,7 @@ void toLeft(WINDOW* simulation, int* row, int* col, int* mat){
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
-/*deplacement a droite*/
+
 void toRight(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
@@ -153,7 +152,7 @@ void toRight(WINDOW* simulation, int* row, int* col, int* mat){
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
-/*deplacement en haut*/
+
 void toUp(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
@@ -167,7 +166,7 @@ void toUp(WINDOW* simulation, int* row, int* col, int* mat){
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
-/*deplacement en bas */
+
 void toDown(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
@@ -182,8 +181,6 @@ void toDown(WINDOW* simulation, int* row, int* col, int* mat){
 	wattroff(simulation, COLOR_PAIR(1));
 }
 
-
-/*libere le semaphore*/
 int  liberation(struct sembuf op){
     int retour;
     printf(" libération du semaphore Sn -> V(Sn)\n");
@@ -197,7 +194,7 @@ int  liberation(struct sembuf op){
     retour =semop(semid, &op, 1);
     return retour;
 }
-/*se met en attente du semaphore puis fait l'action*/
+
 int attente(vstruct sembuf opoid *arg){
     int retour;
     printf("  attente du sémaphore Sn -> P(Sn)\n");
@@ -215,13 +212,13 @@ int attente(vstruct sembuf opoid *arg){
 void* suppression(struct sembuf op){
      int semid;
 
-  /* Récupération du tableau de sémaphores */
+
   if((semid = semget((key_t)CLE, 0, 0)) == -1) {
     perror("Erreur lors de la recuperation du tableau de sémaphores ");
     exit(EXIT_FAILURE);
   }
 
-  /* Suppression du tableau de sémaphores */
+
   if(semctl(semid, 0, IPC_RMID) == -1) {
     perror("Erreur lors de la suppresion du tableau de sémaphores ");
     exit(EXIT_FAILURE);
@@ -233,18 +230,10 @@ void* suppression(struct sembuf op){
 }
 
 
-
-/* Création du sémaphore;*/
-/*penser à passer la grille en param */
-/*penser à passer la window*/
-/*penser à vérifier les coords*/
-/**/
-
 int semid;
 struct sembuf op;
 
 void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
-	/* Récupération de l'identifiant du thread*/
 	int i = 0;
     int booleen=-1;
     if((semid = semget((key_t)CLE, 0, 0)) == -1) {
@@ -253,18 +242,11 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
     }
 	while (i < LIMIT) {
         attente(op);
-		/* On attend la disponibilité du sémaphore*/
         if(semop(semid, &op, 1) == -1) {
          perror("Erreur lors de l'opération op sur le sémaphore ");
          exit(EXIT_FAILURE);
         }else{
-        /*choix de la direction  */
         int randomValue;
-
-        /* */
-        /*déplacement*/
-        /**/
-        /**/
  
         switch(cardinal){
             case 0:
@@ -382,12 +364,8 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                 printf("plop");
                 break;
             }
-        
-      
-
-        }
-        
+        }     
 	}
 	pthread_exit(EXIT_SUCCESS);
 
-}
+}*/
