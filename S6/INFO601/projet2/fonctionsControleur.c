@@ -5,7 +5,7 @@
  * @param carte carte_t du segment partagé
  * @return affichage
  */
-void afficher_carte(carte_t *carte){
+void term_afficher_carte(carte_t *carte){
     int i;
     int j;
     for(i=0 ; i<LINE ; i++){
