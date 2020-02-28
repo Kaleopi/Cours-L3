@@ -279,18 +279,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
             }
         
       
-		/* Section critique*/
-		printf(" je vais dormir \n");
-		if (sleepnano(tim,time2) == -1) {
-         perror("Erreur lors de l'opération sur le sémaphore ");
-         exit(EXIT_FAILURE);
-        }
-		printf(" j'ai fini ma sieste\n");
-		/* On relache le sémaphore*/
-		if (liberation(op) == -1) {
-         perror("Erreur lors de la liberation sur le sémaphore ");
-         exit(EXIT_FAILURE);
-        }
+
         }
         
 	}
