@@ -35,7 +35,7 @@ void * job_voiture(void * args) {
     struct timespec tim, time2;
     tim.tv_sec = 0;
     tim.tv_nsec = 500000000L;
-	int tid = pthread_self();
+	//int tid = pthread_self();
 	int i = 0;
     if((semid = semget((key_t)CLE, 0, 0)) == -1) {
     perror("Erreur lors de la récupération du tableau de sémaphores ");
