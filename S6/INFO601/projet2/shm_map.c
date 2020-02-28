@@ -5,7 +5,8 @@
 #define NB_THREAD 4
 #define LIMIT 2
 #define N 2
-
+#define COLONNE 15
+#define ROW 30
 /**
  * initialise la carte du segment partagé à '0'
  * @param carte carte_t du segment
