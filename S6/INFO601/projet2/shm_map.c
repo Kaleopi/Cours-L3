@@ -3,7 +3,7 @@
 
 #define NB_THREAD 4
 #define LIMIT 2
-#define N 3
+#define N 2
 
 /**
  * initialise la carte du segment partagé à '0'
@@ -163,29 +163,26 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
  
         switch(cardinal){
             case 0:
-                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
+                if(carte->carte[COLONNE*(v->y)-1+(v->x)]==0){
                     toLeft(WINDOW* simulation, v->x, v->y, int* carte);
                 }else{
                     while(booleen!=1){
                         randomValue = rand() % N;
                         switch(randomValue){
                             case 0:
-                                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
-                                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
-                                booleen=1
-                                }
-                            break;
-                            case 1:
-                                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
+                                if(carte->carte[COLONNE*(v->y)+(v->x)-1]==0){
                                   toUp(WINDOW* simulation, v.x, v.y, int* carte);
                                   booleen=1;
                                 }
                             break;
-                            case 2:
-                                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
+                            case 1:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)+1]==0){
                                      toDown(WINDOW* simulation, v.x, v.y, int* carte);
                                      booleen=1;
                                 }
+                            break;
+                            default:
+                            printf("plop");
                             break;
                         }
                     }
@@ -193,7 +190,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                 }
                 break;
             case 1:
-                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
+                if(carte->carte[COLONNE*(v->y)+1+(v->x)]==0){
                     toRight(WINDOW* simulation, v.x, v.y, int* carte);
                 }
                 else{
@@ -201,22 +198,19 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                         randomValue = rand() % N;
                         switch(randomValue){
                             case 0:
-                                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
-                                    toLeft(WINDOW* simulation, v.x, v.y, int* carte);
-                                booleen=1
-                                }
-                            break;
-                            case 1:
-                                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
+                                if(carte->carte[COLONNE*(v->y)+(v->x)-1]==0){
                                   toUp(WINDOW* simulation, v.x, v.y, int* carte);
                                   booleen=1;
                                 }
                             break;
-                            case 2:
-                                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
+                            case 1:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)+1]==0){
                                      toDown(WINDOW* simulation, v.x, v.y, int* carte);
                                      booleen=1;
                                 }
+                            break;
+                            default:
+                            printf("plop");
                             break;
                         }
                     }
@@ -224,7 +218,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                 }
                 break;
             case 2 :
-                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
+                if(carte->carte[COLONNE*(v->y)+(v->x)-1]==0){
                     toUp(WINDOW* simulation, v.x, v.y, int* carte);
                 }
                 else{
@@ -232,22 +226,19 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                         randomValue = rand() % N;
                         switch(randomValue){
                             case 0:
-                                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
+                                if(carte->carte[COLONNE*(v->y)+1+(v->x)]==0){
                                     toRight(WINDOW* simulation, v.x, v.y, int* carte);
                                 booleen=1
                                 }
                             break;
                             case 1:
-                                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
+                                if(carte->carte[COLONNE*(v->y)-1+(v->x)]==0){
                                   toLeft(WINDOW* simulation, v.x, v.y, int* carte);
                                   booleen=1;
                                 }
                             break;
-                            case 2:
-                                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
-                                    toDown(WINDOW* simulation, v.x, v.y, int* carte);
-                                booleen=1;
-                                }
+                            default:
+                            printf("plop");
                             break;
                         }
                     }
@@ -255,31 +246,29 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                 }
                 break;
             case 3 :
-                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
+                if(carte->carte[COLONNE*(v->y)+(v->x)+1]==0){
                     toDown(WINDOW* simulation, v.x, v.y, int* carte);
                 }else{
                      while(booleen!=1){
                         randomValue = rand() % N;
                         switch(randomValue){
                             case 0:
-                                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
+                                if(carte->carte[COLONNE*(v->y)+1+(v->x)]==0){
                                     toRight(WINDOW* simulation, v.x, v.y, int* carte);
                                 booleen=1
                                 }
                             break;
                             case 1:
-                                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
-                                  toUp(WINDOW* simulation, v.x, v.y, int* carte);
-                                  booleen=1;
-                                }
-                            break;
-                            case 2:
-                                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
+                                if(carte->carte[COLONNE*(v->y)-1+(v->x)]==0){
                                      toLeft(WINDOW* simulation, v.x, v.y, int* carte);
                                      booleen=1;
                                 }
                             break;
-                        }
+                            default:
+                            printf("plop");
+                            break;
+                                    
+                            }
                     }
                      booleen=-1;
                 }
