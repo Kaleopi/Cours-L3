@@ -17,7 +17,7 @@ void handler(int signum){
 }
 
 /**
- * Programme principal du contrôleur 
+ * Programme principal du contrôleur
  * @param argv[1] nom_fichier.bin
  * @param argv[2] nombre maximum de voitures
  * @param argv[3] cle file de message
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
     voitures_i = 0;
     val[0] = 0;
     val[1] = 0;
-  
+
     sigaction(SIGINT, &sa, NULL);
     voitures_i = 0;
     if(argc==6){
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]){
         error_args();
         exit(EXIT_FAILURE);
     }
-    
+
     /* Création du tableau de sémaphore */
     if((semid = semget(cle_sem, 2, S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
         if(errno == EEXIST)
@@ -79,12 +79,16 @@ int main(int argc, char *argv[]){
         perror("Erreur lors de l'initialisation des sémaphores ");
         exit(EXIT_FAILURE);
     }
-    
+    printf("LES SEMAPHONRES SONT CREE ET INITIALISES\n");
+
 
     /* Création de la file si elle n'existe pas */
     msqid = creer_file(cle_msg);
+    printf("LA FILE DE MESSAGE CREE ET INITIALISES\n");
     /* Création du segment */
+    printf("DANS CONTROLEUR TAILLE = %ld\n", taille_titre);
     shmid = creer_segment(&segment, cle_shm, nom_fichier, &taille_titre, nbMaxVoitures);
+    printf("SEGMENT CREE ET INITIALISES\n");
     printf("%d",shmid);
 
     initialiser_carte(&carte);
@@ -155,7 +159,7 @@ int main(int argc, char *argv[]){
             else
                 fprintf(stderr, "Erreur kill pid\n");
             exit(EXIT_FAILURE);
-        };  
+        };
     }
 
     /* Suppression de la file */

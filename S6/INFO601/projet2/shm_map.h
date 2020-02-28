@@ -3,7 +3,7 @@
 #include "defines.h"
 
 typedef struct{
-    unsigned char carte[LINE][COL];
+    unsigned char carte[LINE*COL];
 }carte_t;
 
 typedef struct{

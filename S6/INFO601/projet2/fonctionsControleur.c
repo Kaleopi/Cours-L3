@@ -10,7 +10,7 @@ void afficher_carte(carte_t *carte){
     int j;
     for(i=0 ; i<LINE ; i++){
         for(j=0 ; j<COL ; j++){
-            printf("%d",(int)carte->carte[i][j]);
+            printf("%d",(int)carte->carte[(i*COL)+j]);
         }
         printf("\n");
     }
