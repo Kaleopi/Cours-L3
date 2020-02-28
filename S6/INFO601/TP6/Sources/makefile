@@ -2,9 +2,9 @@
 # CONFIGURATION GENERALE
 #
 
-EXEC = voiture controleur
-OBJETS = ncurses.o shm_map.o fonctionsControleur.o
-NOM_PROJET = Projet 2 GIGOUT DAUNIQUE
+EXEC = fileServeur fileClient fileSupprime
+OBJETS = 
+NOM_PROJET = file
 
 #
 # SUFFIXES
@@ -23,11 +23,10 @@ OBJETS_O = $(OBJETS) $(EXEC_O)
 # ARGUMENTS ET COMPILATEUR
 #
 
-STOP=-1
+CLE_MSG = 1056
 CC = gcc
-CCFLAGS = -Wall -Werror -O3 -ansi -pedantic -D _XOPEN_SOURCE
-
-CCLIBS =  -lncurses
+CCFLAGS = -Wall -O3 -Werror -ansi -pedantic -D _XOPEN_SOURCE -D CLE=$(CLE_MSG)
+CCLIBS = 
 
 #
 # REGLES
@@ -58,13 +57,11 @@ clean:
 	@rm -f $(EXEC)
 	@rm -f dependances
 	@echo "Terminé."
-	
-cleanIPC: 
-	@echo "Suppression des ipcs..."
-	@ipcrm -Q 1056
-	@ipcrm -M 2056
-	@ipcrm -S 3056
-	@echo "Suppression ipcs terminée..."
+
+cleanIPC:
+	@echo "Suppression de la file de messages..."
+	@ipcrm -Q $(CLE_MSG)
+	@echo "File supprimée."
 
 depend:
 	@echo "Création des dépendances..."
@@ -89,8 +86,6 @@ archive: clean
 	@echo "Termine."
 
 # DEPENDANCES
-shm_map.o: shm_map.c shm_map.h
-ncurses.o: ncurses.c ncurses.h
-fonctionsControleur.o: fonctionsControleur.c fonctionsControleur.h
-controleur.o: controleur.c ncurses.h shm_map.h fonctionsControleur.h
-voiture.o: voiture.c 
+fileServeur.o: fileServeur.c structures.h
+fileClient.o: fileClient.c structures.h
+fileSupprime.o: fileSupprime.c structures.h

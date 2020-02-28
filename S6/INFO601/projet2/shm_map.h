@@ -3,7 +3,7 @@
 #include "defines.h"
 
 typedef struct{
-    unsigned char carte[LINE*COL];
+    unsigned char carte[LINE][COL];
 }carte_t;
 
 typedef struct{
@@ -22,8 +22,9 @@ typedef struct{
 
 
 void initialiser_carte(carte_t *);
-int creer_segment(shmmap_t*, key_t, char*, size_t*, int);
-void charger_carte(char *nom_fichier, WINDOW * bordure, WINDOW * sim, carte_t *carte, size_t taille);
+int creer_segment(shmmap_t*, key_t, char*, size_t, int);
+void charger_carte(char *, carte_t *, size_t*);
+void afficher_carte(carte_t*);
 
 #endif /*SHMMAP_H*/
 

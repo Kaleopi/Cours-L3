@@ -2,9 +2,9 @@
 # CONFIGURATION GENERALE
 #
 
-EXEC = voiture controleur
-OBJETS = ncurses.o shm_map.o fonctionsControleur.o
-NOM_PROJET = Projet 2 GIGOUT DAUNIQUE
+EXEC = question1
+OBJETS = 
+NOM_PROJET = TP7_question1
 
 #
 # SUFFIXES
@@ -23,22 +23,20 @@ OBJETS_O = $(OBJETS) $(EXEC_O)
 # ARGUMENTS ET COMPILATEUR
 #
 
-STOP=-1
 CC = gcc
-CCFLAGS = -Wall -Werror -O3 -ansi -pedantic -D _XOPEN_SOURCE
-
-CCLIBS =  -lncurses
+CCFLAGS = -Wall -O3 -Werror -ansi -pedantic -D _XOPEN_SOURCE=500
+CCLIBS = 
 
 #
 # REGLES
 #
 
 all: $(OBJETS) $(EXEC_O)
-	@echo "Création des exécutables..."
+	@echo "Creation des executables..."
 	@for i in $(EXEC); do \
 	$(CC) -o $$i $$i.o $(OBJETS) $(CCLIBS); \
 	done
-	@echo "Terminé."
+	@echo "Termine."
 
 #
 # REGLES PAR DEFAUT
@@ -57,17 +55,10 @@ clean:
 	@rm -f *~ *#
 	@rm -f $(EXEC)
 	@rm -f dependances
-	@echo "Terminé."
-	
-cleanIPC: 
-	@echo "Suppression des ipcs..."
-	@ipcrm -Q 1056
-	@ipcrm -M 2056
-	@ipcrm -S 3056
-	@echo "Suppression ipcs terminée..."
+	@echo "Termine."
 
 depend:
-	@echo "Création des dépendances..."
+	@echo "Creation des dependances..."
 	@sed -e "/^# DEPENDANCES/,$$ d" makefile > dependances
 	@echo "# DEPENDANCES" >> dependances
 	@for i in $(OBJETS_O); do \
@@ -75,7 +66,7 @@ depend:
 	done
 	@cat dependances > makefile
 	@rm dependances
-	@echo "Terminé."
+	@echo "Termine."
 
 #
 # CREATION ARCHIVE
@@ -84,13 +75,9 @@ depend:
 ARCHIVE_FILES = *
 
 archive: clean
-	@echo "Création de l'archive $(NOM_PROJET)$(shell date '+%y%m%d.tar.gz')..."
+	@echo "Creation de l'archive $(NOM_PROJET)$(shell date '+%y%m%d.tar.gz')..."
 	@REP=`basename $$PWD`; cd .. && tar zcf $(NOM_PROJET)$(shell date '+%y%m%d.tar.gz') $(addprefix $$REP/,$(ARCHIVE_FILES))
 	@echo "Termine."
 
 # DEPENDANCES
-shm_map.o: shm_map.c shm_map.h
-ncurses.o: ncurses.c ncurses.h
-fonctionsControleur.o: fonctionsControleur.c fonctionsControleur.h
-controleur.o: controleur.c ncurses.h shm_map.h fonctionsControleur.h
-voiture.o: voiture.c 
+question1.o: question1.c include.h

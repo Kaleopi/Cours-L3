@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
     pid_t *tab_pid;
     requete_t req;
     reponse_t rep;
-    WINDOW *sim, *bordure;
+    /*WINDOW *sim, *bordure, *etat;*/
     int semid;
     unsigned short val[2];
     /*struct sembuf op;*/
@@ -80,49 +80,51 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
     }
     printf("LES SEMAPHONRES SONT CREE ET INITIALISES\n");
+    printf("cc\n");
 
+    initialiser_carte(&carte);
+    printf("dd\n");
+    /*Initialisation de ncurses*/
+    /*ncurses_initialiser();
+    ncurses_souris();
+    ncurses_couleurs();
+    wbkgd(stdscr, COLOR_PAIR(3));
+    refresh();*/
 
+	/* Vérification des dimensions du terminal */
+  	/*if((COLS < COL+5) || (LINES < LINE+5)) {
+        ncurses_stopper();
+        fprintf(stderr, "Les dimensions du terminal sont insufisantes : l=%d,h=%d au lieu de l=%d,h=%d\n", COLS, LINES, COL+5, LINE+5);
+        exit(EXIT_FAILURE);
+    }*/
+
+    /*Initialisation des fenêtres*/
+    /*bordure = newwin(LINE+2,COL+2,1,0);
+    box(bordure, 0,0);
+    sim = subwin(bordure,LINE+1,COL,2,1);
+    scrollok(sim,TRUE);
+    etat = newwin(LINE,COL,COL+5,0);*/
+
+    charger_carte(nom_fichier, &carte, &taille_titre);
+    printf("ee\n");
     /* Création de la file si elle n'existe pas */
     msqid = creer_file(cle_msg);
     printf("LA FILE DE MESSAGE CREE ET INITIALISES\n");
     /* Création du segment */
     printf("DANS CONTROLEUR TAILLE = %ld\n", taille_titre);
-    shmid = creer_segment(&segment, cle_shm, nom_fichier, &taille_titre, nbMaxVoitures);
+    shmid = creer_segment(&segment, cle_shm, nom_fichier, taille_titre, nbMaxVoitures);
     printf("SEGMENT CREE ET INITIALISES\n");
     printf("%d",shmid);
-
-    initialiser_carte(&carte);
-    /*Initialisation de ncurses*/
-    ncurses_initialiser();
-    ncurses_souris();
-    ncurses_couleurs();
-    wbkgd(stdscr, COLOR_PAIR(3));
-    refresh();
-
-	/* Vérification des dimensions du terminal */
-  	if((COLS < COL+5) || (LINES < LINE+5)) {
-        ncurses_stopper();
-        fprintf(stderr, "Les dimensions du terminal sont insufisantes : l=%d,h=%d au lieu de l=%d,h=%d\n", COLS, LINES, COL+5, LINE+5);
-        exit(EXIT_FAILURE);
-    }
-
-    /*Initialisation des fenêtres*/
-    bordure = newwin(LINE+2,COL+2,1,0);
-    box(bordure, 0,0);
-    sim = subwin(bordure,LINE+1,COL,2,1);
-    scrollok(sim,TRUE);
-
-    charger_carte(nom_fichier, bordure, sim, &carte, taille_titre);
     /* afficher_carte(&carte);*/
 
-    wrefresh(bordure);
+    /*wrefresh(bordure);
     wrefresh(sim);
-    printw("Pressez F2 pour quitter...");
+    printw("Pressez F2 pour quitter...");*/
     while((!sigintRecu) && (i=getch()!=KEY_F(2))){
         printf("CONTROLEUR : en attente d'une requête\n");
         if((msgrcv(msqid , &req, sizeof(requete_t)-sizeof(long), -2, 0)==-1) && !sigintRecu){
             perror("Erreur lors de la réception de la requête");
-            break;
+            exit(EXIT_FAILURE);
         }
         if(!sigintRecu && req.type == TYPE_REQUETE){
             tab_pid[voitures_i]=req.pid;
@@ -136,7 +138,7 @@ int main(int argc, char *argv[]){
         rep.cle_sem = cle_sem;
 
         if(msgsnd(msqid, &rep, sizeof(reponse_t)-sizeof(long), 0) == -1){
-            perror("Erreur lors de l'envoi de la réponse");
+            perror("controleur : Erreur lors de l'envoi de la réponse");
             exit(EXIT_FAILURE);
         }
         printf("Réponse envoyée\n");
@@ -169,9 +171,24 @@ int main(int argc, char *argv[]){
     }
     printf("CONSTROLEUR : File supprimée.\n");
 
-    delwin(sim);
+    if(semctl(semid, IPC_RMID, 0) == -1) {
+    perror("CONSTROLEUR : Erreur lors de la suppression des semaphores ");
+    exit(EXIT_FAILURE);
+  }
+  printf("CONSTROLEUR : Semaphores supprimés.\n");
+
+  /*Suppression de la memoire partagee */
+  if(shmctl(shmid, IPC_RMID, 0) == -1) {
+    perror("CONSTROLEUR : Erreur lors de la suppression de la memoire partagee ");
+    exit(EXIT_FAILURE);
+  }
+  printf("CONSTROLEUR : Memoire partagee supprimée.\n");
+
+  printf("CONSTROLEUR : Fini.\n");
+
+    /*delwin(sim);
     delwin(bordure);
-    ncurses_stopper();
+    ncurses_stopper();*/
 
     exit(EXIT_SUCCESS);
 }
