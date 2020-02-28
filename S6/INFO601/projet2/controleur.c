@@ -129,7 +129,7 @@ int main(int argc, char *argv[]){
         if(!sigintRecu && req.type == TYPE_REQUETE){
             tab_pid[voitures_i]=req.pid;
             voitures_i++;
-            printf("Voiture %d veut se connecter\n",req.pid);
+            printf("Voiture %d veut se connecter\ncpt voiture : %d\n",req.pid, voitures_i);
         }
 
         /* Envoi de la réponse */
@@ -160,7 +160,6 @@ int main(int argc, char *argv[]){
                 fprintf(stderr, "Ce processus n'existe pas\n");
             else
                 fprintf(stderr, "Erreur kill pid\n");
-            exit(EXIT_FAILURE);
         };
     }
 
@@ -172,19 +171,19 @@ int main(int argc, char *argv[]){
     printf("CONSTROLEUR : File supprimée.\n");
 
     if(semctl(semid, IPC_RMID, 0) == -1) {
-    perror("CONSTROLEUR : Erreur lors de la suppression des semaphores ");
-    exit(EXIT_FAILURE);
-  }
-  printf("CONSTROLEUR : Semaphores supprimés.\n");
+        perror("CONSTROLEUR : Erreur lors de la suppression des semaphores ");
+        exit(EXIT_FAILURE);
+    }
+     printf("CONSTROLEUR : Semaphores supprimés.\n");
 
-  /*Suppression de la memoire partagee */
-  if(shmctl(shmid, IPC_RMID, 0) == -1) {
-    perror("CONSTROLEUR : Erreur lors de la suppression de la memoire partagee ");
-    exit(EXIT_FAILURE);
-  }
-  printf("CONSTROLEUR : Memoire partagee supprimée.\n");
+    /*Suppression de la memoire partagee */
+    if(shmctl(shmid, IPC_RMID, 0) == -1) {
+        perror("CONSTROLEUR : Erreur lors de la suppression de la memoire partagee ");
+        exit(EXIT_FAILURE);
+    }
+    printf("CONSTROLEUR : Memoire partagee supprimée.\n");
 
-  printf("CONSTROLEUR : Fini.\n");
+    printf("CONSTROLEUR : Fini.\n");
 
     /*delwin(sim);
     delwin(bordure);

@@ -12,7 +12,6 @@ short sigRecu = 0;
 
 void handler(int signum){
   if(signum==SIGINT || signum==SIGRTMIN) sigRecu = 1;
-  printf("VOITURE %d :signal recu, %d\n", getpid(), sigRecu);
 }
 /*sleep*/
 /*int sleepnano(struct timespec tim, struct timespec time){
@@ -81,7 +80,7 @@ int main(int argc, char *argv[]) {
 			exit(EXIT_FAILURE);
 		}
 		printf("ZzzZZz\n");
-	};
+	}
 	requete.type = TYPE_REPONSE;
     requete.pid = getpid();
 
