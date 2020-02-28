@@ -23,7 +23,11 @@ void initialiser_carte(carte_t *carte){
 
 /**
  * créer le segment partagé (pour contrôleur)
+ * @param segment segment de mémoire partagée
  * @param cle_shm clé du segment partagé
+ * @param titre titre de la carte
+ * @param taille taille du titre
+ * @param nbVoitures nombre de voiture maximum
  * @return id segment partagé
  */
 int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t taille, int nbVoitures){
@@ -41,7 +45,9 @@ int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t taille, 
             perror("Erreur inconnue lors de la creation du segment ");
         exit(EXIT_FAILURE);
     }
-    segment->titre = malloc(sizeof(char)*taille);
+    if((segment->titre = malloc(sizeof(char)*taille))==NULL){
+        printf("Erreur allocation segment->titre\n");
+    };
     strcpy(segment->titre, titre);
     segment->shmid = shmid;
     segment->addr = shmat(shmid, NULL,0);
@@ -117,17 +123,17 @@ void charger_carte(char *nom_fichier, WINDOW * bordure, WINDOW * sim, carte_t *c
     }
 }
 
-// Création du sémaphore;
-//penser à passer la grille en param 
-//penser à passer la window
-//penser à vérifier les coords
-//
+/*Création du sémaphore;
+penser à passer la grille en param 
+penser à passer la window
+penser à vérifier les coords
+*/
 
 int semid;
 struct sembuf op;
 
 void * job_voiture(void * args) {
-	// Récupération de l'identifiant du thread
+	/* Récupération de l'identifiant du thread*/
     struct timespec tim, time2;
     tim.tv_sec = 0;
     tim.tv_nsec = 500000000L;
@@ -139,18 +145,18 @@ void * job_voiture(void * args) {
     }
 	while (i < LIMIT) {
         attente(op);
-		// On attend la disponibilité du sémaphore
+		/* On attend la disponibilité du sémaphore*/
         if(semop(semid, &op, 1) == -1) {
          perror("Erreur lors de l'opération op sur le sémaphore ");
          exit(EXIT_FAILURE);
         }else{
-        //choix de la direction  
+        /*choix de la direction  */
         int randomValue;
         randomValue = rand() % N;
-        // 
-        //manque les arguments des to something
-        //à parametrer 
-        //
+        /*
+         * manque les arguments des to something
+         * à parametrer 
+         */
         switch(randomValue){
             case 0:
                 toLeft(WINDOW* simulation, int *row, int* col, int* carte);
@@ -190,7 +196,7 @@ void * job_voiture(void * args) {
 	}
 	pthread_exit(EXIT_SUCCESS);
 }
-//Deplacement a gauche
+/*Deplacement a gauche*/
 void toLeft(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
@@ -204,7 +210,7 @@ void toLeft(WINDOW* simulation, int* row, int* col, int* mat){
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
-//deplacement a droite
+/*deplacement a droite*/
 void toRight(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
@@ -218,7 +224,7 @@ void toRight(WINDOW* simulation, int* row, int* col, int* mat){
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
-//deplacement en haut
+/*deplacement en haut*/
 void toUp(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
@@ -232,7 +238,7 @@ void toUp(WINDOW* simulation, int* row, int* col, int* mat){
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
-//deplacement en bas 
+/*deplacement en bas */
 void toDown(WINDOW* simulation, int* row, int* col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,*row,*col," ");
@@ -248,7 +254,7 @@ void toDown(WINDOW* simulation, int* row, int* col, int* mat){
 }
 
 
-//libere le semaphore
+/*libere le semaphore*/
 int  liberation(struct sembuf op){
     int retour;
     printf(" libération du semaphore Sn -> V(Sn)\n");
@@ -262,7 +268,7 @@ int  liberation(struct sembuf op){
     retour =semop(semid, &op, 1);
     return retour;
 }
-//se met en attente du semaphore puis fait l'action
+/*se met en attente du semaphore puis fait l'action*/
 int attente(vstruct sembuf opoid *arg){
     int retour;
     printf("  attente du sémaphore Sn -> P(Sn)\n");
@@ -297,13 +303,6 @@ void* suppression(struct sembuf op){
   return EXIT_SUCCESS;
 }
 
-
-
-// Création du sémaphore;
-//penser à passer la grille en param 
-//penser à passer la window
-//penser à vérifier les coords
-//
 
 int semid;
 struct sembuf op;
