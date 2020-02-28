@@ -28,31 +28,35 @@ void handler(int signum){
  */
 int main(int argc, char *argv[]){
     /*declarations de variables*/
-    int msqid;
-    int i;
-    int voitures_i;
-    int nbMaxVoitures;
+    int msqid, shmid, i, voitures_i, nbMaxVoitures;
     char *nom_fichier;
-    key_t cle_msg;
-    key_t cle_sem;
-    key_t cle_shm;
+    struct sigaction sa;
+    union sigval sigval;
+    shmmap_t segment;
+    size_t taille_titre;
+    key_t cle_msg, cle_sem, cle_shm;
     pid_t *tab_pid;
     requete_t req;
     reponse_t rep;
+    WINDOW *sim, *bordure;
 
-    struct sigaction sa;
     sa.sa_handler = handler;
+
     sa.sa_flags = 0;
+    voitures_i = 0;
 
     sigaction(SIGINT, &sa, NULL);
 
-    voitures_i = 0;
     if(argc==6){
         nom_fichier = argv[1];
         nbMaxVoitures = atoi(argv[2]);
         cle_msg = atoi(argv[3]);
         cle_shm = atoi(argv[4]);
         cle_sem = atoi(argv[5]);
+        if((tab_pid = malloc(sizeof(pid_t)*nbMaxVoitures))==NULL){
+            fprintf(stderr, "Erreur : allocation tableau de pids\n");
+            exit(EXIT_FAILURE);
+        };
     }
     else{
         error_args();
@@ -61,6 +65,8 @@ int main(int argc, char *argv[]){
 
     /* Création de la file si elle n'existe pas */
     msqid = creer_file(cle_msg);
+    /* Création du segment */
+    shmid = creer_segment(&segment, cle_shm, nom_fichier, taille_titre, nbMaxVoitures);
 
     initialiser_carte(&carte);
     /*Initialisation de ncurses*/
@@ -77,7 +83,7 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
     }
 
-    WINDOW *sim, *bordure;
+
 
     /*Initialisation des fenêtres*/
     bordure = newwin(LINE+2,COL+2,1,0);
@@ -85,18 +91,64 @@ int main(int argc, char *argv[]){
     sim = subwin(bordure,LINE+1,COL,2,1);
     scrollok(sim,TRUE);
 
-    charger_carte(nom_fichier, bordure, sim, &carte);
+    charger_carte(nom_fichier, bordure, sim, &carte, taille_titre);
     /* afficher_carte(&carte);*/
 
     wrefresh(bordure);
     wrefresh(sim);
     printw("Pressez F2 pour quitter...");
     /*à inverser */
-    while((i = getch()) != KEY_F(2)){
-        while(!sigintRecu){
-            
+    while((!sigintRecu) && (i=getch()!=KEY_F(2))){
+        printf("CONTROLEUR : en attente d'une requête\n");
+        if((msgrcv(msqid , &req, sizeof(requete_t)-sizeof(long), -2, 0)==-1) && !sigintRecu){
+            perror("Erreur lors de la réception de la requête");
+            break;
         }
-    };
+        if(!sigintRecu && req.type == TYPE_REQUETE){
+            tab_pid[voitures_i]=req.pid;
+            voitures_i++;
+            printf("Voiture %d veut se connecter\n",req.pid);
+        }
+
+        /* Envoi de la réponse */
+        rep.type = req.pid;
+        rep.cle_shm = cle_shm;
+        rep.cle_sem = cle_sem;
+
+        if(msgsnd(msqid, &rep, sizeof(reponse_t)-sizeof(long), 0) == -1){
+            perror("Erreur lors de l'envoi de la réponse");
+            exit(EXIT_FAILURE);
+        }
+        printf("Réponse envoyée\n");
+
+        if(!sigintRecu && req.type == TYPE_REPONSE){
+            printf("mise à jour affichage ncurses");
+        }
+    }
+
+    /* Kill des voitures après avoir reçu SIGINT */
+    for(i=0; i<voitures_i; i++){
+        printf("CONTROLEUR : envoie signal arrêt au processus %d\n", tab_pid[i]);
+        if(kill(tab_pid[i], SIGRTMIN) == -1){
+            if(errno == EINVAL)
+                fprintf(stderr, "Erreur lors de la terminaison du kill (pid=%d)\n",tab_pid[i]);
+            else if(errno == EPERM)
+                fprintf(stderr, "Ce prossessus n'a pas les droits suffisants de kill (pid=%d)\n",tab_pid[i]);
+            else if(errno == ESRCH)
+                fprintf(stderr, "Ce processus n'existe pas\n");
+            else
+                fprintf(stderr, "Erreur kill pid\n");
+            exit(EXIT_FAILURE);
+        };  
+    }
+
+    /* Suppression de la file */
+    if(msgctl(msqid, IPC_RMID, 0) == -1) {
+        perror("CONSTROLEUR : Erreur lors de la suppression de la file ");
+        exit(EXIT_FAILURE);
+    }
+    printf("CONSTROLEUR : File supprimée.\n");
+
     delwin(sim);
     delwin(bordure);
     ncurses_stopper();

@@ -19,6 +19,7 @@
 #include <sys/msg.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 
 /*Tailles simulation*/
 #define LINE 15
