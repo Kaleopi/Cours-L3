@@ -9,3 +9,9 @@ typedef struct{
     int pid;
     int cle:
 }requete_t;
+
+typedef struct{
+    int x;
+    int y;
+    int id;
+}voiture_t;
