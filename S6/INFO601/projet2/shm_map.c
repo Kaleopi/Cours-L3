@@ -20,6 +20,114 @@ void initialiser_carte(carte_t *carte){
     }
 }
 
+//Deplacement a gauche
+void toLeft(WINDOW* simulation, int* row, int* col, int* mat){
+	wattron(simulation, COLOR_PAIR(3));
+	mvwprintw(simulation,*row,*col," ");
+	wrefresh(simulation);
+	wattroff(simulation, COLOR_PAIR(3));
+	mat[COLONNE*(*row)+(*col)]=0;
+	(*col)--;
+	mat[COLONNE*(*row)+(*col)]=2;
+	wattron(simulation, COLOR_PAIR(1));
+	mvwprintw(simulation, *row, *col," ");
+	wrefresh(simulation);
+	wattroff(simulation, COLOR_PAIR(1));
+}
+//deplacement a droite
+void toRight(WINDOW* simulation, int* row, int* col, int* mat){
+	wattron(simulation, COLOR_PAIR(3));
+	mvwprintw(simulation,*row,*col," ");
+	wrefresh(simulation);
+	wattroff(simulation, COLOR_PAIR(3));
+	mat[COLONNE*(*row)+(*col)]=0;
+	(*col)++;
+	mat[COLONNE*(*row)+(*col)]=2;
+	wattron(simulation, COLOR_PAIR(1));
+	mvwprintw(simulation,*row,*col," ");
+	wrefresh(simulation);
+	wattroff(simulation, COLOR_PAIR(1));
+}
+//deplacement en haut
+void toUp(WINDOW* simulation, int* row, int* col, int* mat){
+	wattron(simulation, COLOR_PAIR(3));
+	mvwprintw(simulation,*row,*col," ");
+	wrefresh(simulation);
+	wattroff(simulation, COLOR_PAIR(3));
+	mat[COLONNE*(*row)+(*col)]=0;
+	(*row)++;
+	mat[COLONNE*(*row)+(*col)]=2;
+	wattron(simulation, COLOR_PAIR(1));
+	mvwprintw(simulation,*row,*col," ");
+	wrefresh(simulation);
+	wattroff(simulation, COLOR_PAIR(1));
+}
+//deplacement en bas 
+void toDown(WINDOW* simulation, int* row, int* col, int* mat){
+	wattron(simulation, COLOR_PAIR(3));
+	mvwprintw(simulation,*row,*col," ");
+	wrefresh(simulation);
+	wattroff(simulation, COLOR_PAIR(3));
+	mat[COLONNE*(*row)+(*col)]=0;
+	(*row)--;
+	mat[COLONNE*(*row)+(*col)]=2;
+	wattron(simulation, COLOR_PAIR(1));
+	mvwprintw(simulation,*row,*col," ");
+	wrefresh(simulation);
+	wattroff(simulation, COLOR_PAIR(1));
+}
+
+
+//libere le semaphore
+int  liberation(struct sembuf op){
+    int retour;
+    printf(" libération du semaphore Sn -> V(Sn)\n");
+    op.sem_num = 0;
+    op.sem_op = 1;
+    op.sem_flg = 0;
+    if(semop(semid, &op, 1) == -1) {
+        perror("Erreur lors de l'opération sur le sémaphore ");
+        exit(EXIT_FAILURE);
+    }
+    retour =semop(semid, &op, 1);
+    return retour;
+}
+//se met en attente du semaphore puis fait l'action
+int attente(vstruct sembuf opoid *arg){
+    int retour;
+    printf("  attente du sémaphore Sn -> P(Sn)\n");
+    op.sem_num = 1;
+    op.sem_op = -1;
+    op.sem_flg = 0;
+    if(semop(semid, &op, 1) == -1) {
+        perror("Erreur lors de l'opération sur le sémaphore ");
+        exit(EXIT_FAILURE);
+    }
+    retour =semop(semid, &op, 1);
+    return retour;
+}
+
+void* suppression(struct sembuf op){
+     int semid;
+
+  /* Récupération du tableau de sémaphores */
+  if((semid = semget((key_t)CLE, 0, 0)) == -1) {
+    perror("Erreur lors de la recuperation du tableau de sémaphores ");
+    exit(EXIT_FAILURE);
+  }
+
+  /* Suppression du tableau de sémaphores */
+  if(semctl(semid, 0, IPC_RMID) == -1) {
+    perror("Erreur lors de la suppresion du tableau de sémaphores ");
+    exit(EXIT_FAILURE);
+  }
+
+  printf("Tableau de semaphores supprimé.\n");
+
+  return EXIT_SUCCESS;
+}
+
+
 
 // Création du sémaphore;
 //penser à passer la grille en param 
@@ -178,11 +286,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                 break;
             }
         
-        //attente
-		if(sem_wait(&op) == -1){
-         perror("Erreur lors de l'opération wait sur le sémaphore ");
-         exit(EXIT_FAILURE);
-        }
+      
 		// Section critique
 		printf("Je suis la voiture [%i] et je vais dormir \n", tid);
 		if (sleepnano(tim,time2) == -1) {
@@ -200,110 +304,3 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
 	}
 	pthread_exit(EXIT_SUCCESS);
 }
-//Deplacement a gauche
-void toLeft(WINDOW* simulation, int* row, int* col, int* mat){
-	wattron(simulation, COLOR_PAIR(3));
-	mvwprintw(simulation,*row,*col," ");
-	wrefresh(simulation);
-	wattroff(simulation, COLOR_PAIR(3));
-	mat[COLONNE*(*row)+(*col)]=0;
-	(*col)--;
-	mat[COLONNE*(*row)+(*col)]=2;
-	wattron(simulation, COLOR_PAIR(1));
-	mvwprintw(simulation, *row, *col," ");
-	wrefresh(simulation);
-	wattroff(simulation, COLOR_PAIR(1));
-}
-//deplacement a droite
-void toRight(WINDOW* simulation, int* row, int* col, int* mat){
-	wattron(simulation, COLOR_PAIR(3));
-	mvwprintw(simulation,*row,*col," ");
-	wrefresh(simulation);
-	wattroff(simulation, COLOR_PAIR(3));
-	mat[COLONNE*(*row)+(*col)]=0;
-	(*col)++;
-	mat[COLONNE*(*row)+(*col)]=2;
-	wattron(simulation, COLOR_PAIR(1));
-	mvwprintw(simulation,*row,*col," ");
-	wrefresh(simulation);
-	wattroff(simulation, COLOR_PAIR(1));
-}
-//deplacement en haut
-void toUp(WINDOW* simulation, int* row, int* col, int* mat){
-	wattron(simulation, COLOR_PAIR(3));
-	mvwprintw(simulation,*row,*col," ");
-	wrefresh(simulation);
-	wattroff(simulation, COLOR_PAIR(3));
-	mat[COLONNE*(*row)+(*col)]=0;
-	(*row)++;
-	mat[COLONNE*(*row)+(*col)]=2;
-	wattron(simulation, COLOR_PAIR(1));
-	mvwprintw(simulation,*row,*col," ");
-	wrefresh(simulation);
-	wattroff(simulation, COLOR_PAIR(1));
-}
-//deplacement en bas 
-void toDown(WINDOW* simulation, int* row, int* col, int* mat){
-	wattron(simulation, COLOR_PAIR(3));
-	mvwprintw(simulation,*row,*col," ");
-	wrefresh(simulation);
-	wattroff(simulation, COLOR_PAIR(3));
-	mat[COLONNE*(*row)+(*col)]=0;
-	(*row)--;
-	mat[COLONNE*(*row)+(*col)]=2;
-	wattron(simulation, COLOR_PAIR(1));
-	mvwprintw(simulation,*row,*col," ");
-	wrefresh(simulation);
-	wattroff(simulation, COLOR_PAIR(1));
-}
-
-
-//libere le semaphore
-int  liberation(struct sembuf op){
-    int retour;
-    printf(" libération du semaphore Sn -> V(Sn)\n");
-    op.sem_num = 0;
-    op.sem_op = 1;
-    op.sem_flg = 0;
-    if(semop(semid, &op, 1) == -1) {
-        perror("Erreur lors de l'opération sur le sémaphore ");
-        exit(EXIT_FAILURE);
-    }
-    retour =semop(semid, &op, 1);
-    return retour;
-}
-//se met en attente du semaphore puis fait l'action
-int attente(vstruct sembuf opoid *arg){
-    int retour;
-    printf("  attente du sémaphore Sn -> P(Sn)\n");
-    op.sem_num = 1;
-    op.sem_op = -1;
-    op.sem_flg = 0;
-    if(semop(semid, &op, 1) == -1) {
-        perror("Erreur lors de l'opération sur le sémaphore ");
-        exit(EXIT_FAILURE);
-    }
-    retour =semop(semid, &op, 1);
-    return retour;
-}
-
-void* suppression(struct sembuf op){
-     int semid;
-
-  /* Récupération du tableau de sémaphores */
-  if((semid = semget((key_t)CLE, 0, 0)) == -1) {
-    perror("Erreur lors de la recuperation du tableau de sémaphores ");
-    exit(EXIT_FAILURE);
-  }
-
-  /* Suppression du tableau de sémaphores */
-  if(semctl(semid, 0, IPC_RMID) == -1) {
-    perror("Erreur lors de la suppresion du tableau de sémaphores ");
-    exit(EXIT_FAILURE);
-  }
-
-  printf("Tableau de semaphores supprimé.\n");
-
-  return EXIT_SUCCESS;
-}
-
