@@ -7,6 +7,7 @@
 #define N 2
 
     int semid;
+    int booleen;
     struct sembuf op;
 /**
  * initialise la carte du segment partagé à '0'
@@ -138,56 +139,56 @@ void affiche_carte(WINDOW* sim,carte_t *carte){
     }
 }
 
-void toLeft(WINDOW* simulation, int row, int col, int* mat){
+void toLeft(WINDOW* simulation, int row, int col, carte_t *carte){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(3));
-	mat[COL*(row)+(col)]=0;
+	carte->carte[row][col]=0;
 	(col)--;
-	mat[COL*(row)+(col)]=2;
+	carte->carte[row][col]=2;
 	wattron(simulation, COLOR_PAIR(1));
 	mvwprintw(simulation, row, col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
 
-void toRight(WINDOW* simulation, int row, int col, int* mat){
+void toRight(WINDOW* simulation, int row, int col, carte_t *carte){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(3));
-	mat[COL*(row)+(col)]=0;
+	carte->carte[row][col]=0;
 	(col)++;
-	mat[COL*(row)+(col)]=2;
+	carte->carte[row][col]=2;
 	wattron(simulation, COLOR_PAIR(1));
 	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
 
-void toUp(WINDOW* simulation, int row, int col, int* mat){
+void toUp(WINDOW* simulation, int row, int col, carte_t *carte){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(3));
-	mat[COL*(row)+(col)]=0;
+	carte->carte[row][col]=0;
 	(row)++;
-	mat[COL*(row)+(col)]=2;
+	carte->carte[row][col]=2;
 	wattron(simulation, COLOR_PAIR(1));
 	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
 
-void toDown(WINDOW* simulation, int row, int col, int* mat){
+void toDown(WINDOW* simulation, int row, int col, carte_t *carte){
 	wattron(simulation, COLOR_PAIR(3));
 	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(3));
-	mat[COL*(row)+(col)]=0;
+	carte->carte[row][col]=0;
 	(row)--;
-	mat[COL*(row)+(col)]=2;
+	carte->carte[row][col]=2;
 	wattron(simulation, COLOR_PAIR(1));
 	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
@@ -244,11 +245,10 @@ void* suppression(struct sembuf op){
 
 
 
-void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal) {
+void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal,WINDOW*simulation) {
 
     int semid;
     struct sembuf op;
-	int i = 0;
     int booleen=-1;
     if((semid = semget((key_t)CLE_MSG, 0, 0)) == -1) {
     perror("Erreur lors de la récupération du tableau de sémaphores ");
@@ -264,20 +264,20 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal) {
         switch(cardinal){
             case 0:
                 if(carte->carte[COL*(v->y )-1+(v->x)]==0){
-                    toLeft( simulation, v->x, v->y , carte->carte);
+                    toLeft( simulation, v->x, v->y , carte);
                 }else{
                     while(booleen!=1){
                         randomValue = rand() % N;
                         switch(randomValue){
                             case 0:
                                 if(carte->carte[COL*(v->y )+(v->x)-1]==0){
-                                  toUp( simulation, v->x, v->y ,carte->carte);
+                                  toUp( simulation, v->x, v->y ,carte);
                                   booleen=1;
                                 }
                             break;
                             case 1:
                                 if(carte->carte[COL*(v->y )+(v->x)+1]==0){
-                                     toDown(simulation, v->x, v->y ,  carte->carte);
+                                     toDown(simulation, v->x, v->y ,  carte);
                                      booleen=1;
                                 }
                             break;
@@ -291,7 +291,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal) {
                 break;
             case 1:
                 if(carte->carte[COL*(v->y )+1+(v->x)]==0){
-                    toRight( simulation, v->x, v->y , carte->carte);
+                    toRight( simulation, v->x, v->y , carte);
                 }
                 else{
                      while(booleen!=1){
@@ -299,13 +299,13 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal) {
                         switch(randomValue){
                             case 0:
                                 if(carte->carte[COL*(v->y )+(v->x)-1]==0){
-                                  toUp( simulation, v->x, v->y , carte->carte);
+                                  toUp( simulation, v->x, v->y , carte);
                                   booleen=1;
                                 }
                             break;
                             case 1:
                                 if(carte->carte[COL*(v->y )+(v->x)+1]==0){
-                                     toDown(simulation, v->x, v->y ,  carte->carte);
+                                     toDown(simulation, v->x, v->y ,  carte);
                                      booleen=1;
                                 }
                             break;
@@ -313,13 +313,14 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal) {
                             printf("plop");
                             break;
                         }
+                         booleen=-1;
                     }
-                     booleen=-1;
+                    
                 }
                 break;
             case 2 :
                 if(carte->carte[COL*(v->y )+(v->x)-1]==0){
-                    toUp( simulation, v->x, v->y , carte->carte);
+                    toUp( simulation, v->x, v->y , carte);
                 }
                 else{
                      while(booleen!=1){
@@ -327,13 +328,13 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal) {
                         switch(randomValue){
                             case 0:
                                 if(carte->carte[COL*(v->y )+1+(v->x)]==0){
-                                    toRight( simulation, v->x, v->y ,  cacarte->carte);
-                                booleen=1
+                                    toRight( simulation, v->x, v->y ,  carte);
+                                booleen=1;
                                 }
                             break;
                             case 1:
                                 if(carte->carte[COL*(v->y )-1+(v->x)]==0){
-                                  toLeft( simulation, v->x, v->y ,carte->carte);
+                                  toLeft( simulation, v->x, v->y ,carte);
                                   booleen=1;
                                 }
                             break;
@@ -347,21 +348,21 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal) {
                 break;
             case 3 :
                 if(carte->carte[COL*(v->y )+(v->x)+1]==0){
-                    toDown(simulation, v->x, v->y ,  carte->carte);
+                    toDown(simulation, v->x, v->y ,  carte);
                 }else{
                      while(booleen!=1){
                         randomValue = rand() % N;
                         switch(randomValue){
                             case 0:
                                 if(carte->carte[COL*(v->y )+1+(v->x)]==0){
-                                    toRight( simulation, v->x, v->y ,  carte->carte);
-                                booleen=1
+                                    toRight( simulation, v->x, v->y ,  carte);
+                                booleen=1;
                                 }
                             break;
                             case 1:
                                 if(carte->carte[COL*(v->y )-1+(v->x)]==0){
-                                     toLeft(simulation, v->x, v->y , carte->carte);
-                                     booleen=1;
+                                     toLeft(simulation, v->x, v->y , carte);
+                                booleen=1;
                                 }
                             break;
                             default:
@@ -379,6 +380,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal) {
             }
         }
 	}
-
-
+    return 0;
 }
+
+
