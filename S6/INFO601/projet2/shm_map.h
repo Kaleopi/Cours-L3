@@ -13,16 +13,17 @@ typedef struct{
 }voiture_t;
 
 typedef struct{
-    unsigned char *L;
-    unsigned char *H;
+    int shmid;
+    char *titre;
     carte_t *carte;
     voiture_t *voitures;
+    void *addr;
 }shmmap_t;
 
-/*
- * Initialise la carte passée en paramètre à '0'
- */
+
 void initialiser_carte(carte_t *);
+int creer_segment(shmmap_t*, key_t, char*, size_t, int);
+void charger_carte(char *nom_fichier, WINDOW * bordure, WINDOW * sim, carte_t *carte, size_t taille);
 
 #endif /*SHMMAP_H*/
 

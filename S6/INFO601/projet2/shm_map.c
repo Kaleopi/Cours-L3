@@ -1,5 +1,6 @@
 #include "shm_map.h"
 #include <semaphore.h>
+#include "defines.h"
 
 #define NB_THREAD 4
 #define LIMIT 2
@@ -19,6 +20,109 @@ void initialiser_carte(carte_t *carte){
         }
     }
 }
+
+/**
+ * créer le segment partagé (pour contrôleur)
+ * @param segment segment de mémoire partagée
+ * @param cle_shm clé du segment partagé
+ * @param titre titre de la carte
+ * @param taille taille du titre
+ * @param nbVoitures nombre de voiture maximum
+ * @return id segment partagé
+ */
+int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t taille, int nbVoitures){
+    int shmid;
+    if((shmid = shmget(cle_shm, sizeof(int)+(sizeof(char)*taille+1)+sizeof(carte_t)+(sizeof(voiture_t)*nbVoitures), S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
+        if(errno == EEXIST)
+            fprintf(stderr, "Segment (cle=%d) existant\n", cle_shm);
+        else if(errno == EINVAL)
+            fprintf(stderr, "Erreur : segment trop petit ou trop grand (cle=%d)",cle_shm);
+        else if(errno == ENOENT)
+            fprintf(stderr, "Erreur : pas de segment associé à la clé (cle=%d)",cle_shm);
+        else if(errno == ENOSPC)
+            fprintf(stderr, "Erreur : nombre maximal de segments atteints / mémoire maximale atteinte");
+        else
+            perror("Erreur inconnue lors de la creation du segment ");
+        exit(EXIT_FAILURE);
+    }
+    if((segment->titre = malloc(sizeof(char)*taille))==NULL){
+        printf("Erreur allocation segment->titre\n");
+    };
+    strcpy(segment->titre, titre);
+    segment->shmid = shmid;
+    segment->addr = shmat(shmid, NULL,0);
+    return shmid;
+}
+
+/**
+ * Ouvre la carte passée en paramètres pour l'appliquer au ncurses
+ * @param nom_fichier nom du fichier .bin qui contient les infos de la carte
+ * @param bordure WINDOW ncurses de la bordure (pour le titre)
+ * @param sim WINDOW ncurses pour la fenêtre en elle même
+ * @param carte carte du segment partagé à remplir avec les infos du fichier
+ * @return void
+ */
+void charger_carte(char *nom_fichier, WINDOW * bordure, WINDOW * sim, carte_t *carte, size_t taille){
+    int i = 0, fd, j = 0, v = 0;
+
+    char *nom_decor;
+
+    /* ouverture du fichier */
+    if((fd = open(nom_fichier, O_RDONLY)) == -1){
+        fprintf(stderr, "Erreur lors de l'ouverture du fichier \"%s\"\n", strerror(errno));
+        delwin(sim);
+        delwin(bordure);
+        ncurses_stopper();
+        exit(EXIT_FAILURE);
+    }
+
+    /* taille nom décor */
+    if((v = read(fd, &taille, sizeof(size_t))) == -1){
+        /* Gestion d'erreur */
+        fprintf(stderr,"Erreur lors de la lecture taille nom_decor : \"%s\"\n", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+    if((nom_decor = malloc(sizeof(char)*taille))==NULL){
+        fprintf(stderr, "Erreur : allocation nom_decor\n");
+    };
+
+    /* nom décor */
+    if((v = read(fd, nom_decor, taille*sizeof(char))) == -1){
+        /* Gestion d'erreur */
+        fprintf(stderr, "Erreur lors de la lecture du nom_decor : \"%s\"\n", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+    mvwprintw(bordure,0,1, nom_decor);
+
+    /* matrice */
+    if ((v = read(fd, carte->carte, COL*LINE*sizeof(char)+30)) == -1){
+        /* Gestion d'erreur */
+        printw("Erreur lors de la lecture de la matrice : \"%s\"\n", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+
+    /* Affichage matrice */
+    for(i = 0; i<LINE; i++){
+        for(j = 0; j<COL; j++){
+            if((carte->carte[i][j]) == 0){
+                wattron(sim, COLOR_PAIR(0));
+                mvwprintw(sim, i+1, j, " ");
+                wattroff(sim, COLOR_PAIR(0));
+            }
+            else if((carte->carte[i][j]) == 1){
+                wattron(sim, COLOR_PAIR(1));
+                mvwprintw(sim, i+1, j, " ");
+                wattroff(sim, COLOR_PAIR(1));
+            }
+            else{
+                wattron(sim, COLOR_PAIR(2));
+                mvwprintw(sim, i+1, j, " ");
+                wattroff(sim, COLOR_PAIR(2));
+            }
+        }
+    }
+}
+
 
 /*Deplacement a gauche*/
 void toLeft(WINDOW* simulation, int* row, int* col, int* mat){

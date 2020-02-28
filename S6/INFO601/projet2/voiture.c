@@ -1,5 +1,3 @@
-
-
 #include "fonctionsVoiture.h"
 #include "messages.h"
 #include "defines.h"
@@ -26,17 +24,17 @@
 
 
 
-// Création du sémaphore;
+/*Création du sémaphore*/
 
 int semid;
 struct sembuf op;
 short sigRecu = 0;
-// 
+
 void handler(int signum){
   if(signum==SIGINT || signum==SIGRTMIN) sigRecu = 1;
   printf("VOITURE %d :signal recu, %d\n", getpid(), sigRecu);
 }
-//sleep
+/*sleep*/
 int sleepnano(timespec tim, timespec time){
    if(nanosleep(&tim , &time) < 0 ){
       printf("Failed \n");
@@ -45,30 +43,28 @@ int sleepnano(timespec tim, timespec time){
    printf("Sleep\n");
    return 0;
 }
-//main
+
 int main() {
-	//initialisation
 	struct timespec tim, time2;
 	tim.tv_sec = 0;
     tim.tv_nsec = 500000000L;
 	int id;
-	//structure message
+
  	requete_t requete;
  	reponse_t reponse;
-	//struct signal
 	struct sigaction sa;
 	srand(time(NULL));
 	sa.sa_handler = handler;
   	sa.sa_flags = 0;
-	//init signal
+
  	sigaction(SIGINT, &sa, NULL);
   	sigaction(SIGRTMIN, &sa, NULL);
-	//init file message et récup
+	/*init file message et récup*/
 	if((id = msgget((key_t)CLE, 0)) == -1) {
 		perror("recup file statut :FAILED");
 		exit(EXIT_FAILURE);
   	}
-	//envoie de la requête
+	/*envoie de la requête*/
   	requete.type = CONFIG;
  	requete.pid = getpid();
 
@@ -78,7 +74,6 @@ int main() {
 			exit(EXIT_FAILURE);
 		}
 		printf("Requete statut :DONE.\n", getpid());
-		//attente de la réponse
 
 		if(msgrcv(id, &reponse, sizeof(reponse_t) - sizeof(long), getpid(), 0) == -1) {
 			perror("Reponse statut :FAILED");
