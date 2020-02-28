@@ -40,39 +40,48 @@ int main(int argc, char *argv[]) {
 	cle_msg = 1056;
 	/*init file message et récup*/
 
-	if((msqid = msgget(cle_msg, 0) == -1)){
-		perror("recup file statut :FAILED");
-		exit(EXIT_FAILURE);
+	if((msqid = msgget(cle_msg, S_IRUSR | S_IWUSR )) == -1){
+		if(errno == EEXIST)
+            fprintf(stderr, "Erreur : file (cle=%d) existante\n", cle_msg);
+        else if(errno == EACCES)
+            fprintf(stderr, "Erreur : accès interdit à la file (cle=%d)\n",cle_msg);
+        else if(errno == ENOENT)
+            fprintf(stderr, "Erreur : pas de file associée à la clé (cle=%d)\n", cle_msg);
+        else if(errno == ENOSPC)
+            fprintf(stderr, "Erreur : nombre de files (cle=%d) maximum atteinte\n",cle_msg);
+        else
+           perror("Erreur inconnue lors de la creation de la file\n");
+   		exit(EXIT_FAILURE);
   	}
-	printf("voiture : file de message ouverte ");
+	printf("voiture : file de message ouverte\n");
 	/*envoie de la requête*/
   	requete.type = TYPE_REQUETE;
  	requete.pid = getpid();
 	printf("msqid %d\n",msqid);
 	if(msgsnd(msqid, &requete, sizeof(requete_t) - sizeof(long), 0) == -1) {
-		perror("Requete statut 1:FAILED");
+		perror("Requete statut 1:FAILED\n");
 		exit(EXIT_FAILURE);
 	}
 	printf("Requete statut :DONE. pid = %d\n", getpid());
 
 	if(msgrcv(msqid, &reponse, sizeof(reponse_t) - sizeof(long), getpid(), 0) == -1) {
-		perror("Reponse statut :FAILED");
+		perror("Reponse statut :FAILED\n");
 		exit(EXIT_FAILURE);    
 	}
 		
 	tim.tv_nsec =rand()%500000000L+500000000L;
 	tim.tv_sec = 0;
-	do{
+	while (!sigRecu && reponse.cle_sem!=-1){
 		nanosleep(&tim,NULL);
 		/*DEPLCAMENENT*/
 		requete.type = TYPE_REPONSE;
  		requete.pid = getpid();
 		if(msgsnd(msqid, &requete, sizeof(requete_t) - sizeof(long), 0) == -1) {
-			perror("Requete statut 2:FAILED");
+			perror("Requete statut 2:FAILED\n");
 			exit(EXIT_FAILURE);
 		}
-		printf("ZzzZZz");
-	}while (reponse.cle_sem!=-1 && !sigRecu);
+		printf("ZzzZZz\n");
+	};
 	requete.type = TYPE_REPONSE;
     requete.pid = getpid();
 

@@ -109,7 +109,7 @@ int main(int argc, char *argv[]){
     printf("ee\n");
     /* Création de la file si elle n'existe pas */
     msqid = creer_file(cle_msg);
-    printf("LA FILE DE MESSAGE CREE ET INITIALISES\n");
+    printf("LA FILE DE MESSAGE CREE ET INITIALISES MSQID : %d\n",msqid);
     /* Création du segment */
     printf("DANS CONTROLEUR TAILLE = %ld\n", taille_titre);
     shmid = creer_segment(&segment, cle_shm, nom_fichier, taille_titre, nbMaxVoitures);
