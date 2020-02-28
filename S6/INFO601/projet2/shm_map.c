@@ -3,12 +3,11 @@
 #include "ncurses.h"
 #include "defines.h"
 
-#define NB_THREAD 4
-#define LIMIT 2
+
 #define N 2
-/*SERT A RIEN, EN PLUS T'AS INVERSÉ*/
-#define COLONNE 15
-#define ROW 30
+
+    int semid;
+    struct sembuf op;
 /**
  * initialise la carte du segment partagé à '0'
  * @param carte carte_t du segment
@@ -109,7 +108,7 @@ void charger_carte(char *nom_fichier, carte_t *carte, size_t *taille){
         exit(EXIT_FAILURE);
     }
 }
-void affiche_carte(carte_t *carte){
+void affiche_carte(WINDOW* sim,carte_t *carte){
     int i,j;
     for(i = 0; i<LINE; i++){
         for(j = 0; j<COL; j++){
@@ -118,7 +117,7 @@ void affiche_carte(carte_t *carte){
         printf("\n");
      }
     /* Affichage matrice */
-    /*for(i = 0; i<LINE; i++){
+    for(i = 0; i<LINE; i++){
         for(j = 0; j<COL; j++){
             if((carte->carte[i][j]) == 0){
                 wattron(sim, COLOR_PAIR(0));
@@ -136,61 +135,61 @@ void affiche_carte(carte_t *carte){
                 wattroff(sim, COLOR_PAIR(2));
             }
         }
-    }*/
+    }
 }
 
-/*void toLeft(WINDOW* simulation, int* row, int* col, int* mat){
+void toLeft(WINDOW* simulation, int row, int col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
-	mvwprintw(simulation,*row,*col," ");
+	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(3));
-	mat[COLONNE*(*row)+(*col)]=0;
-	(*col)--;
-	mat[COLONNE*(*row)+(*col)]=2;
+	mat[COL*(row)+(col)]=0;
+	(col)--;
+	mat[COL*(row)+(col)]=2;
 	wattron(simulation, COLOR_PAIR(1));
-	mvwprintw(simulation, *row, *col," ");
+	mvwprintw(simulation, row, col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
 
-void toRight(WINDOW* simulation, int* row, int* col, int* mat){
+void toRight(WINDOW* simulation, int row, int col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
-	mvwprintw(simulation,*row,*col," ");
+	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(3));
-	mat[COLONNE*(*row)+(*col)]=0;
-	(*col)++;
-	mat[COLONNE*(*row)+(*col)]=2;
+	mat[COL*(row)+(col)]=0;
+	(col)++;
+	mat[COL*(row)+(col)]=2;
 	wattron(simulation, COLOR_PAIR(1));
-	mvwprintw(simulation,*row,*col," ");
+	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
 
-void toUp(WINDOW* simulation, int* row, int* col, int* mat){
+void toUp(WINDOW* simulation, int row, int col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
-	mvwprintw(simulation,*row,*col," ");
+	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(3));
-	mat[COLONNE*(*row)+(*col)]=0;
-	(*row)++;
-	mat[COLONNE*(*row)+(*col)]=2;
+	mat[COL*(row)+(col)]=0;
+	(row)++;
+	mat[COL*(row)+(col)]=2;
 	wattron(simulation, COLOR_PAIR(1));
-	mvwprintw(simulation,*row,*col," ");
+	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
 
-void toDown(WINDOW* simulation, int* row, int* col, int* mat){
+void toDown(WINDOW* simulation, int row, int col, int* mat){
 	wattron(simulation, COLOR_PAIR(3));
-	mvwprintw(simulation,*row,*col," ");
+	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(3));
-	mat[COLONNE*(*row)+(*col)]=0;
-	(*row)--;
-	mat[COLONNE*(*row)+(*col)]=2;
+	mat[COL*(row)+(col)]=0;
+	(row)--;
+	mat[COL*(row)+(col)]=2;
 	wattron(simulation, COLOR_PAIR(1));
-	mvwprintw(simulation,*row,*col," ");
+	mvwprintw(simulation,row,col," ");
 	wrefresh(simulation);
 	wattroff(simulation, COLOR_PAIR(1));
 }
@@ -209,7 +208,7 @@ int  liberation(struct sembuf op){
     return retour;
 }
 
-int attente(vstruct sembuf opoid *arg){
+int attente(struct sembuf op){
     int retour;
     printf("  attente du sémaphore Sn -> P(Sn)\n");
     op.sem_num = 1;
@@ -227,7 +226,7 @@ void* suppression(struct sembuf op){
      int semid;
 
 
-  if((semid = semget((key_t)CLE, 0, 0)) == -1) {
+  if((semid = semget((key_t)CLE_MSG, 0, 0)) == -1) {
     perror("Erreur lors de la recuperation du tableau de sémaphores ");
     exit(EXIT_FAILURE);
   }
@@ -244,18 +243,18 @@ void* suppression(struct sembuf op){
 }
 
 
-int semid;
-struct sembuf op;
 
-void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
+void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal) {
+
+    int semid;
+    struct sembuf op;
 	int i = 0;
     int booleen=-1;
-    if((semid = semget((key_t)CLE, 0, 0)) == -1) {
+    if((semid = semget((key_t)CLE_MSG, 0, 0)) == -1) {
     perror("Erreur lors de la récupération du tableau de sémaphores ");
     exit(EXIT_FAILURE);
     }
-	while (i < LIMIT) {
-        attente(op);
+	while (attente(op)<0) {
         if(semop(semid, &op, 1) == -1) {
          perror("Erreur lors de l'opération op sur le sémaphore ");
          exit(EXIT_FAILURE);
@@ -264,21 +263,21 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
 
         switch(cardinal){
             case 0:
-                if(carte->carte[COLONNE*(v->y)-1+(v->x)]==0){
-                    toLeft(WINDOW* simulation, v->x, v->y, int* carte);
+                if(carte->carte[COL*(v->y )-1+(v->x)]==0){
+                    toLeft( simulation, v->x, v->y , carte->carte);
                 }else{
                     while(booleen!=1){
                         randomValue = rand() % N;
                         switch(randomValue){
                             case 0:
-                                if(carte->carte[COLONNE*(v->y)+(v->x)-1]==0){
-                                  toUp(WINDOW* simulation, v.x, v.y, int* carte);
+                                if(carte->carte[COL*(v->y )+(v->x)-1]==0){
+                                  toUp( simulation, v->x, v->y ,carte->carte);
                                   booleen=1;
                                 }
                             break;
                             case 1:
-                                if(carte->carte[COLONNE*(v->y)+(v->x)+1]==0){
-                                     toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                                if(carte->carte[COL*(v->y )+(v->x)+1]==0){
+                                     toDown(simulation, v->x, v->y ,  carte->carte);
                                      booleen=1;
                                 }
                             break;
@@ -291,22 +290,22 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                 }
                 break;
             case 1:
-                if(carte->carte[COLONNE*(v->y)+1+(v->x)]==0){
-                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
+                if(carte->carte[COL*(v->y )+1+(v->x)]==0){
+                    toRight( simulation, v->x, v->y , carte->carte);
                 }
                 else{
                      while(booleen!=1){
                         randomValue = rand() % N;
                         switch(randomValue){
                             case 0:
-                                if(carte->carte[COLONNE*(v->y)+(v->x)-1]==0){
-                                  toUp(WINDOW* simulation, v.x, v.y, int* carte);
+                                if(carte->carte[COL*(v->y )+(v->x)-1]==0){
+                                  toUp( simulation, v->x, v->y , carte->carte);
                                   booleen=1;
                                 }
                             break;
                             case 1:
-                                if(carte->carte[COLONNE*(v->y)+(v->x)+1]==0){
-                                     toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                                if(carte->carte[COL*(v->y )+(v->x)+1]==0){
+                                     toDown(simulation, v->x, v->y ,  carte->carte);
                                      booleen=1;
                                 }
                             break;
@@ -319,22 +318,22 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                 }
                 break;
             case 2 :
-                if(carte->carte[COLONNE*(v->y)+(v->x)-1]==0){
-                    toUp(WINDOW* simulation, v.x, v.y, int* carte);
+                if(carte->carte[COL*(v->y )+(v->x)-1]==0){
+                    toUp( simulation, v->x, v->y , carte->carte);
                 }
                 else{
                      while(booleen!=1){
                         randomValue = rand() % N;
                         switch(randomValue){
                             case 0:
-                                if(carte->carte[COLONNE*(v->y)+1+(v->x)]==0){
-                                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
+                                if(carte->carte[COL*(v->y )+1+(v->x)]==0){
+                                    toRight( simulation, v->x, v->y ,  cacarte->carte);
                                 booleen=1
                                 }
                             break;
                             case 1:
-                                if(carte->carte[COLONNE*(v->y)-1+(v->x)]==0){
-                                  toLeft(WINDOW* simulation, v.x, v.y, int* carte);
+                                if(carte->carte[COL*(v->y )-1+(v->x)]==0){
+                                  toLeft( simulation, v->x, v->y ,carte->carte);
                                   booleen=1;
                                 }
                             break;
@@ -347,21 +346,21 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                 }
                 break;
             case 3 :
-                if(carte->carte[COLONNE*(v->y)+(v->x)+1]==0){
-                    toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                if(carte->carte[COL*(v->y )+(v->x)+1]==0){
+                    toDown(simulation, v->x, v->y ,  carte->carte);
                 }else{
                      while(booleen!=1){
                         randomValue = rand() % N;
                         switch(randomValue){
                             case 0:
-                                if(carte->carte[COLONNE*(v->y)+1+(v->x)]==0){
-                                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
+                                if(carte->carte[COL*(v->y )+1+(v->x)]==0){
+                                    toRight( simulation, v->x, v->y ,  carte->carte);
                                 booleen=1
                                 }
                             break;
                             case 1:
-                                if(carte->carte[COLONNE*(v->y)-1+(v->x)]==0){
-                                     toLeft(WINDOW* simulation, v.x, v.y, int* carte);
+                                if(carte->carte[COL*(v->y )-1+(v->x)]==0){
+                                     toLeft(simulation, v->x, v->y , carte->carte);
                                      booleen=1;
                                 }
                             break;
@@ -380,6 +379,6 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
             }
         }
 	}
-	pthread_exit(EXIT_SUCCESS);
 
-}*/
+
+}
