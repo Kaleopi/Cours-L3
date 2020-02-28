@@ -3,7 +3,7 @@
 
 #define NB_THREAD 4
 #define LIMIT 2
-#define N 4
+#define N 3
 
 /**
  * initialise la carte du segment partagé à '0'
@@ -30,9 +30,10 @@ void initialiser_carte(carte_t *carte){
 int semid;
 struct sembuf op;
 
-void * job_voiture(voiture_t *v ,carte_t *c,int *cardinal) {
+void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
 	// Récupération de l'identifiant du thread
 	int i = 0;
+    int booleen=-1;
     if((semid = semget((key_t)CLE, 0, 0)) == -1) {
     perror("Erreur lors de la récupération du tableau de sémaphores ");
     exit(EXIT_FAILURE);
@@ -46,28 +47,137 @@ void * job_voiture(voiture_t *v ,carte_t *c,int *cardinal) {
         }else{
         //choix de la direction  
         int randomValue;
-        randomValue = rand() % N;
+
         // 
         //manque les arguments des to something
         //à parametrer 
         //
-        switch( randomValue ){
+ 
+        switch(cardinal){
             case 0:
-                toLeft(WINDOW* simulation, int* row, int* col, int* carte);
+                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
+                    toLeft(WINDOW* simulation, v->x, v->y, int* carte);
+                }else{
+                    while(booleen!=1){
+                        randomValue = rand() % N;
+                        switch(randomValue){
+                            case 0:
+                                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
+                                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
+                                booleen=1
+                                }
+                            break;
+                            case 1:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
+                                  toUp(WINDOW* simulation, v.x, v.y, int* carte);
+                                  booleen=1;
+                                }
+                            break;
+                            case 2:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
+                                     toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                                     booleen=1;
+                                }
+                            break;
+                        }
+                    }
+                }
                 break;
             case 1:
-                toRight(WINDOW* simulation, int* row, int* col, int* carte);
+                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
+                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
+                }
+                else{
+                     while(booleen!=1){
+                        randomValue = rand() % N;
+                        switch(randomValue){
+                            case 0:
+                                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
+                                    toLeft(WINDOW* simulation, v.x, v.y, int* carte);
+                                booleen=1
+                                }
+                            break;
+                            case 1:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
+                                  toUp(WINDOW* simulation, v.x, v.y, int* carte);
+                                  booleen=1;
+                                }
+                            break;
+                            case 2:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
+                                     toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                                     booleen=1;
+                                }
+                            break;
+                        }
+                    }
+                    
+                }
                 break;
             case 2 :
-                toUp(WINDOW* simulation, int* row, int* col, int* carte);
+                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
+                    toUp(WINDOW* simulation, v.x, v.y, int* carte);
+                }
+                else{
+                     while(booleen!=1){
+                        randomValue = rand() % N;
+                        switch(randomValue){
+                            case 0:
+                                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
+                                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
+                                booleen=1
+                                }
+                            break;
+                            case 1:
+                                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
+                                  toLeft(WINDOW* simulation, v.x, v.y, int* carte);
+                                  booleen=1;
+                                }
+                            break;
+                            case 2:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
+                                     toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                                     booleen=1;
+                                }
+                            break;
+                        }
+                    }
+                }
                 break;
             case 3 :
-                toDown(WINDOW* simulation, int* row, int* col, int* carte);
+                if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
+                    toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                }else{
+                     while(booleen!=1){
+                        randomValue = rand() % N;
+                        switch(randomValue){
+                            case 0:
+                                if(carte->carte[COLONNE*(v->y)+cardinal+(v->x)]==0){
+                                    toRight(WINDOW* simulation, v.x, v.y, int* carte);
+                                booleen=1
+                                }
+                            break;
+                            case 1:
+                                if(carte->carte[COLONNE*(v->y)+(v->x)-cardinal]==0){
+                                  toUp(WINDOW* simulation, v.x, v.y, int* carte);
+                                  booleen=1;
+                                }
+                            break;
+                            case 2:
+                                if(carte->carte[COLONNE*(v->y)-cardinal+(v->x)]==0){
+                                     toLeft(WINDOW* simulation, v.x, v.y, int* carte);
+                                     booleen=1;
+                                }
+                            break;
+                        }
+                    }
+                }
                 break;
             default:
                 printf("plop");
                 break;
-        }
+            }
+        
         //attente
 		if(sem_wait(&op) == -1){
          perror("Erreur lors de l'opération wait sur le sémaphore ");
