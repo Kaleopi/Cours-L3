@@ -157,8 +157,8 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
         int randomValue;
 
         // 
-        //manque les arguments des to something
-        //à parametrer 
+        //déplacement
+        //
         //
  
         switch(cardinal){
@@ -189,6 +189,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                             break;
                         }
                     }
+                    booleen=-1;
                 }
                 break;
             case 1:
@@ -219,7 +220,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                             break;
                         }
                     }
-                    
+                     booleen=-1;
                 }
                 break;
             case 2 :
@@ -244,12 +245,13 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                             break;
                             case 2:
                                 if(carte->carte[COLONNE*(v->y)+(v->x)+cardinal]==0){
-                                     toDown(WINDOW* simulation, v.x, v.y, int* carte);
-                                     booleen=1;
+                                    toDown(WINDOW* simulation, v.x, v.y, int* carte);
+                                booleen=1;
                                 }
                             break;
                         }
                     }
+                     booleen=-1;
                 }
                 break;
             case 3 :
@@ -279,6 +281,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
                             break;
                         }
                     }
+                     booleen=-1;
                 }
                 break;
             default:
@@ -288,19 +291,20 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int *cardinal) {
         
       
 		// Section critique
-		printf("Je suis la voiture [%i] et je vais dormir \n", tid);
+		printf(" je vais dormir \n");
 		if (sleepnano(tim,time2) == -1) {
          perror("Erreur lors de l'opération sur le sémaphore ");
          exit(EXIT_FAILURE);
         }
-		printf("Je suis le voiture [%i] et j'ai fini ma sieste\n", tid);
+		printf(" j'ai fini ma sieste\n");
 		// On relache le sémaphore
 		if (liberation(op) == -1) {
          perror("Erreur lors de la liberation sur le sémaphore ");
          exit(EXIT_FAILURE);
-        };
-		i++;
         }
+        }
+        
 	}
 	pthread_exit(EXIT_SUCCESS);
+
 }
