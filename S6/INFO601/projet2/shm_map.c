@@ -35,10 +35,10 @@ void initialiser_carte(carte_t *carte){
  */
 int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t taille, int nbVoitures){
     int shmid;
-    /*printf("SIZE  = %ld\n", sizeof(int)+(sizeof(char)*(*taille+1))+sizeof(carte_t)+(sizeof(voiture_t)*nbVoitures));*/
-    printf("TAILLE = %ld\n", taille+1);
-    printf("taille carte = %ld\n",sizeof(carte_t));
-    printf("taille voitures = %ld\n",sizeof(voiture_t)*nbVoitures);
+    /*printw("SIZE  = %ld\n", sizeof(int)+(sizeof(char)*(*taille+1))+sizeof(carte_t)+(sizeof(voiture_t)*nbVoitures));*/
+    printw("TAILLE = %ld\n", taille+1);
+    printw("taille carte = %ld\n",sizeof(carte_t));
+    printw("taille voitures = %ld\n",sizeof(voiture_t)*nbVoitures);
     if((shmid = shmget(cle_shm, sizeof(int)+(sizeof(char)*taille+1)+sizeof(carte_t)+(sizeof(voiture_t)*nbVoitures), S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
         if(errno == EEXIST)
             fprintf(stderr, "Segment (cle=%d) existant\n", cle_shm);
@@ -53,7 +53,7 @@ int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t taille, 
         exit(EXIT_FAILURE);
     }
     if((segment->titre = malloc(sizeof(char)*taille))==NULL){
-        printf("Erreur allocation segment->titre\n");
+        printw("Erreur allocation segment->titre\n");
     };
     strcpy(segment->titre, titre);
     segment->shmid = shmid;
@@ -81,7 +81,7 @@ void charger_carte(char *nom_fichier, carte_t *carte, size_t *taille){
         ncurses_stopper();*/
         exit(EXIT_FAILURE);
     }
-    printf("fd : %d\n",fd);
+    printw("fd : %d\n",fd);
 
     /* taille nom décor */
     if((v = read(fd, taille, sizeof(size_t))) == -1){
@@ -89,7 +89,7 @@ void charger_carte(char *nom_fichier, carte_t *carte, size_t *taille){
         fprintf(stderr,"Erreur lors de la lecture taille nom_decor : \"%s\"\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
-    printf("taille : %ld\n",*taille);
+    printw("taille : %ld\n",*taille);
     if((nom_decor = malloc(sizeof(char)*(*taille)))==NULL){
         fprintf(stderr, "Erreur : allocation nom_decor\n");
     };
@@ -113,9 +113,9 @@ void affiche_carte(WINDOW* sim,carte_t *carte){
     int i,j;
     for(i = 0; i<LINE; i++){
         for(j = 0; j<COL; j++){
-            printf("%d",carte->carte[i][j]);
+            printw("%d",carte->carte[i][j]);
         }
-        printf("\n");
+        printw("\n");
      }
     /* Affichage matrice */
     for(i = 0; i<LINE; i++){
@@ -197,7 +197,7 @@ void toDown(WINDOW* simulation, int row, int col, carte_t *carte){
 
 int  liberation(struct sembuf op){
     int retour;
-    printf(" libération du semaphore Sn -> V(Sn)\n");
+    printw(" libération du semaphore Sn -> V(Sn)\n");
     op.sem_num = 0;
     op.sem_op = 1;
     op.sem_flg = 0;
@@ -211,7 +211,7 @@ int  liberation(struct sembuf op){
 
 int attente(struct sembuf op){
     int retour;
-    printf("  attente du sémaphore Sn -> P(Sn)\n");
+    printw("  attente du sémaphore Sn -> P(Sn)\n");
     op.sem_num = 1;
     op.sem_op = -1;
     op.sem_flg = 0;
@@ -238,7 +238,7 @@ void* suppression(struct sembuf op){
     exit(EXIT_FAILURE);
   }
 
-  printf("Tableau de semaphores supprimé.\n");
+  printw("Tableau de semaphores supprimé.\n");
 
   return EXIT_SUCCESS;
 }
@@ -282,7 +282,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal,WINDOW*simulation) 
                                 }
                             break;
                             default:
-                            printf("plop");
+                            printw("plop");
                             break;
                         }
                     }
@@ -310,7 +310,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal,WINDOW*simulation) 
                                 }
                             break;
                             default:
-                            printf("plop");
+                            printw("plop");
                             break;
                         }
                          booleen=-1;
@@ -339,7 +339,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal,WINDOW*simulation) 
                                 }
                             break;
                             default:
-                            printf("plop");
+                            printw("plop");
                             break;
                         }
                     }
@@ -366,7 +366,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal,WINDOW*simulation) 
                                 }
                             break;
                             default:
-                            printf("plop");
+                            printw("plop");
                             break;
 
                             }
@@ -375,7 +375,7 @@ void * job_voiture(voiture_t *v ,carte_t *carte,int cardinal,WINDOW*simulation) 
                 }
                 break;
             default:
-                printf("plop");
+                printw("plop");
                 break;
             }
         }
