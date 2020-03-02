@@ -1,0 +1,11 @@
+Project : Voiture invisible
+Author : GIGOUT Thomas & DAUNIQUE Wilfried
+
+1 - Éxecuter "make".
+    Suite à ça, deux éxecutables sont créés : ./controleur et ./voiture.
+    cle =int;
+    ./controleur fichier.bin cle cle cle permet d'initialiser le programme avec la carte fichier.bin et avec le code de cle.
+	./voiture envoie une requete et cree une voiture
+  
+
+
