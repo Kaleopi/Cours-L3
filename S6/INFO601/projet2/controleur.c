@@ -39,13 +39,14 @@ int main(int argc, char *argv[]){
     int semid;
     unsigned short val[2];
     /*struct sembuf op;*/
-
+    printf("test\n");
     sa.sa_handler = handler;
 
     sa.sa_flags = 0;
     voitures_i = 0;
     val[0] = 0;
     val[1] = 0;
+    taille_titre = 0;
 
     sigaction(SIGINT, &sa, NULL);
     voitures_i = 0;
@@ -64,26 +65,8 @@ int main(int argc, char *argv[]){
         error_args();
         exit(EXIT_FAILURE);
     }
-
-    /* Création du tableau de sémaphore */
-    if((semid = semget(cle_sem, 2, S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
-        if(errno == EEXIST)
-        fprintf(stderr, "Tableau de sémaphores (cle=%d) existant\n", cle_sem);
-        else
-        perror("Erreur lors de la création du tableau de sémaphores ");
-        exit(EXIT_FAILURE);
-    }
-
-    /* Initialisation des sémaphores */
-    if(semctl(semid, 0, SETALL, val) == -1) {
-        perror("Erreur lors de l'initialisation des sémaphores ");
-        exit(EXIT_FAILURE);
-    }
-    printw("LES SEMAPHONRES SONT CREE ET INITIALISES\n");
-    printw("cc\n");
-
     initialiser_carte(&carte);
-    printw("dd\n");
+    printf("dd\n");
     /*Initialisation de ncurses*/
     ncurses_initialiser();
     ncurses_souris();
@@ -100,25 +83,40 @@ int main(int argc, char *argv[]){
 
     /*Initialisation des fenêtres*/
     /*fen princ*/
-    bordure = newwin(LINE+2,COL+2,10,0);
+    bordure = newwin(LINE+2,COL+2,0,0);
     etat = newwin(LINE,COL,COL-3,0);
     box(bordure, 0,0);
     box(etat,0,0);
     sim = subwin(bordure,LINE+1,COL,2,1);
     scrollok(sim,TRUE);
   
-
-    charger_carte(nom_fichier, &carte, &taille_titre);
+    charger_carte(nom_fichier, bordure, sim, &carte, taille_titre);
 
     /* Création de la file si elle n'existe pas */
     msqid = creer_file(cle_msg);
-    mvwprintw(etat,COL-2,0,"LA FILE DE MESSAGE CREE ET INITIALISES MSQID : %d //",msqid);
-    printw("LA FILE DE MESSAGE CREE ET INITIALISES MSQID : %d \n//",msqid);
+    /*mvwprintw(etat,COL-2,0,"LA FILE DE MESSAGE CREE ET INITIALISES MSQID : %d //",msqid);
+    printw("LA FILE DE MESSAGE CREE ET INITIALISES MSQID : %d \n//",msqid);*/
     /* Création du segment */
-    printw("DANS CONTROLEUR TAILLE = %ld \n//", taille_titre);
+    /*printw("DANS CONTROLEUR TAILLE = %ld \n//", taille_titre);*/
     shmid = creer_segment(&segment, cle_shm, nom_fichier, taille_titre, nbMaxVoitures);
-    printw("SEGMENT CREE ET INITIALISES \n//");
-    printw("%d\n",shmid);
+    /*printw("SEGMENT CREE ET INITIALISES \n//");
+    printw("%d\n",shmid);*/
+    /* Création du tableau de sémaphore */
+    if((semid = semget(cle_sem, 2, S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
+        if(errno == EEXIST)
+        fprintf(stderr, "Tableau de sémaphores (cle=%d) existant\n", cle_sem);
+        else
+        perror("Erreur lors de la création du tableau de sémaphores ");
+        exit(EXIT_FAILURE);
+    }
+
+    /* Initialisation des sémaphores */
+    if(semctl(semid, 0, SETALL, val) == -1) {
+        perror("Erreur lors de l'initialisation des sémaphores ");
+        exit(EXIT_FAILURE);
+    }
+    /*printw("LES SEMAPHONRES SONT CREE ET INITIALISES\n");
+    printw("cc\n");*/
     /*afficher_carte(&carte);*/
 
     wrefresh(bordure);
@@ -126,7 +124,7 @@ int main(int argc, char *argv[]){
     wrefresh(etat);
     printw("Pressez F2 pour quitter...");
     while((!sigintRecu) && (i=getch()!=KEY_F(2))){
-        printw("CONTROLEUR : en attente d'une requête\n");
+        /*printw("CONTROLEUR : en attente d'une requête\n");*/
         if((msgrcv(msqid , &req, sizeof(requete_t)-sizeof(long), -2, 0)==-1) && !sigintRecu){
             perror("Erreur lors de la réception de la requête");
             exit(EXIT_FAILURE);
@@ -134,7 +132,7 @@ int main(int argc, char *argv[]){
         if(!sigintRecu && req.type == TYPE_REQUETE){
             tab_pid[voitures_i]=req.pid;
             voitures_i++;
-            printw("Voiture %d veut se connecter\ncpt voiture : %d\n",req.pid, voitures_i);
+            /*printw("Voiture %d veut se connecter\ncpt voiture : %d\n",req.pid, voitures_i);*/
         }
 
         /* Envoi de la réponse */
@@ -146,7 +144,7 @@ int main(int argc, char *argv[]){
             perror("controleur : Erreur lors de l'envoi de la réponse");
             exit(EXIT_FAILURE);
         }
-        printw("Réponse envoyée\n");
+        /*printw("Réponse envoyée\n");*/
 
         if(!sigintRecu && req.type == TYPE_REPONSE){
             printw("mise à jour affichage ncurses");
@@ -155,7 +153,7 @@ int main(int argc, char *argv[]){
 
     /* Kill des voitures après avoir reçu SIGINT */
     for(i=0; i<voitures_i; i++){
-        printw("CONTROLEUR : envoie signal arrêt au processus %d\n", tab_pid[i]);
+        /*printw("CONTROLEUR : envoie signal arrêt au processus %d\n", tab_pid[i]);*/
         if(kill(tab_pid[i], SIGRTMIN) == -1){
             if(errno == EINVAL)
                 fprintf(stderr, "Erreur lors de la terminaison du kill (pid=%d)\n",tab_pid[i]);
@@ -186,9 +184,9 @@ int main(int argc, char *argv[]){
         perror("CONSTROLEUR : Erreur lors de la suppression de la memoire partagee ");
         exit(EXIT_FAILURE);
     }
-    printw("CONSTROLEUR : Memoire partagee supprimée.\n");
+    /*printw("CONSTROLEUR : Memoire partagee supprimée.\n");
 
-    printw("CONSTROLEUR : Fini.\n");
+    printw("CONSTROLEUR : Fini.\n");*/
 
     delwin(sim);
     delwin(bordure);

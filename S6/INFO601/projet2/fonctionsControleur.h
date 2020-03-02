@@ -3,6 +3,6 @@
 #include "messages.h"
 #include "defines.h"
 
-void afficher_carte(carte_t *);
+void term_afficher_carte(carte_t *);
 int creer_file();
 void error_args();

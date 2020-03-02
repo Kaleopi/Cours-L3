@@ -17,10 +17,18 @@
 void initialiser_carte(carte_t *carte){
     int i;
     int j;
+    printf("initialize");
     for(i=0 ; i<LINE ; i++){
         for(j=0 ; j<COL ; j++){
             carte->carte[i][j]= 0;
         }
+    }
+    printf("initialize stop");
+    for(i=0 ; i<LINE ; i++){
+        for(j=0 ; j<COL ; j++){
+            printf("%d",carte->carte[i][j]);
+        }
+        printf("\n");
     }
 }
 
@@ -36,9 +44,9 @@ void initialiser_carte(carte_t *carte){
 int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t taille, int nbVoitures){
     int shmid;
     /*printw("SIZE  = %ld\n", sizeof(int)+(sizeof(char)*(*taille+1))+sizeof(carte_t)+(sizeof(voiture_t)*nbVoitures));*/
-    printw("TAILLE = %ld\n", taille+1);
+    /*printw("TAILLE = %ld\n", taille+1);
     printw("taille carte = %ld\n",sizeof(carte_t));
-    printw("taille voitures = %ld\n",sizeof(voiture_t)*nbVoitures);
+    printw("taille voitures = %ld\n",sizeof(voiture_t)*nbVoitures);*/
     if((shmid = shmget(cle_shm, sizeof(int)+(sizeof(char)*taille+1)+sizeof(carte_t)+(sizeof(voiture_t)*nbVoitures), S_IRUSR | S_IWUSR | IPC_CREAT | IPC_EXCL)) == -1) {
         if(errno == EEXIST)
             fprintf(stderr, "Segment (cle=%d) existant\n", cle_shm);
@@ -53,7 +61,7 @@ int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t taille, 
         exit(EXIT_FAILURE);
     }
     if((segment->titre = malloc(sizeof(char)*taille))==NULL){
-        printw("Erreur allocation segment->titre\n");
+        printf("Erreur allocation segment->titre\n");
     };
     strcpy(segment->titre, titre);
     segment->shmid = shmid;
@@ -69,54 +77,42 @@ int creer_segment(shmmap_t* segment, key_t cle_shm, char* titre, size_t taille, 
  * @param carte carte du segment partagé à remplir avec les infos du fichier
  * @return void
  */
-void charger_carte(char *nom_fichier, carte_t *carte, size_t *taille){
-    int fd, v = 0;
+void charger_carte(char *nom_fichier, WINDOW * bordure, WINDOW * sim, carte_t *carte, size_t taille){
+    int i = 0, fd, j = 0, v = 0;
+
     char *nom_decor;
 
     /* ouverture du fichier */
     if((fd = open(nom_fichier, O_RDONLY)) == -1){
         fprintf(stderr, "Erreur lors de l'ouverture du fichier \"%s\"\n", strerror(errno));
-        /*delwin(sim);
+        delwin(sim);
         delwin(bordure);
-        ncurses_stopper();*/
+        ncurses_stopper();
         exit(EXIT_FAILURE);
     }
-    printw("fd : %d\n",fd);
-
     /* taille nom décor */
-    if((v = read(fd, taille, sizeof(size_t))) == -1){
+    if((v = read(fd, &taille, sizeof(size_t))) == -1){
         /* Gestion d'erreur */
         fprintf(stderr,"Erreur lors de la lecture taille nom_decor : \"%s\"\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
-    printw("taille : %ld\n",*taille);
-    if((nom_decor = malloc(sizeof(char)*(*taille)))==NULL){
+    if((nom_decor = malloc(sizeof(char)*taille))==NULL){
         fprintf(stderr, "Erreur : allocation nom_decor\n");
     };
-
     /* nom décor */
-    if((v = read(fd, nom_decor, (*taille)*sizeof(char))) == -1){
+    if((v = read(fd, nom_decor, taille*sizeof(char))) == -1){
         /* Gestion d'erreur */
         fprintf(stderr, "Erreur lors de la lecture du nom_decor : \"%s\"\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
-    /*mvwprintw(bordure,0,1, nom_decor);*/
+    mvwprintw(bordure,0,1, nom_decor);
 
     /* matrice */
     if ((v = read(fd, carte->carte, COL*LINE*sizeof(char))) == -1){
         /* Gestion d'erreur */
-        fprintf(stderr, "Erreur lors de la lecture de la matrice : \"%s\"\n", strerror(errno));
+        printf("Erreur lors de la lecture de la matrice : \"%s\"\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
-}
-void affiche_carte(WINDOW* sim,carte_t *carte){
-    int i,j;
-    for(i = 0; i<LINE; i++){
-        for(j = 0; j<COL; j++){
-            printw("%d",carte->carte[i][j]);
-        }
-        printw("\n");
-     }
     /* Affichage matrice */
     for(i = 0; i<LINE; i++){
         for(j = 0; j<COL; j++){
