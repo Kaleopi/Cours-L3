@@ -21,8 +21,9 @@ void* afficherMatrices(void *args){
 	while(1){
 		pthread_mutex_lock(&serveurAff.mutex);
 		while(!serveurAff.rat){
-		pthread_cond_wait(&serveurAff.requete, &serveurAff.mutex);
+			pthread_cond_wait(&serveurAff.requete, &serveurAff.mutex);
 		}
+		serveurAff.rat = 0;
 		/*Afficher matrices*/
 		pthread_cond_broadcast(&serveurAff.termine);
 		pthread_mutex_unlock(&serveurAff.mutex);

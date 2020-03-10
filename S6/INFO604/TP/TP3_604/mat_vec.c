@@ -6,11 +6,13 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+
+
 #define M	6
 #define N	6
 static pthread_mutex_t  mutex = PTHREAD_MUTEX_INITIALIZER;
 typedef struct stepOne_t{
-	pthread_mutex_t mutex; 
+	pthread_mutex_t mutex;
     pthread_cond_t cond;
 	int **matrice;
 	int *vecteur;
@@ -86,7 +88,7 @@ int main(int argc, char *argv[]) {
 
 	vecResultat = (int *) malloc(sizeof(int) * M);
 	for (i = 0; i < M; i++)
-		vecResultat[i] = -1;	
+		vecResultat[i] = -1;
 
 	afficherMatrice(matrice, M, N);
 	afficherVecteur(vecteur, N);
@@ -113,4 +115,3 @@ int main(int argc, char *argv[]) {
 
 	return 0;
 }
-
