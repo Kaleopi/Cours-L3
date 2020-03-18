@@ -13,7 +13,7 @@
 #define NB_LIGNES_OUTILS	9
 #define NB_COL_OUTILS		49
 
-#define MAX_poissons			3				/* Nombre maximum de poissons de la simulation */
+#define MAX_poissons			1			/* Nombre maximum de poissons de la simulation */
 
 #define VIDE				0				/* Identifiants des elements pouvant etre */
 #define OBSTACLE			1				/* places sur la grille de simulation */
@@ -96,7 +96,10 @@ WINDOW *creer_fenetre_sim() {
 	WINDOW *fen_sim;
 	
 	fen_sim = newwin(NB_LIGNES_SIM, NB_COL_SIM, 1, 1);
-	
+	initscr();
+	start_color();
+	init_pair(1,COLOR_WHITE,COLOR_BLUE);
+	wbkgd(fen_sim,COLOR_PAIR(1));
 	return fen_sim;
 }
 
@@ -308,20 +311,22 @@ void *routine_poisson(void *arg) {
 int main(int argc, char *argv[]) {
 	WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_outils;
 	MEVENT event;
+
 	int ch, i, item_actif = OBSTACLE;
 	int randomx,randomy;
 	coord_t *coord;
-	
+
 	ncurses_initialiser();
 	simulation_initialiser();
-	
+
 	fen_box_sim = creer_fenetre_box_sim();
 	fen_sim = creer_fenetre_sim();
 	fen_box_msg = creer_fenetre_box_msg();
 	fen_msg = creer_fenetre_msg();
 	fen_box_outils = creer_fenetre_box_outils();
 	fen_outils = creer_fenetre_outils();
-	
+
+
 	mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
 	wrefresh(stdscr);
 	srand( time( NULL ) );
@@ -329,7 +334,7 @@ int main(int argc, char *argv[]) {
 	
 	while((ch = getch()) != KEY_F(2)) {
 	while(i<MAX_poissons){
-		sleep(1);
+		
 		randomx=rand()%NB_COL_SIM;
 		randomy=rand()%NB_LIGNES_SIM;
 		pthread_mutex_lock(&grille[randomy- 1][randomx - 1].mutex);
