@@ -12,8 +12,10 @@
 #define NB_COL_MSG			49
 #define NB_LIGNES_OUTILS	9
 #define NB_COL_OUTILS		49
+#define COLS 150
+#define LINES 200
 
-#define MAX_poissons			1			/* Nombre maximum de poissons de la simulation */
+#define MAX_poissons			3			/* Nombre maximum de poissons de la simulation */
 
 #define VIDE				0				/* Identifiants des elements pouvant etre */
 #define OBSTACLE			1				/* places sur la grille de simulation */
@@ -300,7 +302,7 @@ void *routine_poisson(void *arg) {
 		}
 		
 		sleep(1);
-		
+		wrefresh(fen_sim);
 	}
 
 	free(coord);
@@ -316,8 +318,18 @@ int main(int argc, char *argv[]) {
 	int randomx,randomy;
 	coord_t *coord;
 
+	/* Initialisation de ncurses */
 	ncurses_initialiser();
 	simulation_initialiser();
+
+
+	 /* Vérification des dimensions du terminal */
+  	if((COLS< NB_COL_SIM + NB_COL_MSG) || (LINES < NB_LIGNES_SIM + NB_LIGNES_MSG)) {
+      ncurses_stopper();
+      fprintf(stderr, 
+              "Les dimensions du terminal sont insufisantes ");
+      exit(EXIT_FAILURE);
+  }  
 
 	fen_box_sim = creer_fenetre_box_sim();
 	fen_sim = creer_fenetre_sim();
