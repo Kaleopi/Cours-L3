@@ -1,10 +1,3 @@
-/**
- * Ce programme permet d'envoyer un message au serveur via une socket TCP.
- * Le message, passé en argument du programme, est envoyé en deux temps :
- * sa taille, puis le contenu du message. L'adresse IP et le port du serveur
- * sont passés en arguments du programme.
- * @author Cyril Rabat
- **/
 #include <stdlib.h>     /* Pour exit, EXIT_SUCCESS, EXIT_FAILURE */
 #include <sys/socket.h> /* Pour socket */
 #include <arpa/inet.h>  /* Pour IPPROTO_TCP */
