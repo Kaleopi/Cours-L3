@@ -37,9 +37,9 @@ void ncurses_couleurs() {
   start_color();
 
   /* Definition de la palette */
-  init_pair(1, COLOR_WHITE, COLOR_WHITE);  //Flocon
-  init_pair(2, COLOR_BLUE, COLOR_BLUE);   //Obstacle
-  init_pair(3, COLOR_WHITE, COLOR_BLACK); 
+  init_pair(1, COLOR_YELLOW, COLOR_YELLOW);  /*Flocon*/
+  init_pair(2, COLOR_BLUE, COLOR_BLUE);   /*Obstacle*/
+  init_pair(3, COLOR_WHITE, COLOR_BLACK);
   init_pair(4, COLOR_BLACK, COLOR_CYAN);
   }
 
@@ -52,7 +52,7 @@ void ncurses_souris() {
     fprintf(stderr, "Erreur lors de l'initialisation de la souris.\n");
     exit(EXIT_FAILURE);
   }
- 
+
   if(has_mouse() != TRUE) {
     ncurses_stopper();
     fprintf(stderr, "Aucune souris n'est détectée.\n");
@@ -70,7 +70,7 @@ void ncurses_souris() {
 int souris_getpos(int *x, int *y, int *bouton) {
   MEVENT event;
   int resultat = getmouse(&event);
- 
+
   if(resultat == OK) {
     *x = event.x;
     *y = event.y;

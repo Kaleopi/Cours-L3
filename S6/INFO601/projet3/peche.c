@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <ncurses.h>
+#include "ncurses.h"
 
 #define NB_LIGNES_SIM		40				/* Dimensions des fenetres du programme */
 #define NB_COL_SIM			80
@@ -54,10 +55,10 @@ void ncurses_stopper() {
 
 void simulation_initialiser() {
 	int i, j;
-	
+
 	for (i = 0; i < MAX_poissons; i++)		/* Au depart il n'y a aucune poisson dans la simulation */
 		threads_poissons[i] = NULL;
-		
+
 	for (i = 0; i < NB_LIGNES_SIM; i++) {	/* Initialisation des cases de la simulation */
 		for (j = 0; j < NB_COL_SIM; j++) {
 			grille[i][j].element = VIDE;
@@ -69,7 +70,7 @@ void simulation_initialiser() {
 
 void simulation_stopper() {
 	int i;
-	
+
 	for (i = 0; i < MAX_poissons; i++) {
 		if (threads_poissons[i] != NULL) {
 			pthread_cancel(*threads_poissons[i]);
@@ -82,12 +83,12 @@ WINDOW *creer_fenetre_box_sim() {
 /*Creation de la fenetre de contour de la fenetre de simulation */
 
 	WINDOW *fen_box_sim;
-	
+
 	fen_box_sim = newwin(NB_LIGNES_SIM + 2, NB_COL_SIM + 2, 0, 0);
 	box(fen_box_sim, 0, 0);
-	mvwprintw(fen_box_sim, 0, (NB_COL_SIM + 2) / 2 - 5, "SIMULATION");	
+	mvwprintw(fen_box_sim, 0, (NB_COL_SIM + 2) / 2 - 5, "SIMULATION");
 	wrefresh(fen_box_sim);
-	
+
 	return fen_box_sim;
 }
 
@@ -96,7 +97,7 @@ WINDOW *creer_fenetre_sim() {
 /* La simulation est affichee dans cette fenetre */
 
 	WINDOW *fen_sim;
-	
+
 	fen_sim = newwin(NB_LIGNES_SIM, NB_COL_SIM, 1, 1);
 	initscr();
 	start_color();
@@ -109,12 +110,12 @@ WINDOW *creer_fenetre_box_msg() {
 /* Creation de la fenetre de contour de la fenetre de messages */
 
 	WINDOW *fen_box_msg;
-	
+
 	fen_box_msg = newwin(NB_LIGNES_MSG + 2, NB_COL_MSG + 2, 0, NB_COL_SIM + 2);
 	box(fen_box_msg, 0, 0);
 	mvwprintw(fen_box_msg, 0, (NB_COL_MSG + 2) / 2 - 4, "MESSAGES");
 	wrefresh(fen_box_msg);
-	
+
 	return fen_box_msg;
 }
 
@@ -124,10 +125,10 @@ WINDOW *creer_fenetre_msg() {
 /* utilisateur sont affiches dans cete fenetre */
 
 	WINDOW *fen_msg;
-	
+
 	fen_msg = newwin(NB_LIGNES_MSG, NB_COL_MSG, 1, NB_COL_SIM + 3);
 	scrollok(fen_msg, TRUE);
-	
+
 	return fen_msg;
 }
 
@@ -135,12 +136,12 @@ WINDOW *creer_fenetre_box_outils() {
 /* Fenetre de contour de la fenetre des outils */
 
 	WINDOW *fen_box_outils;
-	
+
 	fen_box_outils = newwin(NB_LIGNES_OUTILS + 2, NB_COL_OUTILS + 2, NB_LIGNES_MSG + 2 , NB_COL_SIM + 2);
 	box(fen_box_outils, 0, 0);
 	mvwprintw(fen_box_outils, 0, (NB_COL_OUTILS + 2) / 2 - 3, "OUTILS");
 	wrefresh(fen_box_outils);
-	
+
 	return fen_box_outils;
 }
 
@@ -149,13 +150,13 @@ WINDOW *creer_fenetre_outils() {
 /* Les outils dans cette fenetre sont clickables, l'outil actif etant indique par un X */
 
 	WINDOW *fen_outils;
-	
+
 	fen_outils = newwin(NB_LIGNES_OUTILS, NB_COL_OUTILS, NB_LIGNES_MSG + 3, NB_COL_SIM + 3);
 	mvwprintw(fen_outils, 0, 3, "# : Obstacle\n");
 	mvwprintw(fen_outils, 1, 3, "@ : poisson");
 	mvwprintw(fen_outils, 0, 1, "X");
 	wrefresh(fen_outils);
-	
+
 	return fen_outils;
 }
 
@@ -204,7 +205,7 @@ void *routine_poisson(void *arg) {
 	coord_t *coord = (coord_t *) arg;
 	int random=0;
 	srand(time(NULL));
-	while (1) {		
+	while (1) {
 		/*Que feront les poissons ?!?!?!*/
 		random=rand()%5;
 		switch (random){
@@ -300,7 +301,7 @@ void *routine_poisson(void *arg) {
 			break;
 			default: ;
 		}
-		
+
 		sleep(1);
 		wrefresh(fen_sim);
 	}
@@ -326,10 +327,10 @@ int main(int argc, char *argv[]) {
 	 /* Vérification des dimensions du terminal */
   	if((COLS< NB_COL_SIM + NB_COL_MSG) || (LINES < NB_LIGNES_SIM + NB_LIGNES_MSG)) {
       ncurses_stopper();
-      fprintf(stderr, 
+      fprintf(stderr,
               "Les dimensions du terminal sont insufisantes ");
       exit(EXIT_FAILURE);
-  }  
+  }
 
 	fen_box_sim = creer_fenetre_box_sim();
 	fen_sim = creer_fenetre_sim();
@@ -343,10 +344,10 @@ int main(int argc, char *argv[]) {
 	wrefresh(stdscr);
 	srand( time( NULL ) );
 
-	
+
 	while((ch = getch()) != KEY_F(2)) {
 	while(i<MAX_poissons){
-		
+
 		randomx=rand()%NB_COL_SIM;
 		randomy=rand()%NB_LIGNES_SIM;
 		pthread_mutex_lock(&grille[randomy- 1][randomx - 1].mutex);
@@ -369,7 +370,7 @@ int main(int argc, char *argv[]) {
 							wprintw(fen_msg, "Nombre maximum de poissons atteint\n");
 				}
 			}
-	
+
 		/*switch(ch) {
 			case KEY_MOUSE :
 				if (getmouse(&event) == OK) {
@@ -424,7 +425,7 @@ int main(int argc, char *argv[]) {
 									else {
 										wprintw(fen_msg, "Nombre maximum de poissons atteint\n");
 									}
-								}	*/				
+								}	*/
 								wrefresh(fen_sim);
 								wrefresh(fen_msg);
 								pthread_mutex_unlock(&grille[randomy - 1][randomx- 1].mutex);
