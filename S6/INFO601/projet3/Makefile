@@ -2,7 +2,7 @@
 # CONFIGURATION GENERALE
 #
 
-EXEC = peche
+EXEC = client
 OBJETS = ncurses.o
 NOM_PROJET = Projet 3 GIGOUT DAUNIQUE
 
@@ -89,4 +89,4 @@ archive: clean
 
 # DEPENDANCES
 ncurses.o: ncurses.c ncurses.h
-peche.o: peche.c
+client.o: client.c
