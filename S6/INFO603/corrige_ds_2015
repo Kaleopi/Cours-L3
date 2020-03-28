@@ -1,0 +1,24 @@
+DS 603
+Exercice 1
+
+Xi+K % 26
+E = 17.5%
+S = 8.0%
+A = 7.6%
+I = 7.5%
+T = 7.2%
+OZSOXOQHOSGH
+ALEAJACTAEST
+
+1)  Méthode 1 : Chercher la lettre la plus fréquente du message  (=O) et tester alternativement toutes les lettres les plus fréquentes de la langue française
+        E-O
+        S-O
+        A-O
+    Méthode 2 : Prendre les lettres les plus fréquentes du message (par ordre de fréquence décroissant) et tester le décalage associé à la lettre la plus fréquente du français
+2)  Méthode 1
+3)  Elle ne suit pas la distribution du français
+4)  L'espace des clefs est trop petit (25) Attaque par brut-force est envisageable
+
+Exercice 2
+
+{A,N,R,S,T} = {0,1,2,3,4} => mod 5
