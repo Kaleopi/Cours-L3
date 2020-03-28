@@ -19,5 +19,6 @@
 #define VIDE				0				/* Identifiants des elements pouvant etre */
 #define HAMMECONS			1				/* places sur la grille de simulation */
 #define POISSON				2
-
+#define COOL                1
+#define FUITE               0
 #endif

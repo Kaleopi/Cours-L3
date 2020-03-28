@@ -273,6 +273,55 @@ void *routine_poisson(void *arg) {
 	free(coord);
 	return NULL;
 }
+void init_poisson(poisson_t *fish,int val){
+	int v;
+
+	v = (rand() % 99);
+    if (v < 65)
+    {
+        fish->num = 1;
+		fish->valeur=100;
+    }
+    else if (v > 90)
+    {
+        fish->num = 3;
+		fish->valeur=200;
+    }
+    else
+    {
+        fish->num = 2;
+		fish->valeur=300;
+    }
+
+    fish->id = val;
+    fish->etat = 0;
+    fish->pos = 0;
+
+    
+}
+void generer_poisson(case_t *grille,int largeur ,int longueur ){
+	int posx;
+	int posy;
+	poisson_t fish =malloc(sizeof(poisson_t));
+	srand(time(NULL));
+	init_poisson(fish,0);
+	posx=rand()%largeur;
+	posy=rand()%longueur;
+	while (grille[posx][posy].element!=VIDE){
+		posx=rand()%largeur;
+		posy=rand()%longueur;
+	}
+		grille[posy][posx].element = POISSON;
+        grille[posy][posx].poisson = threads_poissons[i];
+		coord = (coord_t *) malloc(sizeof(coord_t));
+        coord->y = posy - 1;
+        coord->x = posx - 1;
+        pthread_create(threads_poissons[i], NULL, routine_poisson, (void *) coord);
+        mvwprintw(fen_sim, posy - 1, posx - 1, "@");
+		fish.posx=posx;
+		fish.posy=posy;
+
+}
 void simulation(){
     WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_outils;
         MEVENT event;
@@ -296,8 +345,13 @@ void simulation(){
         
         mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
         wrefresh(stdscr);
+		int nb_poissons=0;
         while((ch = getch()) != KEY_F(2)) {
-            
+            while( nb_poissons<MAX_POISSONS){
+				generer_poisson(grille,NB_COL_SIM,NB_LIGNES_SIM);
+				wprintw(fen_msg, "Ajout d'une poisson a la position ");
+				nb_poissons ++;
+			}
         /*while(nb_poissons<3){
                 randomx=rand()%NB_COL_SIM;
                 randomy=rand()%NB_LIGNES_SIM;
@@ -351,34 +405,6 @@ void simulation(){
                         else if (event.y > 0 && event.y < NB_LIGNES_SIM + 1 && event.x > 0 && event.x < NB_COL_SIM + 1) {
                             switch (item_actif) {
                                 case HAMMECONS :
-                                    /*pthread_mutex_lock(&grille[randomy - 1][randomx - 1].mutex);
-
-                                    if(nb_poissons<MAX_POISSONS){
-                                        randomx=rand()%NB_COL_SIM;
-                                        randomy=rand()%NB_LIGNES_SIM;
-                                        if (grille[randomy- 1][randomx - 1].element == VIDE) {
-                                            i = 0;
-                                            while (i < MAX_POISSONS && threads_poissons[i] != NULL)
-                                            nb_poissons++;
-                                            i++;
-                                            if (i < MAX_POISSONS) {
-                                                threads_poissons[i] = (pthread_t *) malloc(sizeof(pthread_t));
-                                                grille[randomy - 1][randomx - 1].element = POISSON;
-                                                grille[randomy - 1][randomx - 1].poisson = threads_poissons[i];
-                                                coord = (coord_t *) malloc(sizeof(coord_t));
-                                                coord->y = randomy - 1;
-                                                coord->x = randomx - 1;
-                                                pthread_create(threads_poissons[i], NULL, routine_poisson, (void *) coord);
-                                                mvwprintw(fen_sim, randomy - 1, randomx - 1, "@");
-                                                wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);
-                                                }
-                                                else {
-                                                    wprintw(fen_msg, "Nombre maximum de poissons atteint\n");
-                                                    }
-                                                }
-                                                
-                                                        pthread_mutex_unlock(&grille[randomy - 1][randomx - 1].mutex);
-                                                        }*/
 
                                     if(nb_hammecon<MAX_HAMMECONS){
                                         if (grille[event.y - 1][event.x - 1].element == VIDE) {
@@ -396,7 +422,7 @@ void simulation(){
                                         tempx=event.x-1;
                                         tempy=event.y-1;
                                         nb_hammecon=0;
-                                        wprintw(fen_msg, "Ajout d'un Hammecon a la position %d %d\n", event.y - 1, event.x - 1);
+                                        wprintw(fen_msg, "retrait %d %d\n", event.y - 1, event.x - 1);
                                     }
 
                                     wrefresh(fen_sim);

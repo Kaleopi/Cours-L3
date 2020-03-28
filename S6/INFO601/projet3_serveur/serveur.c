@@ -6,6 +6,7 @@
 #include <string.h>     /* Pour memset */
 #include <time.h>
 
+#include <pthread.h>
 #include "includes.h"
 #include "message.h"
 

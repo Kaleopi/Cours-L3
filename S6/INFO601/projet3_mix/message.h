@@ -11,6 +11,14 @@ typedef struct case_tag {					/* Description d'une case sur la grille de simulat
 	pthread_mutex_t mutex;					/* Protection de la case */
 } case_t;
 
+typedef struct poisson{
+	int id;
+	int etat;
+	int num;
+	int valeur;
+	int posx;
+	int posy;
+}poisson_t;
 /**
  * @struct requete_t
  * @field type type de la requête (connexion, etc)
