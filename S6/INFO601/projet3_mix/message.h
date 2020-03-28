@@ -1,6 +1,7 @@
 #ifndef _MESSAGE_H_
 #define _MESSAGE_H_
-
+#include <errno.h>
+#include <pthread.h>
 #define TYPE_CONNEXION 0
 #define TYPE_CONNEXION_AUTHORIZED 0
 /**

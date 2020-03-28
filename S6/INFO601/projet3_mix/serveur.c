@@ -5,9 +5,14 @@
 #include <unistd.h>     /* Pour close */
 #include <string.h>     /* Pour memset */
 #include <time.h>
-
+#include <errno.h>
+#include <ncurses.h>
+#include <pthread.h>
+#include "fonctions.h"
 #include "includes.h"
 #include "message.h"
+#include "fonctions.c"
+
 
 int main(int argc, char *argv[]) {
   struct sockaddr_in adresse;
@@ -194,6 +199,12 @@ int main(int argc, char *argv[]) {
 
   /* Liberation mémoire */
   /*free(msg);*/
+ 
+  /*début de la sim*/
+  simulation();
+
+
+
 
   printf("Serveur terminé.\n");
 

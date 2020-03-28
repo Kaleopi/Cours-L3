@@ -1,7 +1,23 @@
 
+#include <stdlib.h>     /* Pour exit, EXIT_SUCCESS, EXIT_FAILURE */
+#include <sys/socket.h> /* Pour socket */
+#include <arpa/inet.h>  /* Pour sockaddr_in, IPPROTO_TCP */
+#include <stdio.h>      /* Pour perror */
+#include <unistd.h>     /* Pour close */
+#include <string.h>     /* Pour memset */
+#include <time.h>
+#include <errno.h>
+#include <ncurses.h>
+#include <pthread.h>
+
 #include "fonctions.h"
 #include "message.h"
 #include "includes.h"
+pthread_t *threads_poissons[MAX_POISSONS];	/* Identifants des threads des poissons de la simulation*/
+WINDOW *fen_sim;							/* Fenetre de simulation partagee par les poissons*/
+WINDOW *fen_msg;							/* Fenetre de messages partagee par les poissons*/
+
+case_t grille[NB_LIGNES_SIM][NB_COL_SIM];	/* Grille de simulation */
 void ncurses_initialiser() {
 	initscr();								/* Demarre le mode ncurses */
 	cbreak();								/* Pour les saisies clavier (desac. mise en buffer) */
@@ -125,13 +141,15 @@ WINDOW *creer_fenetre_outils() {
 }
 
 void *routine_poisson(void *arg) {
+		int j;
 	coord_t *coord = (coord_t *) arg;
 	srand(time(NULL));
-	int pos,j;
+
+
 	
 	pthread_mutex_lock(&grille[coord->y][coord->x].mutex);
 	while (1) {		
-		pos = rand()%4;
+		int pos = rand()%4;
 		switch(pos){
 			case 0:
 				if(coord->y+1<NB_LIGNES_SIM)
@@ -259,10 +277,10 @@ void simulation(){
     WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_outils;
         MEVENT event;
         int ch, i, item_actif = HAMMECONS;
-        int randomx,randomy;
-        int tempx,tempy;
+        /*int randomx,randomy;*/
+       int tempx=0,tempy=0;
         int nb_hammecon=0;
-        int nb_poissons=0;
+        /*int nb_poissons=0;*/
         coord_t *coord;
             srand( time( NULL ) );
 
@@ -427,5 +445,5 @@ void simulation(){
         simulation_stopper();
         ncurses_stopper();
 
-        return 0;
+        /*return 0;*/
 }

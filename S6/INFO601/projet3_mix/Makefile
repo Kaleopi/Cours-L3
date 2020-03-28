@@ -2,7 +2,7 @@
 # CONFIGURATION GENERALE
 #
 
-EXEC = serveur client
+EXEC = serveur client 
 OBJETS =
 NOM_PROJET = socketTCP
 
@@ -80,5 +80,8 @@ archive: clean
 	@echo "Termine."
 
 # DEPENDANCES
-serveur.o: serveur.c
+fonctions.o :fonctions.c fonctions.h
+serveur.o: serveur.c fonctions.h
 client.o: client.c
+
+

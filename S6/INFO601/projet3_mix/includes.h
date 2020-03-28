@@ -20,10 +20,4 @@
 #define HAMMECONS			1				/* places sur la grille de simulation */
 #define POISSON				2
 
-pthread_t *threads_poissons[MAX_POISSONS];	/* Identifants des threads des poissons de la simulation*/
-WINDOW *fen_sim;							/* Fenetre de simulation partagee par les poissons*/
-WINDOW *fen_msg;							/* Fenetre de messages partagee par les poissons*/
-
-case_t grille[NB_LIGNES_SIM][NB_COL_SIM];	/* Grille de simulation */
-
 #endif

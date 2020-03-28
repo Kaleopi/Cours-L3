@@ -1,5 +1,4 @@
 
-#include "fonctions.h"
 #include "message.h"
 #include "includes.h"
 void ncurses_stopper() ;
