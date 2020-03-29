@@ -11,6 +11,10 @@ typedef struct case_tag {					/* Description d'une case sur la grille de simulat
 	pthread_mutex_t mutex;					/* Protection de la case */
 } case_t;
 
+typedef struct grille{
+	int grille;
+}grille_t;
+
 typedef struct poisson{
 	int id;
 	int etat;

@@ -273,63 +273,48 @@ void *routine_poisson(void *arg) {
 	free(coord);
 	return NULL;
 }
-void init_poisson(poisson_t *fish,int val){
-	int v;
 
-	v = (rand() % 99);
-    if (v < 65)
-    {
-        fish->num = 1;
-		fish->valeur=100;
-    }
-    else if (v > 90)
-    {
-        fish->num = 3;
-		fish->valeur=200;
-    }
-    else
-    {
-        fish->num = 2;
-		fish->valeur=300;
-    }
-
-    fish->id = val;
-    fish->etat = 0;
-    fish->pos = 0;
-
-    
-}
-void generer_poisson(case_t *grille,int largeur ,int longueur ){
-	int posx;
-	int posy;
-	poisson_t fish =malloc(sizeof(poisson_t));
-	srand(time(NULL));
-	init_poisson(fish,0);
-	posx=rand()%largeur;
-	posy=rand()%longueur;
-	while (grille[posx][posy].element!=VIDE){
-		posx=rand()%largeur;
-		posy=rand()%longueur;
-	}
-		grille[posy][posx].element = POISSON;
-        grille[posy][posx].poisson = threads_poissons[i];
-		coord = (coord_t *) malloc(sizeof(coord_t));
-        coord->y = posy - 1;
-        coord->x = posx - 1;
-        pthread_create(threads_poissons[i], NULL, routine_poisson, (void *) coord);
-        mvwprintw(fen_sim, posy - 1, posx - 1, "@");
-		fish.posx=posx;
-		fish.posy=posy;
+void generer_poisson(){
+	int i;
+	int nb_poissons=0;
+	int	randomx=rand()%NB_COL_SIM;
+    int  randomy=rand()%NB_LIGNES_SIM;
+	 coord_t *coord;
+                    if (grille[randomy- 1][randomx - 1].element == VIDE) {
+                        i = 0;
+                        while (i < MAX_POISSONS && threads_poissons[i] != NULL){
+                            nb_poissons++;
+                            i++;
+                            if (i < MAX_POISSONS) {
+                                threads_poissons[i] = (pthread_t *) malloc(sizeof(pthread_t));
+                                grille[randomy - 1][randomx - 1].element = POISSON;
+                                grille[randomy - 1][randomx - 1].poisson = threads_poissons[i];
+                                coord = (coord_t *) malloc(sizeof(coord_t));
+                                coord->y = randomy - 1;
+                                coord->x = randomx - 1;
+                                pthread_create(threads_poissons[i], NULL, routine_poisson, (void *) coord);
+                                mvwprintw(fen_sim, randomy - 1, randomx - 1, "@");
+                                /*wprintw(fen_msg, " poisson a la position %d %d\n", randomy - 1, randomx - 1);*/
+                                }
+                                else {
+                                   /* wprintw(fen_msg, "Nombre maximum de poissons atteint\n");*/
+                                    }
+                                
+                                                
+                                                        pthread_mutex_unlock(&grille[randomy - 1][randomx - 1].mutex);
+                                                        
+                                }
+                    }
 
 }
 void simulation(){
     WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_outils;
         MEVENT event;
-        int ch, i, item_actif = HAMMECONS;
-        /*int randomx,randomy;*/
+        int ch, i,item_actif = HAMMECONS;
+        int randomx,randomy;
        int tempx=0,tempy=0;
         int nb_hammecon=0;
-        /*int nb_poissons=0;*/
+        int nb_poissons=0;
         coord_t *coord;
             srand( time( NULL ) );
 
@@ -345,46 +330,37 @@ void simulation(){
         
         mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
         wrefresh(stdscr);
-		int nb_poissons=0;
+
         while((ch = getch()) != KEY_F(2)) {
-            while( nb_poissons<MAX_POISSONS){
-				generer_poisson(grille,NB_COL_SIM,NB_LIGNES_SIM);
-				wprintw(fen_msg, "Ajout d'une poisson a la position ");
-				nb_poissons ++;
-			}
-        /*while(nb_poissons<3){
+
+        while(nb_poissons<2){
                 randomx=rand()%NB_COL_SIM;
                 randomy=rand()%NB_LIGNES_SIM;
-                    if (grille[randomy- 1][randomx - 1].element == VIDE) {
-                        i = 0;
-                        while (i < MAX_POISSONS && threads_poissons[i] != NULL){
-                            nb_poissons++;
-                            i++;
-                            if (i < MAX_POISSONS) {
-                                threads_poissons[i] = (pthread_t *) malloc(sizeof(pthread_t));
-                                grille[randomy - 1][randomx - 1].element = POISSON;
-                                grille[randomy - 1][randomx - 1].poisson = threads_poissons[i];
+				nb_poissons++;
+                
+                                threads_poissons[nb_poissons] = (pthread_t *) malloc(sizeof(pthread_t));
+                                grille[randomy ][randomx ].element = POISSON;
+                                grille[randomy ][randomx ].poisson = threads_poissons[nb_poissons];
                                 coord = (coord_t *) malloc(sizeof(coord_t));
-                                coord->y = randomy - 1;
-                                coord->x = randomx - 1;
-                                pthread_create(threads_poissons[i], NULL, routine_poisson, (void *) coord);
-                                mvwprintw(fen_sim, randomy - 1, randomx - 1, "@");
-                                wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);
-                                }
-                                else {
-                                    wprintw(fen_msg, "Nombre maximum de poissons atteint\n");
-                                    }
+                                coord->y = randomy ;
+                                coord->x = randomx ;
+                                pthread_create(threads_poissons[nb_poissons], NULL, routine_poisson, (void *) coord);
+                                mvwprintw(fen_sim, randomy , randomx , "@");
+                               /* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);*/
+                                
                                 
                                                 
-                                                        pthread_mutex_unlock(&grille[randomy - 1][randomx - 1].mutex);
+                                 pthread_mutex_unlock(&grille[randomy ][randomx ].mutex);
                                                         
-                                }
-                    }
-            }*/
+                                
+                    sleep(3);
+					 wrefresh(fen_sim);
+					wprintw(fen_msg,"%d %d\n" ,randomy ,randomx);
+            }
             switch(ch) {
                 case KEY_MOUSE :
                     if (getmouse(&event) == OK) {
-                        wprintw(fen_msg, "Clic a la position %d %d de l'ecran\n", event.y, event.x);
+                       /* wprintw(fen_msg, "Clic a la position %d %d de l'ecran\n", event.y, event.x);*/
                         wrefresh(fen_msg);
                         if (event.y == 32 && event.x >= 82 && event.x <= 98) {
                             item_actif = HAMMECONS;
@@ -413,7 +389,7 @@ void simulation(){
                                         tempx=event.x-1;
                                         tempy=event.y-1;
                                         nb_hammecon++;
-                                        wprintw(fen_msg, "Ajout d'un Hammecon a la position %d %d\n", event.y - 1, event.x - 1);
+                                        wprintw(fen_msg, "Ajout d'un Hammecon ");
 
                                         }
                                     }else{
@@ -422,7 +398,7 @@ void simulation(){
                                         tempx=event.x-1;
                                         tempy=event.y-1;
                                         nb_hammecon=0;
-                                        wprintw(fen_msg, "retrait %d %d\n", event.y - 1, event.x - 1);
+                                        wprintw(fen_msg, "retrait ");
                                     }
 
                                     wrefresh(fen_sim);
@@ -445,10 +421,10 @@ void simulation(){
                                             coord->x = event.x - 1;
                                             pthread_create(threads_poissons[i], NULL, routine_poisson, (void *) coord);
                                             mvwprintw(fen_sim, event.y - 1, event.x - 1, "@");
-                                            wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", event.y - 1, event.x - 1);
+                                           /* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", event.y - 1, event.x - 1);*/
                                         }
                                         else {
-                                            wprintw(fen_msg, "Nombre maximum de poissons atteint\n");
+                                            /*wprintw(fen_msg, "Nombre maximum de poissons atteint\n");*/
                                         }
                                     }
                                     wrefresh(fen_sim);
