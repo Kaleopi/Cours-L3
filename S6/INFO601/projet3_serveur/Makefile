@@ -3,8 +3,8 @@
 #
 
 EXEC = serveur client
-OBJETS =
-NOM_PROJET = socketTCP
+OBJETS = fonctions.o
+NOM_PROJET = Projet 3 GIGOUT DAUNIQUE
 
 #
 # SUFFIXES
@@ -80,5 +80,6 @@ archive: clean
 	@echo "Termine."
 
 # DEPENDANCES
-serveur.o: serveur.c
-client.o: client.c
+fonctions.o :fonctions.c fonctions.h
+serveur.o: serveur.c fonctions.h
+client.o: client.c fonctions.h

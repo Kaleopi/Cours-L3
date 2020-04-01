@@ -6,9 +6,11 @@
 #include <string.h>     /* Pour memset */
 #include <time.h>
 
-#include <pthread.h>
+#include "fonctions.h"
 #include "includes.h"
 #include "message.h"
+
+grille_t etang;
 
 int main(int argc, char *argv[]) {
   struct sockaddr_in adresse;
@@ -30,6 +32,7 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
 
+  init_etang(etang);
   /*
    *
    * PARTIE UDP
@@ -138,6 +141,9 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   printf("Joueur 2 connecté TCP !\n");
+  etang.grille[0][0] =  5;
+  afficher_etang(etang);
+  both_send(etang, sock_one, sock_two);
 
   /*do{
 

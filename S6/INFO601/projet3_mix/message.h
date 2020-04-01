@@ -1,21 +1,24 @@
 #ifndef _MESSAGE_H_
 #define _MESSAGE_H_
+
 #include <errno.h>
 #include <pthread.h>
+#include "includes.h"
+
 #define TYPE_CONNEXION 0
 #define TYPE_CONNEXION_AUTHORIZED 0
 
-typedef struct case_tag {					/* Description d'une case sur la grille de simulation */
+typedef struct{					/* Description d'une case sur la grille de simulation */
 	int element;							/* Ce qui est present sur la case */
 	pthread_t *poisson;						/* Identifiant du thread de la poisson presente sur la case */
 	pthread_mutex_t mutex;					/* Protection de la case */
-} case_t;
+}case_t;
 
-typedef struct grille{
-	int grille;
+typedef struct{
+	int grille[NB_LIGNES_SIM][NB_COL_SIM];
 }grille_t;
 
-typedef struct poisson{
+typedef struct{
 	int id;
 	int etat;
 	int num;
@@ -23,6 +26,7 @@ typedef struct poisson{
 	int posx;
 	int posy;
 }poisson_t;
+
 /**
  * @struct requete_t
  * @field type type de la requête (connexion, etc)
@@ -38,13 +42,12 @@ typedef struct{
 typedef struct{
   long type;
   int port;
-  case_t grille;
 }reponse_t;
 
 
-typedef struct coord_tag {					/* Coordonnees d'une case sur la grille de simulation*/
+typedef struct{					/* Coordonnees d'une case sur la grille de simulation*/
 	int y;
 	int x;
-} coord_t;
+}coord_t;
 
 #endif /*_MESSAGE_H_*/

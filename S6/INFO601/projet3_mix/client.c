@@ -7,15 +7,16 @@
 
 #include "includes.h"
 #include "message.h"
+#include "fonctions.h"
+
 
 int main(int argc, char *argv[]) {
-  int sockfd;
   struct sockaddr_in adresse;
+  WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_sim, *fen_msg, *fen_outils;
+  grille_t *etang;
+  int sockfd, ch;
   requete_t requete;
   reponse_t reponse;
-  /*size_t taille;
-  char *msgrecu,*msg;
-  char line[MAX];*/
 
   /* Vérification des arguments */
   if(argc != 3) {
@@ -26,6 +27,9 @@ int main(int argc, char *argv[]) {
     /*fprintf(stderr, "  message        : le message à envoyer\n");*/
     exit(EXIT_FAILURE);
   }
+  etang = malloc(sizeof(grille_t));
+  init_etang(etang);
+
   /*
    * PARTIE UDP
    */
@@ -93,48 +97,39 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   printf("Connecté au serveur en TCP !\n");
-  /*
-  do{
-    printf("Entrez le message à envoyer au serveur : ");
-    if((msg = fgets(line, MAX, stdin))==NULL){
-     perror("Erreur saisie msg client");
-    }
+  if(read(sockfd, etang, sizeof(grille_t))==-1){
+    perror("Erreur lors de la réception de la grille");
+  }else{
+    afficher_etang(etang);
+  }
 
+  ncurses_initialiser();
+  fen_box_sim = creer_fenetre_box_sim();
+  fen_sim = creer_fenetre_sim();
+  fen_box_msg = creer_fenetre_box_msg();
+  fen_msg = creer_fenetre_msg();
+  fen_box_outils = creer_fenetre_box_outils();
+  fen_outils = creer_fenetre_outils();
+  mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
+  wrefresh(stdscr);
+  wrefresh(fen_box_sim);
+  wrefresh(fen_sim);
+  wrefresh(fen_box_msg);
+  wrefresh(fen_msg);
+  wrefresh(fen_box_outils);
+  wrefresh(fen_outils);
+  init_sim(fen_sim, etang);
+  while((ch = getch()) != KEY_F(2)) {
 
-    taille = strlen(msg);
-    if(msg[taille-1] == '\n')
-      msg[taille-1] = '\0';
-    if(write(sockfd, &taille, sizeof(size_t)) == -1) {
-      perror("Erreur lors de l'envoi de la taille du message ");
-      exit(EXIT_FAILURE);
-    }
-    if(write(sockfd, msg, sizeof(char) * taille) == -1) {
-      perror("Erreur lors de l'envoi du message ");
-      exit(EXIT_FAILURE);
-    }
-    printf("Client : message envoyé.\n");
-
-    if(read(sockfd, &taille, sizeof(size_t)) == -1) {
-      perror("Erreur lors de la lecture de la taille du message ");
-      exit(EXIT_FAILURE);
-    }
-    if((msgrecu = (char*)malloc(sizeof(char) * taille)) == NULL) {
-      perror("Erreur lors de l'allocation mémoire pour le message ");
-      exit(EXIT_FAILURE);
-    }
-    if(read(sockfd, msgrecu, sizeof(char) * taille) == -1) {
-      perror("Erreur lors de la lecture de la taille du message ");
-      exit(EXIT_FAILURE);
-    }
-    printf("Client : message recu '%s'.\n", msgrecu);
-  }while(strcmp(msgrecu,"Au revoir"));*/
-
-
-  /* Fermeture de la socket */
+  }
+  simulation_stopper();
+  ncurses_stopper();
+  /* Fermeture de la socket TCP*/
   if(close(sockfd) == -1) {
     perror("Erreur lors de la fermeture de la socket ");
     exit(EXIT_FAILURE);
   }
 
+  free(etang);
   return EXIT_SUCCESS;
 }

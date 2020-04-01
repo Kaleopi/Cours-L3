@@ -8,13 +8,14 @@
 #include <errno.h>
 #include <ncurses.h>
 #include <pthread.h>
+
 #include "fonctions.h"
 #include "includes.h"
 #include "message.h"
-#include "fonctions.c"
 
 
 int main(int argc, char *argv[]) {
+  grille_t *etang;
   struct sockaddr_in adresse;
   struct sockaddr p1, p2;
   /*size_t taille;*/
@@ -33,7 +34,9 @@ int main(int argc, char *argv[]) {
     fprintf(stderr, "\n\tport : le numéro de port d'écoute du serveur\n");
     exit(EXIT_FAILURE);
   }
-
+  etang = malloc(sizeof(grille_t));
+  init_etang(etang);
+  afficher_etang(etang);
   /*
    *
    * PARTIE UDP
@@ -142,50 +145,11 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   printf("Joueur 2 connecté TCP !\n");
+  etang->grille[0][0] = 1;
+  etang->grille[0][2] = 1;
+  afficher_etang(etang);
+  both_send(etang, sock_one, sock_two);
 
-  /*do{
-
-    if(read(sock_one, &taille, sizeof(size_t)) == -1) {
-      perror("Erreur lors de la lecture de la taille du message ");
-      exit(EXIT_FAILURE);
-    }
-    if((msg = (char*)malloc(sizeof(char) * taille)) == NULL) {
-      perror("Erreur lors de l'allocation mémoire pour le message ");
-      exit(EXIT_FAILURE);
-    }
-    if(read(sock_one, msg, sizeof(char) * taille) == -1) {
-      perror("Erreur lors de la lecture de la taille du message ");
-      exit(EXIT_FAILURE);
-    }
-    printf("Serveur : message recu '%s'.\n", msg);
-    if(strcmp(msg,"Au revoir")==0){
-
-      taille = strlen("Au revoir") + 1;
-      if(write(sock_one, &taille, sizeof(size_t)) == -1) {
-        perror("Erreur lors de l'envoi de la taille du message ");
-        exit(EXIT_FAILURE);
-      }
-      if(write(sock_one, "Au revoir", sizeof(char) * taille) == -1) {
-        perror("Erreur lors de l'envoi du message ");
-        exit(EXIT_FAILURE);
-      }
-      printf("Serveur : Au revoir envoyé.\n");
-    }else{
-
-
-    taille = strlen(msgenvoi) + 1;
-    if(write(sock_one, &taille, sizeof(size_t)) == -1) {
-      perror("Erreur lors de l'envoi de la taille du message ");
-      exit(EXIT_FAILURE);
-    }
-    if(write(sock_one, msgenvoi, sizeof(char) * taille) == -1) {
-      perror("Erreur lors de l'envoi du message ");
-      exit(EXIT_FAILURE);
-    }
-    printf("Serveur : message envoyé.\n");
-  }
-
-}while(strcmp(msgenvoi,"Au revoir"));*/
 
   /* Fermeture des sockets */
   if(close(sock_one) == -1) {
@@ -197,15 +161,10 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
 
-  /* Liberation mémoire */
-  /*free(msg);*/
- 
   /*début de la sim*/
-  simulation();
+  /*simulation();*/
 
-
-
-
+  free(etang);
   printf("Serveur terminé.\n");
 
   return EXIT_SUCCESS;

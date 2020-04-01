@@ -17,49 +17,33 @@ WINDOW *fen_sim;							/* Fenetre de simulation partagee par les poissons*/
 WINDOW *fen_msg;							/* Fenetre de messages partagee par les poissons*/
 case_t grille[NB_LIGNES_SIM][NB_COL_SIM];	/* Grille de simulation */
 
-void both_send(grille_t *etang, int sock_one, int sock_two){
+void both_send(grille_t etang, int sock_one, int sock_two){
 	one_send(etang, sock_one);
 	one_send(etang, sock_two);
 }
 
-void one_send(grille_t *etang, int sockfd){
-	if(write(sockfd, etang, sizeof(grille_t))==-1){
+void one_send(grille_t etang, int sockfd){
+	if(write(sockfd, &etang, sizeof(grille_t))==-1){
 		perror("Erreur lors de l'envoi de la grille");
 	}
 }
 
-void init_etang(grille_t *etang){
+void init_etang(grille_t etang){
 	int i,j;
 	for(i=0 ; i<NB_LIGNES_SIM ;i++){
 		for(j=0; j<NB_COL_SIM; j++){
-			etang->grille[i][j] = 0;
+			etang.grille[i][j] = 0;
 		}
 	}
 }
 
-void afficher_etang(grille_t *etang){
+void afficher_etang(grille_t etang){
 	int i,j;
 	for(i=0 ; i<NB_LIGNES_SIM ;i++){
 		for(j=0 ; j<NB_COL_SIM; j++){
-			printf("%d",etang->grille[i][j]);
+			printf("%d",etang.grille[i][j]);
 		}
 		printf("\n");
-	}
-}
-
-void init_sim(WINDOW* w, grille_t* etang){
-	int i,j,val;
-	for(i=0;i<NB_LIGNES_SIM;i++){
-		for(j=0;j<NB_COL_SIM;j++){
-			val = etang->grille[i][j];
-			if(val== 0){
-				val = 4;
-			}
-			wattron(w,COLOR_PAIR(val));
-			mvwprintw(w,i,j," ",val);
-			wrefresh(w);
-			wattroff(w,COLOR_PAIR(val));
-		}
 	}
 }
 
@@ -71,10 +55,6 @@ void ncurses_initialiser() {
 	refresh();								/* Met a jour l'affichage */
 	curs_set(FALSE);						/* Masque le curseur */
 	mousemask(BUTTON1_CLICKED, NULL);		/* Active le clic gauche de la souris*/
-	start_color();
-	init_pair(1,COLOR_BLACK,COLOR_YELLOW); /*poisson*/
-	init_pair(4,COLOR_BLACK,COLOR_BLUE); /*eau*/
-	wbkgd(fen_sim,COLOR_PAIR(-1));
 }
 
 void ncurses_stopper() {
@@ -127,6 +107,10 @@ WINDOW *creer_fenetre_sim() {
 	WINDOW *fen_sim;
 
 	fen_sim = newwin(NB_LIGNES_SIM, NB_COL_SIM, 1, 1);
+	initscr();
+	start_color();
+	init_pair(1,COLOR_YELLOW,COLOR_BLUE);
+	wbkgd(fen_sim,COLOR_PAIR(1));
 	wrefresh(fen_sim);
 	return fen_sim;
 }
@@ -150,6 +134,7 @@ WINDOW *creer_fenetre_msg() {
 /* utilisateur sont affiches dans cete fenetre */
 
 	WINDOW *fen_msg;
+
 	fen_msg = newwin(NB_LIGNES_MSG, NB_COL_MSG, 1, NB_COL_SIM + 3);
 	scrollok(fen_msg, TRUE);
 

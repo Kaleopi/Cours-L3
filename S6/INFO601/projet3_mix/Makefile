@@ -2,8 +2,8 @@
 # CONFIGURATION GENERALE
 #
 
-EXEC = serveur client 
-OBJETS =
+EXEC = serveur client
+OBJETS = fonctions.o
 NOM_PROJET = socketTCP
 
 #
@@ -83,5 +83,3 @@ archive: clean
 fonctions.o :fonctions.c fonctions.h
 serveur.o: serveur.c fonctions.h
 client.o: client.c
-
-

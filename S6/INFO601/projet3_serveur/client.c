@@ -7,6 +7,9 @@
 
 #include "includes.h"
 #include "message.h"
+#include "fonctions.h"
+
+grille_t etang;
 
 int main(int argc, char *argv[]) {
   int sockfd;
@@ -26,6 +29,8 @@ int main(int argc, char *argv[]) {
     /*fprintf(stderr, "  message        : le message à envoyer\n");*/
     exit(EXIT_FAILURE);
   }
+
+  init_etang(etang);
   /*
    * PARTIE UDP
    */
@@ -93,6 +98,12 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   printf("Connecté au serveur en TCP !\n");
+  if(read(sockfd, &etang, sizeof(grille_t))==-1){
+    perror("Erreur lors de la réception de la grille");
+  }else{
+    afficher_etang(etang);
+  }
+
   /*
   do{
     printf("Entrez le message à envoyer au serveur : ");
