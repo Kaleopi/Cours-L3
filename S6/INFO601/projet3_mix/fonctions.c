@@ -238,8 +238,8 @@ WINDOW *creer_fenetre_points()
 	WINDOW *fen;
 
 	fen = newwin(NB_LIGNES_POINTS, NB_COL_POINTS, 1, NB_COL_SIM + 3);
-	mvwprintw(fen, 0, 0, "Points : xxx");
-	mvwprintw(fen, 1, 0, "Poireaus : xxx");
+	mvwprintw(fen, 0, 0, "Points : x");
+	mvwprintw(fen, 1, 0, "Poireaus : x");
 	wrefresh(fen);
 
 	return fen;
@@ -266,7 +266,7 @@ void *routine_poisson(void *arg)
 					grille[coord->y][coord->x].element = VIDE;
 					coord->y++;
 				}
-				
+
 			}
 			break;
 		case 1:
@@ -278,7 +278,7 @@ void *routine_poisson(void *arg)
 					grille[coord->y][coord->x].element = VIDE;
 					coord->x++;
 				}
-				
+
 			}
 			break;
 		case 2:
@@ -290,7 +290,7 @@ void *routine_poisson(void *arg)
 					grille[coord->y][coord->x].element = VIDE;
 					coord->y--;
 				}
-			
+
 			}
 			break;
 		case 3:
@@ -427,7 +427,7 @@ void lancerTruc(){
 						pthread_mutex_unlock(&grille[event.y - 1][event.x - 1].mutex);
 
 						break;
-				
+
 				}
 			}
 			}
@@ -435,7 +435,7 @@ void lancerTruc(){
 void simulation()
 {
 	WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_outils;
-	
+
 	int ch;
 	/*int randomx, randomy;*/
 
@@ -466,7 +466,7 @@ void simulation()
 			break;
 		}
 	}
-	
+
 	delwin(fen_box_sim);
 	delwin(fen_sim);
 	delwin(fen_box_msg);
