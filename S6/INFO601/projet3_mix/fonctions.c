@@ -162,7 +162,7 @@ WINDOW *creer_fenetre_box_msg()
 
 	WINDOW *fen;
 
-	fen = newwin(NB_LIGNES_MSG + 2, NB_COL_MSG + 2, NB_LIGNES_POINTS+NB_LIGNES_OUTILS+10, NB_COL_SIM + 2);
+	fen = newwin(NB_LIGNES_MSG + 2, NB_COL_MSG + 2, NB_LIGNES_POINTS+NB_LIGNES_OUTILS+4, NB_COL_SIM + 2);
 	box(fen, 0, 0);
 	mvwprintw(fen, 0, (NB_COL_MSG + 2) / 2 - 4, "DEBUG");
 	wrefresh(fen);
@@ -177,7 +177,7 @@ WINDOW *creer_fenetre_msg()
 	/* utilisateur sont affiches dans cete fenetre */
 
 	WINDOW *fen;
-	fen = newwin(NB_LIGNES_MSG, NB_COL_MSG, NB_LIGNES_POINTS+NB_LIGNES_OUTILS+10, NB_COL_SIM + 3);
+	fen = newwin(NB_LIGNES_MSG, NB_COL_MSG, NB_LIGNES_POINTS+NB_LIGNES_OUTILS+5, NB_COL_SIM + 3);
 	scrollok(fen, TRUE);
 
 	return fen;
@@ -237,7 +237,7 @@ WINDOW *creer_fenetre_points()
 
 	WINDOW *fen;
 
-	fen = newwin(NB_LIGNES_OUTILS, NB_COL_OUTILS, 1, NB_COL_SIM + 3);
+	fen = newwin(NB_LIGNES_POINTS, NB_COL_POINTS, 1, NB_COL_SIM + 3);
 	mvwprintw(fen, 0, 0, "Points : xxx");
 	mvwprintw(fen, 1, 0, "Poireaus : xxx");
 	wrefresh(fen);

@@ -11,7 +11,7 @@
 
 #define NB_LIGNES_SIM		20				/* Dimensions des fenetres du programme */
 #define NB_COL_SIM			40
-#define NB_LIGNES_MSG		8
+#define NB_LIGNES_MSG		7
 #define NB_COL_MSG			40
 #define NB_LIGNES_OUTILS 6
 #define NB_COL_OUTILS		40
