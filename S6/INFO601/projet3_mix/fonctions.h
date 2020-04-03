@@ -11,6 +11,8 @@ WINDOW *creer_fenetre_box_msg() ;
 WINDOW *creer_fenetre_msg() ;
 WINDOW *creer_fenetre_box_outils();
 WINDOW *creer_fenetre_outils() ;
+WINDOW *creer_fenetre_box_points();
+WINDOW *creer_fenetre_points() ;
 void *routine_poisson(void *);
 void simulation();
 void init_etang(grille_t*);

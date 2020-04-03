@@ -11,10 +11,12 @@
 
 #define NB_LIGNES_SIM		20				/* Dimensions des fenetres du programme */
 #define NB_COL_SIM			40
-#define NB_LIGNES_MSG		14
+#define NB_LIGNES_MSG		7
 #define NB_COL_MSG			40
-#define NB_LIGNES_OUTILS	4
-#define NB_COL_OUTILS		24
+#define NB_LIGNES_OUTILS 6
+#define NB_COL_OUTILS		40
+#define NB_LIGNES_POINTS 3
+#define NB_COL_POINTS 40
 
 #define MAX_HAMMECONS 		1
 #define MAX_POISSONS		10				/* Nombre maximum de poissons de la simulation */
