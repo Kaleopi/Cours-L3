@@ -20,8 +20,21 @@
 #define MAX_POISSONS		10				/* Nombre maximum de poissons de la simulation */
 
 #define VIDE				0				/* Identifiants des elements pouvant etre */
-#define HAMMECONS			1				/* places sur la grille de simulation */
-#define POISSON				2
+/* places sur la grille de simulation */
+#define POISSON				1
+
+#define HAMMECONSJ1	        10
+#define PNEUJ1              11
+#define DYNAJ1              12
+
+#define HAMMECONSJ2         20
+#define PNEUJ1              21
+#define DYNAJ1              22
+
 #define COOL                1
 #define FUITE               0
+
+#define FURTIFON            1
+#define FURTIFOFF           0
+
 #endif
