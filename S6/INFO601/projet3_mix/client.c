@@ -12,7 +12,7 @@
 
 int main(int argc, char *argv[]) {
   struct sockaddr_in adresse;
-  WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_sim, *fen_msg, *fen_outils;
+  WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_box_points ,*fen_sim, *fen_msg, *fen_outils, *fen_points;
   grille_t *etang;
   int sockfd, ch;
   requete_t requete;
@@ -105,19 +105,22 @@ int main(int argc, char *argv[]) {
 
   ncurses_initialiser();
   fen_box_sim = creer_fenetre_box_sim();
-  fen_sim = creer_fenetre_sim();
-  fen_box_msg = creer_fenetre_box_msg();
-  fen_msg = creer_fenetre_msg();
+  fen_box_points = creer_fenetre_box_points();
   fen_box_outils = creer_fenetre_box_outils();
+  fen_box_msg = creer_fenetre_box_msg();
+  fen_sim = creer_fenetre_sim();
+  fen_points = creer_fenetre_points();
   fen_outils = creer_fenetre_outils();
+  fen_msg = creer_fenetre_msg();
   mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
-  wrefresh(stdscr);
   wrefresh(fen_box_sim);
-  wrefresh(fen_sim);
-  wrefresh(fen_box_msg);
-  wrefresh(fen_msg);
+  wrefresh(fen_box_points);
   wrefresh(fen_box_outils);
+  wrefresh(fen_box_msg);
+  wrefresh(fen_sim);
+  wrefresh(fen_points);
   wrefresh(fen_outils);
+  wrefresh(fen_msg);
   init_sim(fen_sim, etang);
   while((ch = getch()) != KEY_F(2)) {
 

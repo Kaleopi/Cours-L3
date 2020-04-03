@@ -87,8 +87,10 @@ void ncurses_initialiser()
 	mousemask(BUTTON1_CLICKED, NULL); /* Active le clic gauche de la souris*/
 	start_color();
 	init_pair(1, COLOR_BLACK, COLOR_YELLOW); /*poisson*/
+	init_pair(2, COLOR_WHITE, COLOR_BLACK);
 	init_pair(4, COLOR_BLACK, COLOR_BLUE);	 /*eau*/
-	wbkgd(fen_sim, COLOR_PAIR(-1));
+	wbkgd(stdscr, COLOR_PAIR(2));
+	refresh();
 }
 
 void ncurses_stopper()
@@ -132,14 +134,14 @@ WINDOW *creer_fenetre_box_sim()
 {
 	/*Creation de la fenetre de contour de la fenetre de simulation */
 
-	WINDOW *fen_box_sim;
+	WINDOW *fen;
 
-	fen_box_sim = newwin(NB_LIGNES_SIM + 2, NB_COL_SIM + 2, 0, 0);
-	box(fen_box_sim, 0, 0);
-	mvwprintw(fen_box_sim, 0, (NB_COL_SIM + 2) / 2 - 5, "SIMULATION");
-	wrefresh(fen_box_sim);
+	fen = newwin(NB_LIGNES_SIM + 2, NB_COL_SIM + 2, 0, 0);
+	box(fen, 0, 0);
+	mvwprintw(fen, 0, (NB_COL_SIM + 2) / 2 - 5, "SIMULATION");
+	wrefresh(fen);
 
-	return fen_box_sim;
+	return fen;
 }
 
 WINDOW *creer_fenetre_sim()
@@ -147,25 +149,25 @@ WINDOW *creer_fenetre_sim()
 	/* Creation de la fenetre de simulation dans la fenetre de contour */
 	/* La simulation est affichee dans cette fenetre */
 
-	WINDOW *fen_sim;
+	WINDOW *fen;
 
-	fen_sim = newwin(NB_LIGNES_SIM, NB_COL_SIM, 1, 1);
-	wrefresh(fen_sim);
-	return fen_sim;
+	fen = newwin(NB_LIGNES_SIM, NB_COL_SIM, 1, 1);
+	wrefresh(fen);
+	return fen;
 }
 
 WINDOW *creer_fenetre_box_msg()
 {
 	/* Creation de la fenetre de contour de la fenetre de messages */
 
-	WINDOW *fen_box_msg;
+	WINDOW *fen;
 
-	fen_box_msg = newwin(NB_LIGNES_MSG + 2, NB_COL_MSG + 2, 0, NB_COL_SIM + 2);
-	box(fen_box_msg, 0, 0);
-	mvwprintw(fen_box_msg, 0, (NB_COL_MSG + 2) / 2 - 4, "MESSAGES");
-	wrefresh(fen_box_msg);
+	fen = newwin(NB_LIGNES_MSG + 2, NB_COL_MSG + 2, NB_LIGNES_POINTS+NB_LIGNES_OUTILS+10, NB_COL_SIM + 2);
+	box(fen, 0, 0);
+	mvwprintw(fen, 0, (NB_COL_MSG + 2) / 2 - 4, "DEBUG");
+	wrefresh(fen);
 
-	return fen_box_msg;
+	return fen;
 }
 
 WINDOW *creer_fenetre_msg()
@@ -174,25 +176,25 @@ WINDOW *creer_fenetre_msg()
 	/* Les messages indicatifs des evenements de la simulation et de l'interface */
 	/* utilisateur sont affiches dans cete fenetre */
 
-	WINDOW *fen_msg;
-	fen_msg = newwin(NB_LIGNES_MSG, NB_COL_MSG, 1, NB_COL_SIM + 3);
-	scrollok(fen_msg, TRUE);
+	WINDOW *fen;
+	fen = newwin(NB_LIGNES_MSG, NB_COL_MSG, NB_LIGNES_POINTS+NB_LIGNES_OUTILS+10, NB_COL_SIM + 3);
+	scrollok(fen, TRUE);
 
-	return fen_msg;
+	return fen;
 }
 
 WINDOW *creer_fenetre_box_outils()
 {
 	/* Fenetre de contour de la fenetre des outils */
 
-	WINDOW *fen_box_outils;
+	WINDOW *fen;
 
-	fen_box_outils = newwin(NB_LIGNES_OUTILS + 2, NB_COL_OUTILS + 2, NB_LIGNES_MSG + 2, NB_COL_SIM + 2);
-	box(fen_box_outils, 0, 0);
-	mvwprintw(fen_box_outils, 0, (NB_COL_OUTILS + 2) / 2 - 3, "OUTILS");
-	wrefresh(fen_box_outils);
+	fen = newwin(NB_LIGNES_OUTILS + 2, NB_COL_OUTILS + 2, NB_LIGNES_POINTS + 2, NB_COL_SIM + 2);
+	box(fen, 0, 0);
+	mvwprintw(fen, 0, (NB_COL_OUTILS + 2) / 2 - 3, "OUTILS");
+	wrefresh(fen);
 
-	return fen_box_outils;
+	return fen;
 }
 
 WINDOW *creer_fenetre_outils()
@@ -200,15 +202,47 @@ WINDOW *creer_fenetre_outils()
 	/* Creation de la fenetre des outils a l'interieur de la fenetre de contour */
 	/* Les outils dans cette fenetre sont clickables, l'outil actif etant indique par un X */
 
-	WINDOW *fen_outils;
+	WINDOW *fen;
 
-	fen_outils = newwin(NB_LIGNES_OUTILS, NB_COL_OUTILS, NB_LIGNES_MSG + 3, NB_COL_SIM + 3);
-	mvwprintw(fen_outils, 0, 3, "# : Hammecons\n");
-	mvwprintw(fen_outils, 1, 3, "@ : Poisson");
-	mvwprintw(fen_outils, 0, 1, "X");
-	wrefresh(fen_outils);
+	fen = newwin(NB_LIGNES_OUTILS, NB_COL_OUTILS, NB_LIGNES_POINTS + 3, NB_COL_SIM + 3);
+	mvwprintw(fen, 0, 1, " : Hammecon\n");
+	mvwprintw(fen, 1, 1, " : Pneu (150)\n");
+	mvwprintw(fen, 2, 1, " : Dynamite (200)\n");
+	mvwprintw(fen, 3, 1, " : Requin (300)\n");
+	mvwprintw(fen, 4, 1, " : Furtif (500)\n");
+	mvwprintw(fen, 0, 0, "X");
+	wrefresh(fen);
 
-	return fen_outils;
+	return fen;
+}
+
+WINDOW *creer_fenetre_box_points()
+{
+	/* Fenetre de contour de la fenetre des outils */
+
+	WINDOW *fen;
+
+	fen = newwin(NB_LIGNES_POINTS + 2, NB_COL_POINTS + 2, 0, NB_COL_SIM + 2);
+	box(fen, 0, 0);
+	mvwprintw(fen, 0, (NB_COL_OUTILS + 2) / 2 - 3, "POINTS");
+	wrefresh(fen);
+
+	return fen;
+}
+
+WINDOW *creer_fenetre_points()
+{
+	/* Creation de la fenetre des outils a l'interieur de la fenetre de contour */
+	/* Les outils dans cette fenetre sont clickables, l'outil actif etant indique par un X */
+
+	WINDOW *fen;
+
+	fen = newwin(NB_LIGNES_OUTILS, NB_COL_OUTILS, 1, NB_COL_SIM + 3);
+	mvwprintw(fen, 0, 0, "Points : xxx");
+	mvwprintw(fen, 1, 0, "Poireaus : xxx");
+	wrefresh(fen);
+
+	return fen;
 }
 
 void *routine_poisson(void *arg)
@@ -383,11 +417,11 @@ void generer_poisson(grille_t *etang)
 	coord_t *coord;
 	nb_poissons=0;
 		while (nb_poissons < MAX_POISSONS-2)
-		{	
+		{
 			randomx = rand() % NB_COL_SIM;
 			randomy = rand() % NB_LIGNES_SIM;
 			if (etang->grille[randomy][randomx] ==0)
-				
+
 				{
 
 				nb_poissons++;
@@ -409,7 +443,7 @@ void generer_poisson(grille_t *etang)
 				wprintw(fen_msg, "%d %d\n", randomy, randomx);
 				}
 			}
-	
+
 }
 
 void simulation()
