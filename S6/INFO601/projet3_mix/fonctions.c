@@ -354,37 +354,41 @@ void *routine_poisson(void *arg)
 poisson_t creer_poisson(int id, int posx, int posy)
 {
 	int random;
-	poisson_t poisson = (poisson_t *)malloc(sizeof(poisson_t));
+	poisson_t *poisson;
+
+poisson = (poisson_t *)malloc(sizeof(poisson_t));
 	random = rand() % 100;
 	if (random < 15)
 	{
-		poisson.val = 3;
+		poisson->val = 3;
 	}
 	if (random > 15 && random < 40)
 	{
-		poisson.val = 2;
+		poisson->val = 2;
 	}
 	else
 	{
-		poisson.val = 1;
+		poisson->val = 1;
 	}
-	poisson.id = id;
-	poisson.posx = posx;
-	poisson.posy = posy;
+	poisson->id = id;
+	poisson->posx = posx;
+	poisson->posy = posy;
+	return *poisson;
 }
+
 void generer_poisson(grille_t *etang)
 {
-	int i = 0;
-
+	int randomx, randomy;
+	int nb_poissons;
 	coord_t *coord;
-	if (etang[randomy][randomx ] !=0)
-	{
-		i = 0;
-		
-		while (nb_poissons < MAX_POISSONS)
-		{
+	nb_poissons=0;
+		while (nb_poissons < MAX_POISSONS-2)
+		{	
 			randomx = rand() % NB_COL_SIM;
 			randomy = rand() % NB_LIGNES_SIM;
+			if (etang->grille[randomy][randomx] !=0)
+	{
+
 			nb_poissons++;
 
 			threads_poissons[nb_poissons] = (pthread_t *)malloc(sizeof(pthread_t));
@@ -402,8 +406,9 @@ void generer_poisson(grille_t *etang)
 			sleep(3);
 			wrefresh(fen_sim);
 			wprintw(fen_msg, "%d %d\n", randomy, randomx);
+			}
 		}
-	}
+	
 }
 
 void simulation()
@@ -411,10 +416,10 @@ void simulation()
 	WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_outils;
 	MEVENT event;
 	int ch, i, item_actif = HAMMECONS;
-	int randomx, randomy;
-	int tempx = 0, tempy = 0;
+	/*int randomx, randomy;*/
+		int tempx = 0, tempy = 0;
 	int nb_hammecon = 0;
-	int nb_poissons = 0;
+	/*int nb_poissons = 0;*/
 	coord_t *coord;
 	srand(time(NULL));
 

@@ -22,14 +22,14 @@
 #define VIDE				0				/* Identifiants des elements pouvant etre */
 /* places sur la grille de simulation */
 #define POISSON				1
-
+#define HAMMECONS              2
 #define HAMMECONSJ1	        10
 #define PNEUJ1              11
 #define DYNAJ1              12
 
 #define HAMMECONSJ2         20
-#define PNEUJ1              21
-#define DYNAJ1              22
+#define PNEUJ2              21
+#define DYNAJ2              22
 
 #define COOL                1
 #define FUITE               0
