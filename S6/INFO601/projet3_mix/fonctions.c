@@ -213,7 +213,7 @@ WINDOW *creer_fenetre_outils()
 
 void *routine_poisson(void *arg)
 {
-	int j;
+	/*int j;*/
 	coord_t *coord = (coord_t *)arg;
 	srand(time(NULL));
 
@@ -232,24 +232,7 @@ void *routine_poisson(void *arg)
 					grille[coord->y][coord->x].element = VIDE;
 					coord->y++;
 				}
-				/*else if(grille[coord->y+1][coord->x].element==HAMMECONS){
-						grille[coord->y+1][coord->x].element = VIDE;
-						mvwprintw(fen_sim, coord->y+1, coord->x, " ");
-					}*/
-				else if (grille[coord->y + 1][coord->x].element == POISSON)
-				{
-					grille[coord->y + 1][coord->x].element = VIDE;
-					pthread_mutex_lock(&grille[coord->y + 1][coord->x].mutex);
-					pthread_cancel((pthread_t)grille[coord->y + 1][coord->x].poisson);
-					for (j = 0; j < MAX_POISSONS; j++)
-					{
-						if (grille[coord->y + 1][coord->x].poisson == threads_poissons[j])
-						{
-							pthread_cancel((pthread_t)threads_poissons[j]);
-						}
-					}
-					pthread_mutex_unlock(&grille[coord->y + 1][coord->x].mutex);
-				}
+				
 			}
 			break;
 		case 1:
@@ -261,25 +244,7 @@ void *routine_poisson(void *arg)
 					grille[coord->y][coord->x].element = VIDE;
 					coord->x++;
 				}
-				/*else if(grille[coord->y][coord->x+1].element==HAMMECONS){
-						grille[coord->y][coord->x+1].element = VIDE;
-						mvwprintw(fen_sim, coord->y, coord->x+1, " ");
-					}*/
-				else if (grille[coord->y][coord->x + 1].element == POISSON)
-				{
-					grille[coord->y][coord->x + 1].element = VIDE;
-					pthread_mutex_lock(&grille[coord->y][coord->x + 1].mutex);
-					pthread_cancel((pthread_t)grille[coord->y][coord->x + 1].poisson);
-					for (j = 0; j < MAX_POISSONS; j++)
-					{
-						if (grille[coord->y][coord->x + 1].poisson == threads_poissons[j])
-						{
-							pthread_mutex_lock(&grille[coord->y + 1][coord->x].mutex);
-							pthread_cancel((pthread_t)threads_poissons[j]);
-						}
-					}
-					pthread_mutex_unlock(&grille[coord->y][coord->x + 1].mutex);
-				}
+				
 			}
 			break;
 		case 2:
@@ -291,24 +256,7 @@ void *routine_poisson(void *arg)
 					grille[coord->y][coord->x].element = VIDE;
 					coord->y--;
 				}
-				/*else if(grille[coord->y-1][coord->x].element==HAMMECONS){
-						grille[coord->y-1][coord->x].element = VIDE;
-						mvwprintw(fen_sim, coord->y-1, coord->x, " ");
-					}*/
-				else if (grille[coord->y - 1][coord->x].element == POISSON)
-				{
-					grille[coord->y - 1][coord->x].element = VIDE;
-					pthread_mutex_lock(&grille[coord->y - 1][coord->x].mutex);
-					pthread_cancel((pthread_t)grille[coord->y - 1][coord->x].poisson);
-					for (j = 0; j < MAX_POISSONS; j++)
-					{
-						if (grille[coord->y - 1][coord->x].poisson == threads_poissons[j])
-						{
-							pthread_cancel((pthread_t)threads_poissons[j]);
-						}
-					}
-					pthread_mutex_unlock(&grille[coord->y - 1][coord->x].mutex);
-				}
+			
 			}
 			break;
 		case 3:
@@ -319,24 +267,6 @@ void *routine_poisson(void *arg)
 					grille[coord->y][coord->x - 1].element = POISSON;
 					grille[coord->y][coord->x].element = VIDE;
 					coord->x--;
-				}
-				/*else if(grille[coord->y][coord->x-1].element==HAMMECONS){
-						grille[coord->y][coord->x-1].element = VIDE;
-						mvwprintw(fen_sim, coord->y, coord->x-1, " ");
-					}*/
-				else if (grille[coord->y][coord->x - 1].element == POISSON)
-				{
-					grille[coord->y][coord->x - 1].element = VIDE;
-					pthread_mutex_lock(&grille[coord->y][coord->x - 1].mutex);
-					pthread_cancel((pthread_t)grille[coord->y][coord->x - 1].poisson);
-					for (j = 0; j < MAX_POISSONS; j++)
-					{
-						if (grille[coord->y][coord->x - 1].poisson == threads_poissons[j])
-						{
-							pthread_cancel((pthread_t)threads_poissons[j]);
-						}
-					}
-					pthread_mutex_unlock(&grille[coord->y][coord->x - 1].mutex);
 				}
 			}
 			break;
@@ -350,7 +280,15 @@ void *routine_poisson(void *arg)
 	free(coord);
 	return NULL;
 }
-
+grille_t recuperation(grille_t *etang){
+	int i,j;
+	for(i=0;i<NB_LIGNES_SIM;i++){
+		for( j=0;j<NB_COL_SIM;j++){
+			etang->grille[i][j]=grille[i][j].element;
+		}
+	}
+	return *etang;
+}
 poisson_t creer_poisson(int id, int posx, int posy)
 {
 	int random;
@@ -394,6 +332,7 @@ void generer_poisson(grille_t *etang)
 
 				threads_poissons[nb_poissons] = (pthread_t *)malloc(sizeof(pthread_t));
 				grille[randomy][randomx].element = POISSON;
+				etang->grille[randomy][randomx]=POISSON;
 				grille[randomy][randomx].poisson = threads_poissons[nb_poissons];
 				coord = (coord_t *)malloc(sizeof(coord_t));
 				coord->y = randomy;
@@ -411,61 +350,17 @@ void generer_poisson(grille_t *etang)
 			}
 	
 }
-
-void simulation()
-{
-	WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_outils;
+void lancerTruc(){
 	MEVENT event;
-	int ch, i, item_actif = HAMMECONS;
-	/*int randomx, randomy;*/
-		int tempx = 0, tempy = 0;
-	int nb_hammecon = 0;
-	/*int nb_poissons = 0;*/
-	coord_t *coord;
-	srand(time(NULL));
-
-	ncurses_initialiser();
-	simulation_initialiser();
-
-	fen_box_sim = creer_fenetre_box_sim();
-	fen_sim = creer_fenetre_sim();
-	fen_box_msg = creer_fenetre_box_msg();
-	fen_msg = creer_fenetre_msg();
-	fen_box_outils = creer_fenetre_box_outils();
-	fen_outils = creer_fenetre_outils();
-
-	mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
-	wrefresh(stdscr);
-
-	while ((ch = getch()) != KEY_F(2))
-	{
-
-		switch (ch)
-		{
-		case KEY_MOUSE:
-			if (getmouse(&event) == OK)
+	int item_actif = HAMMECONS;
+		int nb_hammecon = 0;
+			int tempx = 0, tempy = 0;
+	if (getmouse(&event) == OK)
 			{
 				/* wprintw(fen_msg, "Clic a la position %d %d de l'ecran\n", event.y, event.x);*/
 				wrefresh(fen_msg);
-				if (event.y == 32 && event.x >= 82 && event.x <= 98)
-				{
-					item_actif = HAMMECONS;
-					mvwprintw(fen_outils, 0, 1, "X");
-					mvwprintw(fen_outils, 1, 1, " ");
-					wrefresh(fen_outils);
-					wprintw(fen_msg, "Outil Hammecon active\n");
-					wrefresh(fen_msg);
-				}
-				else if (event.y == 33 && event.x >= 82 && event.x <= 98)
-				{
-					item_actif = POISSON;
-					mvwprintw(fen_outils, 0, 1, " ");
-					mvwprintw(fen_outils, 1, 1, "X");
-					wrefresh(fen_outils);
-					wprintw(fen_msg, "Outil poisson active\n");
-					wrefresh(fen_msg);
-				}
-				else if (event.y > 0 && event.y < NB_LIGNES_SIM + 1 && event.x > 0 && event.x < NB_COL_SIM + 1)
+
+				 if (event.y > 0 && event.y < NB_LIGNES_SIM + 1 && event.x > 0 && event.x < NB_COL_SIM + 1)
 				{
 					switch (item_actif)
 					{
@@ -498,41 +393,46 @@ void simulation()
 						pthread_mutex_unlock(&grille[event.y - 1][event.x - 1].mutex);
 
 						break;
-					case POISSON:
-						pthread_mutex_lock(&grille[event.y - 1][event.x - 1].mutex);
-						if (grille[event.y - 1][event.x - 1].element == VIDE)
-						{
-							i = 0;
-							while (i < MAX_POISSONS && threads_poissons[i] != NULL)
-								i++;
-							if (i < MAX_POISSONS)
-							{
-								threads_poissons[i] = (pthread_t *)malloc(sizeof(pthread_t));
-								grille[event.y - 1][event.x - 1].element = POISSON;
-								grille[event.y - 1][event.x - 1].poisson = threads_poissons[i];
-								coord = (coord_t *)malloc(sizeof(coord_t));
-								coord->y = event.y - 1;
-								coord->x = event.x - 1;
-								pthread_create(threads_poissons[i], NULL, routine_poisson, (void *)coord);
-								mvwprintw(fen_sim, event.y - 1, event.x - 1, "@");
-								/* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", event.y - 1, event.x - 1);*/
-							}
-							else
-							{
-								/*wprintw(fen_msg, "Nombre maximum de poissons atteint\n");*/
-							}
-						}
-						wrefresh(fen_sim);
-						wrefresh(fen_msg);
-						pthread_mutex_unlock(&grille[event.y - 1][event.x - 1].mutex);
-						break;
-					}
+				
 				}
 			}
+			}
+}
+void simulation()
+{
+	WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_outils;
+	
+	int ch;
+	/*int randomx, randomy;*/
+
+
+	/*int nb_poissons = 0;*/
+	/*coord_t *coord;*/
+	srand(time(NULL));
+
+	ncurses_initialiser();
+	simulation_initialiser();
+
+	fen_box_sim = creer_fenetre_box_sim();
+	fen_sim = creer_fenetre_sim();
+	fen_box_msg = creer_fenetre_box_msg();
+	fen_msg = creer_fenetre_msg();
+	fen_box_outils = creer_fenetre_box_outils();
+	fen_outils = creer_fenetre_outils();
+
+	mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
+	wrefresh(stdscr);
+
+	while ((ch = getch()) != KEY_F(2))
+	{
+		switch (ch)
+		{
+		case KEY_MOUSE:
+			lancerTruc();
 			break;
 		}
 	}
-
+	
 	delwin(fen_box_sim);
 	delwin(fen_sim);
 	delwin(fen_box_msg);
