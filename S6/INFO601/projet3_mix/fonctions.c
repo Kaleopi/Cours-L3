@@ -386,28 +386,29 @@ void generer_poisson(grille_t *etang)
 		{	
 			randomx = rand() % NB_COL_SIM;
 			randomy = rand() % NB_LIGNES_SIM;
-			if (etang->grille[randomy][randomx] !=0)
-	{
+			if (etang->grille[randomy][randomx] ==0)
+				
+				{
 
-			nb_poissons++;
+				nb_poissons++;
 
-			threads_poissons[nb_poissons] = (pthread_t *)malloc(sizeof(pthread_t));
-			grille[randomy][randomx].element = POISSON;
-			grille[randomy][randomx].poisson = threads_poissons[nb_poissons];
-			coord = (coord_t *)malloc(sizeof(coord_t));
-			coord->y = randomy;
-			coord->x = randomx;
-			pthread_create(threads_poissons[nb_poissons], NULL, routine_poisson, (void *)coord);
-			mvwprintw(fen_sim, randomy, randomx, "@");
-			/* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);*/
+				threads_poissons[nb_poissons] = (pthread_t *)malloc(sizeof(pthread_t));
+				grille[randomy][randomx].element = POISSON;
+				grille[randomy][randomx].poisson = threads_poissons[nb_poissons];
+				coord = (coord_t *)malloc(sizeof(coord_t));
+				coord->y = randomy;
+				coord->x = randomx;
+				pthread_create(threads_poissons[nb_poissons], NULL, routine_poisson, (void *)coord);
+				mvwprintw(fen_sim, randomy, randomx, "@");
+				/* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);*/
 
-			pthread_mutex_unlock(&grille[randomy][randomx].mutex);
+				pthread_mutex_unlock(&grille[randomy][randomx].mutex);
 
-			sleep(3);
-			wrefresh(fen_sim);
-			wprintw(fen_msg, "%d %d\n", randomy, randomx);
+				sleep(3);
+				wrefresh(fen_sim);
+				wprintw(fen_msg, "%d %d\n", randomy, randomx);
+				}
 			}
-		}
 	
 }
 
