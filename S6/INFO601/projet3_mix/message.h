@@ -20,9 +20,9 @@ typedef struct{
 
 typedef struct{
 	int id;
-	int etat;
-	int num;
-	int valeur;
+	int ETAT;
+	int val;
+	int stun;
 	int posx;
 	int posy;
 }poisson_t;

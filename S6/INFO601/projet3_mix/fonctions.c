@@ -201,8 +201,6 @@ void *routine_poisson(void *arg) {
 					if(grille[coord->y+1][coord->x].element==VIDE){
 						grille[coord->y+1][coord->x].element = POISSON;
 						grille[coord->y][coord->x].element = VIDE;
-						mvwprintw(fen_sim, coord->y+1, coord->x, "@");
-						mvwprintw(fen_sim, coord->y, coord->x, " ");
 						coord->y++;
 					}
 					/*else if(grille[coord->y+1][coord->x].element==HAMMECONS){
@@ -211,7 +209,6 @@ void *routine_poisson(void *arg) {
 					}*/
 					else if(grille[coord->y+1][coord->x].element==POISSON){
 						grille[coord->y+1][coord->x].element = VIDE;
-						mvwprintw(fen_sim, coord->y+1, coord->x, " ");
 						pthread_mutex_lock(&grille[coord->y+1][coord->x].mutex);
 						pthread_cancel((pthread_t)grille[coord->y+1][coord->x].poisson);
 						for(j=0;j<MAX_POISSONS;j++){
@@ -229,8 +226,6 @@ void *routine_poisson(void *arg) {
 					if(grille[coord->y][coord->x+1].element==VIDE){
 						grille[coord->y][coord->x+1].element = POISSON;
 						grille[coord->y][coord->x].element = VIDE;
-						mvwprintw(fen_sim, coord->y, coord->x+1, "@");
-						mvwprintw(fen_sim, coord->y, coord->x, " ");
 						coord->x++;
 					}
 					/*else if(grille[coord->y][coord->x+1].element==HAMMECONS){
@@ -239,7 +234,6 @@ void *routine_poisson(void *arg) {
 					}*/
 					else if(grille[coord->y][coord->x+1].element==POISSON){
 						grille[coord->y][coord->x+1].element = VIDE;
-						mvwprintw(fen_sim, coord->y, coord->x+1, " ");
 						pthread_mutex_lock(&grille[coord->y][coord->x+1].mutex);
 						pthread_cancel((pthread_t)grille[coord->y][coord->x+1].poisson);
 						for(j=0;j<MAX_POISSONS;j++){
@@ -257,8 +251,6 @@ void *routine_poisson(void *arg) {
 					if(grille[coord->y-1][coord->x].element==VIDE){
 						grille[coord->y-1][coord->x].element = POISSON;
 						grille[coord->y][coord->x].element = VIDE;
-						mvwprintw(fen_sim, coord->y-1, coord->x, "@");
-						mvwprintw(fen_sim, coord->y, coord->x, " ");
 						coord->y--;
 					}
 					/*else if(grille[coord->y-1][coord->x].element==HAMMECONS){
@@ -267,7 +259,6 @@ void *routine_poisson(void *arg) {
 					}*/
 					else if(grille[coord->y-1][coord->x].element==POISSON){
 						grille[coord->y-1][coord->x].element = VIDE;
-						mvwprintw(fen_sim, coord->y-1, coord->x, " ");
 						pthread_mutex_lock(&grille[coord->y-1][coord->x].mutex);
 						pthread_cancel((pthread_t)grille[coord->y-1][coord->x].poisson);
 						for(j=0;j<MAX_POISSONS;j++){
@@ -285,8 +276,6 @@ void *routine_poisson(void *arg) {
 					if(grille[coord->y][coord->x-1].element==VIDE){
 						grille[coord->y][coord->x-1].element = POISSON;
 						grille[coord->y][coord->x].element = VIDE;
-						mvwprintw(fen_sim, coord->y, coord->x-1, "@");
-						mvwprintw(fen_sim, coord->y, coord->x, " ");
 						coord->x--;
 					}
 					/*else if(grille[coord->y][coord->x-1].element==HAMMECONS){
@@ -295,7 +284,6 @@ void *routine_poisson(void *arg) {
 					}*/
 					else if(grille[coord->y][coord->x-1].element==POISSON){
 						grille[coord->y][coord->x-1].element = VIDE;
-						mvwprintw(fen_sim, coord->y, coord->x-1, " ");
 						pthread_mutex_lock(&grille[coord->y][coord->x-1].mutex);
 						pthread_cancel((pthread_t)grille[coord->y][coord->x-1].poisson);
 						for(j=0;j<MAX_POISSONS;j++){
@@ -318,11 +306,28 @@ void *routine_poisson(void *arg) {
 	return NULL;
 }
 
+poisson_t creer_poisson(int id,int posx,int posy){
+	int random;
+	poisson_t poisson = (poisson_t*)malloc(sizeof(poisson_t));
+	random=rand()%100;
+	if( random<15){
+		poisson.val=3;
+	}
+	if(random>15 &&random<40){
+		poisson.val=2;
+	}
+	else{
+		poisson.val=1;
+	}
+	poisson.id=id;
+	poisson.posx=posx;
+	poisson.posy=posy;
+}
 void generer_poisson(){
 	int i;
 	int nb_poissons=0;
 	int	randomx=rand()%NB_COL_SIM;
-  int  randomy=rand()%NB_LIGNES_SIM;
+  	int  randomy=rand()%NB_LIGNES_SIM;
 	coord_t *coord;
   if (grille[randomy- 1][randomx - 1].element == VIDE) {
   	i = 0;
@@ -331,7 +336,7 @@ void generer_poisson(){
       i++;
       if(i < MAX_POISSONS) {
         threads_poissons[i] = (pthread_t *) malloc(sizeof(pthread_t));
-				grille[randomy - 1][randomx - 1].element = POISSON;
+		grille[randomy - 1][randomx - 1].element = POISSON;
         grille[randomy - 1][randomx - 1].poisson = threads_poissons[i];
         coord = (coord_t *) malloc(sizeof(coord_t));
         coord->y = randomy - 1;
@@ -353,7 +358,7 @@ void simulation(){
         MEVENT event;
         int ch, i,item_actif = HAMMECONS;
         int randomx,randomy;
-       int tempx=0,tempy=0;
+       	int tempx=0,tempy=0;
         int nb_hammecon=0;
         int nb_poissons=0;
         coord_t *coord;
@@ -374,7 +379,7 @@ void simulation(){
 
         while((ch = getch()) != KEY_F(2)) {
 
-        while(nb_poissons<2){
+        while(nb_poissons<MAX_POISSONS){
                 randomx=rand()%NB_COL_SIM;
                 randomy=rand()%NB_LIGNES_SIM;
 				nb_poissons++;
