@@ -505,8 +505,6 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 								mvwprintw(fen_sim, event.y , event.x - 1, " ");
 								mvwprintw(fen_sim, event.y +1 , event.x - 1, " ");
 								wattroff(fen_sim, COLOR_PAIR(2));
-								tempx = event.x - 1;
-								tempy = event.y - 1;
 								wprintw(fen_msg, "Ajout d'un Hammecon \n");
 							}		
 					break;
@@ -581,8 +579,7 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 
 
 								
-								tempx = event.x - 1;
-								tempy = event.y - 1;
+
 								wprintw(fen_msg, "EXPLOSION \n");
 								wattron(fen_sim, COLOR_PAIR(4));
 								mvwprintw(fen_sim, event.y -3, event.x - 3, " ");
