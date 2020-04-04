@@ -8,11 +8,11 @@
 #include "includes.h"
 #include "message.h"
 #include "fonctions.h"
-
+  WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_box_points ,*fen_sim, *fen_msg, *fen_outils, *fen_points;
   int tab[3];
 int main(int argc, char *argv[]) {
   struct sockaddr_in adresse;
-  WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_box_points ,*fen_sim, *fen_msg, *fen_outils, *fen_points;
+
   int item_actif=HAMMECONS;
   grille_t *etang;
   int sockfd, ch;
@@ -125,16 +125,21 @@ int main(int argc, char *argv[]) {
   wrefresh(fen_msg);
   init_sim(fen_sim, etang);
   while((ch = getch()) != KEY_F(2)) {
-      	
+      /*	 generer_poisson(etang);*/
 		switch (ch)
 		{
+     
       case KEY_MOUSE:
         lancerTruc(item_actif,fen_sim,fen_msg,tab);
         break;
       case KEY_DOWN:
+        wprintw(fen_msg, "Switch Item down\n");
+	      wrefresh(fen_msg);
         item_actif=switchDown(item_actif,fen_outils);
         break;
       case KEY_UP:
+        wprintw(fen_msg, "Switch item Up\n");
+	      wrefresh(fen_msg);
         item_actif=switchUp(item_actif,fen_outils);
         break;
 		}

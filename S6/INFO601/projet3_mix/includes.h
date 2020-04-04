@@ -27,7 +27,8 @@
 #define HAMMECONS              2
 #define PNEU                   3
 #define DYNA                    4
-#define FURTIF              5
+#define FURTIF              6
+#define REQUIN                  5
 
 
 #define HAMMECONSJ1	        10

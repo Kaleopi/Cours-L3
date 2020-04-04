@@ -386,21 +386,29 @@ void generer_poisson(grille_t *etang)
 int switchUp(int item_actif,WINDOW *fen){
 	switch(item_actif){
 		case HAMMECONS:
+			mvwprintw(fen, 0, 0, " ");
+			mvwprintw(fen, 4, 0, "X");
 			return FURTIF;
-			mvwprintw(fen, 3, 0, "X");
 		break;
 		case PNEU:
-			return HAMMECONS;
+			mvwprintw(fen, 1, 0, " ");
 			mvwprintw(fen, 0, 0, "X");
+			return HAMMECONS;
 		break;
 		case DYNA:
-			return PNEU;
+			mvwprintw(fen, 2, 0, " ");
 			mvwprintw(fen, 1, 0, "X");
+			return PNEU;
 		break;
 		case FURTIF:
-			return DYNA;
-			mvwprintw(fen, 2, 0, "X");
+			mvwprintw(fen, 4, 0, " ");
+			mvwprintw(fen, 3, 0, "X");
+			return REQUIN;
 		break;
+		case REQUIN:
+			mvwprintw(fen, 3, 0, " ");
+			mvwprintw(fen, 2, 0, "X");
+			return DYNA;
 	}
 	return item_actif;
 }
@@ -408,21 +416,30 @@ int  switchDown(int item_actif,WINDOW *fen){
 		switch(item_actif){
 	
 		case HAMMECONS:
-			return PNEU;
+			mvwprintw(fen, 0, 0, " ");
 			mvwprintw(fen, 1, 0, "X");
+			return PNEU;
 		break;
 		case PNEU:
-			return DYNA;
+			mvwprintw(fen, 1, 0, " ");
 			mvwprintw(fen, 2, 0, "X");
+			return DYNA;
 		break;
 		case DYNA:
-			return FURTIF;
+			mvwprintw(fen, 2, 0, " ");
 			mvwprintw(fen, 3, 0, "X");
+			return REQUIN;
+		break;
+		case REQUIN:
+			mvwprintw(fen, 3, 0, " ");
+			mvwprintw(fen, 4, 0, "X");
+			return FURTIF;
 		break;
 		case FURTIF:
-			return HAMMECONS;
+			mvwprintw(fen, 4, 0, " ");
 			mvwprintw(fen, 0, 0, "X");
-		break;
+			return HAMMECONS;
+			break;
 	}
 	return item_actif;
 }
