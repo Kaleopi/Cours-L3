@@ -86,8 +86,10 @@ void ncurses_initialiser()
 	mousemask(BUTTON1_CLICKED, NULL); /* Active le clic gauche de la souris*/
 	start_color();
 	init_pair(1, COLOR_BLACK, COLOR_YELLOW); /*poisson*/
-	init_pair(2, COLOR_WHITE, COLOR_BLACK);
+	init_pair(2, COLOR_WHITE, COLOR_BLACK);/*peuneu*/
+	init_pair(3, COLOR_WHITE, COLOR_RED);/*dyna*/
 	init_pair(4, COLOR_WHITE, COLOR_BLUE);	 /*eau*/
+	init_pair(5, COLOR_WHITE, COLOR_GREEN);/*requin*/
 	wbkgd(stdscr, COLOR_PAIR(2));
 	refresh();
 }
@@ -508,7 +510,111 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 								wprintw(fen_msg, "Ajout d'un Hammecon \n");
 							}		
 					break;
+				case DYNA:
+								grille[event.y-3 ][event.x - 3].element = VIDE;
+								grille[event.y - 2][event.x - 3].element = VIDE;
+								grille[event.y -1][event.x - 3].element = VIDE;
+								grille[event.y ][event.x - 3].element = VIDE;
+								grille[event.y +1][event.x - 3].element=VIDE;
 
+								grille[event.y-3 ][event.x - 2].element = VIDE;
+								grille[event.y - 2][event.x - 2].element = VIDE;
+								grille[event.y -1][event.x - 2].element = VIDE;
+								grille[event.y ][event.x - 2].element = VIDE;
+								grille[event.y +1][event.x - 2].element = VIDE;
+
+								grille[event.y-3 ][event.x - 1].element = VIDE;
+								grille[event.y - 2][event.x - 1].element = VIDE;
+								grille[event.y -1][event.x - 1].element = VIDE;
+								grille[event.y ][event.x - 1].element = VIDE;
+								grille[event.y +1][event.x - 1].element=VIDE;
+								
+								grille[event.y-3 ][event.x].element = VIDE;
+								grille[event.y - 2][event.x].element = VIDE;
+								grille[event.y -1][event.x].element = VIDE;
+								grille[event.y ][event.x].element = VIDE;
+								grille[event.y +1][event.x ].element=VIDE;
+
+								grille[event.y-3 ][event.x+1].element = VIDE;
+								grille[event.y - 2][event.x+1].element = VIDE;
+								grille[event.y -1][event.x+1].element = VIDE;
+								grille[event.y ][event.x+1].element = VIDE;
+								grille[event.y +1][event.x+1 ].element=VIDE;
+
+
+
+								wattron(fen_sim, COLOR_PAIR(3));
+								mvwprintw(fen_sim, event.y -3, event.x - 3, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x - 3, " ");
+								mvwprintw(fen_sim, event.y -1, event.x -3, " ");
+								mvwprintw(fen_sim, event.y , event.x - 3, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x - 3, " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x - 2, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x - 2, " ");
+								mvwprintw(fen_sim, event.y -1, event.x -2, " ");
+								mvwprintw(fen_sim, event.y , event.x - 2, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x - 2, " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x - 1, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x - 1, " ");
+								mvwprintw(fen_sim, event.y -1, event.x -1, " ");
+								mvwprintw(fen_sim, event.y , event.x - 1, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x - 1, " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x , " ");
+								mvwprintw(fen_sim, event.y - 2, event.x , " ");
+								mvwprintw(fen_sim, event.y -1, event.x , " ");
+								mvwprintw(fen_sim, event.y , event.x , " ");
+								mvwprintw(fen_sim, event.y + 1, event.x , " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x +1, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x +1, " ");
+								mvwprintw(fen_sim, event.y -1, event.x +1, " ");
+								mvwprintw(fen_sim, event.y , event.x +1, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x +1, " ");
+								wattroff(fen_sim, COLOR_PAIR(3));
+
+								
+								wrefresh(fen_sim);
+								sleep(1);
+
+
+								
+								tempx = event.x - 1;
+								tempy = event.y - 1;
+								wprintw(fen_msg, "EXPLOSION \n");
+								wattron(fen_sim, COLOR_PAIR(4));
+								mvwprintw(fen_sim, event.y -3, event.x - 3, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x - 3, " ");
+								mvwprintw(fen_sim, event.y -1, event.x -3, " ");
+								mvwprintw(fen_sim, event.y , event.x - 3, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x - 3, " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x - 2, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x - 2, " ");
+								mvwprintw(fen_sim, event.y -1, event.x -2, " ");
+								mvwprintw(fen_sim, event.y , event.x - 2, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x - 2, " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x - 1, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x - 1, " ");
+								mvwprintw(fen_sim, event.y -1, event.x -1, " ");
+								mvwprintw(fen_sim, event.y , event.x - 1, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x - 1, " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x , " ");
+								mvwprintw(fen_sim, event.y - 2, event.x , " ");
+								mvwprintw(fen_sim, event.y -1, event.x , " ");
+								mvwprintw(fen_sim, event.y , event.x , " ");
+								mvwprintw(fen_sim, event.y + 1, event.x , " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x +1, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x +1, " ");
+								mvwprintw(fen_sim, event.y -1, event.x +1, " ");
+								mvwprintw(fen_sim, event.y , event.x +1, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x +1, " ");
+								wattroff(fen_sim, COLOR_PAIR(4));
 				}
 			}
 			}
