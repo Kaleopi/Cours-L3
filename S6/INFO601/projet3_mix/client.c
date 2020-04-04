@@ -9,7 +9,7 @@
 #include "message.h"
 #include "fonctions.h"
 
-
+  int tab[3];
 int main(int argc, char *argv[]) {
   struct sockaddr_in adresse;
   WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_box_points ,*fen_sim, *fen_msg, *fen_outils, *fen_points;
@@ -114,6 +114,7 @@ int main(int argc, char *argv[]) {
   fen_outils = creer_fenetre_outils();
   fen_msg = creer_fenetre_msg();
   mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
+   wrefresh(stdscr);
   wrefresh(fen_box_sim);
   wrefresh(fen_box_points);
   wrefresh(fen_box_outils);
@@ -127,18 +128,31 @@ int main(int argc, char *argv[]) {
       	
 		switch (ch)
 		{
-		case KEY_MOUSE:
-			lancerTruc(item_actif);
-			break;
-		case KEY_DOWN:
-			item_actif=switchDown(item_actif,fen_outils);
-			break;
-		case KEY_UP:
-			item_actif=switchUp(item_actif,fen_outils);
-			break;
+      case KEY_MOUSE:
+        lancerTruc(item_actif,fen_sim,fen_msg,tab);
+        break;
+      case KEY_DOWN:
+        item_actif=switchDown(item_actif,fen_outils);
+        break;
+      case KEY_UP:
+        item_actif=switchUp(item_actif,fen_outils);
+        break;
 		}
+      wrefresh(fen_sim);
+      wrefresh(fen_outils);
+      wrefresh(fen_msg);
+      wrefresh(fen_points);
   }
+
   simulation_stopper();
+  delwin(fen_box_sim);
+  delwin(fen_sim);
+  delwin(fen_box_msg);
+  delwin(fen_msg);
+  delwin(fen_box_outils);
+  delwin(fen_outils);
+  delwin(fen_box_points);
+  delwin(fen_points);
   ncurses_stopper();
   /* Fermeture de la socket TCP*/
   if(close(sockfd) == -1) {

@@ -22,4 +22,4 @@ void one_send(grille_t*, int);
 void init_sim(WINDOW* w, grille_t* etang);
 int switchUp(int,WINDOW*);
 int switchDown(int,WINDOW*);
-void lancerTruc(int);
+int* lancerTruc(int,WINDOW*,WINDOW*,int*);

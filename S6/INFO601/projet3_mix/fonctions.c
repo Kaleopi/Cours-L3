@@ -426,13 +426,13 @@ int  switchDown(int item_actif,WINDOW *fen){
 	}
 	return item_actif;
 }
-void lancerTruc(int item_actif){
+int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 	MEVENT event;
-		int nb_hammecon = 0;
-			int tempx = 0, tempy = 0;
+	int nb_hammecon=tab[0];
+		int tempx = tab[1], tempy = tab[2];
 	if (getmouse(&event) == OK)
 			{
-				/* wprintw(fen_msg, "Clic a la position %d %d de l'ecran\n", event.y, event.x);*/
+				 wprintw(fen_msg, "Clic a la position %d %d de l'ecran\n", event.y, event.x);
 				wrefresh(fen_msg);
 
 				 if (event.y > 0 && event.y < NB_LIGNES_SIM + 1 && event.x > 0 && event.x < NB_COL_SIM + 1)
@@ -466,10 +466,14 @@ void lancerTruc(int item_actif){
 						wrefresh(fen_sim);
 						wrefresh(fen_msg);
 						pthread_mutex_unlock(&grille[event.y - 1][event.x - 1].mutex);
-
+						
 						break;
 
 				}
 			}
 			}
+			tab[0]=nb_hammecon;
+			tab[2]=tempy;
+			tab[1]=tempx;
+			return tab;
 }
