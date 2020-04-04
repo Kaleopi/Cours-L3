@@ -25,6 +25,11 @@
 /* places sur la grille de simulation */
 #define POISSON				1
 #define HAMMECONS              2
+#define PNEU                   3
+#define DYNA                    4
+#define FURTIF              5
+
+
 #define HAMMECONSJ1	        10
 #define PNEUJ1              11
 #define DYNAJ1              12

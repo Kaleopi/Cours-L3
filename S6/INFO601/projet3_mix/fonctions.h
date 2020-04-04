@@ -20,3 +20,6 @@ void afficher_etang(grille_t*);
 void both_send(grille_t*, int, int);
 void one_send(grille_t*, int);
 void init_sim(WINDOW* w, grille_t* etang);
+int switchUp(int);
+int switchDown(int);
+void lancerTruc(int);

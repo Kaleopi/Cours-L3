@@ -1,4 +1,3 @@
-
 #include <stdlib.h>		/* Pour exit, EXIT_SUCCESS, EXIT_FAILURE */
 #include <sys/socket.h> /* Pour socket */
 #include <arpa/inet.h>	/* Pour sockaddr_in, IPPROTO_TCP */
@@ -384,9 +383,43 @@ void generer_poisson(grille_t *etang)
 			}
 
 }
-void lancerTruc(){
+int switchUp(int item_actif){
+	switch(item_actif){
+		case HAMMECONS:
+			return FURTIF;
+		break;
+		case PNEU:
+			return HAMMECONS;
+		break;
+		case DYNA:
+			return PNEU;
+		break;
+		case FURTIF:
+			return DYNA;
+		break;
+	}
+	return item_actif;
+}
+int  switchDown(int item_actif){
+		switch(item_actif){
+	
+		case HAMMECONS:
+			return PNEU;
+		break;
+		case PNEU:
+			return DYNA;
+		break;
+		case DYNA:
+			return FURTIF;
+		break;
+		case FURTIF:
+			return HAMMECONS;
+		break;
+	}
+	return item_actif;
+}
+void lancerTruc(int item_actif){
 	MEVENT event;
-	int item_actif = HAMMECONS;
 		int nb_hammecon = 0;
 			int tempx = 0, tempy = 0;
 	if (getmouse(&event) == OK)
@@ -435,7 +468,7 @@ void lancerTruc(){
 void simulation()
 {
 	WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_outils;
-
+	int item_actif=HAMMECONS;
 	int ch;
 	/*int randomx, randomy;*/
 
@@ -462,7 +495,13 @@ void simulation()
 		switch (ch)
 		{
 		case KEY_MOUSE:
-			lancerTruc();
+			lancerTruc(item_actif);
+			break;
+		case KEY_DOWN:
+			item_actif=switchDown(item_actif);
+			break;
+		case KEY_UP:
+			item_actif=switchUp(item_actif);
 			break;
 		}
 	}
