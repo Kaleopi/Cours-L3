@@ -383,37 +383,45 @@ void generer_poisson(grille_t *etang)
 			}
 
 }
-int switchUp(int item_actif){
+int switchUp(int item_actif,WINDOW *fen){
 	switch(item_actif){
 		case HAMMECONS:
 			return FURTIF;
+			mvwprintw(fen, 3, 0, "X");
 		break;
 		case PNEU:
 			return HAMMECONS;
+			mvwprintw(fen, 0, 0, "X");
 		break;
 		case DYNA:
 			return PNEU;
+			mvwprintw(fen, 1, 0, "X");
 		break;
 		case FURTIF:
 			return DYNA;
+			mvwprintw(fen, 2, 0, "X");
 		break;
 	}
 	return item_actif;
 }
-int  switchDown(int item_actif){
+int  switchDown(int item_actif,WINDOW *fen){
 		switch(item_actif){
 	
 		case HAMMECONS:
 			return PNEU;
+			mvwprintw(fen, 1, 0, "X");
 		break;
 		case PNEU:
 			return DYNA;
+			mvwprintw(fen, 2, 0, "X");
 		break;
 		case DYNA:
 			return FURTIF;
+			mvwprintw(fen, 3, 0, "X");
 		break;
 		case FURTIF:
 			return HAMMECONS;
+			mvwprintw(fen, 0, 0, "X");
 		break;
 	}
 	return item_actif;
@@ -464,56 +472,4 @@ void lancerTruc(int item_actif){
 				}
 			}
 			}
-}
-void simulation()
-{
-	WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_outils;
-	int item_actif=HAMMECONS;
-	int ch;
-	/*int randomx, randomy;*/
-
-
-	/*int nb_poissons = 0;*/
-	/*coord_t *coord;*/
-	srand(time(NULL));
-
-	ncurses_initialiser();
-	simulation_initialiser();
-
-	fen_box_sim = creer_fenetre_box_sim();
-	fen_sim = creer_fenetre_sim();
-	fen_box_msg = creer_fenetre_box_msg();
-	fen_msg = creer_fenetre_msg();
-	fen_box_outils = creer_fenetre_box_outils();
-	fen_outils = creer_fenetre_outils();
-
-	mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
-	wrefresh(stdscr);
-
-	while ((ch = getch()) != KEY_F(2))
-	{
-		switch (ch)
-		{
-		case KEY_MOUSE:
-			lancerTruc(item_actif);
-			break;
-		case KEY_DOWN:
-			item_actif=switchDown(item_actif);
-			break;
-		case KEY_UP:
-			item_actif=switchUp(item_actif);
-			break;
-		}
-	}
-
-	delwin(fen_box_sim);
-	delwin(fen_sim);
-	delwin(fen_box_msg);
-	delwin(fen_msg);
-	delwin(fen_box_outils);
-	delwin(fen_outils);
-	simulation_stopper();
-	ncurses_stopper();
-
-	/*return 0;*/
 }

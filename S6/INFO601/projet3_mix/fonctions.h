@@ -14,12 +14,12 @@ WINDOW *creer_fenetre_outils() ;
 WINDOW *creer_fenetre_box_points();
 WINDOW *creer_fenetre_points() ;
 void *routine_poisson(void *);
-void simulation();
+
 void init_etang(grille_t*);
 void afficher_etang(grille_t*);
 void both_send(grille_t*, int, int);
 void one_send(grille_t*, int);
 void init_sim(WINDOW* w, grille_t* etang);
-int switchUp(int);
-int switchDown(int);
+int switchUp(int,WINDOW*);
+int switchDown(int,WINDOW*);
 void lancerTruc(int);

@@ -13,6 +13,7 @@
 int main(int argc, char *argv[]) {
   struct sockaddr_in adresse;
   WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_box_points ,*fen_sim, *fen_msg, *fen_outils, *fen_points;
+  int item_actif=HAMMECONS;
   grille_t *etang;
   int sockfd, ch;
   requete_t requete;
@@ -123,7 +124,19 @@ int main(int argc, char *argv[]) {
   wrefresh(fen_msg);
   init_sim(fen_sim, etang);
   while((ch = getch()) != KEY_F(2)) {
-
+      	
+		switch (ch)
+		{
+		case KEY_MOUSE:
+			lancerTruc(item_actif);
+			break;
+		case KEY_DOWN:
+			item_actif=switchDown(item_actif,fen_outils);
+			break;
+		case KEY_UP:
+			item_actif=switchUp(item_actif,fen_outils);
+			break;
+		}
   }
   simulation_stopper();
   ncurses_stopper();
