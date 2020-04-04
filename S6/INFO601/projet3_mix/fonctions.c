@@ -87,7 +87,7 @@ void ncurses_initialiser()
 	start_color();
 	init_pair(1, COLOR_BLACK, COLOR_YELLOW); /*poisson*/
 	init_pair(2, COLOR_WHITE, COLOR_BLACK);
-	init_pair(4, COLOR_BLACK, COLOR_BLUE);	 /*eau*/
+	init_pair(4, COLOR_WHITE, COLOR_BLUE);	 /*eau*/
 	wbkgd(stdscr, COLOR_PAIR(2));
 	refresh();
 }
@@ -446,21 +446,25 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 							if (grille[event.y - 1][event.x - 1].element == VIDE)
 							{
 								grille[event.y - 1][event.x - 1].element = HAMMECONS;
+								wattron(fen_sim, COLOR_PAIR(4));
 								mvwprintw(fen_sim, event.y - 1, event.x - 1, "#");
+								wattroff(fen_sim, COLOR_PAIR(4));
 								tempx = event.x - 1;
 								tempy = event.y - 1;
 								nb_hammecon++;
-								wprintw(fen_msg, "Ajout d'un Hammecon ");
+								wprintw(fen_msg, "Ajout d'un Hammecon \n");
 							}
 						}
 						else
 						{
 							grille[tempy][tempx].element = VIDE;
+							wattron(fen_sim, COLOR_PAIR(4));
 							mvwprintw(fen_sim, tempy, tempx, " ");
+							wattroff(fen_sim, COLOR_PAIR(4));
 							tempx = event.x - 1;
 							tempy = event.y - 1;
 							nb_hammecon = 0;
-							wprintw(fen_msg, "retrait ");
+							wprintw(fen_msg, "retrait\n");
 						}
 
 						wrefresh(fen_sim);
