@@ -488,7 +488,26 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 						wrefresh(fen_msg);
 						pthread_mutex_unlock(&grille[event.y - 1][event.x - 1].mutex);
 						
-						break;
+					break;
+
+				case PNEU:
+							if ((grille[event.y - 1][event.x - 1].element == VIDE)
+								&& (grille[event.y  ][event.x - 1].element == VIDE)
+								&&(grille[event.y +1][event.x - 1].element == VIDE) )
+							{
+								grille[event.y - 1][event.x - 1].element = PNEU;
+								grille[event.y ][event.x - 1].element = PNEU;
+								grille[event.y +1][event.x - 1].element = PNEU;
+								wattron(fen_sim, COLOR_PAIR(2));
+								mvwprintw(fen_sim, event.y - 1, event.x - 1, " ");
+								mvwprintw(fen_sim, event.y , event.x - 1, " ");
+								mvwprintw(fen_sim, event.y +1 , event.x - 1, " ");
+								wattroff(fen_sim, COLOR_PAIR(2));
+								tempx = event.x - 1;
+								tempy = event.y - 1;
+								wprintw(fen_msg, "Ajout d'un Hammecon \n");
+							}		
+					break;
 
 				}
 			}
