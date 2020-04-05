@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   reponse_t reponse;
   socklen_t len = sizeof(struct sockaddr_in);
   socklen_t p_len = sizeof(struct sockaddr);
-  int sockfdTCP, sockfdUDP, sock_one, sock_two;
+  int sockfdTCP, sockfdUDP, sock_one, sock_two, test, verif;
   /*char *msg, *msgenvoi;
   msgenvoi = "";*/
 
@@ -37,6 +37,8 @@ int main(int argc, char *argv[]) {
   etang = malloc(sizeof(grille_t));
   init_etang(etang);
   afficher_etang(etang);
+  test = 0;
+  verif = 0;
   /*
    *
    * PARTIE UDP
@@ -145,11 +147,19 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   printf("Joueur 2 connecté TCP !\n");
-  etang->grille[0][0] = 1;
-  etang->grille[0][2] = 1;
+  etang->grille[0][0] = 3;
+  etang->grille[0][2] = 2;
   afficher_etang(etang);
+  printf("\n\n");
   both_send(etang, sock_one, sock_two);
-
+  while(verif!=5){
+    test++;
+    verif++;
+    etang->grille[test][test] = 1;
+    both_send(etang,sock_one, sock_two);
+    afficher_etang(etang);
+    sleep(3);
+  }
 
   /* Fermeture des sockets */
   if(close(sock_one) == -1) {
