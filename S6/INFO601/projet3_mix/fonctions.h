@@ -16,6 +16,7 @@ WINDOW *creer_fenetre_points() ;
 void *routine_poisson(void *);
 
 void init_etang(grille_t*);
+void update_sim(WINDOW*,grille_t*);
 void afficher_etang(grille_t*);
 void both_send(grille_t*, int, int);
 void one_send(grille_t*, int);

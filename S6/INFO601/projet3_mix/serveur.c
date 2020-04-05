@@ -37,6 +37,8 @@ int main(int argc, char *argv[]) {
   etang = malloc(sizeof(grille_t));
   init_etang(etang);
   afficher_etang(etang);
+  test = 0;
+  verif = 0;
   /*
    *
    * PARTIE UDP

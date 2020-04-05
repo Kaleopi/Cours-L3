@@ -42,6 +42,52 @@ void init_etang(grille_t *etang)
 	}
 }
 
+void update_sim(WINDOW *w, grille_t *etang){
+	int i,j;
+	for(i=0 ; i<NB_LIGNES_SIM ; i++){
+		for(j=0 ; j<NB_COL_SIM ; j++){
+			switch(etang->grille[i][j]){
+				case VIDE:
+					wattron(w, COLOR_PAIR(4));
+					mvwprintw(w, i, j, " ", 4);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(4));
+					break;
+				case POISSON:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, " ", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
+				case HAMMECONS:
+					wattron(w, COLOR_PAIR(4));
+					mvwprintw(w, i, j, "*", 4);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(4));
+				break;
+				case PNEU:
+					wattron(w, COLOR_PAIR(2));
+					mvwprintw(w, i, j, " ", 2);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(2));
+				break;
+				case DYNA:
+					wattron(w, COLOR_PAIR(3));
+					mvwprintw(w, i, j, " ", 3);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(3));
+				break;
+				default:
+					wattron(w, COLOR_PAIR(4));
+					mvwprintw(w, i, j, " ", 4);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(4));
+				break;
+			}
+		}
+	}
+}
+
 void afficher_etang(grille_t *etang)
 {
 	int i, j;
