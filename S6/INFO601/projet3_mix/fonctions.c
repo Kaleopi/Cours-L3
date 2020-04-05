@@ -492,10 +492,10 @@ int  switchDown(int item_actif,WINDOW *fen){
 	}
 	return item_actif;
 }
-int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
+void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_t* etang){
 	MEVENT event;
 	int nb_hammecon=tab[0];
-		int tempx = tab[1], tempy = tab[2];
+	int tempx = tab[1], tempy = tab[2];
 	if (getmouse(&event) == OK)
 			{
 				wprintw(fen_msg, "Clic a la position %d %d de l'ecran\n", event.y, event.x);
@@ -662,8 +662,14 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 				}
 			}
 			}
-			tab[0]=nb_hammecon;
+			etang->grille[tab[1]][tab[2]]=tab[0];
+			update_sim(fen_sim,etang);
+			if(write(sockfd,etang,sizeof(grille_t))==-1){
+				perror("Erreur écriture");
+				exit(EXIT_FAILURE);
+			}
+			/*tab[0]=nb_hammecon;
 			tab[2]=tempy;
 			tab[1]=tempx;
-			return tab;
+			return tab;*/
 }
