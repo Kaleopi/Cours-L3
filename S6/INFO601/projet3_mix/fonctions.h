@@ -23,5 +23,6 @@ void one_send(grille_t*, int);
 void init_sim(WINDOW* w, grille_t* etang);
 int switchUp(int,WINDOW*);
 int switchDown(int,WINDOW*);
-int* lancerTruc(int,WINDOW*,WINDOW*,int*);
+void lancerTruc(int,WINDOW*,WINDOW*,int*,grille_t*,int);
 void generer_poisson(grille_t*);
+void simulation_initialiser();

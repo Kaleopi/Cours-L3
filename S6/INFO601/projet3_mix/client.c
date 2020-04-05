@@ -135,11 +135,10 @@ int main(int argc, char *argv[]) {
       wprintw(fen_msg, "verif = %d\n", verif);
       wrefresh(fen_msg);
       wrefresh(fen_sim);
-      /*generer_poisson(etang);*/
       switch (ch)
       {
         case KEY_MOUSE:
-        lancerTruc(item_actif,fen_sim,fen_msg,tab,etang);
+        lancerTruc(item_actif,fen_sim,fen_msg,tab,etang,sockfd);
         break;
         case KEY_DOWN:
         wprintw(fen_msg, "Switch Item down\n");

@@ -492,7 +492,7 @@ int  switchDown(int item_actif,WINDOW *fen){
 	}
 	return item_actif;
 }
-void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_t* etang){
+void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_t* etang,int sockfd){
 	MEVENT event;
 	int nb_hammecon=tab[0];
 	int tempx = tab[1], tempy = tab[2];
