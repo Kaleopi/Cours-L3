@@ -115,52 +115,47 @@ int main(int argc, char *argv[]) {
   fen_msg = creer_fenetre_msg();
   mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
   wprintw(fen_msg,"initialisation client verif = %d\n",verif);
-  wrefresh(stdscr);
-  wrefresh(fen_box_sim);
-  wrefresh(fen_box_points);
-  wrefresh(fen_box_outils);
-  wrefresh(fen_box_msg);
-  wrefresh(fen_sim);
-  wrefresh(fen_points);
-  wrefresh(fen_outils);
-  wrefresh(fen_msg);
-  init_sim(fen_sim, etang);
-  while((ch = getch()) != KEY_F(2)) {
-    verif = read(sockfd, etang, sizeof(grille_t));
-    if(verif ==-1){
-      perror("Erreur lors de la réception de la grille");
-    }
-    else if(verif>=0){
-
-      wprintw(fen_msg, "verif = %d\n", verif);
-      wrefresh(fen_msg);
-      update_sim(fen_sim,etang);
-      wrefresh(fen_sim);
-      /*generer_poisson(etang);*/
-      switch (ch)
-      {
-        case KEY_MOUSE:
-        lancerTruc(item_actif,fen_sim,fen_msg,tab);
-
-        break;
-        case KEY_DOWN:
-        wprintw(fen_msg, "Switch Item down\n");
-        wrefresh(fen_msg);
-        item_actif=switchDown(item_actif,fen_outils);
-        break;
-        case KEY_UP:
-        wprintw(fen_msg, "Switch item Up\n");
-        wrefresh(fen_msg);
-        item_actif=switchUp(item_actif,fen_outils);
-        break;
-      }
-      wrefresh(fen_sim);
-      wrefresh(fen_outils);
-      wrefresh(fen_msg);
-      wrefresh(fen_points);
-    }
-    verif=0;
+  refresh();
+  wprintw(fen_msg,"after refresh");
+  verif = read(sockfd, etang, sizeof(grille_t));
+  if(verif ==-1){
+    perror("Erreur lors de la réception de la grille");
   }
+  while(verif>-1){
+    wprintw(fen_msg,"boucle while(verif>-1)\n");
+    if(verif>0){
+      update_sim(fen_sim,etang);
+      while((ch = getch()) != KEY_F(2) && verif>0){
+          wprintw(fen_msg, "verif = %d\n", verif);
+          wrefresh(fen_msg);
+          wrefresh(fen_sim);
+          /*generer_poisson(etang);*/
+          switch (ch)
+          {
+            case KEY_MOUSE:
+            lancerTruc(item_actif,fen_sim,fen_msg,tab);
+
+            break;
+            case KEY_DOWN:
+            wprintw(fen_msg, "Switch Item down\n");
+            wrefresh(fen_msg);
+            item_actif=switchDown(item_actif,fen_outils);
+            break;
+            case KEY_UP:
+            wprintw(fen_msg, "Switch item Up\n");
+            wrefresh(fen_msg);
+            item_actif=switchUp(item_actif,fen_outils);
+            break;
+          }
+          wrefresh(fen_sim);
+          wrefresh(fen_outils);
+          wrefresh(fen_msg);
+          wrefresh(fen_points);
+          verif = 0;
+        }
+        verif=0;
+      }
+    }
 
   simulation_stopper();
   delwin(fen_box_sim);

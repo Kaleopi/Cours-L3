@@ -84,6 +84,7 @@ void update_sim(WINDOW *w, grille_t *etang){
 					wattroff(w, COLOR_PAIR(4));
 				break;
 			}
+			refresh();
 		}
 	}
 }
@@ -512,7 +513,7 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 							{
 								grille[event.y - 1][event.x - 1].element = HAMMECONS;
 								wattron(fen_sim, COLOR_PAIR(4));
-								mvwprintw(fen_sim, event.y - 1, event.x - 1, "#");
+								mvwprintw(fen_sim, event.y - 1, event.x - 1, "*");
 								wattroff(fen_sim, COLOR_PAIR(4));
 								tempx = event.x - 1;
 								tempy = event.y - 1;

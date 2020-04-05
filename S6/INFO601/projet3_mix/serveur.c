@@ -147,8 +147,8 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   printf("Joueur 2 connecté TCP !\n");
-  etang->grille[0][0] = 3;
-  etang->grille[0][2] = 2;
+  etang->grille[10][10] = 3;
+  etang->grille[10][12] = 2;
   afficher_etang(etang);
   printf("\n\n");
   both_send(etang, sock_one, sock_two);
@@ -158,7 +158,18 @@ int main(int argc, char *argv[]) {
     etang->grille[test][test] = 1;
     both_send(etang,sock_one, sock_two);
     afficher_etang(etang);
-    sleep(3);
+    printf("\n\n");
+    sleep(1);
+  }
+  while(sock_one > -1 && sock_two > -1){
+    if(read(sock_one, etang, sizeof(grille_t))>0){
+      printf("modif reçue de player 1\n");
+      afficher_etang(etang);
+    }
+    if(read(sock_two, etang, sizeof(grille_t))>0){
+      printf("modif reçue de player 2\n");
+      afficher_etang(etang);
+    }
   }
 
   /* Fermeture des sockets */
