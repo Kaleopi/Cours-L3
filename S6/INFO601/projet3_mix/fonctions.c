@@ -462,7 +462,7 @@ int switchUp(int item_actif,WINDOW *fen){
 }
 int  switchDown(int item_actif,WINDOW *fen){
 		switch(item_actif){
-	
+
 		case HAMMECONS:
 			mvwprintw(fen, 0, 0, " ");
 			mvwprintw(fen, 1, 0, "X");
@@ -497,10 +497,10 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 		int tempx = tab[1], tempy = tab[2];
 	if (getmouse(&event) == OK)
 			{
-				 wprintw(fen_msg, "Clic a la position %d %d de l'ecran\n", event.y, event.x);
+				wprintw(fen_msg, "Clic a la position %d %d de l'ecran\n", event.y, event.x);
 				wrefresh(fen_msg);
 
-				 if (event.y > 0 && event.y < NB_LIGNES_SIM + 1 && event.x > 0 && event.x < NB_COL_SIM + 1)
+				if (event.y > 0 && event.y < NB_LIGNES_SIM + 1 && event.x > 0 && event.x < NB_COL_SIM + 1)
 				{
 					switch (item_actif)
 					{
@@ -535,7 +535,7 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 						wrefresh(fen_sim);
 						wrefresh(fen_msg);
 						pthread_mutex_unlock(&grille[event.y - 1][event.x - 1].mutex);
-						
+
 					break;
 
 				case PNEU:
@@ -551,8 +551,8 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 								mvwprintw(fen_sim, event.y , event.x - 1, " ");
 								mvwprintw(fen_sim, event.y +1 , event.x - 1, " ");
 								wattroff(fen_sim, COLOR_PAIR(2));
-								wprintw(fen_msg, "Ajout d'un Hammecon \n");
-							}		
+								wprintw(fen_msg, "Ajout d'un pneu \n");
+							}
 					break;
 				case DYNA:
 								grille[event.y-3 ][event.x - 3].element = VIDE;
@@ -572,7 +572,7 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 								grille[event.y -1][event.x - 1].element = VIDE;
 								grille[event.y ][event.x - 1].element = VIDE;
 								grille[event.y +1][event.x - 1].element=VIDE;
-								
+
 								grille[event.y-3 ][event.x].element = VIDE;
 								grille[event.y - 2][event.x].element = VIDE;
 								grille[event.y -1][event.x].element = VIDE;
@@ -619,12 +619,12 @@ int *lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab){
 								mvwprintw(fen_sim, event.y + 1, event.x +1, " ");
 								wattroff(fen_sim, COLOR_PAIR(3));
 
-								
+
 								wrefresh(fen_sim);
 								sleep(1);
 
 
-								
+
 
 								wprintw(fen_msg, "EXPLOSION \n");
 								wattron(fen_sim, COLOR_PAIR(4));

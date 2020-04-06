@@ -30,14 +30,15 @@
 #define FURTIF              6
 #define REQUIN                  5
 
-
 #define HAMMECONSJ1	        10
 #define PNEUJ1              11
 #define DYNAJ1              12
+#define REQUINJ1 13
 
 #define HAMMECONSJ2         20
 #define PNEUJ2              21
 #define DYNAJ2              22
+#define REQUINJ2 23
 
 #define COOL                1
 #define FUITE               0
