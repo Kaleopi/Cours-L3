@@ -1,5 +1,6 @@
 #include <stdlib.h>     /* Pour exit, EXIT_SUCCESS, EXIT_FAILURE */
 #include <sys/socket.h> /* Pour socket */
+#include <sys/time.h>
 #include <arpa/inet.h>  /* Pour sockaddr_in, IPPROTO_TCP */
 #include <stdio.h>      /* Pour perror */
 #include <unistd.h>     /* Pour close */
@@ -8,6 +9,7 @@
 #include <errno.h>
 #include <ncurses.h>
 #include <pthread.h>
+#include <fcntl.h>
 
 #include "fonctions.h"
 #include "includes.h"
@@ -18,12 +20,14 @@ int main(int argc, char *argv[]) {
   grille_t *etang;
   struct sockaddr_in adresse;
   struct sockaddr p1, p2;
+  struct timeval tour;
   /*size_t taille;*/
   requete_t requete;
   reponse_t reponse;
   socklen_t len = sizeof(struct sockaddr_in);
   socklen_t p_len = sizeof(struct sockaddr);
-  int sockfdTCP, sockfdUDP, sock_one, sock_two, test, verif;
+  int sockfdTCP, sockfdUDP, sock_one, sock_two, test, verif, maxFD;
+  fd_set set;
   /*char *msg, *msgenvoi;
   msgenvoi = "";*/
 
@@ -147,18 +151,57 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   printf("Joueur 2 connecté TCP !\n");
-  etang->grille[0][0] = 3;
-  etang->grille[0][2] = 2;
+
+  if(sock_one > sock_two) maxFD = sock_one;
+  else maxFD = sock_two;
   afficher_etang(etang);
   printf("\n\n");
   both_send(etang, sock_one, sock_two);
-  while(verif!=5){
+
+  while(sock_one > -1 || sock_two > -1){
+
+    if(test<15){
+      test++;
+      etang->grille[test][test] = 1;
+      both_send(etang,sock_one, sock_two);
+      afficher_etang(etang);
+      printf("\n\n");
+      printf("while if i=%d\n",test);
+    }
+    tour.tv_sec = 1;
+    tour.tv_usec = 0;
+
+    FD_ZERO(&set);
+    FD_SET(sock_one, &set);
+    FD_SET(sock_two, &set);
+
+    if((verif = select(maxFD+1, &set, NULL, NULL, &tour)) == -1){
+      if(errno != EINTR){
+        perror("Serveur : erreur select");
+        exit(EXIT_FAILURE);
+      }
+    }
+    if(FD_ISSET(sock_one, &set)){
+       if(read(sock_one, etang, sizeof(grille_t) )==-1) {
+         if(errno != EINTR){
+           perror("Serveur : erreur select");
+           exit(EXIT_FAILURE);
+         }
+       }else
+       printf("SOCK_ONE verif serveur 183 = %d\n",verif);
+    }
+    if(FD_ISSET(sock_two, &set)){
+      if(read(sock_two, etang, sizeof(grille_t))==-1){
+        if(errno != EINTR){
+          perror("Serveur : erreur select");
+          exit(EXIT_FAILURE);
+        }
+      }else
+     printf("SOCK_TWO serveur 192 = %d\n",sock_one);
+    }
+    printf("sockone serveur 201 = %d\n",sock_two);
+    printf("while %d\n",test);
     test++;
-    verif++;
-    etang->grille[test][test] = 1;
-    both_send(etang,sock_one, sock_two);
-    afficher_etang(etang);
-    sleep(3);
   }
 
   /* Fermeture des sockets */
@@ -173,7 +216,7 @@ int main(int argc, char *argv[]) {
 
   /*début de la sim*/
   /*simulation();*/
-
+  simulation_stopper();
   free(etang);
   printf("Serveur terminé.\n");
 

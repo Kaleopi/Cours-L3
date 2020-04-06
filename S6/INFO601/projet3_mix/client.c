@@ -9,15 +9,16 @@
 #include "message.h"
 #include "fonctions.h"
 WINDOW *fen_box_sim, *fen_box_msg, *fen_box_outils, *fen_box_points ,*fen_sim, *fen_msg, *fen_outils, *fen_points;
-int tab[3];
+int *tab;
 int verif;
 int main(int argc, char *argv[]) {
   struct sockaddr_in adresse;
   int item_actif;
   grille_t *etang;
-  int sockfd, ch;
+  int sockfd, ch=0;
   requete_t requete;
   reponse_t reponse;
+  int cpt=0;
 
   /* Vérification des arguments */
   if(argc != 3) {
@@ -29,6 +30,7 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   etang = malloc(sizeof(grille_t));
+  tab = malloc(sizeof(int)*3);
   init_etang(etang);
   item_actif = HAMMECONS;
   verif = 0;
@@ -115,33 +117,28 @@ int main(int argc, char *argv[]) {
   fen_msg = creer_fenetre_msg();
   mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
   wprintw(fen_msg,"initialisation client verif = %d\n",verif);
-  wrefresh(stdscr);
-  wrefresh(fen_box_sim);
-  wrefresh(fen_box_points);
-  wrefresh(fen_box_outils);
-  wrefresh(fen_box_msg);
-  wrefresh(fen_sim);
-  wrefresh(fen_points);
-  wrefresh(fen_outils);
-  wrefresh(fen_msg);
-  init_sim(fen_sim, etang);
-  while((ch = getch()) != KEY_F(2)) {
+  refresh();
+  wprintw(fen_msg,"after refresh");
+  verif = read(sockfd, etang, sizeof(grille_t));
+  if(verif ==-1){
+    perror("Erreur lors de la réception de la grille");
+  }
+  timeout(250);
+  while(verif>-1 && ch!=KEY_F(2)){
+    wprintw(fen_msg,"ifverif>%d\n", verif);
     verif = read(sockfd, etang, sizeof(grille_t));
-    if(verif ==-1){
-      perror("Erreur lors de la réception de la grille");
-    }
-    else if(verif>=0){
-
+    wprintw(fen_msg, "J'AI RECU LE MSG DU SERVEUR %d\n", cpt);
+    update_sim(fen_sim,etang);
+    cpt++;
+    if(verif>0){
+      ch = getch();
       wprintw(fen_msg, "verif = %d\n", verif);
       wrefresh(fen_msg);
-      update_sim(fen_sim,etang);
       wrefresh(fen_sim);
-      /*generer_poisson(etang);*/
       switch (ch)
       {
         case KEY_MOUSE:
-        lancerTruc(item_actif,fen_sim,fen_msg,tab);
-
+        lancerTruc(item_actif,fen_sim,fen_msg,tab,etang,sockfd);
         break;
         case KEY_DOWN:
         wprintw(fen_msg, "Switch Item down\n");
@@ -154,13 +151,12 @@ int main(int argc, char *argv[]) {
         item_actif=switchUp(item_actif,fen_outils);
         break;
       }
-      wrefresh(fen_sim);
-      wrefresh(fen_outils);
-      wrefresh(fen_msg);
-      wrefresh(fen_points);
+      refresh();
+      verif=0;
     }
-    verif=0;
+    wrefresh(fen_msg);
   }
+  wprintw(fen_msg,"end\n");
 
   simulation_stopper();
   delwin(fen_box_sim);
