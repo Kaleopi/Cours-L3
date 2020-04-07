@@ -34,9 +34,6 @@ typedef struct{
 	int posy;
 }poisson_t;
 
-typedef struct {
-	int ETAT;
-}hammecon_t;
 
 /**
  * @struct requete_t

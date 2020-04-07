@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
     if(verif>0){
       ch = getch();
       /*wprintw(fen_msg, "verif = %d\n", verif);*/
-          wrefresh(fen_msg);
+       wrefresh(fen_msg);
       wrefresh(fen_sim);
       update_sim(fen_sim,etang);
       if(write(sockfd,etang,sizeof(grille_t))==-1){

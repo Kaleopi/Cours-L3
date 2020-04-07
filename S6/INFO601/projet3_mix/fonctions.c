@@ -670,7 +670,6 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 				}
 			}
 			}
-			etang->grille[tab[1]][tab[2]]=tab[0];
 			etang=recuperation(etang);
 			update_sim(fen_sim,etang);
 			if(write(sockfd,etang,sizeof(grille_t))==-1){

@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
   socklen_t p_len = sizeof(struct sockaddr);
   int sockfdTCP, sockfdUDP, sock_one, sock_two, test, verif, maxFD;
   fd_set set;
+  int j;
   /*char *msg, *msgenvoi;
   msgenvoi = "";*/
 
@@ -157,30 +158,33 @@ int main(int argc, char *argv[]) {
   afficher_etang(etang);
   printf("\n\n");
   both_send(etang, sock_one, sock_two);
-
-  while(sock_one > -1 || sock_two > -1){
-    if(test<15){
-      test++;
-      etang->grille[test][test] = 1;
-      both_send(etang,sock_one, sock_two);
-      afficher_etang(etang);
-      printf("\n\n");
-      printf("while if i=%d\n",test);
-    }
-    if(test>15){
-      test--;
-      etang->grille[test][test] = 0;
-      both_send(etang,sock_one, sock_two);
-      afficher_etang(etang);
-      printf("\n\n");
-      printf("while if i=%d\n",test);
-    }
-    tour.tv_sec = 1;
-    tour.tv_usec = 0;
-
     FD_ZERO(&set);
     FD_SET(sock_one, &set);
     FD_SET(sock_two, &set);
+  while(sock_one > -1 || sock_two > -1){
+    afficher_etang(etang);
+
+    if(test<30){
+      test++;
+      etang->grille[1][test] = 1;
+      both_send(etang,sock_one, sock_two);
+      afficher_etang(etang);
+      printf("\n\n");
+      printf("while if i=%d\n",test);
+    }
+    if(test>30){
+      test=0;
+      for(j=0;j<32;j++){etang->grille[1][j] = 0;}
+      both_send(etang,sock_one, sock_two);
+      afficher_etang(etang);
+      printf("\n\n");
+      printf("while if i=%d\n",test);
+    }
+   
+    tour.tv_sec = 1;
+    tour.tv_usec = 0;
+
+  
 
     if((verif = select(maxFD+1, &set, NULL, NULL, &tour)) == -1){
       if(errno != EINTR){
@@ -195,6 +199,7 @@ int main(int argc, char *argv[]) {
            exit(EXIT_FAILURE);
          }
        }else
+         both_send(etang, sock_one, sock_two);
        printf("SOCK_ONE verif serveur 183 = %d\n",verif);
     }
     if(FD_ISSET(sock_two, &set)){
@@ -204,8 +209,10 @@ int main(int argc, char *argv[]) {
           exit(EXIT_FAILURE);
         }
       }else
+        both_send(etang, sock_one, sock_two);
      printf("SOCK_TWO serveur 192 = %d\n",sock_one);
     }
+      both_send(etang, sock_one, sock_two);
     printf("sockone serveur 201 = %d\n",sock_two);
     printf("while %d\n",test);
     test++;
