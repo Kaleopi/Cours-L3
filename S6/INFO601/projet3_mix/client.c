@@ -135,7 +135,13 @@ int main(int argc, char *argv[]) {
       wprintw(fen_msg, "verif = %d\n", verif);
       wrefresh(fen_msg);
       wrefresh(fen_sim);
+      update_sim(fen_sim,etang);
+      if(write(sockfd,etang,sizeof(grille_t))==-1){
+			  perror("Erreur écriture");
+			  exit(EXIT_FAILURE);
+			  }
       switch (ch)
+      
       {
         case KEY_MOUSE:
         lancerTruc(item_actif,fen_sim,fen_msg,tab,etang,sockfd);

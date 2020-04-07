@@ -362,14 +362,14 @@ void *routine_poisson(void *arg)
 	free(coord);
 	return NULL;
 }
-grille_t recuperation(grille_t *etang){
+grille_t *recuperation(grille_t *etang){
 	int i,j;
 	for(i=0;i<NB_LIGNES_SIM;i++){
 		for( j=0;j<NB_COL_SIM;j++){
 			etang->grille[i][j]=grille[i][j].element;
 		}
 	}
-	return *etang;
+	return etang;
 }
 poisson_t creer_poisson(int id, int posx, int posy)
 {
@@ -663,6 +663,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 			}
 			}
 			etang->grille[tab[1]][tab[2]]=tab[0];
+			etang=recuperation(etang);
 			update_sim(fen_sim,etang);
 			if(write(sockfd,etang,sizeof(grille_t))==-1){
 				perror("Erreur écriture");

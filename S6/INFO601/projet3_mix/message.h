@@ -15,6 +15,13 @@ typedef struct{					/* Description d'une case sur la grille de simulation */
 }case_t;
 
 typedef struct{
+	int id;
+	int furtif;
+	int points;
+	int poireaus;
+}joueur_t;
+
+typedef struct{
 	int grille[NB_LIGNES_SIM][NB_COL_SIM];
 }grille_t;
 

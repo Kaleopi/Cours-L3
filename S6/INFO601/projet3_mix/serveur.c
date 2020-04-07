@@ -168,6 +168,14 @@ int main(int argc, char *argv[]) {
       printf("\n\n");
       printf("while if i=%d\n",test);
     }
+    if(test>15){
+      test--;
+      etang->grille[test][test] = 0;
+      both_send(etang,sock_one, sock_two);
+      afficher_etang(etang);
+      printf("\n\n");
+      printf("while if i=%d\n",test);
+    }
     tour.tv_sec = 1;
     tour.tv_usec = 0;
 
