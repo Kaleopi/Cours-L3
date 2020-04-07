@@ -6,8 +6,12 @@ int yylex();
 void yyerror(const char *erreurMsg);
 %}
 
+%union {
+  char* string;
+}
+
 %token ENTIER
-%token <str> NOM
+%token <string> NOM
 %token SI
 %token FINSI
 %token FIN
@@ -20,6 +24,7 @@ void yyerror(const char *erreurMsg);
 %%
 
 int main(void) {
+  /*changer les entrées pour lire le fichier*/
   yyparse();
   return EXIT_SUCCESS;
 }
