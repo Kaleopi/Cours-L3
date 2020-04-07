@@ -159,7 +159,6 @@ int main(int argc, char *argv[]) {
   both_send(etang, sock_one, sock_two);
 
   while(sock_one > -1 || sock_two > -1){
-
     if(test<15){
       test++;
       etang->grille[test][test] = 1;

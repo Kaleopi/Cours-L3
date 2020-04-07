@@ -125,15 +125,17 @@ int main(int argc, char *argv[]) {
   }
   timeout(250);
   while(verif>-1 && ch!=KEY_F(2)){
-    wprintw(fen_msg,"ifverif>%d\n", verif);
+    /*wprintw(fen_msg,"ifverif>%d\n", verif);*/
     verif = read(sockfd, etang, sizeof(grille_t));
-    wprintw(fen_msg, "J'AI RECU LE MSG DU SERVEUR %d\n", cpt);
+    recuperation_grille(etang);
+    wrefresh(fen_sim);
+    /*wprintw(fen_msg, "J'AI RECU LE MSG DU SERVEUR %d\n", cpt);*/
     update_sim(fen_sim,etang);
     cpt++;
     if(verif>0){
       ch = getch();
-      wprintw(fen_msg, "verif = %d\n", verif);
-      wrefresh(fen_msg);
+      /*wprintw(fen_msg, "verif = %d\n", verif);*/
+          wrefresh(fen_msg);
       wrefresh(fen_sim);
       update_sim(fen_sim,etang);
       if(write(sockfd,etang,sizeof(grille_t))==-1){

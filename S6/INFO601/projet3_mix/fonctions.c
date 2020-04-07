@@ -371,6 +371,14 @@ grille_t *recuperation(grille_t *etang){
 	}
 	return etang;
 }
+void recuperation_grille(grille_t *etang){
+	int i,j;
+	for(i=0;i<NB_LIGNES_SIM;i++){
+		for( j=0;j<NB_COL_SIM;j++){
+			grille[i][j].element=etang->grille[i][j];
+		}
+	}
+}
 poisson_t creer_poisson(int id, int posx, int posy)
 {
 	int random;
@@ -669,8 +677,8 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 				perror("Erreur écriture");
 				exit(EXIT_FAILURE);
 			}
-			/*tab[0]=nb_hammecon;
+			tab[0]=nb_hammecon;
 			tab[2]=tempy;
 			tab[1]=tempx;
-			return tab;*/
+			/*return tab;*/
 }
