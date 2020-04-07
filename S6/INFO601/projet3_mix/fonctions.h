@@ -15,6 +15,7 @@ WINDOW *creer_fenetre_box_points();
 WINDOW *creer_fenetre_points() ;
 void *routine_poisson(void *);
 
+void fusion_etang(grille_t *,grille_t*,grille_t*);
 void init_etang(grille_t*);
 void update_sim(WINDOW*,grille_t*);
 void afficher_etang(grille_t*);

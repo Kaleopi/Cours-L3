@@ -42,7 +42,12 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   etang = malloc(sizeof(grille_t));
+  etangj1 = malloc(sizeof(grille_t));
+  etangj2 = malloc(sizeof(grille_t));
   init_etang(etang);
+  init_etang(etangj1);
+  init_etang(etangj2);
+
   afficher_etang(etang);
   test = 0;
   verif = 0;
