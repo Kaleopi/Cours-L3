@@ -504,12 +504,14 @@ void fusion_etang(grille_t *etang,grille_t* etangj1,grille_t *etangj2){
 	int i=0,j=0;
 		for(i=0;i<20;i++){
 				for (j=0;j<40;j++){
-					if (etangj1->grille[i][j]==0){
-						etang->grille[i][j]=etangj2->grille[i][j];
-					}else{
-						etang->grille[i][j]=etangj1->grille[i][j];
+						if(etang->grille[i][j]==0){
+										if (etangj1->grille[i][j]==0){
+												etang->grille[i][j]=etangj2->grille[i][j];
+												}else{
+													etang->grille[i][j]=etangj1->grille[i][j];
+												}
+											}
 					}
-		}
 	}
 }
 void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_t* etang,int sockfd){

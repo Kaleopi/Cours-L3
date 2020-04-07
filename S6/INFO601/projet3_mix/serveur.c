@@ -223,10 +223,11 @@ int main(int argc, char *argv[]) {
         both_send(etang, sock_one, sock_two);
      printf("SOCK_TWO serveur 192 = %d\n",sock_one);
     }
-
+        fusion_etang(etang,etangj1,etangj2);
     both_send(etang, sock_one, sock_two);
     printf("sockone serveur 201 = %d\n",sock_two);
     printf("while %d\n",test);
+
     test++;
   }
 
