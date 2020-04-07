@@ -18,6 +18,8 @@
 
 int main(int argc, char *argv[]) {
   grille_t *etang;
+  grille_t *etangj1;
+  grille_t *etangj2;
   struct sockaddr_in adresse;
   struct sockaddr p1, p2;
   struct timeval tour;
@@ -180,11 +182,11 @@ int main(int argc, char *argv[]) {
       printf("\n\n");
       printf("while if i=%d\n",test);
     }
-   
+
     tour.tv_sec = 1;
     tour.tv_usec = 0;
 
-  
+
 
     if((verif = select(maxFD+1, &set, NULL, NULL, &tour)) == -1){
       if(errno != EINTR){
@@ -193,7 +195,7 @@ int main(int argc, char *argv[]) {
       }
     }
     if(FD_ISSET(sock_one, &set)){
-       if(read(sock_one, etang, sizeof(grille_t) )==-1) {
+       if(read(sock_one, etangj1, sizeof(grille_t) )==-1) {
          if(errno != EINTR){
            perror("Serveur : erreur select");
            exit(EXIT_FAILURE);
@@ -203,7 +205,7 @@ int main(int argc, char *argv[]) {
        printf("SOCK_ONE verif serveur 183 = %d\n",verif);
     }
     if(FD_ISSET(sock_two, &set)){
-      if(read(sock_two, etang, sizeof(grille_t))==-1){
+      if(read(sock_two, etangj2, sizeof(grille_t))==-1){
         if(errno != EINTR){
           perror("Serveur : erreur select");
           exit(EXIT_FAILURE);
@@ -212,7 +214,8 @@ int main(int argc, char *argv[]) {
         both_send(etang, sock_one, sock_two);
      printf("SOCK_TWO serveur 192 = %d\n",sock_one);
     }
-      both_send(etang, sock_one, sock_two);
+
+    both_send(etang, sock_one, sock_two);
     printf("sockone serveur 201 = %d\n",sock_two);
     printf("while %d\n",test);
     test++;
