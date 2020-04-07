@@ -411,8 +411,8 @@ void generer_poisson(grille_t *etang)
 	nb_poissons=0;
 		while (nb_poissons < MAX_POISSONS-2)
 		{
-			randomx = rand() % NB_COL_SIM;
-			randomy = rand() % NB_LIGNES_SIM;
+			randomx = rand() % NB_COL_SIM/1.5+1;
+			randomy = rand() % NB_LIGNES_SIM/1.5+1;
 			if (etang->grille[randomy][randomx] ==0)
 
 				{
@@ -427,7 +427,7 @@ void generer_poisson(grille_t *etang)
 				coord->y = randomy;
 				coord->x = randomx;
 				pthread_create(threads_poissons[nb_poissons], NULL, routine_poisson, (void *)coord);
-				mvwprintw(fen_sim, randomy, randomx, "@");
+				/*mvwprintw(fen_sim, randomy, randomx, "@");*/
 				/* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);*/
 
 				pthread_mutex_unlock(&grille[randomy][randomx].mutex);
