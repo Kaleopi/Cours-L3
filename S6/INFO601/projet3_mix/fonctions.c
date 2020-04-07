@@ -362,14 +362,13 @@ void *routine_poisson(void *arg)
 	free(coord);
 	return NULL;
 }
-grille_t *recuperation(grille_t *etang){
+void recuperation(grille_t *etang){
 	int i,j;
 	for(i=0;i<NB_LIGNES_SIM;i++){
 		for( j=0;j<NB_COL_SIM;j++){
 			etang->grille[i][j]=grille[i][j].element;
 		}
 	}
-	return etang;
 }
 void recuperation_grille(grille_t *etang){
 	int i,j;

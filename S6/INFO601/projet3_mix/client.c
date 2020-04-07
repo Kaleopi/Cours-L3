@@ -135,7 +135,11 @@ int main(int argc, char *argv[]) {
     if(verif>0){
       ch = getch();
       /*wprintw(fen_msg, "verif = %d\n", verif);*/
+<<<<<<< HEAD
        wrefresh(fen_msg);
+=======
+      wrefresh(fen_msg);
+>>>>>>> 3d531a15010d6c11365d303cc5b4140570f0c3d0
       wrefresh(fen_sim);
       update_sim(fen_sim,etang);
       if(write(sockfd,etang,sizeof(grille_t))==-1){
@@ -143,7 +147,7 @@ int main(int argc, char *argv[]) {
 			  exit(EXIT_FAILURE);
 			  }
       switch (ch)
-      
+
       {
         case KEY_MOUSE:
         lancerTruc(item_actif,fen_sim,fen_msg,tab,etang,sockfd);
