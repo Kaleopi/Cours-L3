@@ -669,7 +669,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 				}
 			}
 			}
-			etang=recuperation(etang);
+			recuperation(etang);
 			update_sim(fen_sim,etang);
 			if(write(sockfd,etang,sizeof(grille_t))==-1){
 				perror("Erreur écriture");
