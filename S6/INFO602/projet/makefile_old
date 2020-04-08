@@ -11,11 +11,11 @@ $(EXEC) : $(OUTPUT)
 $(OUTPUT) : projet
 	./projet $(LIB)
 
-projet : y.tab.o lex.yy.o
-	gcc -o projet y.tab.o lex.yy.o -lm -lfl
+projet : y.tab.o lex.yy.o liste.o
+	gcc -o projet y.tab.o lex.yy.o liste.o -lm -lfl
 
-#liste.o :
-#	gcc -c liste.c liste.h
+liste.o :
+	gcc -c liste.c liste.h
 
 y.tab.o : y.tab.h y.tab.c
 	gcc -c y.tab.c

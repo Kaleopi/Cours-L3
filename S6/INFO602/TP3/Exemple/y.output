@@ -1,0 +1,274 @@
+État 5 conflits: 4 décalage/réduction
+État 13 conflits: 4 décalage/réduction
+État 14 conflits: 4 décalage/réduction
+État 15 conflits: 4 décalage/réduction
+État 16 conflits: 4 décalage/réduction
+
+
+Grammaire
+
+    0 $accept: programme $end
+
+    1 $@1: %empty
+
+    2 programme: expression '.' $@1 programme
+    3          | %empty
+
+    4 expression: ENTIER
+    5           | expression '+' expression
+    6           | '-' expression
+    7           | expression '-' expression
+    8           | expression '*' expression
+    9           | expression '/' expression
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+$end (0) 0
+'*' (42) 8
+'+' (43) 5
+'-' (45) 6 7
+'.' (46) 2
+'/' (47) 9
+error (256)
+ENTIER (258) 4
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+$accept (9)
+    à gauche: 0
+programme (10)
+    à gauche: 2 3, à droite: 0 2
+$@1 (11)
+    à gauche: 1, à droite: 2
+expression (12)
+    à gauche: 4 5 6 7 8 9, à droite: 2 5 6 7 8 9
+
+
+État 0
+
+    0 $accept: . programme $end
+
+    ENTIER  décalage et aller à l'état 1
+    '-'     décalage et aller à l'état 2
+
+    $défaut  réduction par utilisation de la règle 3 (programme)
+
+    programme   aller à l'état 3
+    expression  aller à l'état 4
+
+
+État 1
+
+    4 expression: ENTIER .
+
+    $défaut  réduction par utilisation de la règle 4 (expression)
+
+
+État 2
+
+    6 expression: '-' . expression
+
+    ENTIER  décalage et aller à l'état 1
+    '-'     décalage et aller à l'état 2
+
+    expression  aller à l'état 5
+
+
+État 3
+
+    0 $accept: programme . $end
+
+    $end  décalage et aller à l'état 6
+
+
+État 4
+
+    2 programme: expression . '.' $@1 programme
+    5 expression: expression . '+' expression
+    7           | expression . '-' expression
+    8           | expression . '*' expression
+    9           | expression . '/' expression
+
+    '.'  décalage et aller à l'état 7
+    '+'  décalage et aller à l'état 8
+    '-'  décalage et aller à l'état 9
+    '*'  décalage et aller à l'état 10
+    '/'  décalage et aller à l'état 11
+
+
+État 5
+
+    5 expression: expression . '+' expression
+    6           | '-' expression .
+    7           | expression . '-' expression
+    8           | expression . '*' expression
+    9           | expression . '/' expression
+
+    '+'  décalage et aller à l'état 8
+    '-'  décalage et aller à l'état 9
+    '*'  décalage et aller à l'état 10
+    '/'  décalage et aller à l'état 11
+
+    '+'       [réduction par utilisation de la règle 6 (expression)]
+    '-'       [réduction par utilisation de la règle 6 (expression)]
+    '*'       [réduction par utilisation de la règle 6 (expression)]
+    '/'       [réduction par utilisation de la règle 6 (expression)]
+    $défaut  réduction par utilisation de la règle 6 (expression)
+
+
+État 6
+
+    0 $accept: programme $end .
+
+    $défaut  accepter
+
+
+État 7
+
+    2 programme: expression '.' . $@1 programme
+
+    $défaut  réduction par utilisation de la règle 1 ($@1)
+
+    $@1  aller à l'état 12
+
+
+État 8
+
+    5 expression: expression '+' . expression
+
+    ENTIER  décalage et aller à l'état 1
+    '-'     décalage et aller à l'état 2
+
+    expression  aller à l'état 13
+
+
+État 9
+
+    7 expression: expression '-' . expression
+
+    ENTIER  décalage et aller à l'état 1
+    '-'     décalage et aller à l'état 2
+
+    expression  aller à l'état 14
+
+
+État 10
+
+    8 expression: expression '*' . expression
+
+    ENTIER  décalage et aller à l'état 1
+    '-'     décalage et aller à l'état 2
+
+    expression  aller à l'état 15
+
+
+État 11
+
+    9 expression: expression '/' . expression
+
+    ENTIER  décalage et aller à l'état 1
+    '-'     décalage et aller à l'état 2
+
+    expression  aller à l'état 16
+
+
+État 12
+
+    2 programme: expression '.' $@1 . programme
+
+    ENTIER  décalage et aller à l'état 1
+    '-'     décalage et aller à l'état 2
+
+    $défaut  réduction par utilisation de la règle 3 (programme)
+
+    programme   aller à l'état 17
+    expression  aller à l'état 4
+
+
+État 13
+
+    5 expression: expression . '+' expression
+    5           | expression '+' expression .
+    7           | expression . '-' expression
+    8           | expression . '*' expression
+    9           | expression . '/' expression
+
+    '+'  décalage et aller à l'état 8
+    '-'  décalage et aller à l'état 9
+    '*'  décalage et aller à l'état 10
+    '/'  décalage et aller à l'état 11
+
+    '+'       [réduction par utilisation de la règle 5 (expression)]
+    '-'       [réduction par utilisation de la règle 5 (expression)]
+    '*'       [réduction par utilisation de la règle 5 (expression)]
+    '/'       [réduction par utilisation de la règle 5 (expression)]
+    $défaut  réduction par utilisation de la règle 5 (expression)
+
+
+État 14
+
+    5 expression: expression . '+' expression
+    7           | expression . '-' expression
+    7           | expression '-' expression .
+    8           | expression . '*' expression
+    9           | expression . '/' expression
+
+    '+'  décalage et aller à l'état 8
+    '-'  décalage et aller à l'état 9
+    '*'  décalage et aller à l'état 10
+    '/'  décalage et aller à l'état 11
+
+    '+'       [réduction par utilisation de la règle 7 (expression)]
+    '-'       [réduction par utilisation de la règle 7 (expression)]
+    '*'       [réduction par utilisation de la règle 7 (expression)]
+    '/'       [réduction par utilisation de la règle 7 (expression)]
+    $défaut  réduction par utilisation de la règle 7 (expression)
+
+
+État 15
+
+    5 expression: expression . '+' expression
+    7           | expression . '-' expression
+    8           | expression . '*' expression
+    8           | expression '*' expression .
+    9           | expression . '/' expression
+
+    '+'  décalage et aller à l'état 8
+    '-'  décalage et aller à l'état 9
+    '*'  décalage et aller à l'état 10
+    '/'  décalage et aller à l'état 11
+
+    '+'       [réduction par utilisation de la règle 8 (expression)]
+    '-'       [réduction par utilisation de la règle 8 (expression)]
+    '*'       [réduction par utilisation de la règle 8 (expression)]
+    '/'       [réduction par utilisation de la règle 8 (expression)]
+    $défaut  réduction par utilisation de la règle 8 (expression)
+
+
+État 16
+
+    5 expression: expression . '+' expression
+    7           | expression . '-' expression
+    8           | expression . '*' expression
+    9           | expression . '/' expression
+    9           | expression '/' expression .
+
+    '+'  décalage et aller à l'état 8
+    '-'  décalage et aller à l'état 9
+    '*'  décalage et aller à l'état 10
+    '/'  décalage et aller à l'état 11
+
+    '+'       [réduction par utilisation de la règle 9 (expression)]
+    '-'       [réduction par utilisation de la règle 9 (expression)]
+    '*'       [réduction par utilisation de la règle 9 (expression)]
+    '/'       [réduction par utilisation de la règle 9 (expression)]
+    $défaut  réduction par utilisation de la règle 9 (expression)
+
+
+État 17
+
+    2 programme: expression '.' $@1 programme .
+
+    $défaut  réduction par utilisation de la règle 2 (programme)

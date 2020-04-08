@@ -10,21 +10,19 @@ void yyerror(const char *erreurMsg);
   char* string;
 }
 
-%token ENTIER
-%token <string> NOM
-%token SI
-%token FINSI
-%token FIN
-%token ALORS
-%token BOOLEEN
-%token CASE
+%token <string> ENTIER
+%token <string> TYPE
+%token VARIABLE
 
 %%
-
+test: ENTIER {
+           printf("=%s\n", $1);
+      }
 %%
 
-int main(void) {
+int main(int argc, char* argv[]) {
   /*changer les entrées pour lire le fichier*/
+
   yyparse();
   return EXIT_SUCCESS;
 }

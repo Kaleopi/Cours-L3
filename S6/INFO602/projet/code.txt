@@ -1,0 +1,26 @@
+proc avancer(x : entier)
+  i = 0
+  tantque(i < x)
+    avance()
+    i = i + 1
+  fintantque
+finproc
+
+proc main()
+  avance()
+  droite()
+  avancer(3)
+  droite()
+  avancer(3)
+  gauche()
+  avance()
+  droite()
+  prendre()
+  droite()
+  droite()
+  avance(7)
+  gauche()
+  avance(7)
+  gauche()
+  poser()
+finproc
