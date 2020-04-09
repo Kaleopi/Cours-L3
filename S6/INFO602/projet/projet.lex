@@ -9,6 +9,7 @@ void yyerror(const char *erreurMsg);
 ENTIER    [0-9]+
 VRAI      "true"
 FAUX      "false"
+TESTJSON  "{"[a-zA-Z]*"}"
 
 /* json */
 HAUTEUR   "\"hauteur\""
@@ -46,6 +47,7 @@ EGEG      "=="
 INF       "<"
 SUP       ">"
 %%
+{TESTJSON}  { return *yytext; }
 {ENTIER}    { return *yytext; }
 {VRAI}      { return VRAI; }
 {FAUX}      { return FAUX; }
@@ -86,7 +88,6 @@ SUP       ">"
 
 [*-+/\[\]\{\},:\.] { return *yytext; }
 [ \t\n]	 ;
-.        yyerror("Caractère non valide");
 
 %%
 
