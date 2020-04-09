@@ -46,4 +46,7 @@
 #define FURTIFON            1
 #define FURTIFOFF           0
 
+#define POISSONVAL1       100
+#define POISSONVAL2       200
+#define POISSONVAL3       300
 #endif

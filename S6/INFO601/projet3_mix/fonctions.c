@@ -62,6 +62,24 @@ void update_sim(WINDOW *w, grille_t *etang){
 					wrefresh(w);
 					wattroff(w, COLOR_PAIR(1));
 				break;
+				case POISSONVAL1:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, "1", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
+				case POISSONVAL2:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, "2", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
+				case POISSONVAL3:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, "3", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
 				case HAMMECONS:
 					wattron(w, COLOR_PAIR(4));
 					mvwprintw(w, i, j, "*", 4);
@@ -315,7 +333,7 @@ void *routine_poisson(void *arg)
 			{
 				if (grille[coord->y + 1][coord->x].element == VIDE)
 				{
-					coord->etang->grille[coord->y + 1][coord->x]= POISSON;
+					coord->etang->grille[coord->y + 1][coord->x]= coord->poisson->val;
 					coord->etang->grille[coord->y ][coord->x]= VIDE;
 					grille[coord->y + 1][coord->x].element = POISSON;
 					grille[coord->y][coord->x].element = VIDE;
@@ -329,7 +347,7 @@ void *routine_poisson(void *arg)
 			{
 				if (grille[coord->y][coord->x + 1].element == VIDE)
 				{
-						coord->etang->grille[coord->y][coord->x+1]= POISSON;
+						coord->etang->grille[coord->y][coord->x+1]= coord->poisson->val;
 					coord->etang->grille[coord->y ][coord->x]= VIDE;
 					grille[coord->y][coord->x + 1].element = POISSON;
 					grille[coord->y][coord->x].element = VIDE;
@@ -343,7 +361,7 @@ void *routine_poisson(void *arg)
 			{
 				if (grille[coord->y - 1][coord->x].element == VIDE)
 				{
-						coord->etang->grille[coord->y -1 ][coord->x]= POISSON;
+						coord->etang->grille[coord->y -1 ][coord->x]= coord->poisson->val;
 					coord->etang->grille[coord->y ][coord->x]= VIDE;
 					grille[coord->y - 1][coord->x].element = POISSON;
 					grille[coord->y][coord->x].element = VIDE;
@@ -357,7 +375,7 @@ void *routine_poisson(void *arg)
 			{
 				if (grille[coord->y][coord->x - 1].element == VIDE)
 				{
-					coord->etang->grille[coord->y ][coord->x-1]= POISSON;
+					coord->etang->grille[coord->y ][coord->x-1]= coord->poisson->val;
 					coord->etang->grille[coord->y ][coord->x]= VIDE;
 					grille[coord->y][coord->x - 1].element = POISSON;
 					grille[coord->y][coord->x].element = VIDE;
@@ -391,37 +409,38 @@ void recuperation_grille(grille_t *etang){
 		}
 	}
 }
-poisson_t creer_poisson(int id, int posx, int posy)
+void creer_poisson(int id, int posx, int posy,poisson_t *poisson)
 {
 	int random;
-	poisson_t *poisson;
+	
 
-poisson = (poisson_t *)malloc(sizeof(poisson_t));
+
 	random = rand() % 100;
 	if (random < 15)
 	{
-		poisson->val = 3;
+		poisson->val = 300;
 	}
 	if (random > 15 && random < 40)
 	{
-		poisson->val = 2;
+		poisson->val = 200;
 	}
 	else
 	{
-		poisson->val = 1;
+		poisson->val = 100;
 	}
 	poisson->id = id;
 	poisson->posx = posx;
 	poisson->posy = posy;
-	return *poisson;
+	
+
 }
 
 void generer_poisson(grille_t *etang)
 {
 	int randomx, randomy;
-
+	poisson_t *poisson;
 	coord_t *coord;
-	
+	poisson = (poisson_t *)malloc(sizeof(poisson_t));
 		while (nb_poissons < MAX_POISSONS)
 		{
 			randomx = rand() % NB_COL_SIM/1.5+1;
@@ -431,15 +450,17 @@ void generer_poisson(grille_t *etang)
 				{
 
 				nb_poissons++;
-
+				creer_poisson(nb_poissons,randomx,randomy,poisson);
 				threads_poissons[nb_poissons] = (pthread_t *)malloc(sizeof(pthread_t));
 				grille[randomy][randomx].element = POISSON;
-				etang->grille[randomy][randomx]=POISSON;
+				etang->grille[randomy][randomx]=poisson->val;
 				grille[randomy][randomx].poisson = threads_poissons[nb_poissons];
 				coord = (coord_t *)malloc(sizeof(coord_t));
 				coord->y = randomy;
 				coord->x = randomx;
 				coord->etang=etang;
+				
+				coord->poisson=poisson;
 				pthread_create(threads_poissons[nb_poissons], NULL, routine_poisson, (void *)coord);
 				/* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);*/
 

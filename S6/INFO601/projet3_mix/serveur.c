@@ -171,7 +171,7 @@ int main(int argc, char *argv[]) {
   while(sock_one > -1 || sock_two > -1){
     sleep(1);
     afficher_etang(etang);
-        fusion_etang(etang,etangj1,etangj2);
+    fusion_etang(etang,etangj1,etangj2);
  
     generer_poisson(etang);
     tour.tv_sec = 1;

@@ -64,6 +64,7 @@ typedef struct{					/* Coordonnees d'une case sur la grille de simulation*/
 	int y;
 	int x;
 	grille_t *etang;
+	poisson_t *poisson;
 }coord_t;
 
 #endif /*_MESSAGE_H_*/
