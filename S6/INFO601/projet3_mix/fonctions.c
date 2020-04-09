@@ -384,9 +384,9 @@ void *routine_poisson(void *arg)
 			}
 			break;
 		}
-
+	sleep(1);
 		wrefresh(fen_sim);
-		sleep(1);
+		
 	}
 	pthread_mutex_unlock(&grille[coord->y][coord->x].mutex);
 	update_sim(fen_sim,coord->etang);
@@ -411,23 +411,10 @@ void recuperation_grille(grille_t *etang){
 }
 void creer_poisson(int id, int posx, int posy,poisson_t *poisson)
 {
-	int random;
+
 	
 
-
-	random = rand() % 100;
-	if (random < 15)
-	{
-		poisson->val = 300;
-	}
-	if (random > 15 && random < 40)
-	{
-		poisson->val = 200;
-	}
-	else
-	{
-		poisson->val = 100;
-	}
+	
 	poisson->id = id;
 	poisson->posx = posx;
 	poisson->posy = posy;
@@ -438,6 +425,8 @@ void creer_poisson(int id, int posx, int posy,poisson_t *poisson)
 void generer_poisson(grille_t *etang)
 {
 	int randomx, randomy;
+	
+	int random;
 	poisson_t *poisson;
 	coord_t *coord;
 	poisson = (poisson_t *)malloc(sizeof(poisson_t));
@@ -453,6 +442,21 @@ void generer_poisson(grille_t *etang)
 				creer_poisson(nb_poissons,randomx,randomy,poisson);
 				threads_poissons[nb_poissons] = (pthread_t *)malloc(sizeof(pthread_t));
 				grille[randomy][randomx].element = POISSON;
+				
+				random = rand() % 100;
+				if (random < 20)
+				{
+					poisson->val = 300;
+				}
+				if (random > 20&& random <40 )
+				{
+					poisson->val = 200;
+				}
+				if(random>40 &&random<100)
+				{
+					poisson->val = 100;
+				}
+
 				etang->grille[randomy][randomx]=poisson->val;
 				grille[randomy][randomx].poisson = threads_poissons[nb_poissons];
 				coord = (coord_t *)malloc(sizeof(coord_t));
