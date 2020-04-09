@@ -16,6 +16,8 @@ WINDOW *fen_sim;						   /* Fenetre de simulation partagee par les poissons*/
 WINDOW *fen_msg;						   /* Fenetre de messages partagee par les poissons*/
 case_t grille[NB_LIGNES_SIM][NB_COL_SIM];  /* Grille de simulation */
 int nb_poissons=0;
+
+ 
 void both_send(grille_t *etang, int sock_one, int sock_two)
 {
 	
@@ -296,10 +298,12 @@ WINDOW *creer_fenetre_points()
 
 void *routine_poisson(void *arg)
 {
+	
+	
 	/*int j;*/
 	coord_t *coord = (coord_t *)arg;
 	srand(time(NULL));
-
+	
 	pthread_mutex_lock(&grille[coord->y][coord->x].mutex);
 	while (1)
 	{
@@ -311,6 +315,8 @@ void *routine_poisson(void *arg)
 			{
 				if (grille[coord->y + 1][coord->x].element == VIDE)
 				{
+					coord->etang->grille[coord->y + 1][coord->x]= POISSON;
+					coord->etang->grille[coord->y ][coord->x]= VIDE;
 					grille[coord->y + 1][coord->x].element = POISSON;
 					grille[coord->y][coord->x].element = VIDE;
 					coord->y++;
@@ -323,6 +329,8 @@ void *routine_poisson(void *arg)
 			{
 				if (grille[coord->y][coord->x + 1].element == VIDE)
 				{
+						coord->etang->grille[coord->y][coord->x+1]= POISSON;
+					coord->etang->grille[coord->y ][coord->x]= VIDE;
 					grille[coord->y][coord->x + 1].element = POISSON;
 					grille[coord->y][coord->x].element = VIDE;
 					coord->x++;
@@ -335,6 +343,8 @@ void *routine_poisson(void *arg)
 			{
 				if (grille[coord->y - 1][coord->x].element == VIDE)
 				{
+						coord->etang->grille[coord->y -1 ][coord->x]= POISSON;
+					coord->etang->grille[coord->y ][coord->x]= VIDE;
 					grille[coord->y - 1][coord->x].element = POISSON;
 					grille[coord->y][coord->x].element = VIDE;
 					coord->y--;
@@ -347,6 +357,8 @@ void *routine_poisson(void *arg)
 			{
 				if (grille[coord->y][coord->x - 1].element == VIDE)
 				{
+					coord->etang->grille[coord->y ][coord->x-1]= POISSON;
+					coord->etang->grille[coord->y ][coord->x]= VIDE;
 					grille[coord->y][coord->x - 1].element = POISSON;
 					grille[coord->y][coord->x].element = VIDE;
 					coord->x--;
@@ -359,7 +371,7 @@ void *routine_poisson(void *arg)
 		sleep(1);
 	}
 	pthread_mutex_unlock(&grille[coord->y][coord->x].mutex);
-
+	update_sim(fen_sim,coord->etang);
 	free(coord);
 	return NULL;
 }
@@ -410,7 +422,7 @@ void generer_poisson(grille_t *etang)
 
 	coord_t *coord;
 	
-		while (nb_poissons < MAX_POISSONS-2)
+		while (nb_poissons < MAX_POISSONS)
 		{
 			randomx = rand() % NB_COL_SIM/1.5+1;
 			randomy = rand() % NB_LIGNES_SIM/1.5+1;
@@ -427,6 +439,7 @@ void generer_poisson(grille_t *etang)
 				coord = (coord_t *)malloc(sizeof(coord_t));
 				coord->y = randomy;
 				coord->x = randomx;
+				coord->etang=etang;
 				pthread_create(threads_poissons[nb_poissons], NULL, routine_poisson, (void *)coord);
 				/* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);*/
 

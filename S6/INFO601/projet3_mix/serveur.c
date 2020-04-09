@@ -14,7 +14,7 @@
 #include "fonctions.h"
 #include "includes.h"
 #include "message.h"
-
+ 
 
 int main(int argc, char *argv[]) {
   grille_t *etang;
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
   socklen_t p_len = sizeof(struct sockaddr);
   int sockfdTCP, sockfdUDP, sock_one, sock_two, test, verif, maxFD;
   fd_set set;
-  int j;
+
   /*char *msg, *msgenvoi;
   msgenvoi = "";*/
 
@@ -172,23 +172,7 @@ int main(int argc, char *argv[]) {
     sleep(1);
     afficher_etang(etang);
         fusion_etang(etang,etangj1,etangj2);
-    if(test<30){
-      test++;
-      etang->grille[1][test] = 1;
-    
-      both_send(etang,sock_one, sock_two);
-      afficher_etang(etang);
-      printf("\n\n");
-      printf("while if i=%d\n",test);
-    }
-    if(test>30){
-      test=0;
-      for(j=0;j<32;j++){etang->grille[1][j] = 0;}
-      both_send(etang,sock_one, sock_two);
-      afficher_etang(etang);
-      printf("\n\n");
-      printf("while if i=%d\n",test);
-    }
+ 
     generer_poisson(etang);
     tour.tv_sec = 1;
     tour.tv_usec = 0;
