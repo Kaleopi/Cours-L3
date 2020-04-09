@@ -15,9 +15,10 @@ pthread_t *threads_poissons[MAX_POISSONS]; /* Identifants des threads des poisso
 WINDOW *fen_sim;						   /* Fenetre de simulation partagee par les poissons*/
 WINDOW *fen_msg;						   /* Fenetre de messages partagee par les poissons*/
 case_t grille[NB_LIGNES_SIM][NB_COL_SIM];  /* Grille de simulation */
-
+int nb_poissons=0;
 void both_send(grille_t *etang, int sock_one, int sock_two)
 {
+	
 	one_send(etang, sock_one);
 	one_send(etang, sock_two);
 }
@@ -406,9 +407,9 @@ poisson = (poisson_t *)malloc(sizeof(poisson_t));
 void generer_poisson(grille_t *etang)
 {
 	int randomx, randomy;
-	int nb_poissons;
+
 	coord_t *coord;
-	nb_poissons=0;
+	
 		while (nb_poissons < MAX_POISSONS-2)
 		{
 			randomx = rand() % NB_COL_SIM/1.5+1;
@@ -427,12 +428,11 @@ void generer_poisson(grille_t *etang)
 				coord->y = randomy;
 				coord->x = randomx;
 				pthread_create(threads_poissons[nb_poissons], NULL, routine_poisson, (void *)coord);
-				/*mvwprintw(fen_sim, randomy, randomx, "@");*/
 				/* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);*/
 
 				pthread_mutex_unlock(&grille[randomy][randomx].mutex);
 
-				sleep(3);
+				
 				wrefresh(fen_sim);
 				wprintw(fen_msg, "%d %d\n", randomy, randomx);
 				}
@@ -531,9 +531,9 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 
 						if (nb_hammecon < MAX_HAMMECONS)
 						{
-							if (grille[event.y - 1][event.x - 1].element == VIDE)
+							if (etang->grille[event.y - 1][event.x - 1] == VIDE)
 							{
-								grille[event.y - 1][event.x - 1].element = HAMMECONS;
+								etang->grille[event.y - 1][event.x - 1] = HAMMECONS;
 								wattron(fen_sim, COLOR_PAIR(4));
 								mvwprintw(fen_sim, event.y - 1, event.x - 1, "*");
 								wattroff(fen_sim, COLOR_PAIR(4));
@@ -545,7 +545,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 						}
 						else
 						{
-							grille[tempy][tempx].element = VIDE;
+							etang->grille[tempy][tempx] = VIDE;
 							wattron(fen_sim, COLOR_PAIR(4));
 							mvwprintw(fen_sim, tempy, tempx, " ");
 							wattroff(fen_sim, COLOR_PAIR(4));
@@ -557,18 +557,18 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 
 						wrefresh(fen_sim);
 						wrefresh(fen_msg);
-						pthread_mutex_unlock(&grille[event.y - 1][event.x - 1].mutex);
+						/*pthread_mutex_unlock(&grille[event.y - 1][event.x - 1].element ,mutex);*/
 
 					break;
 
 				case PNEU:
-							if ((grille[event.y - 1][event.x - 1].element == VIDE)
-								&& (grille[event.y  ][event.x - 1].element == VIDE)
-								&&(grille[event.y +1][event.x - 1].element == VIDE) )
+							if ((etang->grille[event.y - 1][event.x - 1] == VIDE)
+								&& (etang->grille[event.y  ][event.x - 1] == VIDE)
+								&&(etang->grille[event.y +1][event.x - 1] == VIDE) )
 							{
-								grille[event.y - 1][event.x - 1].element = PNEU;
-								grille[event.y ][event.x - 1].element = PNEU;
-								grille[event.y +1][event.x - 1].element = PNEU;
+								etang->grille[event.y - 1][event.x - 1] = PNEU;
+								etang->grille[event.y ][event.x - 1] = PNEU;
+								etang->grille[event.y +1][event.x - 1] = PNEU;
 								wattron(fen_sim, COLOR_PAIR(2));
 								mvwprintw(fen_sim, event.y - 1, event.x - 1, " ");
 								mvwprintw(fen_sim, event.y , event.x - 1, " ");
@@ -578,35 +578,35 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 							}
 					break;
 				case DYNA:
-								grille[event.y-3 ][event.x - 3].element = VIDE;
-								grille[event.y - 2][event.x - 3].element = VIDE;
-								grille[event.y -1][event.x - 3].element = VIDE;
-								grille[event.y ][event.x - 3].element = VIDE;
-								grille[event.y +1][event.x - 3].element=VIDE;
+								etang->grille[event.y-3 ][event.x - 3] = VIDE;
+								etang->grille[event.y - 2][event.x - 3] = VIDE;
+								etang->grille[event.y -1][event.x - 3] = VIDE;
+								etang->grille[event.y ][event.x - 3] = VIDE;
+								etang->grille[event.y +1][event.x - 3]=VIDE;
 
-								grille[event.y-3 ][event.x - 2].element = VIDE;
-								grille[event.y - 2][event.x - 2].element = VIDE;
-								grille[event.y -1][event.x - 2].element = VIDE;
-								grille[event.y ][event.x - 2].element = VIDE;
-								grille[event.y +1][event.x - 2].element = VIDE;
+								etang->grille[event.y-3 ][event.x - 2] = VIDE;
+								etang->grille[event.y - 2][event.x - 2] = VIDE;
+								etang->grille[event.y -1][event.x - 2] = VIDE;
+								etang->grille[event.y ][event.x - 2] = VIDE;
+								etang->grille[event.y +1][event.x - 2] = VIDE;
 
-								grille[event.y-3 ][event.x - 1].element = VIDE;
-								grille[event.y - 2][event.x - 1].element = VIDE;
-								grille[event.y -1][event.x - 1].element = VIDE;
-								grille[event.y ][event.x - 1].element = VIDE;
-								grille[event.y +1][event.x - 1].element=VIDE;
+								etang->grille[event.y-3 ][event.x - 1] = VIDE;
+								etang->grille[event.y - 2][event.x - 1] = VIDE;
+								etang->grille[event.y -1][event.x - 1] = VIDE;
+								etang->grille[event.y ][event.x - 1] = VIDE;
+								etang->grille[event.y +1][event.x - 1]=VIDE;
 
-								grille[event.y-3 ][event.x].element = VIDE;
-								grille[event.y - 2][event.x].element = VIDE;
-								grille[event.y -1][event.x].element = VIDE;
-								grille[event.y ][event.x].element = VIDE;
-								grille[event.y +1][event.x ].element=VIDE;
+								etang->grille[event.y-3 ][event.x] = VIDE;
+								etang->grille[event.y - 2][event.x] = VIDE;
+								etang->grille[event.y -1][event.x] = VIDE;
+								etang->grille[event.y ][event.x] = VIDE;
+								etang->grille[event.y +1][event.x ]=VIDE;
 
-								grille[event.y-3 ][event.x+1].element = VIDE;
-								grille[event.y - 2][event.x+1].element = VIDE;
-								grille[event.y -1][event.x+1].element = VIDE;
-								grille[event.y ][event.x+1].element = VIDE;
-								grille[event.y +1][event.x+1 ].element=VIDE;
+								etang->grille[event.y-3 ][event.x+1] = VIDE;
+								etang->grille[event.y - 2][event.x+1] = VIDE;
+								etang->grille[event.y -1][event.x+1] = VIDE;
+								etang->grille[event.y ][event.x+1] = VIDE;
+								etang->grille[event.y +1][event.x+1 ]=VIDE;
 
 
 
@@ -684,12 +684,8 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 				}
 			}
 			}
-			recuperation(etang);
 			update_sim(fen_sim,etang);
-			if(write(sockfd,etang,sizeof(grille_t))==-1){
-				perror("Erreur écriture");
-				exit(EXIT_FAILURE);
-			}
+
 			tab[0]=nb_hammecon;
 			tab[2]=tempy;
 			tab[1]=tempx;

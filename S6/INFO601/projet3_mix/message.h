@@ -22,6 +22,13 @@ typedef struct{
 }joueur_t;
 
 typedef struct{
+	int what;
+	int posx;
+	int posy;
+	int type;
+}update_t;
+
+typedef struct{
 	int grille[NB_LIGNES_SIM][NB_COL_SIM];
 }grille_t;
 

@@ -169,13 +169,13 @@ int main(int argc, char *argv[]) {
     FD_SET(sock_one, &set);
     FD_SET(sock_two, &set);
   while(sock_one > -1 || sock_two > -1){
-
+    sleep(1);
     afficher_etang(etang);
         fusion_etang(etang,etangj1,etangj2);
     if(test<30){
       test++;
       etang->grille[1][test] = 1;
-
+    
       both_send(etang,sock_one, sock_two);
       afficher_etang(etang);
       printf("\n\n");
@@ -189,7 +189,7 @@ int main(int argc, char *argv[]) {
       printf("\n\n");
       printf("while if i=%d\n",test);
     }
-
+    generer_poisson(etang);
     tour.tv_sec = 1;
     tour.tv_usec = 0;
 
@@ -209,6 +209,7 @@ int main(int argc, char *argv[]) {
            exit(EXIT_FAILURE);
          }
        }else
+           fusion_etang(etang,etangj1,etangj2);
          both_send(etang, sock_one, sock_two);
        printf("SOCK_ONE verif serveur 183 = %d\n",verif);
     }

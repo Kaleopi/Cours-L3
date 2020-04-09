@@ -151,6 +151,10 @@ int main(int argc, char *argv[]) {
       {
         case KEY_MOUSE:
         lancerTruc(item_actif,fen_sim,fen_msg,tab,etang,sockfd);
+        			if(write(sockfd,etang,sizeof(grille_t))==-1){
+				perror("Erreur écriture");
+				exit(EXIT_FAILURE);
+			}
         break;
         case KEY_DOWN:
         wprintw(fen_msg, "Switch Item down\n");
