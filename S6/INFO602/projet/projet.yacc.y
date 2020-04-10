@@ -9,7 +9,7 @@ void yyerror(const char *erreurMsg);
 %union {
   char* string;
 }
-
+%token <string> TESTJSON
 %token <string> ENTIER
 %token <string> NOM
 %token VRAI FAUX
@@ -24,6 +24,9 @@ json: TESTJSON{
     {
 
     } */
+json: '{'elemjson ',' json | elemjson ',' json | '}';
+
+'{'elemjson ',' elemjson ',' '}'
 
 
 %%
