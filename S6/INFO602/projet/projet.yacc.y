@@ -24,6 +24,9 @@ json: TESTJSON{
     {
 
     } */
+json: '{'elemjson ',' json | elemjson ',' json | '}';
+
+'{'elemjson ',' elemjson ',' '}'
 
 
 %%
