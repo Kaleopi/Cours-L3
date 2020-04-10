@@ -127,7 +127,6 @@ int main(int argc, char *argv[]) {
   while(verif>-1 && ch!=KEY_F(2)){
     /*wprintw(fen_msg,"ifverif>%d\n", verif);*/
     verif = read(sockfd, etang, sizeof(grille_t));
-    wprintw(fen_msg," debilus :%d",etang->grille[0][0]);
     wrefresh(fen_sim);
     /*wprintw(fen_msg, "J'AI RECU LE MSG DU SERVEUR %d\n", cpt);*/
     update_sim(fen_sim,etang);
@@ -135,17 +134,11 @@ int main(int argc, char *argv[]) {
     if(verif>0){
       ch = getch();
       /*wprintw(fen_msg, "verif = %d\n", verif);*/
-
-       wrefresh(fen_msg);
-
       wrefresh(fen_msg);
-
+      wrefresh(fen_msg);
       wrefresh(fen_sim);
       update_sim(fen_sim,etang);
-      if(write(sockfd,etang,sizeof(grille_t))==-1){
-			  perror("Erreur écriture");
-			  exit(EXIT_FAILURE);
-			  }
+
       switch (ch)
 
       {
@@ -155,6 +148,8 @@ int main(int argc, char *argv[]) {
 				    perror("Erreur écriture");
 				    exit(EXIT_FAILURE);
 			    } 
+            verif = read(sockfd, etang, sizeof(grille_t));
+
         break;
         case KEY_DOWN:
         wprintw(fen_msg, "Switch Item down\n");
@@ -167,7 +162,6 @@ int main(int argc, char *argv[]) {
         item_actif=switchUp(item_actif,fen_outils);
         break;
       }
-      wprintw(fen_msg,"findus: %d\n",etang->grille[0][0]);
       write(sockfd,etang,sizeof(grille_t));
       sleep(1);
       refresh();

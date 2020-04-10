@@ -165,14 +165,13 @@ int main(int argc, char *argv[]) {
   afficher_etang(etang);
   printf("\n\n");
   both_send(etang, sock_one, sock_two);
-    FD_ZERO(&set);
-    FD_SET(sock_one, &set);
-    FD_SET(sock_two, &set);
+
   while(sock_one > -1 || sock_two > -1){
-    sleep(1);
+
     afficher_etang(etang);
-    fusion_etang(etang,etangj1,etangj2);
- 
+     FD_ZERO(&set);
+        FD_SET(sock_one, &set);
+        FD_SET(sock_two, &set);
     generer_poisson(etang);
     tour.tv_sec = 1;
     tour.tv_usec = 0;
@@ -186,11 +185,8 @@ int main(int argc, char *argv[]) {
       }
     }
     if(FD_ISSET(sock_one, &set)){
-      printf("CONASSUS!!!!!!!!!!!!!!!!!!!!!!!!!!!");
        if(read(sock_one, etangj1, sizeof(grille_t) )==-1) {
          etang=etangj1;
-         printf("trouducus : %d",etangj1->grille[0][0]);
-         printf("fiodus : %d\n",etang->grille[0][0]);
              fusion_etang(etang,etangj1,etangj2);
          if(errno != EINTR){
            perror("Serveur : erreur select");

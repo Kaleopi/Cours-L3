@@ -39,6 +39,8 @@ typedef struct{
 	int stun;
 	int posx;
 	int posy;
+	int posxFUIR;
+	int posyFUIR;
 }poisson_t;
 
 
