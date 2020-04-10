@@ -313,7 +313,8 @@ WINDOW *creer_fenetre_points()
 
 	return fen;
 }
-
+/*thread*/
+	/*routine des poissons*/
 void *routine_poisson(void *arg)
 {
 	
@@ -393,6 +394,7 @@ void *routine_poisson(void *arg)
 	free(coord);
 	return NULL;
 }
+/*recupere la grille*/
 void recuperation(grille_t *etang){
 	int i,j;
 	for(i=0;i<NB_LIGNES_SIM;i++){
@@ -401,6 +403,7 @@ void recuperation(grille_t *etang){
 		}
 	}
 }
+/*recupere l'etang*/
 void recuperation_grille(grille_t *etang){
 	int i,j;
 	for(i=0;i<NB_LIGNES_SIM;i++){
@@ -409,6 +412,7 @@ void recuperation_grille(grille_t *etang){
 		}
 	}
 }
+/*crée les stats des poissons*/
 void creer_poisson(int id, int posx, int posy,poisson_t *poisson,int random,int nb_poissons)
 {
 
@@ -433,7 +437,8 @@ void creer_poisson(int id, int posx, int posy,poisson_t *poisson,int random,int 
 	
 
 }
-
+/*thread*/
+	/*creer les thread etles poissons*/
 void generer_poisson(grille_t *etang)
 {
 	int randomx, randomy;
@@ -483,6 +488,7 @@ void generer_poisson(grille_t *etang)
 			sleep(0.75);
 
 }
+/*change d'items*/
 int switchUp(int item_actif,WINDOW *fen){
 	switch(item_actif){
 		case HAMMECONS:
@@ -512,6 +518,7 @@ int switchUp(int item_actif,WINDOW *fen){
 	}
 	return item_actif;
 }
+/*change d'items*/
 int  switchDown(int item_actif,WINDOW *fen){
 		switch(item_actif){
 
@@ -543,7 +550,7 @@ int  switchDown(int item_actif,WINDOW *fen){
 	}
 	return item_actif;
 }
-
+/*fusionne les étang cote serveur */
 void fusion_etang(grille_t *etang,grille_t* etangj1,grille_t *etangj2){
 	int i=0,j=0;
 		for(i=0;i<1;i++){
@@ -560,6 +567,7 @@ void fusion_etang(grille_t *etang,grille_t* etangj1,grille_t *etangj2){
 					}
 	}
 }
+/*lance un items*/
 void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_t* etang,int sockfd){
 	MEVENT event;
 	int nb_hammecon=tab[0];
