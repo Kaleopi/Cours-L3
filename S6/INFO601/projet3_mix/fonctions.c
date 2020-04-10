@@ -409,15 +409,27 @@ void recuperation_grille(grille_t *etang){
 		}
 	}
 }
-void creer_poisson(int id, int posx, int posy,poisson_t *poisson)
+void creer_poisson(int id, int posx, int posy,poisson_t *poisson,int random,int nb_poissons)
 {
 
 	
-
 	
-	poisson->id = id;
-	poisson->posx = posx;
-	poisson->posy = posy;
+				if (random < 20)
+				{
+					poisson[nb_poissons].val = 300;
+				}
+				if (random > 20&& random <40 )
+				{
+					poisson[nb_poissons].val = 200;
+				}
+				if(random>40&&random<100)
+				{
+					poisson[nb_poissons].val = 100;
+				}
+	
+	poisson[nb_poissons].id = nb_poissons;
+	poisson[nb_poissons].posx = posx;
+	poisson[nb_poissons].posy = posy;
 	
 
 }
@@ -425,37 +437,29 @@ void creer_poisson(int id, int posx, int posy,poisson_t *poisson)
 void generer_poisson(grille_t *etang)
 {
 	int randomx, randomy;
+	int randomP;
 	
-	int random;
 	poisson_t *poisson;
 	coord_t *coord;
-	poisson = (poisson_t *)malloc(sizeof(poisson_t));
+	poisson = (poisson_t *)malloc(sizeof(poisson_t)*MAX_POISSONS);
+	
 		while (nb_poissons < MAX_POISSONS)
 		{
 			randomx = rand() % NB_COL_SIM/1.5+1;
 			randomy = rand() % NB_LIGNES_SIM/1.5+1;
+			srand(time(NULL)+randomx*randomy*randomx*randomx);
 			if (etang->grille[randomy][randomx] ==0)
 
 				{
 
 				nb_poissons++;
-				creer_poisson(nb_poissons,randomx,randomy,poisson);
+				randomP = rand() % 100;
+				
+				creer_poisson(nb_poissons,randomx,randomy,poisson, randomP,nb_poissons);
 				threads_poissons[nb_poissons] = (pthread_t *)malloc(sizeof(pthread_t));
 				grille[randomy][randomx].element = POISSON;
 				
-				random = rand() % 100;
-				if (random < 20)
-				{
-					poisson->val = 300;
-				}
-				if (random > 20&& random <40 )
-				{
-					poisson->val = 200;
-				}
-				if(random>40 &&random<100)
-				{
-					poisson->val = 100;
-				}
+			
 
 				etang->grille[randomy][randomx]=poisson->val;
 				grille[randomy][randomx].poisson = threads_poissons[nb_poissons];
@@ -464,7 +468,7 @@ void generer_poisson(grille_t *etang)
 				coord->x = randomx;
 				coord->etang=etang;
 				
-				coord->poisson=poisson;
+				coord->poisson=&poisson[nb_poissons];
 				pthread_create(threads_poissons[nb_poissons], NULL, routine_poisson, (void *)coord);
 				/* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);*/
 
@@ -473,8 +477,10 @@ void generer_poisson(grille_t *etang)
 				
 				wrefresh(fen_sim);
 				wprintw(fen_msg, "%d %d\n", randomy, randomx);
+			
 				}
 			}
+			sleep(0.75);
 
 }
 int switchUp(int item_actif,WINDOW *fen){

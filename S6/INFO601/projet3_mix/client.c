@@ -170,6 +170,8 @@ int main(int argc, char *argv[]) {
       refresh();
       verif=0;
     }
+    write(sockfd,etang,sizeof(grille_t));
+			
     wrefresh(fen_msg);
   }
   wprintw(fen_msg,"end\n");
