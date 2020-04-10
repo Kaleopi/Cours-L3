@@ -186,7 +186,11 @@ int main(int argc, char *argv[]) {
       }
     }
     if(FD_ISSET(sock_one, &set)){
+      printf("CONASSUS!!!!!!!!!!!!!!!!!!!!!!!!!!!");
        if(read(sock_one, etangj1, sizeof(grille_t) )==-1) {
+         etang=etangj1;
+         printf("trouducus : %d",etangj1->grille[0][0]);
+         printf("fiodus : %d\n",etang->grille[0][0]);
              fusion_etang(etang,etangj1,etangj2);
          if(errno != EINTR){
            perror("Serveur : erreur select");
