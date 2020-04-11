@@ -65,7 +65,21 @@ extern int yydebug;
     BAS = 275,
     HAUT = 276,
     DROITE = 277,
-    GAUCHE = 278
+    GAUCHE = 278,
+    TYPE = 279,
+    PROC = 280,
+    FUNC = 281,
+    F_AVANCE = 282,
+    F_DROITE = 283,
+    F_GAUCHE = 284,
+    FINTQ = 285,
+    FINPROC = 286,
+    FINFUNC = 287,
+    INFEG = 288,
+    SUPEG = 289,
+    EGEG = 290,
+    INF = 291,
+    SUP = 292
   };
 #endif
 /* Tokens.  */
@@ -90,18 +104,32 @@ extern int yydebug;
 #define HAUT 276
 #define DROITE 277
 #define GAUCHE 278
+#define TYPE 279
+#define PROC 280
+#define FUNC 281
+#define F_AVANCE 282
+#define F_DROITE 283
+#define F_GAUCHE 284
+#define FINTQ 285
+#define FINPROC 286
+#define FINFUNC 287
+#define INFEG 288
+#define SUPEG 289
+#define EGEG 290
+#define INF 291
+#define SUP 292
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 16 "projet.yacc.y" /* yacc.c:1909  */
+#line 20 "projet.yacc.y" /* yacc.c:1909  */
 
   int intval;
   char string[100];
 
-#line 105 "y.tab.h" /* yacc.c:1909  */
+#line 133 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -29,6 +29,23 @@ HAUT      "\"HAUT\""
 DROITE    "\"DROITE\""
 GAUCHE    "\"GAUCHE\""
 
+/* pseudo-code */
+TYPE      (entier|bool)
+PROC      "proc"
+FUNC      "func"
+NOM       [A-Za-z]+
+F_AVANCE  "avance()"
+F_DROITE  "droite()"
+F_GAUCHE  "gauche()"
+FINTQ     "fintantque"
+FINPROC   "finproc"
+FINFUNC   "finfunc"
+INFEG     "<="
+SUPEG     ">="
+EGEG      "=="
+INF       "<"
+SUP       ">"
+
 %%
 {ENTIER}   { yylval.intval = atoi(yytext); return ENTIER; }
 {VRAI}      { return VRAI; }
@@ -52,6 +69,21 @@ GAUCHE    "\"GAUCHE\""
 {DROITE}    { return DROITE; }
 {GAUCHE}    { return GAUCHE; }
 
+{TYPE}      { return *yytext; }
+{PROC}      { return PROC; }
+{FUNC}      { return FUNC; }
+{NOM}       { return NOM; }
+{F_AVANCE}  { return F_AVANCE; }
+{F_DROITE}  { return F_DROITE; }
+{F_GAUCHE}  { return F_GAUCHE; }
+{FINTQ}     { return FINTQ; }
+{FINPROC}   { return FINPROC; }
+{FINFUNC}   { return FINFUNC; }
+{INFEG}     { return INFEG; }
+{SUPEG}     { return SUPEG; }
+{EGEG}      { return EGEG; }
+{INF}       { return INF; }
+{SUP}       { return SUP; }
 
 [*-+/\[\]\{\},\:\.] { return *yytext; }
 [ \t\n\r]	 ;

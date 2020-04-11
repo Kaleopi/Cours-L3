@@ -4,6 +4,20 @@ Terminaux inutilisés dans la grammaire
    VRAI
    FAUX
    CASE
+   TYPE
+   PROC
+   FUNC
+   F_AVANCE
+   F_DROITE
+   F_GAUCHE
+   FINTQ
+   FINPROC
+   FINFUNC
+   INFEG
+   SUPEG
+   EGEG
+   INF
+   SUP
 
 
 Grammaire
@@ -71,29 +85,43 @@ BAS (275) 9
 HAUT (276) 10
 DROITE (277) 11
 GAUCHE (278) 12
+TYPE (279)
+PROC (280)
+FUNC (281)
+F_AVANCE (282)
+F_DROITE (283)
+F_GAUCHE (284)
+FINTQ (285)
+FINPROC (286)
+FINFUNC (287)
+INFEG (288)
+SUPEG (289)
+EGEG (290)
+INF (291)
+SUP (292)
 
 
 Non-terminaux, suivis des règles où ils apparaissent
 
-$accept (30)
+$accept (44)
     à gauche: 0
-json (31)
+json (45)
     à gauche: 1, à droite: 0
-lelems (32)
+lelems (46)
     à gauche: 2 3, à droite: 1 2
-elemjson (33)
+elemjson (47)
     à gauche: 4 5 6 7, à droite: 2 3
-debutjson (34)
+debutjson (48)
     à gauche: 8, à droite: 6
-direction (35)
+direction (49)
     à gauche: 9 10 11 12, à droite: 8
-tabcases (36)
+tabcases (50)
     à gauche: 13, à droite: 7
-cases (37)
+cases (51)
     à gauche: 14 15, à droite: 13 14
-scase (38)
+scase (52)
     à gauche: 16, à droite: 14 15
-type (39)
+type (53)
     à gauche: 17 18 19 20, à droite: 16
 
 
