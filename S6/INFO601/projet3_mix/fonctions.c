@@ -98,13 +98,24 @@ void update_sim(WINDOW *w, grille_t *etang){
 					wrefresh(w);
 					wattroff(w, COLOR_PAIR(7));
 				break;
-				case PNEU:
+				case PNEUJ1:
 					wattron(w, COLOR_PAIR(2));
 					mvwprintw(w, i, j, " ", 2);
 					wrefresh(w);
 					wattroff(w, COLOR_PAIR(2));
 				break;
-				case DYNA:
+				case DYNAJ1:
+					wattron(w, COLOR_PAIR(3));
+					mvwprintw(w, i, j, " ", 3);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(3));
+				case PNEUJ2:
+					wattron(w, COLOR_PAIR(2));
+					mvwprintw(w, i, j, " ", 2);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(2));
+				break;
+				case DYNAJ2:
 					wattron(w, COLOR_PAIR(3));
 					mvwprintw(w, i, j, " ", 3);
 					wrefresh(w);
@@ -416,7 +427,7 @@ void recuperation(grille_t *etang){
 	for(i=0;i<NB_LIGNES_SIM;i++){
 		for( j=0;j<NB_COL_SIM;j++){
 			if(grille[i][j].element==VIDE){
-				if(etang->grille[i][j]!=20&&etang->grille[i][j]!=10){
+				if(etang->grille[i][j]>99){
 				etang->grille[i][j]=grille[i][j].element;
 				}
 			}
@@ -424,6 +435,10 @@ void recuperation(grille_t *etang){
 		}
 	}
 }
+void suppr_hammecon(grille_t *etang){
+
+}
+
 /*recupere l'etang*/
 void recuperation_grille(grille_t *etang){
 	int i,j;
@@ -512,30 +527,56 @@ void generer_poisson(grille_t *etang)
 /*change d'items*/
 int switchUp(int item_actif,WINDOW *fen){
 	switch(item_actif){
-		case HAMMECONS:
+		case HAMMECONSJ1:
 			mvwprintw(fen, 0, 0, " ");
 			mvwprintw(fen, 4, 0, "X");
-			return FURTIF;
+			return FURTIFJ1;
 		break;
-		case PNEU:
+		case PNEUJ1:
 			mvwprintw(fen, 1, 0, " ");
 			mvwprintw(fen, 0, 0, "X");
-			return HAMMECONS;
+			return HAMMECONSJ1;
 		break;
-		case DYNA:
+		case DYNAJ1:
 			mvwprintw(fen, 2, 0, " ");
 			mvwprintw(fen, 1, 0, "X");
-			return PNEU;
+			return PNEUJ1;
 		break;
-		case FURTIF:
+		case FURTIFJ1:
 			mvwprintw(fen, 4, 0, " ");
 			mvwprintw(fen, 3, 0, "X");
-			return REQUIN;
+			return REQUINJ1;
 		break;
-		case REQUIN:
+		case REQUINJ1:
 			mvwprintw(fen, 3, 0, " ");
 			mvwprintw(fen, 2, 0, "X");
-			return DYNA;
+			return DYNAJ1;
+
+
+		case HAMMECONSJ2:
+			mvwprintw(fen, 0, 0, " ");
+			mvwprintw(fen, 4, 0, "X");
+			return FURTIFJ2;
+		break;
+		case PNEUJ2:
+			mvwprintw(fen, 1, 0, " ");
+			mvwprintw(fen, 0, 0, "X");
+			return HAMMECONSJ2;
+		break;
+		case DYNAJ2:
+			mvwprintw(fen, 2, 0, " ");
+			mvwprintw(fen, 1, 0, "X");
+			return PNEUJ2;
+		break;
+		case FURTIFJ2:
+			mvwprintw(fen, 4, 0, " ");
+			mvwprintw(fen, 3, 0, "X");
+			return REQUINJ2;
+		break;
+		case REQUINJ2:
+			mvwprintw(fen, 3, 0, " ");
+			mvwprintw(fen, 2, 0, "X");
+			return DYNAJ2;
 	}
 	return item_actif;
 }
@@ -543,30 +584,56 @@ int switchUp(int item_actif,WINDOW *fen){
 int  switchDown(int item_actif,WINDOW *fen){
 		switch(item_actif){
 
-		case HAMMECONS:
+		case HAMMECONSJ1:
 			mvwprintw(fen, 0, 0, " ");
 			mvwprintw(fen, 1, 0, "X");
-			return PNEU;
+			return PNEUJ1;
 		break;
-		case PNEU:
+		case PNEUJ1:
 			mvwprintw(fen, 1, 0, " ");
 			mvwprintw(fen, 2, 0, "X");
-			return DYNA;
+			return DYNAJ1;
 		break;
-		case DYNA:
+		case DYNAJ1:
 			mvwprintw(fen, 2, 0, " ");
 			mvwprintw(fen, 3, 0, "X");
-			return REQUIN;
+			return REQUINJ1;
 		break;
-		case REQUIN:
+		case REQUINJ1:
 			mvwprintw(fen, 3, 0, " ");
 			mvwprintw(fen, 4, 0, "X");
-			return FURTIF;
+			return FURTIFJ1;
 		break;
-		case FURTIF:
+		case FURTIFJ1:
 			mvwprintw(fen, 4, 0, " ");
 			mvwprintw(fen, 0, 0, "X");
-			return HAMMECONS;
+			return HAMMECONSJ1;
+			break;
+
+		case HAMMECONSJ2:
+			mvwprintw(fen, 0, 0, " ");
+			mvwprintw(fen, 1, 0, "X");
+			return PNEUJ2;
+		break;
+		case PNEUJ2:
+			mvwprintw(fen, 1, 0, " ");
+			mvwprintw(fen, 2, 0, "X");
+			return DYNAJ2;
+		break;
+		case DYNAJ2:
+			mvwprintw(fen, 2, 0, " ");
+			mvwprintw(fen, 3, 0, "X");
+			return REQUINJ2;
+		break;
+		case REQUINJ2:
+			mvwprintw(fen, 3, 0, " ");
+			mvwprintw(fen, 4, 0, "X");
+			return FURTIFJ2;
+		break;
+		case FURTIFJ2:
+			mvwprintw(fen, 4, 0, " ");
+			mvwprintw(fen, 0, 0, "X");
+			return HAMMECONSJ2;
 			break;
 	}
 	return item_actif;
@@ -669,14 +736,14 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 
 					break;
 
-				case PNEU:
+				case PNEUJ1:
 							if ((etang->grille[event.y - 1][event.x - 1] == VIDE)
 								&& (etang->grille[event.y  ][event.x - 1] == VIDE)
 								&&(etang->grille[event.y +1][event.x - 1] == VIDE) )
 							{
-								etang->grille[event.y - 1][event.x - 1] = PNEU;
-								etang->grille[event.y ][event.x - 1] = PNEU;
-								etang->grille[event.y +1][event.x - 1] = PNEU;
+								etang->grille[event.y - 1][event.x - 1] = PNEUJ1;
+								etang->grille[event.y ][event.x - 1] = PNEUJ1;
+								etang->grille[event.y +1][event.x - 1] = PNEUJ1;
 								wattron(fen_sim, COLOR_PAIR(2));
 								mvwprintw(fen_sim, event.y - 1, event.x - 1, " ");
 								mvwprintw(fen_sim, event.y , event.x - 1, " ");
@@ -685,7 +752,87 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								wprintw(fen_msg, "Ajout d'un pneu \n");
 							}
 					break;
-				case DYNA:
+				case PNEUJ2:
+							if ((etang->grille[event.y - 1][event.x - 1] == VIDE)
+								&& (etang->grille[event.y  ][event.x - 1] == VIDE)
+								&&(etang->grille[event.y +1][event.x - 1] == VIDE) )
+							{
+								etang->grille[event.y - 1][event.x - 1] = PNEUJ2;
+								etang->grille[event.y ][event.x - 1] = PNEUJ2;
+								etang->grille[event.y +1][event.x - 1] = PNEUJ2;
+								wattron(fen_sim, COLOR_PAIR(2));
+								mvwprintw(fen_sim, event.y - 1, event.x - 1, " ");
+								mvwprintw(fen_sim, event.y , event.x - 1, " ");
+								mvwprintw(fen_sim, event.y +1 , event.x - 1, " ");
+								wattroff(fen_sim, COLOR_PAIR(2));
+								wprintw(fen_msg, "Ajout d'un pneu \n");
+							}
+					break;
+				case DYNAJ1:
+								etang->grille[event.y-3 ][event.x - 3] = VIDE;
+								etang->grille[event.y - 2][event.x - 3] = VIDE;
+								etang->grille[event.y -1][event.x - 3] = VIDE;
+								etang->grille[event.y ][event.x - 3] = VIDE;
+								etang->grille[event.y +1][event.x - 3]=VIDE;
+
+								etang->grille[event.y-3 ][event.x - 2] = VIDE;
+								etang->grille[event.y - 2][event.x - 2] = VIDE;
+								etang->grille[event.y -1][event.x - 2] = VIDE;
+								etang->grille[event.y ][event.x - 2] = VIDE;
+								etang->grille[event.y +1][event.x - 2] = VIDE;
+
+								etang->grille[event.y-3 ][event.x - 1] = VIDE;
+								etang->grille[event.y - 2][event.x - 1] = VIDE;
+								etang->grille[event.y -1][event.x - 1] = VIDE;
+								etang->grille[event.y ][event.x - 1] = VIDE;
+								etang->grille[event.y +1][event.x - 1]=VIDE;
+
+								etang->grille[event.y-3 ][event.x] = VIDE;
+								etang->grille[event.y - 2][event.x] = VIDE;
+								etang->grille[event.y -1][event.x] = VIDE;
+								etang->grille[event.y ][event.x] = VIDE;
+								etang->grille[event.y +1][event.x ]=VIDE;
+
+								etang->grille[event.y-3 ][event.x+1] = VIDE;
+								etang->grille[event.y - 2][event.x+1] = VIDE;
+								etang->grille[event.y -1][event.x+1] = VIDE;
+								etang->grille[event.y ][event.x+1] = VIDE;
+								etang->grille[event.y +1][event.x+1 ]=VIDE;
+
+
+
+								wattron(fen_sim, COLOR_PAIR(3));
+								mvwprintw(fen_sim, event.y -3, event.x - 3, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x - 3, " ");
+								mvwprintw(fen_sim, event.y -1, event.x -3, " ");
+								mvwprintw(fen_sim, event.y , event.x - 3, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x - 3, " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x - 2, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x - 2, " ");
+								mvwprintw(fen_sim, event.y -1, event.x -2, " ");
+								mvwprintw(fen_sim, event.y , event.x - 2, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x - 2, " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x - 1, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x - 1, " ");
+								mvwprintw(fen_sim, event.y -1, event.x -1, " ");
+								mvwprintw(fen_sim, event.y , event.x - 1, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x - 1, " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x , " ");
+								mvwprintw(fen_sim, event.y - 2, event.x , " ");
+								mvwprintw(fen_sim, event.y -1, event.x , " ");
+								mvwprintw(fen_sim, event.y , event.x , " ");
+								mvwprintw(fen_sim, event.y + 1, event.x , " ");
+
+								mvwprintw(fen_sim, event.y -3, event.x +1, " ");
+								mvwprintw(fen_sim, event.y - 2, event.x +1, " ");
+								mvwprintw(fen_sim, event.y -1, event.x +1, " ");
+								mvwprintw(fen_sim, event.y , event.x +1, " ");
+								mvwprintw(fen_sim, event.y + 1, event.x +1, " ");
+								wattroff(fen_sim, COLOR_PAIR(3));
+				case DYNAJ2:
 								etang->grille[event.y-3 ][event.x - 3] = VIDE;
 								etang->grille[event.y - 2][event.x - 3] = VIDE;
 								etang->grille[event.y -1][event.x - 3] = VIDE;

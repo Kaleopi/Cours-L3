@@ -160,12 +160,15 @@ int main(int argc, char *argv[]) {
         case KEY_DOWN:
         wprintw(fen_msg, "Switch Item down\n");
         wrefresh(fen_msg);
+       
         item_actif=switchDown(item_actif,fen_outils);
+        wrefresh(fen_outils);
         break;
         case KEY_UP:
         wprintw(fen_msg, "Switch item Up\n");
         wrefresh(fen_msg);
         item_actif=switchUp(item_actif,fen_outils);
+        wrefresh(fen_outils);
         break;
       }
      

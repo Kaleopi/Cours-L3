@@ -34,11 +34,14 @@
 #define PNEUJ1              11
 #define DYNAJ1              12
 #define REQUINJ1 13
+#define FURTIFJ1 14
+
 
 #define HAMMECONSJ2         20
 #define PNEUJ2              21
 #define DYNAJ2              22
 #define REQUINJ2 23
+#define FURTIFJ2 24
 
 #define COOL                1
 #define FUITE               0
