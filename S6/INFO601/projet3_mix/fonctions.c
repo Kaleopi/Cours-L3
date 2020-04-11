@@ -86,6 +86,18 @@ void update_sim(WINDOW *w, grille_t *etang){
 					wrefresh(w);
 					wattroff(w, COLOR_PAIR(4));
 				break;
+				case HAMMECONSJ1:
+					wattron(w, COLOR_PAIR(4));
+					mvwprintw(w, i, j, "*", 4);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(4));
+				break;
+				case HAMMECONSJ2:
+					wattron(w, COLOR_PAIR(4));
+					mvwprintw(w, i, j, "*", 4);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(4));
+				break;
 				case PNEU:
 					wattron(w, COLOR_PAIR(2));
 					mvwprintw(w, i, j, " ", 2);

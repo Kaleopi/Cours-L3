@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
   requete_t requete;
   reponse_t reponse;
   int cpt=0;
-
+  joueur_t *client;
   /* Vérification des arguments */
   if(argc != 3) {
     fprintf(stderr, "Usage : %s adresse portServeur\n", argv[0]);
@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
   init_etang(etang);
   item_actif = HAMMECONS;
   verif = 0;
+  client=malloc(sizeof(joueur_t));
 
   /*
   * PARTIE UDP
@@ -69,6 +70,7 @@ int main(int argc, char *argv[]) {
   }
   printf("reponse.type : %ld\n",reponse.type);
   printf("reponse.port : %d\n",reponse.port);
+  client->id=reponse.idJOUEUR;
 
   /* Fermeture de la socket */
   if(close(sockfd) == -1) {
@@ -120,6 +122,11 @@ int main(int argc, char *argv[]) {
   refresh();
   wprintw(fen_msg,"after refresh");
   verif = read(sockfd, etang, sizeof(grille_t));
+  if(client->id==1){
+    item_actif=HAMMECONSJ1;
+  }else{
+    item_actif=HAMMECONSJ2;
+  }
   if(verif ==-1){
     perror("Erreur lors de la réception de la grille");
   }

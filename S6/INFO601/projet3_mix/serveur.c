@@ -127,11 +127,13 @@ int main(int argc, char *argv[]) {
   reponse.port = ntohs(adresse.sin_port);
   printf("\nreponse.port : %d\n",reponse.port);
   /* 1ere connexion autorisée */
+  reponse.idJOUEUR=1;
   if(sendto(sockfdUDP, &reponse, sizeof(reponse), 0, (struct sockaddr*)&p1, p_len) == -1) {
     perror("Erreur lors de la reponse 1 ");
     exit(EXIT_FAILURE);
   }
   /* 2ere connexion autorisée */
+    reponse.idJOUEUR=2;
   if(sendto(sockfdUDP, &reponse, sizeof(reponse), 0, (struct sockaddr*)&p2, p_len) == -1) {
     perror("Erreur lors de la reponse 2 ");
     exit(EXIT_FAILURE);
@@ -198,7 +200,7 @@ int main(int argc, char *argv[]) {
       if(read(sock_two, etangj2, sizeof(grille_t))==-1){
 
           fusion_etang(etang,etangj1,etangj2);
-                  recuperation(etang);
+          recuperation(etang);
         if(errno != EINTR){
           perror("Serveur : erreur select");
           exit(EXIT_FAILURE);
@@ -209,7 +211,7 @@ int main(int argc, char *argv[]) {
     }
 
       fusion_etang(etang,etangj1,etangj2);
-              recuperation(etang);
+      recuperation(etang);
     both_send(etang, sock_one, sock_two);
     printf("sockone serveur 201 = %d\n",sock_two);
     printf("while %d\n",test);
