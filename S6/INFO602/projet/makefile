@@ -1,21 +1,5 @@
-LIB = plateau.json code.txt
-OUTPUT = code.c
-EXEC = projet
-
-exe : $(EXEC)
-	./$(EXEC)
-
-$(EXEC) : $(OUTPUT)
-	gcc -o $(EXEC) $(OUTPUT)
-
-$(OUTPUT) : projet
-	./projet $(LIB)
-
 projet : y.tab.o lex.yy.o
 	gcc -o projet y.tab.o lex.yy.o -lm -lfl
-
-#liste.o :
-#	gcc -c liste.c liste.h
 
 y.tab.o : y.tab.h y.tab.c
 	gcc -c y.tab.c
@@ -35,4 +19,4 @@ clean:
 	rm -f projet projet.exe
 	rm -f *~
 	rm -f *.stackdump
-	rm -f liste.o
+	rm -f y.output

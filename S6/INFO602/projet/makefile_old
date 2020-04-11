@@ -1,38 +1,35 @@
-LIB = plateau.json code.txt
-OUTPUT = code.c
-EXEC = projet
 
-exe : $(EXEC)
-	./$(EXEC)
+	/* pseudo-code */
+	TYPE      (entier|bool)
+	PROC      "proc"
+	FUNC      "func"
+	NOM       [A-Za-z]+
+	F_AVANCE  "avance()"
+	F_DROITE  "droite()"
+	F_GAUCHE  "gauche()"
+	FINTQ     "fintantque"
+	FINPROC   "finproc"
+	FINFUNC   "finfunc"
+	INFEG     "<="
+	SUPEG     ">="
+	EGEG      "=="
+	INF       "<"
+	SUP       ">"
 
-$(EXEC) : $(OUTPUT)
-	gcc -o $(EXEC) $(OUTPUT)
+	{TYPE}      { return *yytext; }
+	{PROC}      { return PROC; }
+	{FUNC}      { return FUNC; }
+	{NOM}       { return NOM; }
+	{F_AVANCE}  { return F_AVANCE; }
+	{F_DROITE}  { return F_DROITE; }
+	{F_GAUCHE}  { return F_GAUCHE; }
+	{FINTQ}     { return FINTQ; }
+	{FINPROC}   { return FINPROC; }
+	{FINFUNC}   { return FINFUNC; }
+	{INFEG}     { return INFEG; }
+	{SUPEG}     { return SUPEG; }
+	{EGEG}      { return EGEG; }
+	{INF}       { return INF; }
+	{SUP}       { return SUP; }
 
-$(OUTPUT) : projet
-	./projet $(LIB)
-
-projet : y.tab.o lex.yy.o liste.o
-	gcc -o projet y.tab.o lex.yy.o liste.o -lm -lfl
-
-liste.o :
-	gcc -c liste.c liste.h
-
-y.tab.o : y.tab.h y.tab.c
-	gcc -c y.tab.c
-
-y.tab.c y.tab.h : projet.yacc.y
-	yacc -vd projet.yacc.y
-
-lex.yy.o : lex.yy.c y.tab.h
-	gcc -c lex.yy.c
-
-lex.yy.c : projet.lex
-	flex projet.lex
-
-clean:
-	rm -f y.tab.*
-	rm -f lex.yy.*
-	rm -f projet projet.exe
-	rm -f *~
-	rm -f *.stackdump
-	rm -f liste.o
+	/* %token TYPE PROC FUNC F_AVANCE F_DROITE F_GAUCHE FINTQ FINPROC FINFUNC INFEG SUPEG EGEG INF SUP */
