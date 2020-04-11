@@ -24,8 +24,9 @@ void yyerror(const char *erreurMsg);
 %token <intval> ENTIER
 %token <string> NOM
 %token VRAI FAUX
+%token <string> OPERATEUR
 %token HAUTEUR LARGEUR X Y TYPEJSON BLOC BILLE CAISSE TROU CASE CASES DEBUT DIRECTION BAS HAUT DROITE GAUCHE
-%token TYPE PROC FUNC F_AVANCE F_DROITE F_GAUCHE FINTQ FINPROC FINFUNC INFEG SUPEG EGEG INF SUP
+%token TYPE PROC FUNC F_AVANCE F_DROITE F_GAUCHE FINTQ FINPROC FINFUNC INFEG SUPEG EGGEGG INF SUP
 
 %type <intval> direction
 %type <intval> type
@@ -34,7 +35,7 @@ parser:
     json
     |
     pseudocode;
-    
+
 /* json */
 json:
     '{' lelems '}';
@@ -134,7 +135,7 @@ type:
       argument;
 
     argument:
-      NOM ',' TYPE;
+      NOM ':' TYPE;
 
     code:
       ligne code
@@ -144,17 +145,51 @@ type:
     ligne:
       affectaction
       |
-      appelproc
+      appelproc;
       |
       conditionnelle
       |
       boucle;
 
     affectaction:
-      NOM '=' ENTIER
-      |
-      NOM '=' NOM;
+      NOM '=' calcul;
 
+    calcul:
+      calcul OPERATEUR valeur
+      |
+      valeur;
+
+    valeur:
+      NOM
+      |
+      ENTIER;
+
+    appelproc:
+      NOM'('params')'
+      |
+      NOM"()";
+
+    params:
+      param
+      |
+      params ',' param;
+
+    param:
+      NOM|ENTIER;
+
+    conditionnelle:
+      "si(" expbool')' code sinon "finsi";
+
+    sinon:
+      "sinon" code
+      |
+      ;
+
+    expbool:
+      valeur comparateur valeur;
+
+    comparateur:
+      INFEG|SUPEG|EGGEGG|INF|SUP;
 
 
 %%

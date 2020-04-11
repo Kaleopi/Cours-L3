@@ -49,37 +49,38 @@ extern int yydebug;
     NOM = 259,
     VRAI = 260,
     FAUX = 261,
-    HAUTEUR = 262,
-    LARGEUR = 263,
-    X = 264,
-    Y = 265,
-    TYPEJSON = 266,
-    BLOC = 267,
-    BILLE = 268,
-    CAISSE = 269,
-    TROU = 270,
-    CASE = 271,
-    CASES = 272,
-    DEBUT = 273,
-    DIRECTION = 274,
-    BAS = 275,
-    HAUT = 276,
-    DROITE = 277,
-    GAUCHE = 278,
-    TYPE = 279,
-    PROC = 280,
-    FUNC = 281,
-    F_AVANCE = 282,
-    F_DROITE = 283,
-    F_GAUCHE = 284,
-    FINTQ = 285,
-    FINPROC = 286,
-    FINFUNC = 287,
-    INFEG = 288,
-    SUPEG = 289,
-    EGEG = 290,
-    INF = 291,
-    SUP = 292
+    OPERATEUR = 262,
+    HAUTEUR = 263,
+    LARGEUR = 264,
+    X = 265,
+    Y = 266,
+    TYPEJSON = 267,
+    BLOC = 268,
+    BILLE = 269,
+    CAISSE = 270,
+    TROU = 271,
+    CASE = 272,
+    CASES = 273,
+    DEBUT = 274,
+    DIRECTION = 275,
+    BAS = 276,
+    HAUT = 277,
+    DROITE = 278,
+    GAUCHE = 279,
+    TYPE = 280,
+    PROC = 281,
+    FUNC = 282,
+    F_AVANCE = 283,
+    F_DROITE = 284,
+    F_GAUCHE = 285,
+    FINTQ = 286,
+    FINPROC = 287,
+    FINFUNC = 288,
+    INFEG = 289,
+    SUPEG = 290,
+    EGEG = 291,
+    INF = 292,
+    SUP = 293
   };
 #endif
 /* Tokens.  */
@@ -87,37 +88,38 @@ extern int yydebug;
 #define NOM 259
 #define VRAI 260
 #define FAUX 261
-#define HAUTEUR 262
-#define LARGEUR 263
-#define X 264
-#define Y 265
-#define TYPEJSON 266
-#define BLOC 267
-#define BILLE 268
-#define CAISSE 269
-#define TROU 270
-#define CASE 271
-#define CASES 272
-#define DEBUT 273
-#define DIRECTION 274
-#define BAS 275
-#define HAUT 276
-#define DROITE 277
-#define GAUCHE 278
-#define TYPE 279
-#define PROC 280
-#define FUNC 281
-#define F_AVANCE 282
-#define F_DROITE 283
-#define F_GAUCHE 284
-#define FINTQ 285
-#define FINPROC 286
-#define FINFUNC 287
-#define INFEG 288
-#define SUPEG 289
-#define EGEG 290
-#define INF 291
-#define SUP 292
+#define OPERATEUR 262
+#define HAUTEUR 263
+#define LARGEUR 264
+#define X 265
+#define Y 266
+#define TYPEJSON 267
+#define BLOC 268
+#define BILLE 269
+#define CAISSE 270
+#define TROU 271
+#define CASE 272
+#define CASES 273
+#define DEBUT 274
+#define DIRECTION 275
+#define BAS 276
+#define HAUT 277
+#define DROITE 278
+#define GAUCHE 279
+#define TYPE 280
+#define PROC 281
+#define FUNC 282
+#define F_AVANCE 283
+#define F_DROITE 284
+#define F_GAUCHE 285
+#define FINTQ 286
+#define FINPROC 287
+#define FINFUNC 288
+#define INFEG 289
+#define SUPEG 290
+#define EGEG 291
+#define INF 292
+#define SUP 293
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -129,7 +131,7 @@ union YYSTYPE
   int intval;
   char string[100];
 
-#line 133 "y.tab.h" /* yacc.c:1909  */
+#line 135 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

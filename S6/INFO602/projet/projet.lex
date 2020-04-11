@@ -7,6 +7,7 @@ void yyerror(const char *erreurMsg);
 
 /* global */
 ENTIER    [0-9]+
+OPERATEUR [*+-/]
 VRAI      "true"
 FAUX      "false"
 
@@ -42,12 +43,14 @@ F_DROITE  "droite()"
 F_GAUCHE  "gauche()"
 INFEG     "<="
 SUPEG     ">="
-EGEG      "=="
+/* easter egg */
+EGGEGG      "=="
 INF       "<"
 SUP       ">"
 
 %%
-{ENTIER}   { yylval.intval = atoi(yytext); return ENTIER; }
+{ENTIER}    { yylval.intval = atoi(yytext); return ENTIER; }
+{OPERATEUR} { return *yytext; }
 {VRAI}      { return VRAI; }
 {FAUX}      { return FAUX; }
 
