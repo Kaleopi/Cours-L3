@@ -1,7 +1,12 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "includes.h"
+#include <string.h>
+
 extern FILE *yyin;
+plateau_t *plateau;
+robot_t *robot;
 
 int yylex();
 void yyerror(const char *erreurMsg);
@@ -26,10 +31,11 @@ void yyerror(const char *erreurMsg);
 %type <string> tabcases
 %type <string> scase
 %type <string> cases
-%type <string> type
+%type <intval> type
 %%
 json:
     '{' lelems '}'{
+      int i;
       printf("%s",$2);
     };
 
@@ -44,16 +50,20 @@ lelems:
 
 elemjson:
     LARGEUR ':' ENTIER {
+      plateau->largeur = $3;
       printf("Largeur plateau : %d\n",$3);
     }
     |
     HAUTEUR ':' ENTIER {
+      plateau->hauteur = $3;
       printf("Hauteur plateau : %d\n",$3);
     }
     |
     DEBUT ':' debutjson {}
     |
-    CASES ':' tabcases {};
+    CASES ':' tabcases {
+      printf("ICI %d %d",plateau->largeur,plateau->hauteur);
+    };
 
 debutjson:
     '{'X':'ENTIER','Y':'ENTIER','DIRECTION':'direction'}'{
@@ -70,7 +80,15 @@ direction:
     GAUCHE {sprintf($$,"GAUCHE");};
 
 tabcases:
-    '['cases']' {};
+    '['cases']' {
+      int i,j;
+      /* for(i=0 ; i<plateau->largeur; i++){
+        for(j=0 ; j<plateau->hauteur ; j++){
+          printf("%d ",plateau->cases[j*plateau->largeur + i]);
+        }
+        printf("\n");
+      } */
+    };
 
 cases:
     scase ',' cases
@@ -79,29 +97,36 @@ cases:
 
 scase:
     '{'X':'ENTIER','Y':'ENTIER','TYPEJSON':'type'}'{
-      printf("Case x : %d y : %d type : %s\n",$4,$8,$12);
+      int choix;
+      /* plateau->cases[$8 * plateau->largeur + $4] = choix; */
+      printf("%d",$8*plateau->largeur+$4);
+      /* printf(" valeur trouvée %d\n",plateau->cases[$8 * plateau->largeur +$4]); */
+      printf("Case x : %d y : %d type : %d\n",$4,$8,$12);
     };
 
 type:
     CAISSE {
-      sprintf($$,"CAISSE");
+      $$ = M_CAISSE;
     }
     |
     TROU {
-      sprintf($$,"TROU");
+      $$ = M_TROU;
     }
     |
     BILLE {
-      sprintf($$,"BILLE");
+      $$ = M_BILLE;
     }
     |
     BLOC {
-      sprintf($$,"BLOC");
+      $$ = M_BLOC;
     };
 %%
 
 int main(int argc, char* argv[]) {
   FILE* fd;
+  plateau = malloc(sizeof(plateau_t));
+  robot = malloc(sizeof(robot_t));
+
   if((fd=fopen(argv[1],"r"))==NULL){
     fprintf(stderr, "Erreur lors de l'ouverture du fichier \"%s\"",argv[1]);
     exit(EXIT_FAILURE);

@@ -96,7 +96,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 11 "projet.yacc.y" /* yacc.c:1909  */
+#line 16 "projet.yacc.y" /* yacc.c:1909  */
 
   int intval;
   char string[100];
