@@ -1,6 +1,7 @@
 #ifndef _NCURSES_
 #define _NCURSES_
 #include <ncurses.h>
+#include "includes.h"
 
 /**
  * Initialisation de ncurses.
@@ -30,5 +31,8 @@ void ncurses_souris();
  * @return OK si reussite
  */
 int souris_getpos(int *x, int *y, int *bouton);
+
+WINDOW* creer_fenetre(int,int);
+void update(WINDOW*,plateau_t*,robot_t*);
 
 #endif

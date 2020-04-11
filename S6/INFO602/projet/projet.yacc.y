@@ -1,12 +1,16 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <ncurses.h>
+#include "ncurses.h"
 #include "includes.h"
-#include <string.h>
+#include "liste.h"
+#include <unistd.h>
 
 extern FILE *yyin;
 plateau_t *plateau;
 robot_t *robot;
+liste_t liste_cases;
 
 int yylex();
 void yyerror(const char *erreurMsg);
@@ -22,73 +26,56 @@ void yyerror(const char *erreurMsg);
 %token <string> NOM
 %token VRAI FAUX
 %token HAUTEUR LARGEUR X Y TYPEJSON BLOC BILLE CAISSE TROU CASE CASES DEBUT DIRECTION BAS HAUT DROITE GAUCHE
+%token TYPE PROC FUNC F_AVANCE F_DROITE F_GAUCHE FINTQ FINPROC FINFUNC INFEG SUPEG EGEG INF SUP
 
-%type <string> json
-%type <string> lelems
-%type <string> elemjson
-%type <string> debutjson
-%type <string> direction
-%type <string> tabcases
-%type <string> scase
-%type <string> cases
+%type <intval> direction
 %type <intval> type
 %%
+/* parser:
+    json
+    |
+    pseudocode; */
+
 json:
-    '{' lelems '}'{
-      int i;
-      printf("%s",$2);
-    };
+    '{' lelems '}';
 
 lelems:
-    elemjson ',' lelems{
-      printf("%s",$1);
-    }
+    elemjson ',' lelems
     |
-    elemjson{
-      printf("%s",$1);
-    };
+    elemjson;
 
 elemjson:
     LARGEUR ':' ENTIER {
       plateau->largeur = $3;
-      printf("Largeur plateau : %d\n",$3);
     }
     |
     HAUTEUR ':' ENTIER {
       plateau->hauteur = $3;
-      printf("Hauteur plateau : %d\n",$3);
     }
     |
     DEBUT ':' debutjson {}
     |
-    CASES ':' tabcases {
-      printf("ICI %d %d",plateau->largeur,plateau->hauteur);
-    };
+    CASES ':' tabcases {};
 
 debutjson:
     '{'X':'ENTIER','Y':'ENTIER','DIRECTION':'direction'}'{
-      printf("Robot x : %d y : %d direction : %s\n",$4,$8,$12);
+      robot->x = $4;
+      robot->y = $8;
+      robot->direction = $12;
+      /* printf("Robot x : %d y : %d direction : %d\n",robot->x,robot->y,robot->direction); */
     };
 
 direction:
-    BAS {sprintf($$,"BAS");}
+    BAS {$$ = M_BAS;}
     |
-    HAUT {sprintf($$,"HAUT");}
+    HAUT {$$ = M_HAUT;}
     |
-    DROITE {sprintf($$,"DROITE");}
+    DROITE {$$ = M_DROITE;}
     |
-    GAUCHE {sprintf($$,"GAUCHE");};
+    GAUCHE {$$ = M_GAUCHE;};
 
 tabcases:
-    '['cases']' {
-      int i,j;
-      /* for(i=0 ; i<plateau->largeur; i++){
-        for(j=0 ; j<plateau->hauteur ; j++){
-          printf("%d ",plateau->cases[j*plateau->largeur + i]);
-        }
-        printf("\n");
-      } */
-    };
+    '['cases']' {};
 
 cases:
     scase ',' cases
@@ -97,11 +84,12 @@ cases:
 
 scase:
     '{'X':'ENTIER','Y':'ENTIER','TYPEJSON':'type'}'{
-      int choix;
-      /* plateau->cases[$8 * plateau->largeur + $4] = choix; */
-      printf("%d",$8*plateau->largeur+$4);
-      /* printf(" valeur trouvée %d\n",plateau->cases[$8 * plateau->largeur +$4]); */
-      printf("Case x : %d y : %d type : %d\n",$4,$8,$12);
+      cell_t cellule;
+      cellule.position.x = $4;
+      cellule.position.y = $8;
+      cellule.type = $12;
+      ajouter_cellule(&liste_cases,&cellule);
+      /* printf("Case x : %d y : %d type : %d\n",cellule.position.x,cellule.position.y,cellule.type); */
     };
 
 type:
@@ -120,12 +108,17 @@ type:
     BLOC {
       $$ = M_BLOC;
     };
+
+    /* pseudocode: */
+
 %%
 
 int main(int argc, char* argv[]) {
   FILE* fd;
+  WINDOW *box, *sokoban, *debug, *debug_box;
   plateau = malloc(sizeof(plateau_t));
   robot = malloc(sizeof(robot_t));
+  /* init_liste(&liste_cases); */
 
   if((fd=fopen(argv[1],"r"))==NULL){
     fprintf(stderr, "Erreur lors de l'ouverture du fichier \"%s\"",argv[1]);
@@ -133,16 +126,39 @@ int main(int argc, char* argv[]) {
   }
   yyin = fd;
   yyparse();
-  if((fclose(fd))==EOF){
+  /* if((fclose(fd))==EOF){
     fprintf(stderr, "Erreur lors de la fermeture du fichier");
   };
-  /* if((yyin=fopen(argv[2],"r"))==NULL){
+  if((yyin=fopen(argv[2],"r"))==NULL){
     printf("Erreur lors de l'ouverture du fichier \"%s\"",argv[2]);
     exit(EXIT_FAILURE);
   }
   yyparse();
   if((fclose(yyin))==EOF){
-    printff(stderr, "Erreur lors de la fermeture du fichier");
+    fprintf(stderr, "Erreur lors de la fermeture du fichier");
   }; */
+
+  if(plateau->hauteur <= 0){
+    fprintf(stderr,"La hauteur du plateau est nulle ou négative.\n");
+  }
+  if(plateau->largeur <= 0){
+    fprintf(stderr,"La largeur du plateau est nulle ou négative.\n");
+  }
+  init_plateau(plateau);
+  afficher_plateau(plateau);
+
+  ncurses_initialiser();
+  sokoban = creer_fenetre(plateau->hauteur,plateau->largeur);
+  mvprintw(0,0, "Projet 3 - GIGOUT Thomas - DAUNIQUE Wilfried");
+  refresh();
+  update(sokoban,plateau,robot);
+  sleep(3);
+  /* fin de l'execution */
+  ncurses_stopper();
+  destroy_liste(&liste_cases);
+  free(plateau->cases);
+  free(plateau);
+  free(robot);
+
   return EXIT_SUCCESS;
 }
