@@ -1,17 +1,13 @@
 Terminaux inutilisés dans la grammaire
 
-   NOM
    VRAI
    FAUX
    CASE
-   TYPE
-   PROC
    FUNC
    F_AVANCE
    F_DROITE
    F_GAUCHE
    FINTQ
-   FINPROC
    FINFUNC
    INFEG
    SUPEG
@@ -22,571 +18,853 @@ Terminaux inutilisés dans la grammaire
 
 Grammaire
 
-    0 $accept: json $end
+    0 $accept: parser $end
 
-    1 json: '{' lelems '}'
+    1 parser: json
+    2       | pseudocode
 
-    2 lelems: elemjson ',' lelems
-    3       | elemjson
+    3 json: '{' lelems '}'
 
-    4 elemjson: LARGEUR ':' ENTIER
-    5         | HAUTEUR ':' ENTIER
-    6         | DEBUT ':' debutjson
-    7         | CASES ':' tabcases
+    4 lelems: elemjson ',' lelems
+    5       | elemjson
 
-    8 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction '}'
+    6 elemjson: LARGEUR ':' ENTIER
+    7         | HAUTEUR ':' ENTIER
+    8         | DEBUT ':' debutjson
+    9         | CASES ':' tabcases
 
-    9 direction: BAS
-   10          | HAUT
-   11          | DROITE
-   12          | GAUCHE
+   10 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction '}'
 
-   13 tabcases: '[' cases ']'
+   11 direction: BAS
+   12          | HAUT
+   13          | DROITE
+   14          | GAUCHE
 
-   14 cases: scase ',' cases
-   15      | scase
+   15 tabcases: '[' cases ']'
 
-   16 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type '}'
+   16 cases: scase ',' cases
+   17      | scase
 
-   17 type: CAISSE
-   18     | TROU
-   19     | BILLE
-   20     | BLOC
+   18 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type '}'
+
+   19 type: CAISSE
+   20     | TROU
+   21     | BILLE
+   22     | BLOC
+
+   23 pseudocode: procedure pseudocode
+   24           | procedure
+
+   25 procedure: PROC signature
+
+   26 signature: "main()" code FINPROC
+   27          | NOM '(' arguments ')' code FINPROC
+
+   28 arguments: argument ',' arguments
+   29          | argument
+
+   30 argument: NOM ',' TYPE
+
+   31 code: ligne code
+   32     | ligne
+
+   33 ligne: affectaction
+
+   34 affectaction: NOM '=' ENTIER
+   35             | NOM '=' NOM
 
 
 Terminaux, suivis des règles où ils apparaissent
 
 $end (0) 0
-',' (44) 2 8 14 16
-':' (58) 4 5 6 7 8 16
-'[' (91) 13
-']' (93) 13
-'{' (123) 1 8 16
-'}' (125) 1 8 16
+'(' (40) 27
+')' (41) 27
+',' (44) 4 10 16 18 28 30
+':' (58) 6 7 8 9 10 18
+'=' (61) 34 35
+'[' (91) 15
+']' (93) 15
+'{' (123) 3 10 18
+'}' (125) 3 10 18
 error (256)
-ENTIER (258) 4 5 8 16
-NOM (259)
+ENTIER (258) 6 7 10 18 34
+NOM (259) 27 30 34 35
 VRAI (260)
 FAUX (261)
-HAUTEUR (262) 5
-LARGEUR (263) 4
-X (264) 8 16
-Y (265) 8 16
-TYPEJSON (266) 16
-BLOC (267) 20
-BILLE (268) 19
-CAISSE (269) 17
-TROU (270) 18
+HAUTEUR (262) 7
+LARGEUR (263) 6
+X (264) 10 18
+Y (265) 10 18
+TYPEJSON (266) 18
+BLOC (267) 22
+BILLE (268) 21
+CAISSE (269) 19
+TROU (270) 20
 CASE (271)
-CASES (272) 7
-DEBUT (273) 6
-DIRECTION (274) 8
-BAS (275) 9
-HAUT (276) 10
-DROITE (277) 11
-GAUCHE (278) 12
-TYPE (279)
-PROC (280)
+CASES (272) 9
+DEBUT (273) 8
+DIRECTION (274) 10
+BAS (275) 11
+HAUT (276) 12
+DROITE (277) 13
+GAUCHE (278) 14
+TYPE (279) 30
+PROC (280) 25
 FUNC (281)
 F_AVANCE (282)
 F_DROITE (283)
 F_GAUCHE (284)
 FINTQ (285)
-FINPROC (286)
+FINPROC (286) 26 27
 FINFUNC (287)
 INFEG (288)
 SUPEG (289)
 EGEG (290)
 INF (291)
 SUP (292)
+"main()" (293) 26
 
 
 Non-terminaux, suivis des règles où ils apparaissent
 
-$accept (44)
+$accept (48)
     à gauche: 0
-json (45)
-    à gauche: 1, à droite: 0
-lelems (46)
-    à gauche: 2 3, à droite: 1 2
-elemjson (47)
-    à gauche: 4 5 6 7, à droite: 2 3
-debutjson (48)
-    à gauche: 8, à droite: 6
-direction (49)
-    à gauche: 9 10 11 12, à droite: 8
-tabcases (50)
-    à gauche: 13, à droite: 7
-cases (51)
-    à gauche: 14 15, à droite: 13 14
-scase (52)
-    à gauche: 16, à droite: 14 15
-type (53)
-    à gauche: 17 18 19 20, à droite: 16
+parser (49)
+    à gauche: 1 2, à droite: 0
+json (50)
+    à gauche: 3, à droite: 1
+lelems (51)
+    à gauche: 4 5, à droite: 3 4
+elemjson (52)
+    à gauche: 6 7 8 9, à droite: 4 5
+debutjson (53)
+    à gauche: 10, à droite: 8
+direction (54)
+    à gauche: 11 12 13 14, à droite: 10
+tabcases (55)
+    à gauche: 15, à droite: 9
+cases (56)
+    à gauche: 16 17, à droite: 15 16
+scase (57)
+    à gauche: 18, à droite: 16 17
+type (58)
+    à gauche: 19 20 21 22, à droite: 18
+pseudocode (59)
+    à gauche: 23 24, à droite: 2 23
+procedure (60)
+    à gauche: 25, à droite: 23 24
+signature (61)
+    à gauche: 26 27, à droite: 25
+arguments (62)
+    à gauche: 28 29, à droite: 27 28
+argument (63)
+    à gauche: 30, à droite: 28 29
+code (64)
+    à gauche: 31 32, à droite: 26 27 31
+ligne (65)
+    à gauche: 33, à droite: 31 32
+affectaction (66)
+    à gauche: 34 35, à droite: 33
 
 
 État 0
 
-    0 $accept: . json $end
+    0 $accept: . parser $end
 
-    '{'  décalage et aller à l'état 1
+    PROC  décalage et aller à l'état 1
+    '{'   décalage et aller à l'état 2
 
-    json  aller à l'état 2
+    parser      aller à l'état 3
+    json        aller à l'état 4
+    pseudocode  aller à l'état 5
+    procedure   aller à l'état 6
 
 
 État 1
 
-    1 json: '{' . lelems '}'
+   25 procedure: PROC . signature
 
-    HAUTEUR  décalage et aller à l'état 3
-    LARGEUR  décalage et aller à l'état 4
-    CASES    décalage et aller à l'état 5
-    DEBUT    décalage et aller à l'état 6
+    NOM       décalage et aller à l'état 7
+    "main()"  décalage et aller à l'état 8
 
-    lelems    aller à l'état 7
-    elemjson  aller à l'état 8
+    signature  aller à l'état 9
 
 
 État 2
 
-    0 $accept: json . $end
+    3 json: '{' . lelems '}'
 
-    $end  décalage et aller à l'état 9
+    HAUTEUR  décalage et aller à l'état 10
+    LARGEUR  décalage et aller à l'état 11
+    CASES    décalage et aller à l'état 12
+    DEBUT    décalage et aller à l'état 13
+
+    lelems    aller à l'état 14
+    elemjson  aller à l'état 15
 
 
 État 3
 
-    5 elemjson: HAUTEUR . ':' ENTIER
+    0 $accept: parser . $end
 
-    ':'  décalage et aller à l'état 10
+    $end  décalage et aller à l'état 16
 
 
 État 4
 
-    4 elemjson: LARGEUR . ':' ENTIER
+    1 parser: json .
 
-    ':'  décalage et aller à l'état 11
+    $défaut  réduction par utilisation de la règle 1 (parser)
 
 
 État 5
 
-    7 elemjson: CASES . ':' tabcases
+    2 parser: pseudocode .
 
-    ':'  décalage et aller à l'état 12
+    $défaut  réduction par utilisation de la règle 2 (parser)
 
 
 État 6
 
-    6 elemjson: DEBUT . ':' debutjson
+   23 pseudocode: procedure . pseudocode
+   24           | procedure .
 
-    ':'  décalage et aller à l'état 13
+    PROC  décalage et aller à l'état 1
+
+    $défaut  réduction par utilisation de la règle 24 (pseudocode)
+
+    pseudocode  aller à l'état 17
+    procedure   aller à l'état 6
 
 
 État 7
 
-    1 json: '{' lelems . '}'
+   27 signature: NOM . '(' arguments ')' code FINPROC
 
-    '}'  décalage et aller à l'état 14
+    '('  décalage et aller à l'état 18
 
 
 État 8
 
-    2 lelems: elemjson . ',' lelems
-    3       | elemjson .
+   26 signature: "main()" . code FINPROC
 
-    ','  décalage et aller à l'état 15
+    NOM  décalage et aller à l'état 19
 
-    $défaut  réduction par utilisation de la règle 3 (lelems)
+    code          aller à l'état 20
+    ligne         aller à l'état 21
+    affectaction  aller à l'état 22
 
 
 État 9
 
-    0 $accept: json $end .
+   25 procedure: PROC signature .
 
-    $défaut  accepter
+    $défaut  réduction par utilisation de la règle 25 (procedure)
 
 
 État 10
 
-    5 elemjson: HAUTEUR ':' . ENTIER
+    7 elemjson: HAUTEUR . ':' ENTIER
 
-    ENTIER  décalage et aller à l'état 16
+    ':'  décalage et aller à l'état 23
 
 
 État 11
 
-    4 elemjson: LARGEUR ':' . ENTIER
+    6 elemjson: LARGEUR . ':' ENTIER
 
-    ENTIER  décalage et aller à l'état 17
+    ':'  décalage et aller à l'état 24
 
 
 État 12
 
-    7 elemjson: CASES ':' . tabcases
+    9 elemjson: CASES . ':' tabcases
 
-    '['  décalage et aller à l'état 18
-
-    tabcases  aller à l'état 19
+    ':'  décalage et aller à l'état 25
 
 
 État 13
 
-    6 elemjson: DEBUT ':' . debutjson
+    8 elemjson: DEBUT . ':' debutjson
 
-    '{'  décalage et aller à l'état 20
-
-    debutjson  aller à l'état 21
+    ':'  décalage et aller à l'état 26
 
 
 État 14
 
-    1 json: '{' lelems '}' .
+    3 json: '{' lelems . '}'
 
-    $défaut  réduction par utilisation de la règle 1 (json)
+    '}'  décalage et aller à l'état 27
 
 
 État 15
 
-    2 lelems: elemjson ',' . lelems
+    4 lelems: elemjson . ',' lelems
+    5       | elemjson .
 
-    HAUTEUR  décalage et aller à l'état 3
-    LARGEUR  décalage et aller à l'état 4
-    CASES    décalage et aller à l'état 5
-    DEBUT    décalage et aller à l'état 6
+    ','  décalage et aller à l'état 28
 
-    lelems    aller à l'état 22
-    elemjson  aller à l'état 8
+    $défaut  réduction par utilisation de la règle 5 (lelems)
 
 
 État 16
 
-    5 elemjson: HAUTEUR ':' ENTIER .
+    0 $accept: parser $end .
 
-    $défaut  réduction par utilisation de la règle 5 (elemjson)
+    $défaut  accepter
 
 
 État 17
 
-    4 elemjson: LARGEUR ':' ENTIER .
+   23 pseudocode: procedure pseudocode .
 
-    $défaut  réduction par utilisation de la règle 4 (elemjson)
+    $défaut  réduction par utilisation de la règle 23 (pseudocode)
 
 
 État 18
 
-   13 tabcases: '[' . cases ']'
+   27 signature: NOM '(' . arguments ')' code FINPROC
 
-    '{'  décalage et aller à l'état 23
+    NOM  décalage et aller à l'état 29
 
-    cases  aller à l'état 24
-    scase  aller à l'état 25
+    arguments  aller à l'état 30
+    argument   aller à l'état 31
 
 
 État 19
 
-    7 elemjson: CASES ':' tabcases .
+   34 affectaction: NOM . '=' ENTIER
+   35             | NOM . '=' NOM
 
-    $défaut  réduction par utilisation de la règle 7 (elemjson)
+    '='  décalage et aller à l'état 32
 
 
 État 20
 
-    8 debutjson: '{' . X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction '}'
+   26 signature: "main()" code . FINPROC
 
-    X  décalage et aller à l'état 26
+    FINPROC  décalage et aller à l'état 33
 
 
 État 21
 
-    6 elemjson: DEBUT ':' debutjson .
+   31 code: ligne . code
+   32     | ligne .
 
-    $défaut  réduction par utilisation de la règle 6 (elemjson)
+    NOM  décalage et aller à l'état 19
+
+    $défaut  réduction par utilisation de la règle 32 (code)
+
+    code          aller à l'état 34
+    ligne         aller à l'état 21
+    affectaction  aller à l'état 22
 
 
 État 22
 
-    2 lelems: elemjson ',' lelems .
+   33 ligne: affectaction .
 
-    $défaut  réduction par utilisation de la règle 2 (lelems)
+    $défaut  réduction par utilisation de la règle 33 (ligne)
 
 
 État 23
 
-   16 scase: '{' . X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type '}'
+    7 elemjson: HAUTEUR ':' . ENTIER
 
-    X  décalage et aller à l'état 27
+    ENTIER  décalage et aller à l'état 35
 
 
 État 24
 
-   13 tabcases: '[' cases . ']'
+    6 elemjson: LARGEUR ':' . ENTIER
 
-    ']'  décalage et aller à l'état 28
+    ENTIER  décalage et aller à l'état 36
 
 
 État 25
 
-   14 cases: scase . ',' cases
-   15      | scase .
+    9 elemjson: CASES ':' . tabcases
 
-    ','  décalage et aller à l'état 29
+    '['  décalage et aller à l'état 37
 
-    $défaut  réduction par utilisation de la règle 15 (cases)
+    tabcases  aller à l'état 38
 
 
 État 26
 
-    8 debutjson: '{' X . ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction '}'
+    8 elemjson: DEBUT ':' . debutjson
 
-    ':'  décalage et aller à l'état 30
+    '{'  décalage et aller à l'état 39
+
+    debutjson  aller à l'état 40
 
 
 État 27
 
-   16 scase: '{' X . ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type '}'
+    3 json: '{' lelems '}' .
 
-    ':'  décalage et aller à l'état 31
+    $défaut  réduction par utilisation de la règle 3 (json)
 
 
 État 28
 
-   13 tabcases: '[' cases ']' .
+    4 lelems: elemjson ',' . lelems
 
-    $défaut  réduction par utilisation de la règle 13 (tabcases)
+    HAUTEUR  décalage et aller à l'état 10
+    LARGEUR  décalage et aller à l'état 11
+    CASES    décalage et aller à l'état 12
+    DEBUT    décalage et aller à l'état 13
+
+    lelems    aller à l'état 41
+    elemjson  aller à l'état 15
 
 
 État 29
 
-   14 cases: scase ',' . cases
+   30 argument: NOM . ',' TYPE
 
-    '{'  décalage et aller à l'état 23
-
-    cases  aller à l'état 32
-    scase  aller à l'état 25
+    ','  décalage et aller à l'état 42
 
 
 État 30
 
-    8 debutjson: '{' X ':' . ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction '}'
+   27 signature: NOM '(' arguments . ')' code FINPROC
 
-    ENTIER  décalage et aller à l'état 33
+    ')'  décalage et aller à l'état 43
 
 
 État 31
 
-   16 scase: '{' X ':' . ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type '}'
+   28 arguments: argument . ',' arguments
+   29          | argument .
 
-    ENTIER  décalage et aller à l'état 34
+    ','  décalage et aller à l'état 44
+
+    $défaut  réduction par utilisation de la règle 29 (arguments)
 
 
 État 32
 
-   14 cases: scase ',' cases .
+   34 affectaction: NOM '=' . ENTIER
+   35             | NOM '=' . NOM
 
-    $défaut  réduction par utilisation de la règle 14 (cases)
+    ENTIER  décalage et aller à l'état 45
+    NOM     décalage et aller à l'état 46
 
 
 État 33
 
-    8 debutjson: '{' X ':' ENTIER . ',' Y ':' ENTIER ',' DIRECTION ':' direction '}'
+   26 signature: "main()" code FINPROC .
 
-    ','  décalage et aller à l'état 35
+    $défaut  réduction par utilisation de la règle 26 (signature)
 
 
 État 34
 
-   16 scase: '{' X ':' ENTIER . ',' Y ':' ENTIER ',' TYPEJSON ':' type '}'
+   31 code: ligne code .
 
-    ','  décalage et aller à l'état 36
+    $défaut  réduction par utilisation de la règle 31 (code)
 
 
 État 35
 
-    8 debutjson: '{' X ':' ENTIER ',' . Y ':' ENTIER ',' DIRECTION ':' direction '}'
+    7 elemjson: HAUTEUR ':' ENTIER .
 
-    Y  décalage et aller à l'état 37
+    $défaut  réduction par utilisation de la règle 7 (elemjson)
 
 
 État 36
 
-   16 scase: '{' X ':' ENTIER ',' . Y ':' ENTIER ',' TYPEJSON ':' type '}'
+    6 elemjson: LARGEUR ':' ENTIER .
 
-    Y  décalage et aller à l'état 38
+    $défaut  réduction par utilisation de la règle 6 (elemjson)
 
 
 État 37
 
-    8 debutjson: '{' X ':' ENTIER ',' Y . ':' ENTIER ',' DIRECTION ':' direction '}'
+   15 tabcases: '[' . cases ']'
 
-    ':'  décalage et aller à l'état 39
+    '{'  décalage et aller à l'état 47
+
+    cases  aller à l'état 48
+    scase  aller à l'état 49
 
 
 État 38
 
-   16 scase: '{' X ':' ENTIER ',' Y . ':' ENTIER ',' TYPEJSON ':' type '}'
+    9 elemjson: CASES ':' tabcases .
 
-    ':'  décalage et aller à l'état 40
+    $défaut  réduction par utilisation de la règle 9 (elemjson)
 
 
 État 39
 
-    8 debutjson: '{' X ':' ENTIER ',' Y ':' . ENTIER ',' DIRECTION ':' direction '}'
+   10 debutjson: '{' . X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction '}'
 
-    ENTIER  décalage et aller à l'état 41
+    X  décalage et aller à l'état 50
 
 
 État 40
 
-   16 scase: '{' X ':' ENTIER ',' Y ':' . ENTIER ',' TYPEJSON ':' type '}'
+    8 elemjson: DEBUT ':' debutjson .
 
-    ENTIER  décalage et aller à l'état 42
+    $défaut  réduction par utilisation de la règle 8 (elemjson)
 
 
 État 41
 
-    8 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER . ',' DIRECTION ':' direction '}'
+    4 lelems: elemjson ',' lelems .
 
-    ','  décalage et aller à l'état 43
+    $défaut  réduction par utilisation de la règle 4 (lelems)
 
 
 État 42
 
-   16 scase: '{' X ':' ENTIER ',' Y ':' ENTIER . ',' TYPEJSON ':' type '}'
+   30 argument: NOM ',' . TYPE
 
-    ','  décalage et aller à l'état 44
+    TYPE  décalage et aller à l'état 51
 
 
 État 43
 
-    8 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' . DIRECTION ':' direction '}'
+   27 signature: NOM '(' arguments ')' . code FINPROC
 
-    DIRECTION  décalage et aller à l'état 45
+    NOM  décalage et aller à l'état 19
+
+    code          aller à l'état 52
+    ligne         aller à l'état 21
+    affectaction  aller à l'état 22
 
 
 État 44
 
-   16 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' . TYPEJSON ':' type '}'
+   28 arguments: argument ',' . arguments
 
-    TYPEJSON  décalage et aller à l'état 46
+    NOM  décalage et aller à l'état 29
+
+    arguments  aller à l'état 53
+    argument   aller à l'état 31
 
 
 État 45
 
-    8 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION . ':' direction '}'
+   34 affectaction: NOM '=' ENTIER .
 
-    ':'  décalage et aller à l'état 47
+    $défaut  réduction par utilisation de la règle 34 (affectaction)
 
 
 État 46
 
-   16 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON . ':' type '}'
+   35 affectaction: NOM '=' NOM .
 
-    ':'  décalage et aller à l'état 48
+    $défaut  réduction par utilisation de la règle 35 (affectaction)
 
 
 État 47
 
-    8 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' . direction '}'
+   18 scase: '{' . X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type '}'
 
-    BAS     décalage et aller à l'état 49
-    HAUT    décalage et aller à l'état 50
-    DROITE  décalage et aller à l'état 51
-    GAUCHE  décalage et aller à l'état 52
-
-    direction  aller à l'état 53
+    X  décalage et aller à l'état 54
 
 
 État 48
 
-   16 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' . type '}'
+   15 tabcases: '[' cases . ']'
 
-    BLOC    décalage et aller à l'état 54
-    BILLE   décalage et aller à l'état 55
-    CAISSE  décalage et aller à l'état 56
-    TROU    décalage et aller à l'état 57
-
-    type  aller à l'état 58
+    ']'  décalage et aller à l'état 55
 
 
 État 49
 
-    9 direction: BAS .
+   16 cases: scase . ',' cases
+   17      | scase .
 
-    $défaut  réduction par utilisation de la règle 9 (direction)
+    ','  décalage et aller à l'état 56
+
+    $défaut  réduction par utilisation de la règle 17 (cases)
 
 
 État 50
 
-   10 direction: HAUT .
+   10 debutjson: '{' X . ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction '}'
 
-    $défaut  réduction par utilisation de la règle 10 (direction)
+    ':'  décalage et aller à l'état 57
 
 
 État 51
 
-   11 direction: DROITE .
+   30 argument: NOM ',' TYPE .
 
-    $défaut  réduction par utilisation de la règle 11 (direction)
+    $défaut  réduction par utilisation de la règle 30 (argument)
 
 
 État 52
 
-   12 direction: GAUCHE .
+   27 signature: NOM '(' arguments ')' code . FINPROC
 
-    $défaut  réduction par utilisation de la règle 12 (direction)
+    FINPROC  décalage et aller à l'état 58
 
 
 État 53
 
-    8 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction . '}'
+   28 arguments: argument ',' arguments .
 
-    '}'  décalage et aller à l'état 59
+    $défaut  réduction par utilisation de la règle 28 (arguments)
 
 
 État 54
 
-   20 type: BLOC .
+   18 scase: '{' X . ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type '}'
 
-    $défaut  réduction par utilisation de la règle 20 (type)
+    ':'  décalage et aller à l'état 59
 
 
 État 55
 
-   19 type: BILLE .
+   15 tabcases: '[' cases ']' .
 
-    $défaut  réduction par utilisation de la règle 19 (type)
+    $défaut  réduction par utilisation de la règle 15 (tabcases)
 
 
 État 56
 
-   17 type: CAISSE .
+   16 cases: scase ',' . cases
 
-    $défaut  réduction par utilisation de la règle 17 (type)
+    '{'  décalage et aller à l'état 47
+
+    cases  aller à l'état 60
+    scase  aller à l'état 49
 
 
 État 57
 
-   18 type: TROU .
+   10 debutjson: '{' X ':' . ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction '}'
 
-    $défaut  réduction par utilisation de la règle 18 (type)
+    ENTIER  décalage et aller à l'état 61
 
 
 État 58
 
-   16 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type . '}'
+   27 signature: NOM '(' arguments ')' code FINPROC .
 
-    '}'  décalage et aller à l'état 60
+    $défaut  réduction par utilisation de la règle 27 (signature)
 
 
 État 59
 
-    8 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction '}' .
+   18 scase: '{' X ':' . ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type '}'
 
-    $défaut  réduction par utilisation de la règle 8 (debutjson)
+    ENTIER  décalage et aller à l'état 62
 
 
 État 60
 
-   16 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type '}' .
+   16 cases: scase ',' cases .
 
-    $défaut  réduction par utilisation de la règle 16 (scase)
+    $défaut  réduction par utilisation de la règle 16 (cases)
+
+
+État 61
+
+   10 debutjson: '{' X ':' ENTIER . ',' Y ':' ENTIER ',' DIRECTION ':' direction '}'
+
+    ','  décalage et aller à l'état 63
+
+
+État 62
+
+   18 scase: '{' X ':' ENTIER . ',' Y ':' ENTIER ',' TYPEJSON ':' type '}'
+
+    ','  décalage et aller à l'état 64
+
+
+État 63
+
+   10 debutjson: '{' X ':' ENTIER ',' . Y ':' ENTIER ',' DIRECTION ':' direction '}'
+
+    Y  décalage et aller à l'état 65
+
+
+État 64
+
+   18 scase: '{' X ':' ENTIER ',' . Y ':' ENTIER ',' TYPEJSON ':' type '}'
+
+    Y  décalage et aller à l'état 66
+
+
+État 65
+
+   10 debutjson: '{' X ':' ENTIER ',' Y . ':' ENTIER ',' DIRECTION ':' direction '}'
+
+    ':'  décalage et aller à l'état 67
+
+
+État 66
+
+   18 scase: '{' X ':' ENTIER ',' Y . ':' ENTIER ',' TYPEJSON ':' type '}'
+
+    ':'  décalage et aller à l'état 68
+
+
+État 67
+
+   10 debutjson: '{' X ':' ENTIER ',' Y ':' . ENTIER ',' DIRECTION ':' direction '}'
+
+    ENTIER  décalage et aller à l'état 69
+
+
+État 68
+
+   18 scase: '{' X ':' ENTIER ',' Y ':' . ENTIER ',' TYPEJSON ':' type '}'
+
+    ENTIER  décalage et aller à l'état 70
+
+
+État 69
+
+   10 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER . ',' DIRECTION ':' direction '}'
+
+    ','  décalage et aller à l'état 71
+
+
+État 70
+
+   18 scase: '{' X ':' ENTIER ',' Y ':' ENTIER . ',' TYPEJSON ':' type '}'
+
+    ','  décalage et aller à l'état 72
+
+
+État 71
+
+   10 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' . DIRECTION ':' direction '}'
+
+    DIRECTION  décalage et aller à l'état 73
+
+
+État 72
+
+   18 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' . TYPEJSON ':' type '}'
+
+    TYPEJSON  décalage et aller à l'état 74
+
+
+État 73
+
+   10 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION . ':' direction '}'
+
+    ':'  décalage et aller à l'état 75
+
+
+État 74
+
+   18 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON . ':' type '}'
+
+    ':'  décalage et aller à l'état 76
+
+
+État 75
+
+   10 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' . direction '}'
+
+    BAS     décalage et aller à l'état 77
+    HAUT    décalage et aller à l'état 78
+    DROITE  décalage et aller à l'état 79
+    GAUCHE  décalage et aller à l'état 80
+
+    direction  aller à l'état 81
+
+
+État 76
+
+   18 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' . type '}'
+
+    BLOC    décalage et aller à l'état 82
+    BILLE   décalage et aller à l'état 83
+    CAISSE  décalage et aller à l'état 84
+    TROU    décalage et aller à l'état 85
+
+    type  aller à l'état 86
+
+
+État 77
+
+   11 direction: BAS .
+
+    $défaut  réduction par utilisation de la règle 11 (direction)
+
+
+État 78
+
+   12 direction: HAUT .
+
+    $défaut  réduction par utilisation de la règle 12 (direction)
+
+
+État 79
+
+   13 direction: DROITE .
+
+    $défaut  réduction par utilisation de la règle 13 (direction)
+
+
+État 80
+
+   14 direction: GAUCHE .
+
+    $défaut  réduction par utilisation de la règle 14 (direction)
+
+
+État 81
+
+   10 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction . '}'
+
+    '}'  décalage et aller à l'état 87
+
+
+État 82
+
+   22 type: BLOC .
+
+    $défaut  réduction par utilisation de la règle 22 (type)
+
+
+État 83
+
+   21 type: BILLE .
+
+    $défaut  réduction par utilisation de la règle 21 (type)
+
+
+État 84
+
+   19 type: CAISSE .
+
+    $défaut  réduction par utilisation de la règle 19 (type)
+
+
+État 85
+
+   20 type: TROU .
+
+    $défaut  réduction par utilisation de la règle 20 (type)
+
+
+État 86
+
+   18 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type . '}'
+
+    '}'  décalage et aller à l'état 88
+
+
+État 87
+
+   10 debutjson: '{' X ':' ENTIER ',' Y ':' ENTIER ',' DIRECTION ':' direction '}' .
+
+    $défaut  réduction par utilisation de la règle 10 (debutjson)
+
+
+État 88
+
+   18 scase: '{' X ':' ENTIER ',' Y ':' ENTIER ',' TYPEJSON ':' type '}' .
+
+    $défaut  réduction par utilisation de la règle 18 (scase)

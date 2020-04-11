@@ -32,14 +32,14 @@ GAUCHE    "\"GAUCHE\""
 /* pseudo-code */
 TYPE      (entier|bool)
 PROC      "proc"
-FUNC      "func"
+FUNC      "procfunc"
+FINTQ     "fintantque"
+FINPROC   "finproc"
+FINFUNC   "finfunc"
 NOM       [A-Za-z]+
 F_AVANCE  "avance()"
 F_DROITE  "droite()"
 F_GAUCHE  "gauche()"
-FINTQ     "fintantque"
-FINPROC   "finproc"
-FINFUNC   "finfunc"
 INFEG     "<="
 SUPEG     ">="
 EGEG      "=="
@@ -73,12 +73,12 @@ SUP       ">"
 {PROC}      { return PROC; }
 {FUNC}      { return FUNC; }
 {NOM}       { return NOM; }
-{F_AVANCE}  { return F_AVANCE; }
-{F_DROITE}  { return F_DROITE; }
-{F_GAUCHE}  { return F_GAUCHE; }
 {FINTQ}     { return FINTQ; }
 {FINPROC}   { return FINPROC; }
 {FINFUNC}   { return FINFUNC; }
+{F_AVANCE}  { return F_AVANCE; }
+{F_DROITE}  { return F_DROITE; }
+{F_GAUCHE}  { return F_GAUCHE; }
 {INFEG}     { return INFEG; }
 {SUPEG}     { return SUPEG; }
 {EGEG}      { return EGEG; }

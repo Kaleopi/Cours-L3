@@ -30,11 +30,12 @@ void yyerror(const char *erreurMsg);
 %type <intval> direction
 %type <intval> type
 %%
-/* parser:
+parser:
     json
     |
-    pseudocode; */
-
+    pseudocode;
+    
+/* json */
 json:
     '{' lelems '}';
 
@@ -113,7 +114,48 @@ type:
       $$ = M_BLOC;
     };
 
-    /* pseudocode: */
+/* pseudocode */
+    pseudocode:
+      procedure pseudocode
+      |
+      procedure;
+
+    procedure:
+      PROC signature;
+
+    signature:
+      "main()" code FINPROC
+      |
+      NOM '(' arguments ')' code FINPROC;
+
+    arguments:
+      argument ',' arguments
+      |
+      argument;
+
+    argument:
+      NOM ',' TYPE;
+
+    code:
+      ligne code
+      |
+      ligne;
+
+    ligne:
+      affectaction
+      |
+      appelproc
+      |
+      conditionnelle
+      |
+      boucle;
+
+    affectaction:
+      NOM '=' ENTIER
+      |
+      NOM '=' NOM;
+
+
 
 %%
 
