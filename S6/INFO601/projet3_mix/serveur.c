@@ -17,6 +17,7 @@
  
 
 int main(int argc, char *argv[]) {
+
   grille_t *etang;
   grille_t *etangj1;
   grille_t *etangj2;
@@ -169,7 +170,8 @@ int main(int argc, char *argv[]) {
   both_send(etang, sock_one, sock_two);
 
   while(sock_one > -1 || sock_two > -1){
-
+    simulation_initialiser();
+    
     afficher_etang(etang);
      FD_ZERO(&set);
     FD_SET(sock_one, &set);
@@ -230,7 +232,8 @@ int main(int argc, char *argv[]) {
   }
 
   /*début de la sim*/
-  /*simulation();*/
+  /*
+  ();*/
   simulation_stopper();
   free(etang);
   printf("Serveur terminé.\n");

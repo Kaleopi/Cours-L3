@@ -11,7 +11,8 @@
 typedef struct{					/* Description d'une case sur la grille de simulation */
 	int element;							/* Ce qui est present sur la case */
 	pthread_t *poisson;						/* Identifiant du thread de la poisson presente sur la case */
-	pthread_mutex_t mutex;					/* Protection de la case */
+	pthread_mutex_t mutex;
+	pthread_cond_t cond;					/* Protection de la case */
 }case_t;
 /*structure du joueur*/
 typedef struct{
