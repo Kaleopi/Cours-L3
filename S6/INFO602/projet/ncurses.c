@@ -1,8 +1,4 @@
 #include "ncurses.h"
-#include "includes.h"
-#include <ncurses.h>   /* Pour toutes les fonctions/constantes ncurses */
-#include <stdlib.h>    /* Pour exit, EXIT_FAILURE */
-
 /**
 * Initialisation de ncurses.
 */
@@ -97,12 +93,13 @@ WINDOW *creer_fenetre(int hauteur, int largeur){
 }
 
 void update(WINDOW* w, plateau_t *p, robot_t* r){
-  int i,j,height,witdh;
-  height = p->hauteur;
-  witdh = p->largeur;
-  for(i=0 ; i<height ; i++){
-    for(j=0 ; j<witdh ; j++){
-      switch(p->cases[j*witdh+i]){
+  // afficher_plateau(p);
+  int i,j,hauteur,largeur;
+  hauteur = p->hauteur;
+  largeur = p->largeur;
+  for(i=0 ; i<hauteur ; i++){
+    for(j=0 ; j<largeur ; j++){
+      switch(p->cases[i*largeur+j]){
         case M_VIDE:
           wattron(w, COLOR_PAIR(2));
           mvwprintw(w,i,j,"0",1);
@@ -134,11 +131,11 @@ void update(WINDOW* w, plateau_t *p, robot_t* r){
           wattroff(w,COLOR_PAIR(4));
         break;
         default:
-          wattron(w, COLOR_PAIR(2));
-          mvwprintw(w,i,j,M_VIDE,1);
-          wattroff(w,COLOR_PAIR(2));
+          wattron(w, COLOR_PAIR(3));
+          mvwprintw(w,i,j," ",1);
+          wattroff(w,COLOR_PAIR(3));
       }
     }
   }
-  refresh();
+  wrefresh(w);
 }

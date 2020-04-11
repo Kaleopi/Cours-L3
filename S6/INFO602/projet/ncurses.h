@@ -1,6 +1,5 @@
 #ifndef _NCURSES_
 #define _NCURSES_
-#include <ncurses.h>
 #include "includes.h"
 
 /**

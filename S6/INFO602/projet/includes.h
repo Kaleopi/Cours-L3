@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "liste.h"
 
 #define M_VIDE 0
 #define M_BLOC 1
@@ -28,7 +29,7 @@ typedef struct{
   int direction;
 }robot_t;
 
-void init_plateau(plateau_t*);
+void init_plateau(plateau_t*, liste_t*);
 void afficher_plateau(plateau_t*);
 
 #endif /*INCLUDES_H*/

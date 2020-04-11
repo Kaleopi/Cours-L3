@@ -118,6 +118,7 @@ int main(int argc, char* argv[]) {
   WINDOW *box, *sokoban, *debug, *debug_box;
   plateau = malloc(sizeof(plateau_t));
   robot = malloc(sizeof(robot_t));
+  int hauteur,largeur;
   /* init_liste(&liste_cases); */
 
   if((fd=fopen(argv[1],"r"))==NULL){
@@ -141,18 +142,24 @@ int main(int argc, char* argv[]) {
   if(plateau->hauteur <= 0){
     fprintf(stderr,"La hauteur du plateau est nulle ou négative.\n");
   }
+  hauteur = plateau->hauteur;
   if(plateau->largeur <= 0){
     fprintf(stderr,"La largeur du plateau est nulle ou négative.\n");
   }
-  init_plateau(plateau);
+  largeur = plateau->largeur;
+  plateau->cases = malloc(sizeof(int)*hauteur*largeur);
+  init_plateau(plateau,&liste_cases);
   afficher_plateau(plateau);
 
+
   ncurses_initialiser();
-  sokoban = creer_fenetre(plateau->hauteur,plateau->largeur);
+  sokoban = creer_fenetre(hauteur,largeur);
   mvprintw(0,0, "Projet 3 - GIGOUT Thomas - DAUNIQUE Wilfried");
-  refresh();
   update(sokoban,plateau,robot);
+  refresh();
   sleep(3);
+
+
   /* fin de l'execution */
   ncurses_stopper();
   destroy_liste(&liste_cases);
