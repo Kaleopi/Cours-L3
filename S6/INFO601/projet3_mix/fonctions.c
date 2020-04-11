@@ -483,7 +483,7 @@ WINDOW *creer_fenetre_points()
 
 	return fen;
 }
-
+/*test si un poisson se trouve à côté*/
 int poisson_near(coord_t*coord){
 	if(coord->etang->grille[coord->y-2][coord->x-1]==(HAMMECONSJ1 ||HAMMECONSJ2)
 	||coord->etang->grille[coord->y][coord->x-1]==(HAMMECONSJ1 ||HAMMECONSJ2)
@@ -841,8 +841,54 @@ int i=0,j=0;
 		}
 	}
 }
+/*fuite*/
+void fuite(poisson_t *poisson){
+	
+}
+/*peche*/
+void peche(grille_t *etang,joueur_t * client){
+	if(grille[client->posyHAMMECON+1][client->posxHAMMECON].element==POISSON){
+
+		client->points = etang->grille[client->posyHAMMECON+1][client->posxHAMMECON]/100;
+		client->poireaus= etang->grille[client->posyHAMMECON+1][client->posxHAMMECON];
+
+		if(pthread_cancel(*grille[client->posyHAMMECON+1][client->posxHAMMECON].poisson)){
+			printf("delete");
+		}
+	}
+	if(grille[client->posyHAMMECON-1][client->posxHAMMECON].element==POISSON){
+
+
+		client->points = etang->grille[client->posyHAMMECON-1][client->posxHAMMECON]/100;
+		client->poireaus= etang->grille[client->posyHAMMECON-11][client->posxHAMMECON];
+
+		if(pthread_cancel(*grille[client->posyHAMMECON-4][client->posxHAMMECON].poisson)){
+			printf("delete");
+		}
+	}
+	if(grille[client->posyHAMMECON][client->posxHAMMECON+1].element==POISSON){
+
+		client->points = etang->grille[client->posyHAMMECON][client->posxHAMMECON+1];
+		client->poireaus= etang->grille[client->posyHAMMECON][client->posxHAMMECON+1];
+
+		if(pthread_cancel(*grille[client->posyHAMMECON][client->posxHAMMECON+1].poisson)){
+			printf("delete");
+		}
+
+	}
+	if(grille[client->posyHAMMECON][client->posxHAMMECON-1].element==POISSON){
+
+		client->points = etang->grille[client->posyHAMMECON][client->posxHAMMECON-1];
+		client->points = etang->grille[client->posyHAMMECON][client->posxHAMMECON-1];
+
+		if(pthread_cancel(*grille[client->posyHAMMECON][client->posxHAMMECON-1].poisson)){
+			printf("delete");
+		}
+
+	}
+}
 /*lance un items*/
-void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_t* etang,int sockfd){
+void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_t* etang,int sockfd,joueur_t * client){
 	MEVENT event;
 
 	int nb_hammeconj1=tab[0];
@@ -885,9 +931,9 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 							tempx = event.x - 1;
 							tempy = event.y - 1;
 							nb_hammeconj1 = 0;
+							peche(etang,client);
 							wprintw(fen_msg, "retrait\n");
 						}
-
 						wrefresh(fen_sim);
 						wrefresh(fen_msg);
 						/*pthread_mutex_unlock(&grille[event.y - 1][event.x - 1].element ,mutex);*/
@@ -918,6 +964,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 							tempx2 = event.x - 1;
 							tempy2 = event.y - 1;
 							nb_hammeconj2 = 0;
+							peche(etang,client);
 							wprintw(fen_msg, "retrait\n");
 						}
 

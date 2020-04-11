@@ -20,6 +20,8 @@ typedef struct{
 	int furtif;
 	int points;
 	int poireaus;
+	int posxHAMMECON;
+ 	 int posyHAMMECON;
 }joueur_t;
 /*structure test d'update message serveur*/
 typedef struct{
@@ -61,6 +63,7 @@ typedef struct{
   long type;
   int port;
   int idJOUEUR;
+
 }reponse_t;
 
 /*structure de stockage des positions et des infos poissons à passer au pthread create */
