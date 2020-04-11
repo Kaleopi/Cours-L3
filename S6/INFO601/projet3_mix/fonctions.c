@@ -326,7 +326,9 @@ void *routine_poisson(void *arg)
 	pthread_mutex_lock(&grille[coord->y][coord->x].mutex);
 	while (1)
 	{
+		
 		int pos = rand() % 4;
+	
 		switch (pos)
 		{
 		case 0:
@@ -399,7 +401,12 @@ void recuperation(grille_t *etang){
 	int i,j;
 	for(i=0;i<NB_LIGNES_SIM;i++){
 		for( j=0;j<NB_COL_SIM;j++){
-			etang->grille[i][j]=grille[i][j].element;
+			if(grille[i][j].element==VIDE){
+				if(etang->grille[i][j]!=2){
+				etang->grille[i][j]=grille[i][j].element;
+				}
+			}
+
 		}
 	}
 }
@@ -552,17 +559,19 @@ int  switchDown(int item_actif,WINDOW *fen){
 }
 /*fusionne les étang cote serveur */
 void fusion_etang(grille_t *etang,grille_t* etangj1,grille_t *etangj2){
-	int i=0,j=0;
-		for(i=0;i<20;i++){
-				for (j=0;j<40;j++){
-						if(etang->grille[i][j]==0){
-										if (etangj1->grille[i][j]==0){
-												etang->grille[i][j]=etangj2->grille[i][j];
-												}else{
-													etang->grille[i][j]=etangj1->grille[i][j];
-												}
-											}
-					}
+int i=0,j=0;
+	for(i=0;i<20;i++){
+		for (j=0;j<40;j++){
+			if(etang->grille[i][j]==0){
+				if (etangj1->grille[i][j]==0){
+						etang->grille[i][j]=etangj2->grille[i][j];
+					
+				}else{
+					etang->grille[i][j]=etangj1->grille[i][j];
+					
+				}
+			}
+		}
 	}
 }
 /*lance un items*/

@@ -186,20 +186,19 @@ int main(int argc, char *argv[]) {
     }
     if(FD_ISSET(sock_one, &set)){
        if(read(sock_one, etangj1, sizeof(grille_t) )==-1) {
-         etang=etangj1;
-             fusion_etang(etang,etangj1,etangj2);
          if(errno != EINTR){
            perror("Serveur : erreur select");
            exit(EXIT_FAILURE);
          }
        }else
-           fusion_etang(etang,etangj1,etangj2);
          both_send(etang, sock_one, sock_two);
        printf("SOCK_ONE verif serveur 183 = %d\n",verif);
     }
     if(FD_ISSET(sock_two, &set)){
       if(read(sock_two, etangj2, sizeof(grille_t))==-1){
+
           fusion_etang(etang,etangj1,etangj2);
+                  recuperation(etang);
         if(errno != EINTR){
           perror("Serveur : erreur select");
           exit(EXIT_FAILURE);
@@ -208,7 +207,9 @@ int main(int argc, char *argv[]) {
         both_send(etang, sock_one, sock_two);
      printf("SOCK_TWO serveur 192 = %d\n",sock_one);
     }
-        fusion_etang(etang,etangj1,etangj2);
+
+      fusion_etang(etang,etangj1,etangj2);
+              recuperation(etang);
     both_send(etang, sock_one, sock_two);
     printf("sockone serveur 201 = %d\n",sock_two);
     printf("while %d\n",test);
