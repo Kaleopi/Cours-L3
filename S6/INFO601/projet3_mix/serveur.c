@@ -172,8 +172,8 @@ int main(int argc, char *argv[]) {
 
     afficher_etang(etang);
      FD_ZERO(&set);
-        FD_SET(sock_one, &set);
-        FD_SET(sock_two, &set);
+    FD_SET(sock_one, &set);
+     FD_SET(sock_two, &set);
     generer_poisson(etang);
     tour.tv_sec = 1;
     tour.tv_usec = 0;

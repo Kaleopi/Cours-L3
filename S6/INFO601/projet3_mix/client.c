@@ -151,7 +151,9 @@ int main(int argc, char *argv[]) {
       {
         case KEY_MOUSE:
         lancerTruc(item_actif,fen_sim,fen_msg,tab,etang,sockfd);
-         write(sockfd,etang,sizeof(grille_t));
+         if(write(sockfd,etang,sizeof(grille_t))==-1{
+
+         }
         verif = read(sockfd, etang, sizeof(grille_t));
 
         break;
