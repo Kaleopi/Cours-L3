@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   etang = malloc(sizeof(grille_t));
-  tab = malloc(sizeof(int)*3);
+  tab = malloc(sizeof(int)*7);
   init_etang(etang);
   item_actif = HAMMECONS;
   verif = 0;
@@ -131,12 +131,14 @@ int main(int argc, char *argv[]) {
     perror("Erreur lors de la réception de la grille");
   }
   timeout(250);
+  wprintw(fen_points,"Client%d",client->id);
+  wrefresh(fen_points);
   while(verif>-1 && ch!=KEY_F(2)){
     /*wprintw(fen_msg,"ifverif>%d\n", verif);*/
     verif = read(sockfd, etang, sizeof(grille_t));
     wrefresh(fen_sim);
     /*wprintw(fen_msg, "J'AI RECU LE MSG DU SERVEUR %d\n", cpt);*/
-    update_sim(fen_sim,etang);
+    update_sim_client(fen_sim,etang,client);
     cpt++;
     if(verif>0){
       ch = getch();
@@ -144,7 +146,7 @@ int main(int argc, char *argv[]) {
       wrefresh(fen_msg);
       wrefresh(fen_msg);
       wrefresh(fen_sim);
-      update_sim(fen_sim,etang);
+      update_sim_client(fen_sim,etang,client);
       
       switch (ch)
 

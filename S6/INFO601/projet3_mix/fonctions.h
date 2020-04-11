@@ -24,6 +24,7 @@
 void fusion_etang(grille_t *,grille_t*,grille_t*);/*fusionne létang du j1 et j2*/
 void init_etang(grille_t*);/*initialise l'étang*/
 void update_sim(WINDOW*,grille_t*);/*raffraichis la simulation*/
+void update_sim_client(WINDOW*,grille_t*,joueur_t *);
 void afficher_etang(grille_t*);/*affiche l'étang dans la console*/
 void recuperation(grille_t*);/*recupère l'étang via la grille*/
 void recuperation_grille(grille_t *);/*recupere la grille via l'étang*/

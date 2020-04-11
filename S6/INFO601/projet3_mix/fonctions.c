@@ -5,6 +5,7 @@
 #include <unistd.h>		/* Pour close */
 #include <string.h>		/* Pour memset */
 #include <time.h>
+#include <sys/time.h>
 #include <errno.h>
 
 #include "message.h"
@@ -15,9 +16,9 @@ pthread_t *threads_poissons[MAX_POISSONS]; /* Identifants des threads des poisso
 WINDOW *fen_sim;						   /* Fenetre de simulation partagee par les poissons*/
 WINDOW *fen_msg;						   /* Fenetre de messages partagee par les poissons*/
 case_t grille[NB_LIGNES_SIM][NB_COL_SIM];  /* Grille de simulation */
+
 int nb_poissons=0;
 
- 
 void both_send(grille_t *etang, int sock_one, int sock_two)
 {
 	
@@ -131,6 +132,150 @@ void update_sim(WINDOW *w, grille_t *etang){
 			refresh();
 		}
 	}
+}
+
+void update_sim_client(WINDOW *w, grille_t *etang,joueur_t *client){
+	int i,j;
+	if(client->id==1){
+		for(i=0 ; i<NB_LIGNES_SIM ; i++){
+		for(j=0 ; j<NB_COL_SIM ; j++){
+			switch(etang->grille[i][j]){
+				case VIDE:
+					wattron(w, COLOR_PAIR(4));
+					mvwprintw(w, i, j, " ", 4);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(4));
+					break;
+				case POISSON:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, " ", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
+				case POISSONVAL1:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, "1", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
+				case POISSONVAL2:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, "2", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
+				case POISSONVAL3:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, "3", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
+				case HAMMECONS:
+					wattron(w, COLOR_PAIR(4));
+					mvwprintw(w, i, j, "*", 4);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(4));
+				break;
+				case HAMMECONSJ1:
+					wattron(w, COLOR_PAIR(6));
+					mvwprintw(w, i, j, "*", 6);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(6));
+				break;
+				case PNEUJ1:
+					wattron(w, COLOR_PAIR(2));
+					mvwprintw(w, i, j, " ", 2);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(2));
+				break;
+				case DYNAJ1:
+					wattron(w, COLOR_PAIR(3));
+					mvwprintw(w, i, j, " ", 3);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(3));
+				break;
+				default:
+					wattron(w, COLOR_PAIR(4));
+					mvwprintw(w, i, j, " ", 4);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(4));
+					break;
+			}
+			}
+		}
+	}
+	if(client->id==2){
+		for(i=0 ; i<NB_LIGNES_SIM ; i++){
+		for(j=0 ; j<NB_COL_SIM ; j++){
+			switch(etang->grille[i][j]){
+				case VIDE:
+					wattron(w, COLOR_PAIR(4));
+					mvwprintw(w, i, j, " ", 4);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(4));
+					break;
+				case POISSON:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, " ", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
+				case POISSONVAL1:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, "1", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
+				case POISSONVAL2:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, "2", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
+				case POISSONVAL3:
+					wattron(w, COLOR_PAIR(1));
+					mvwprintw(w, i, j, "3", 1);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(1));
+				break;
+				case HAMMECONS:
+					wattron(w, COLOR_PAIR(4));
+					mvwprintw(w, i, j, "*", 4);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(4));
+				break;
+				case HAMMECONSJ2:
+					wattron(w, COLOR_PAIR(6));
+					mvwprintw(w, i, j, "*", 6);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(6));
+				break;
+				case PNEUJ2:
+					wattron(w, COLOR_PAIR(2));
+					mvwprintw(w, i, j, " ", 2);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(2));
+				break;
+				case DYNAJ2:
+					wattron(w, COLOR_PAIR(3));
+					mvwprintw(w, i, j, " ", 3);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(3));
+				break;
+				 default:
+					wattron(w, COLOR_PAIR(4));
+					mvwprintw(w, i, j, " ", 4);
+					wrefresh(w);
+					wattroff(w, COLOR_PAIR(4));
+					break;
+			}
+			}
+		}
+	}
+			
+	refresh();
+		
+
 }
 
 void afficher_etang(grille_t *etang)
@@ -342,15 +487,40 @@ WINDOW *creer_fenetre_points()
 	/*routine des poissons*/
 void *routine_poisson(void *arg)
 {
-	
-	
-	/*int j;*/
 	coord_t *coord = (coord_t *)arg;
+	struct timeval now;
+  	struct timespec timeout;
+	int retcode;
+	int verif;
+	/*int j;*/
+	
 	srand(time(NULL));
 	
 	pthread_mutex_lock(&grille[coord->y][coord->x].mutex);
+	gettimeofday(&now,NULL);
+	timeout.tv_sec=now.tv_sec + 3;
+	timeout.tv_nsec=now.tv_usec *3000;
+	retcode=0;
+	verif=1;
+	while((verif==0) && retcode!=ETIMEDOUT){
+		if(coord->etang->grille[coord->y+1][coord->x]==10||coord->etang->grille[coord->y-1][coord->x]==10||coord->etang->grille[coord->y][coord->x+1]==10||coord->etang->grille[coord->y-1][coord->x-1]==10
+			||coord->etang->grille[coord->y+1][coord->x]==20||coord->etang->grille[coord->y-1][coord->x]==20||coord->etang->grille[coord->y][coord->x+1]==20||coord->etang->grille[coord->y-1][coord->x-1]==20
+			){
+				verif=1;
+			}else{
+				verif=0;
+			}
+			printf("wait");
+		retcode=pthread_cond_timedwait(&grille[coord->y][coord->x].cond,&grille[coord->y][coord->x].mutex,&timeout);
+	}
+	if(retcode==ETIMEDOUT){
+		/*timeout*/
+		printf("rekt %d",retcode);
+	}
+	printf("rekt %d",retcode);
 	while (1)
 	{
+
 		
 		int pos = rand() % 4;
 	
@@ -512,7 +682,8 @@ void generer_poisson(grille_t *etang)
 				coord->poisson=&poisson[nb_poissons];
 				pthread_create(threads_poissons[nb_poissons], NULL, routine_poisson, (void *)coord);
 				/* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);*/
-
+				
+				pthread_cond_broadcast(&grille[randomy][randomx].cond);
 				pthread_mutex_unlock(&grille[randomy][randomx].mutex);
 
 				
@@ -643,11 +814,12 @@ void fusion_etang(grille_t *etang,grille_t* etangj1,grille_t *etangj2){
 int i=0,j=0;
 	for(i=0;i<20;i++){
 		for (j=0;j<40;j++){
-			if(etang->grille[i][j]==0){
-				if (etangj1->grille[i][j]==0){
-						etang->grille[i][j]=etangj2->grille[i][j];
+			if(etang->grille[i][j]<99){
+				if (etangj1->grille[i][j]<99){
+					etang->grille[i][j]=etangj2->grille[i][j];
 					
-				}else{
+				}
+				if (etangj2->grille[i][j]==0){
 					etang->grille[i][j]=etangj1->grille[i][j];
 					
 				}
@@ -658,8 +830,10 @@ int i=0,j=0;
 /*lance un items*/
 void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_t* etang,int sockfd){
 	MEVENT event;
-	int nb_hammecon=tab[0];
+	int nb_hammeconj1=tab[0];
+	int nb_hammeconj2=tab[4];
 	int tempx = tab[1], tempy = tab[2];
+	int tempx2 = tab[5], tempy2 = tab[6];
 	if (getmouse(&event) == OK)
 			{
 				wprintw(fen_msg, "Clic a la position %d %d de l'ecran\n", event.y, event.x);
@@ -671,7 +845,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 					{
 					case HAMMECONSJ1:
 
-						if (nb_hammecon < MAX_HAMMECONS)
+						if (nb_hammeconj1 < MAX_HAMMECONS)
 						{
 							if (etang->grille[event.y - 1][event.x - 1] == VIDE)
 							{
@@ -681,7 +855,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								wattroff(fen_sim, COLOR_PAIR(4));
 								tempx = event.x - 1;
 								tempy = event.y - 1;
-								nb_hammecon++;
+								nb_hammeconj1++;
 								wprintw(fen_msg, "Ajout d'un Hammecon \n");
 							}
 						}
@@ -693,7 +867,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 							wattroff(fen_sim, COLOR_PAIR(4));
 							tempx = event.x - 1;
 							tempy = event.y - 1;
-							nb_hammecon = 0;
+							nb_hammeconj1 = 0;
 							wprintw(fen_msg, "retrait\n");
 						}
 
@@ -704,7 +878,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 					break;
 					case HAMMECONSJ2:
 
-						if (nb_hammecon < MAX_HAMMECONS)
+						if (nb_hammeconj2 < MAX_HAMMECONS)
 						{
 							if (etang->grille[event.y - 1][event.x - 1] == VIDE)
 							{
@@ -712,21 +886,21 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								wattron(fen_sim, COLOR_PAIR(4));
 								mvwprintw(fen_sim, event.y - 1, event.x - 1, "*");
 								wattroff(fen_sim, COLOR_PAIR(4));
-								tempx = event.x - 1;
-								tempy = event.y - 1;
-								nb_hammecon++;
+								tempx2 = event.x - 1;
+								tempy2 = event.y - 1;
+								nb_hammeconj2++;
 								wprintw(fen_msg, "Ajout d'un Hammecon \n");
 							}
 						}
 						else
 						{
-							etang->grille[tempy][tempx] = VIDE;
+							etang->grille[tempy2][tempx2] = VIDE;
 							wattron(fen_sim, COLOR_PAIR(4));
-							mvwprintw(fen_sim, tempy, tempx, " ");
+							mvwprintw(fen_sim, tempy2, tempx2, " ");
 							wattroff(fen_sim, COLOR_PAIR(4));
-							tempx = event.x - 1;
-							tempy = event.y - 1;
-							nb_hammecon = 0;
+							tempx2 = event.x - 1;
+							tempy2 = event.y - 1;
+							nb_hammeconj2 = 0;
 							wprintw(fen_msg, "retrait\n");
 						}
 
@@ -941,8 +1115,11 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 			}
 			update_sim(fen_sim,etang);
  
-			tab[0]=nb_hammecon;
+			tab[0]=nb_hammeconj1;
 			tab[2]=tempy;
 			tab[1]=tempx;
+			tab[4]=nb_hammeconj2;
+			tab[5]=tempx2;
+			tab[6]=tempy2;
 			/*return tab;*/
 }
