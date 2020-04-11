@@ -87,16 +87,16 @@ void update_sim(WINDOW *w, grille_t *etang){
 					wattroff(w, COLOR_PAIR(4));
 				break;
 				case HAMMECONSJ1:
-					wattron(w, COLOR_PAIR(4));
-					mvwprintw(w, i, j, "*", 4);
+					wattron(w, COLOR_PAIR(6));
+					mvwprintw(w, i, j, "*", 6);
 					wrefresh(w);
-					wattroff(w, COLOR_PAIR(4));
+					wattroff(w, COLOR_PAIR(6));
 				break;
 				case HAMMECONSJ2:
-					wattron(w, COLOR_PAIR(4));
-					mvwprintw(w, i, j, "*", 4);
+					wattron(w, COLOR_PAIR(7));
+					mvwprintw(w, i, j, "*", 7);
 					wrefresh(w);
-					wattroff(w, COLOR_PAIR(4));
+					wattroff(w, COLOR_PAIR(7));
 				break;
 				case PNEU:
 					wattron(w, COLOR_PAIR(2));
@@ -170,6 +170,8 @@ void ncurses_initialiser()
 	init_pair(3, COLOR_WHITE, COLOR_RED);/*dyna*/
 	init_pair(4, COLOR_WHITE, COLOR_BLUE);	 /*eau*/
 	init_pair(5, COLOR_WHITE, COLOR_GREEN);/*requin*/
+	init_pair(6,COLOR_WHITE,COLOR_BLUE); /*hammeconqs J1*/
+	init_pair(7,COLOR_BLACK,COLOR_BLUE); /*hammecon J2*/
 	wbkgd(stdscr, COLOR_PAIR(2));
 	refresh();
 }
@@ -414,7 +416,7 @@ void recuperation(grille_t *etang){
 	for(i=0;i<NB_LIGNES_SIM;i++){
 		for( j=0;j<NB_COL_SIM;j++){
 			if(grille[i][j].element==VIDE){
-				if(etang->grille[i][j]!=2){
+				if(etang->grille[i][j]!=20&&etang->grille[i][j]!=10){
 				etang->grille[i][j]=grille[i][j].element;
 				}
 			}
@@ -600,13 +602,46 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 				{
 					switch (item_actif)
 					{
-					case HAMMECONS:
+					case HAMMECONSJ1:
 
 						if (nb_hammecon < MAX_HAMMECONS)
 						{
 							if (etang->grille[event.y - 1][event.x - 1] == VIDE)
 							{
-								etang->grille[event.y - 1][event.x - 1] = HAMMECONS;
+								etang->grille[event.y - 1][event.x - 1] = HAMMECONSJ1;
+								wattron(fen_sim, COLOR_PAIR(4));
+								mvwprintw(fen_sim, event.y - 1, event.x - 1, "*");
+								wattroff(fen_sim, COLOR_PAIR(4));
+								tempx = event.x - 1;
+								tempy = event.y - 1;
+								nb_hammecon++;
+								wprintw(fen_msg, "Ajout d'un Hammecon \n");
+							}
+						}
+						else
+						{
+							etang->grille[tempy][tempx] = VIDE;
+							wattron(fen_sim, COLOR_PAIR(4));
+							mvwprintw(fen_sim, tempy, tempx, " ");
+							wattroff(fen_sim, COLOR_PAIR(4));
+							tempx = event.x - 1;
+							tempy = event.y - 1;
+							nb_hammecon = 0;
+							wprintw(fen_msg, "retrait\n");
+						}
+
+						wrefresh(fen_sim);
+						wrefresh(fen_msg);
+						/*pthread_mutex_unlock(&grille[event.y - 1][event.x - 1].element ,mutex);*/
+
+					break;
+					case HAMMECONSJ2:
+
+						if (nb_hammecon < MAX_HAMMECONS)
+						{
+							if (etang->grille[event.y - 1][event.x - 1] == VIDE)
+							{
+								etang->grille[event.y - 1][event.x - 1] = HAMMECONSJ2;
 								wattron(fen_sim, COLOR_PAIR(4));
 								mvwprintw(fen_sim, event.y - 1, event.x - 1, "*");
 								wattroff(fen_sim, COLOR_PAIR(4));
