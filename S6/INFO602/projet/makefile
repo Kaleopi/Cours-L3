@@ -1,5 +1,5 @@
-projet : y.tab.o lex.yy.o liste.o ncurses.o includes.o
-	gcc -o projet y.tab.o lex.yy.o liste.o ncurses.o includes.o -lm -lfl -lncurses
+projet : y.tab.o lex.yy.o ncurses.o includes.o
+	gcc -o projet y.tab.o lex.yy.o ncurses.o includes.o -lm -lfl -lncurses
 
 y.tab.o : y.tab.h y.tab.c
 	gcc -c -g y.tab.c
@@ -16,9 +16,6 @@ lex.yy.c : projet.lex
 includes.o : includes.h includes.c
 	gcc -c -g includes.c
 
-liste.o : liste.h liste.c
-	gcc -c -g liste.c
-
 ncurses.o : ncurses.h ncurses.c
 	gcc -c -g ncurses.c
 
@@ -27,5 +24,6 @@ clean:
 	rm -f lex.yy.*
 	rm -f projet projet.exe
 	rm -f *~
+	rm -f *.o
 	rm -f *.stackdump
 	rm -f y.output

@@ -81,13 +81,13 @@ int souris_getpos(int *x, int *y, int *bouton) {
   return resultat;
 }
 
-WINDOW *creer_fenetre(int hauteur, int largeur){
+WINDOW *creer_fenetre(int hauteur, int largeur,int x, int y){
   /* Creation de la fenetre de simulation dans la fenetre de contour */
   /* La simulation est affichee dans cette fenetre */
 
   WINDOW *fen;
 
-  fen = newwin(hauteur, largeur, 5 , 5);
+  fen = newwin(hauteur, largeur, x , y);
   wrefresh(fen);
   return fen;
 }
@@ -102,32 +102,32 @@ void update(WINDOW* w, plateau_t *p, robot_t* r){
       switch(p->cases[i*largeur+j]){
         case M_VIDE:
           wattron(w, COLOR_PAIR(2));
-          mvwprintw(w,i,j,"0",1);
+          mvwprintw(w,i,j," ",1);
           wattroff(w,COLOR_PAIR(2));
         break;
         case M_BLOC:
           wattron(w, COLOR_PAIR(3));
-          mvwprintw(w,i,j,"B",1);
+          mvwprintw(w,i,j," ",1);
           wattroff(w,COLOR_PAIR(3));
         break;
         case M_CAISSE:
           wattron(w, COLOR_PAIR(5));
-          mvwprintw(w,i,j,"C",1);
+          mvwprintw(w,i,j," ",1);
           wattroff(w,COLOR_PAIR(5));
         break;
         case M_TROU:
           wattron(w, COLOR_PAIR(7));
-          mvwprintw(w,i,j,"T",1);
+          mvwprintw(w,i,j," ",1);
           wattroff(w,COLOR_PAIR(7));
         break;
         case M_BILLE:
           wattron(w, COLOR_PAIR(6));
-          mvwprintw(w,i,j,"o",1);
+          mvwprintw(w,i,j," ",1);
           wattroff(w,COLOR_PAIR(6));
         break;
         case M_ROBOT:
           wattron(w, COLOR_PAIR(4));
-          mvwprintw(w,i,j,"r",1);
+          mvwprintw(w,i,j," ",1);
           wattroff(w,COLOR_PAIR(4));
         break;
         default:

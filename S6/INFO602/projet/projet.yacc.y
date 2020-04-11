@@ -2,10 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
+#include <unistd.h>
 #include "ncurses.h"
 #include "includes.h"
-#include "liste.h"
-#include <unistd.h>
 
 extern FILE *yyin;
 plateau_t *plateau;
@@ -62,6 +61,11 @@ debutjson:
       robot->x = $4;
       robot->y = $8;
       robot->direction = $12;
+      cell_t cellule;
+      cellule.position.x = $4;
+      cellule.position.y = $8;
+      cellule.type = M_ROBOT;
+      ajouter_cellule(&liste_cases,&cellule);
       /* printf("Robot x : %d y : %d direction : %d\n",robot->x,robot->y,robot->direction); */
     };
 
@@ -115,11 +119,11 @@ type:
 
 int main(int argc, char* argv[]) {
   FILE* fd;
-  WINDOW *box, *sokoban, *debug, *debug_box;
+  WINDOW *sokoban, *debug, *legende;
   plateau = malloc(sizeof(plateau_t));
   robot = malloc(sizeof(robot_t));
   int hauteur,largeur;
-  /* init_liste(&liste_cases); */
+  init_liste(&liste_cases);
 
   if((fd=fopen(argv[1],"r"))==NULL){
     fprintf(stderr, "Erreur lors de l'ouverture du fichier \"%s\"",argv[1]);
@@ -149,15 +153,14 @@ int main(int argc, char* argv[]) {
   largeur = plateau->largeur;
   plateau->cases = malloc(sizeof(int)*hauteur*largeur);
   init_plateau(plateau,&liste_cases);
-  afficher_plateau(plateau);
-
 
   ncurses_initialiser();
-  sokoban = creer_fenetre(hauteur,largeur);
+  sokoban = creer_fenetre(hauteur,largeur,1,10);
   mvprintw(0,0, "Projet 3 - GIGOUT Thomas - DAUNIQUE Wilfried");
+  legende = creer_fenetre(10,20,1,21);
   update(sokoban,plateau,robot);
   refresh();
-  sleep(3);
+  sleep(20);
 
 
   /* fin de l'execution */

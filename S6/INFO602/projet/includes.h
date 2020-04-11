@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "liste.h"
 
 #define M_VIDE 0
 #define M_BLOC 1
@@ -29,6 +28,27 @@ typedef struct{
   int direction;
 }robot_t;
 
+typedef struct {
+  int x;
+  int y;
+}pos_t;
+
+typedef struct cellule {
+  pos_t position;
+  int type;
+  struct cellule* succ;
+}cell_t;
+
+typedef struct {
+  cell_t* tete;
+}liste_t;
+
+/* listes */
+void init_liste(liste_t*);
+void ajouter_cellule(liste_t*, cell_t*);
+void destroy_liste(liste_t*);
+
+/* plateau */
 void init_plateau(plateau_t*, liste_t*);
 void afficher_plateau(plateau_t*);
 

@@ -67,10 +67,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
+#include <unistd.h>
 #include "ncurses.h"
 #include "includes.h"
-#include "liste.h"
-#include <unistd.h>
 
 extern FILE *yyin;
 plateau_t *plateau;
@@ -80,7 +79,7 @@ liste_t liste_cases;
 int yylex();
 void yyerror(const char *erreurMsg);
 
-#line 84 "y.tab.c" /* yacc.c:339  */
+#line 83 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -194,12 +193,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 20 "projet.yacc.y" /* yacc.c:355  */
+#line 19 "projet.yacc.y" /* yacc.c:355  */
 
   int intval;
   char string[100];
 
-#line 203 "y.tab.c" /* yacc.c:355  */
+#line 202 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -216,7 +215,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 220 "y.tab.c" /* yacc.c:358  */
+#line 219 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -517,9 +516,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    40,    40,    43,    45,    48,    52,    56,    58,    61,
-      69,    71,    73,    75,    78,    81,    83,    86,    96,   100,
-     104,   108
+       0,    39,    39,    42,    44,    47,    51,    55,    57,    60,
+      73,    75,    77,    79,    82,    85,    87,    90,   100,   104,
+     108,   112
 };
 #endif
 
@@ -1327,82 +1326,87 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 48 "projet.yacc.y" /* yacc.c:1646  */
+#line 47 "projet.yacc.y" /* yacc.c:1646  */
     {
       plateau->largeur = (yyvsp[0].intval);
     }
-#line 1335 "y.tab.c" /* yacc.c:1646  */
+#line 1334 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 52 "projet.yacc.y" /* yacc.c:1646  */
+#line 51 "projet.yacc.y" /* yacc.c:1646  */
     {
       plateau->hauteur = (yyvsp[0].intval);
     }
-#line 1343 "y.tab.c" /* yacc.c:1646  */
+#line 1342 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 56 "projet.yacc.y" /* yacc.c:1646  */
+#line 55 "projet.yacc.y" /* yacc.c:1646  */
     {}
-#line 1349 "y.tab.c" /* yacc.c:1646  */
+#line 1348 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 58 "projet.yacc.y" /* yacc.c:1646  */
+#line 57 "projet.yacc.y" /* yacc.c:1646  */
     {}
-#line 1355 "y.tab.c" /* yacc.c:1646  */
+#line 1354 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 61 "projet.yacc.y" /* yacc.c:1646  */
+#line 60 "projet.yacc.y" /* yacc.c:1646  */
     {
       robot->x = (yyvsp[-9].intval);
       robot->y = (yyvsp[-5].intval);
       robot->direction = (yyvsp[-1].intval);
+      cell_t cellule;
+      cellule.position.x = (yyvsp[-9].intval);
+      cellule.position.y = (yyvsp[-5].intval);
+      cellule.type = M_ROBOT;
+      ajouter_cellule(&liste_cases,&cellule);
       /* printf("Robot x : %d y : %d direction : %d\n",robot->x,robot->y,robot->direction); */
     }
-#line 1366 "y.tab.c" /* yacc.c:1646  */
+#line 1370 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 69 "projet.yacc.y" /* yacc.c:1646  */
+#line 73 "projet.yacc.y" /* yacc.c:1646  */
     {(yyval.intval) = M_BAS;}
-#line 1372 "y.tab.c" /* yacc.c:1646  */
+#line 1376 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 71 "projet.yacc.y" /* yacc.c:1646  */
+#line 75 "projet.yacc.y" /* yacc.c:1646  */
     {(yyval.intval) = M_HAUT;}
-#line 1378 "y.tab.c" /* yacc.c:1646  */
+#line 1382 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 73 "projet.yacc.y" /* yacc.c:1646  */
+#line 77 "projet.yacc.y" /* yacc.c:1646  */
     {(yyval.intval) = M_DROITE;}
-#line 1384 "y.tab.c" /* yacc.c:1646  */
+#line 1388 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 75 "projet.yacc.y" /* yacc.c:1646  */
+#line 79 "projet.yacc.y" /* yacc.c:1646  */
     {(yyval.intval) = M_GAUCHE;}
-#line 1390 "y.tab.c" /* yacc.c:1646  */
+#line 1394 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 78 "projet.yacc.y" /* yacc.c:1646  */
+#line 82 "projet.yacc.y" /* yacc.c:1646  */
     {}
-#line 1396 "y.tab.c" /* yacc.c:1646  */
+#line 1400 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 83 "projet.yacc.y" /* yacc.c:1646  */
+#line 87 "projet.yacc.y" /* yacc.c:1646  */
     {}
-#line 1402 "y.tab.c" /* yacc.c:1646  */
+#line 1406 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 86 "projet.yacc.y" /* yacc.c:1646  */
+#line 90 "projet.yacc.y" /* yacc.c:1646  */
     {
       cell_t cellule;
       cellule.position.x = (yyvsp[-9].intval);
@@ -1411,43 +1415,43 @@ yyreduce:
       ajouter_cellule(&liste_cases,&cellule);
       /* printf("Case x : %d y : %d type : %d\n",cellule.position.x,cellule.position.y,cellule.type); */
     }
-#line 1415 "y.tab.c" /* yacc.c:1646  */
+#line 1419 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 96 "projet.yacc.y" /* yacc.c:1646  */
+#line 100 "projet.yacc.y" /* yacc.c:1646  */
     {
       (yyval.intval) = M_CAISSE;
     }
-#line 1423 "y.tab.c" /* yacc.c:1646  */
+#line 1427 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 100 "projet.yacc.y" /* yacc.c:1646  */
+#line 104 "projet.yacc.y" /* yacc.c:1646  */
     {
       (yyval.intval) = M_TROU;
     }
-#line 1431 "y.tab.c" /* yacc.c:1646  */
+#line 1435 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 104 "projet.yacc.y" /* yacc.c:1646  */
+#line 108 "projet.yacc.y" /* yacc.c:1646  */
     {
       (yyval.intval) = M_BILLE;
     }
-#line 1439 "y.tab.c" /* yacc.c:1646  */
+#line 1443 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 108 "projet.yacc.y" /* yacc.c:1646  */
+#line 112 "projet.yacc.y" /* yacc.c:1646  */
     {
       (yyval.intval) = M_BLOC;
     }
-#line 1447 "y.tab.c" /* yacc.c:1646  */
+#line 1451 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1451 "y.tab.c" /* yacc.c:1646  */
+#line 1455 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1675,16 +1679,16 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 114 "projet.yacc.y" /* yacc.c:1906  */
+#line 118 "projet.yacc.y" /* yacc.c:1906  */
 
 
 int main(int argc, char* argv[]) {
   FILE* fd;
-  WINDOW *box, *sokoban, *debug, *debug_box;
+  WINDOW *sokoban, *debug, *legende;
   plateau = malloc(sizeof(plateau_t));
   robot = malloc(sizeof(robot_t));
   int hauteur,largeur;
-  /* init_liste(&liste_cases); */
+  init_liste(&liste_cases);
 
   if((fd=fopen(argv[1],"r"))==NULL){
     fprintf(stderr, "Erreur lors de l'ouverture du fichier \"%s\"",argv[1]);
@@ -1714,15 +1718,14 @@ int main(int argc, char* argv[]) {
   largeur = plateau->largeur;
   plateau->cases = malloc(sizeof(int)*hauteur*largeur);
   init_plateau(plateau,&liste_cases);
-  afficher_plateau(plateau);
-
 
   ncurses_initialiser();
-  sokoban = creer_fenetre(hauteur,largeur);
+  sokoban = creer_fenetre(hauteur,largeur,1,10);
   mvprintw(0,0, "Projet 3 - GIGOUT Thomas - DAUNIQUE Wilfried");
+  legende = creer_fenetre(10,20,1,21);
   update(sokoban,plateau,robot);
   refresh();
-  sleep(3);
+  sleep(20);
 
 
   /* fin de l'execution */

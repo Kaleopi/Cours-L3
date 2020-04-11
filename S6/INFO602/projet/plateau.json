@@ -1,10 +1,14 @@
 {
-  "hauteur": 10, "largeur": 20,
+  "hauteur": 10, "largeur": 10,
   "debut": {
-    "x":0, "y":5,
+    "x":4, "y":5,
     "direction": "BAS"
   },
   "cases":[
+    {
+      "x": 1, "y": 0,
+      "type": "BLOC"
+    },
     {
       "x": 1, "y": 0,
       "type": "BLOC"
@@ -18,15 +22,15 @@
       "type": "BILLE"
     },
     {
-      "x": 2, "y": 1,
+      "x": 1, "y": 2,
       "type": "BLOC"
     },
     {
-      "x": 1, "y": 2,
+      "x": 2, "y": 1,
       "type": "CAISSE"
     },
     {
-      "x": 5, "y": 3,
+      "x": 3, "y": 5,
       "type": "BLOC"
     },
     {
@@ -34,15 +38,15 @@
       "type": "BLOC"
     },
     {
-      "x": 6, "y": 4,
-      "type": "BLOC"
-    },
-    {
-      "x": 8, "y": 7,
+      "x": 4, "y": 6,
       "type": "BLOC"
     },
     {
       "x": 7, "y": 8,
+      "type": "BLOC"
+    },
+    {
+      "x": 8, "y": 7,
       "type": "BLOC"
     },
     {
