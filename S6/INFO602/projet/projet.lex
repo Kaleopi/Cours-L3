@@ -84,7 +84,7 @@ SUP       ">"
 {F_GAUCHE}  { return F_GAUCHE; }
 {INFEG}     { return INFEG; }
 {SUPEG}     { return SUPEG; }
-{EGEG}      { return EGEG; }
+{EGGEGG}      { return EGGEGG; }
 {INF}       { return INF; }
 {SUP}       { return SUP; }
 

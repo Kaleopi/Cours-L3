@@ -78,7 +78,7 @@ extern int yydebug;
     FINFUNC = 288,
     INFEG = 289,
     SUPEG = 290,
-    EGEG = 291,
+    EGGEGG = 291,
     INF = 292,
     SUP = 293
   };
@@ -117,7 +117,7 @@ extern int yydebug;
 #define FINFUNC 288
 #define INFEG 289
 #define SUPEG 290
-#define EGEG 291
+#define EGGEGG 291
 #define INF 292
 #define SUP 293
 

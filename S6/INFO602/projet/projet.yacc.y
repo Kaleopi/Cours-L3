@@ -145,7 +145,7 @@ type:
     ligne:
       affectaction
       |
-      appelproc;
+      appelproc
       |
       conditionnelle
       |
@@ -175,21 +175,32 @@ type:
       params ',' param;
 
     param:
-      NOM|ENTIER;
+      NOM{printf("%s",$1);}
+      |
+      ENTIER{printf("%d",$1);};
 
     conditionnelle:
-      "si(" expbool')' code sinon "finsi";
+      "si(" expbool')' code sinon "finsi"{
+        printf("conditionelle : si(%s) %s %s finsi",$2,$4,$5);
+      };
 
     sinon:
       "sinon" code
       |
       ;
 
+    boucle:
+      "tantque("expbool")" code FINTQ;
+
     expbool:
       valeur comparateur valeur;
 
     comparateur:
       INFEG|SUPEG|EGGEGG|INF|SUP;
+
+
+
+
 
 
 %%
@@ -208,7 +219,7 @@ int main(int argc, char* argv[]) {
   }
   yyin = fd;
   yyparse();
-  /* if((fclose(fd))==EOF){
+  if((fclose(fd))==EOF){
     fprintf(stderr, "Erreur lors de la fermeture du fichier");
   };
   if((yyin=fopen(argv[2],"r"))==NULL){
@@ -218,7 +229,7 @@ int main(int argc, char* argv[]) {
   yyparse();
   if((fclose(yyin))==EOF){
     fprintf(stderr, "Erreur lors de la fermeture du fichier");
-  }; */
+  };
 
   if(plateau->hauteur <= 0){
     fprintf(stderr,"La hauteur du plateau est nulle ou négative.\n");
@@ -233,7 +244,7 @@ int main(int argc, char* argv[]) {
 
   ncurses_initialiser();
   sokoban = creer_fenetre(hauteur,largeur,1,10);
-  mvprintw(0,0, "Projet 3 - GIGOUT Thomas - DAUNIQUE Wilfried");
+  mvprintw(0,0, "Projet 602 - GIGOUT Thomas - DAUNIQUE Wilfried");
   legende = creer_fenetre(10,20,1,21);
   update(sokoban,plateau,robot);
   refresh();
