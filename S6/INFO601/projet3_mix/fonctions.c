@@ -16,7 +16,7 @@ pthread_t *threads_poissons[MAX_POISSONS]; /* Identifants des threads des poisso
 WINDOW *fen_sim;						   /* Fenetre de simulation partagee par les poissons*/
 WINDOW *fen_msg;						   /* Fenetre de messages partagee par les poissons*/
 case_t grille[NB_LIGNES_SIM][NB_COL_SIM];  /* Grille de simulation */
-
+int verif;
 int nb_poissons=0;
 
 void both_send(grille_t *etang, int sock_one, int sock_two)
@@ -483,15 +483,30 @@ WINDOW *creer_fenetre_points()
 
 	return fen;
 }
+
+int poisson_near(coord_t*coord){
+	if(coord->etang->grille[coord->y-2][coord->x-1]==(HAMMECONSJ1 ||HAMMECONSJ2)
+	||coord->etang->grille[coord->y][coord->x-1]==(HAMMECONSJ1 ||HAMMECONSJ2)
+	||coord->etang->grille[coord->y-1][coord->x]==(HAMMECONSJ1 ||HAMMECONSJ2)
+	||coord->etang->grille[coord->y-1][coord->x-2]==(HAMMECONSJ1 ||HAMMECONSJ2)
+	
+	){
+		return 1;
+	}else{
+		return 0;
+	}
+	printf("!!!!!!!!!!!!!!!!!!");
+}
 /*thread*/
 	/*routine des poissons*/
 void *routine_poisson(void *arg)
 {
+	int pos;
 	coord_t *coord = (coord_t *)arg;
 	struct timeval now;
   	struct timespec timeout;
 	int retcode;
-	int verif;
+	
 	/*int j;*/
 	
 	srand(time(NULL));
@@ -501,28 +516,27 @@ void *routine_poisson(void *arg)
 	timeout.tv_sec=now.tv_sec + 3;
 	timeout.tv_nsec=now.tv_usec *3000;
 	retcode=0;
-	verif=1;
-	while((verif==0) && retcode!=ETIMEDOUT){
-		if(coord->etang->grille[coord->y+1][coord->x]==10||coord->etang->grille[coord->y-1][coord->x]==10||coord->etang->grille[coord->y][coord->x+1]==10||coord->etang->grille[coord->y-1][coord->x-1]==10
-			||coord->etang->grille[coord->y+1][coord->x]==20||coord->etang->grille[coord->y-1][coord->x]==20||coord->etang->grille[coord->y][coord->x+1]==20||coord->etang->grille[coord->y-1][coord->x-1]==20
-			){
-				verif=1;
-			}else{
-				verif=0;
-			}
-			printf("wait");
-		retcode=pthread_cond_timedwait(&grille[coord->y][coord->x].cond,&grille[coord->y][coord->x].mutex,&timeout);
-	}
-	if(retcode==ETIMEDOUT){
-		/*timeout*/
-		printf("rekt %d",retcode);
-	}
-	printf("rekt %d",retcode);
+	verif=0;
+	
 	while (1)
 	{
+		while(poisson_near(coord)==1 && retcode!=ETIMEDOUT){
+	
+				
 
+			printf("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+			retcode=pthread_cond_timedwait(&grille[coord->y][coord->x].cond,&grille[coord->y][coord->x].mutex,&timeout);
+			
 		
-		int pos = rand() % 4;
+		
+		}
+		if(retcode==ETIMEDOUT){
+			/*timeout*/
+			printf("rekt %d",retcode);
+		}
+		printf("rekt %d",retcode);
+		
+		pos = rand() % 4;
 	
 		switch (pos)
 		{
@@ -830,10 +844,13 @@ int i=0,j=0;
 /*lance un items*/
 void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_t* etang,int sockfd){
 	MEVENT event;
+
 	int nb_hammeconj1=tab[0];
 	int nb_hammeconj2=tab[4];
 	int tempx = tab[1], tempy = tab[2];
 	int tempx2 = tab[5], tempy2 = tab[6];
+
+
 	if (getmouse(&event) == OK)
 			{
 				wprintw(fen_msg, "Clic a la position %d %d de l'ecran\n", event.y, event.x);
@@ -1110,6 +1127,14 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								mvwprintw(fen_sim, event.y , event.x +1, " ");
 								mvwprintw(fen_sim, event.y + 1, event.x +1, " ");
 								wattroff(fen_sim, COLOR_PAIR(4));
+					case REQUINJ1:	
+					break;
+					case REQUINJ2:
+					break;
+					case FURTIFJ1:
+					break;
+					case FURTIFJ2:
+					break;
 				}
 			}
 			}
