@@ -1,0 +1,7 @@
+Pour lancer l'application, utilisez les commandes suivantes dans l'ordre :
+
+make clean (si besoin)
+make
+./projet plateau.json code.txt
+
+Pour quitter, appuyez sur CTRL+C ou attendez 10 secondes, car dans l'état actuel, le programme s'éteint au bout de 10 secondes grâce à un sleep.
