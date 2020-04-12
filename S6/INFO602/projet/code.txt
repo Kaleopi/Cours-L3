@@ -1,5 +1,5 @@
 proc avancer(x : entier)
-  i = 0
+  i = 8
   tantque(i < x)
     avance()
     i = i + 1

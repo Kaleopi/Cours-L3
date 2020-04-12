@@ -31,22 +31,16 @@ DROITE    "\"DROITE\""
 GAUCHE    "\"GAUCHE\""
 
 /* pseudo-code */
-TYPE      (entier|bool)
 PROC      "proc"
 FUNC      "procfunc"
 FINTQ     "fintantque"
 FINPROC   "finproc"
-FINFUNC   "finfunc"
-NOM       [A-Za-z]+
-F_AVANCE  "avance()"
-F_DROITE  "droite()"
-F_GAUCHE  "gauche()"
 INFEG     "<="
 SUPEG     ">="
-/* easter egg */
-EGGEGG      "=="
+EGGEGG    "=="
 INF       "<"
 SUP       ">"
+NOM       [a-z]+
 
 %%
 {ENTIER}    { yylval.intval = atoi(yytext); return ENTIER; }
@@ -71,24 +65,21 @@ SUP       ">"
 {HAUT}      { return HAUT; }
 {DROITE}    { return DROITE; }
 {GAUCHE}    { return GAUCHE; }
-
-{TYPE}      { return *yytext; }
 {PROC}      { return PROC; }
 {FUNC}      { return FUNC; }
-{NOM}       { return NOM; }
 {FINTQ}     { return FINTQ; }
 {FINPROC}   { return FINPROC; }
-{FINFUNC}   { return FINFUNC; }
-{F_AVANCE}  { return F_AVANCE; }
-{F_DROITE}  { return F_DROITE; }
-{F_GAUCHE}  { return F_GAUCHE; }
-{INFEG}     { return INFEG; }
-{SUPEG}     { return SUPEG; }
-{EGGEGG}      { return EGGEGG; }
-{INF}       { return INF; }
-{SUP}       { return SUP; }
+{NOM}       {
+              yylval.string = yytext;
+              return NOM;
+            }
+{INFEG}     { return *yytext; }
+{SUPEG}     { return *yytext; }
+{EGGEGG}    { return *yytext; }
+{INF}       { return *yytext; }
+{SUP}       { return *yytext; }
 
-[*-+/\[\]\{\},\:\.] { return *yytext; }
+[*-+/:\[\]\{\},\.\(\)=] { return *yytext; }
 [ \t\n\r]	 ;
 
 %%
