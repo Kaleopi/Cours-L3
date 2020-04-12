@@ -15,11 +15,11 @@ liste_hachage_t lh;
 int yylex();
 void yyerror(const char *erreurMsg);
 %}
-%define parse.error verbose
+/* %define parse.error verbose */
 
 %union {
   int intval;
-  char string[100];
+  char *string;
 }
 
 %token <intval> ENTIER
@@ -27,25 +27,46 @@ void yyerror(const char *erreurMsg);
 %token VRAI FAUX
 %token <string> OPERATEUR
 %token HAUTEUR LARGEUR X Y TYPEJSON BLOC BILLE CAISSE TROU CASE CASES DEBUT DIRECTION BAS HAUT DROITE GAUCHE
-%token TYPE PROC FUNC F_AVANCE F_DROITE F_GAUCHE FINTQ FINPROC FINFUNC
+%token FUNC FINPROC PROC FINTQ
 %token <string> INFEG
 %token <string> SUPEG
 %token <string> EGGEGG
 %token <string> INF
 %token <string> SUP
 
+
+%type <string> pseudocode
+%type <string> procedure
+%type <string> signature
 %type <intval> direction
 %type <intval> type
+%type <string> conditionnelle
 %type <string> comparateur
 %type <string> valeur
 %type <string> ligne
 %type <string> expbool
+%type <string> affectaction
+%type <string> appelproc
+%type <string> boucle
+%type <string> code
+%type <string> calcul
+%type <string> params
+%type <string> param
+%type <string> argument
+%type <string> arguments
+%type <string> sinon
+%type <string> typearg
+%type <string> variable
 
 %%
 parser:
-    json
+    json{
+      printf("json\n");
+    }
     |
-    pseudocode;
+    pseudocode{
+      printf("pseudocode\n%s",$1);
+    };
 
 /* json */
 json:
@@ -128,25 +149,49 @@ type:
 
 /* pseudocode */
     pseudocode:
-      procedure pseudocode
+      procedure pseudocode{
+        sprintf($$,"%s %s",$1,$2);
+      }
       |
-      procedure;
+      procedure{
+        sprintf($$,"%s",$1);
+      };
 
     procedure:
-      PROC signature;
+      PROC signature{
+        sprintf($$,"proc %s",$2);
+      };
 
     signature:
-      "main()" code FINPROC
-      |
-      NOM '(' arguments ')' code FINPROC;
+      NOM '(' arguments ')' code FINPROC{
+        sprintf($$,"%s(%s)\n%s\nfinproc",$1,$3,$5);
+      };
 
     arguments:
-      argument ',' arguments
+      argument{
+        sprintf($$,"%s",$1);
+      }
       |
-      argument;
+      arguments ',' argument{
+        sprintf($$,"%s %s",$1,$3);
+      };
 
     argument:
-      NOM ':' TYPE;
+      variable ':' typearg{
+        /* printf("j'ai un argument %s", $1); */
+        sprintf($$,"%s %s",$1,$3);
+        printf("%s",$$);
+      };
+
+    variable:
+      NOM{
+        sprintf($$,"%s",$1);
+      }
+
+    typearg:
+      NOM{
+        sprintf($$,"%s",$1);
+      };
 
     code:
       ligne code
@@ -154,62 +199,116 @@ type:
       ligne;
 
     ligne:
-      affectaction
+      affectaction{
+        sprintf($$,"%s",$1);
+      }
       |
-      appelproc
+      appelproc{
+        sprintf($$,"%s",$1);
+      }
       |
-      conditionnelle
+      conditionnelle{
+        sprintf($$,"%s",$1);
+      }
       |
-      boucle;
+      boucle{
+        sprintf($$,"%s",$1);
+      };
 
     affectaction:
-      NOM '=' calcul;
+      NOM '=' calcul{
+        sprintf($$,"%s = %s",$1,$3);
+      };
 
     calcul:
-      calcul OPERATEUR valeur
+      calcul OPERATEUR valeur{
+        sprintf($$,"%s %s %s",$1,$2,$3);
+      }
       |
-      valeur;
+      valeur{
+        sprintf($$,"%s",$1);
+      };
 
     valeur:
-      NOM
+      NOM{
+        sprintf($$,"%s",$1);
+      }
       |
       ENTIER{
         sprintf($$,"%d",$1);
       };
 
     appelproc:
-      NOM'('params')'
+      NOM'('params')'{
+        sprintf($$,"%s(%s)",$1,$3);
+      }
       |
-      NOM"()";
+      NOM"()"{
+        sprintf($$,"%s()",$1);
+      };
 
     params:
-      param
+      param{
+        sprintf($$,"%s",$1);
+      }
       |
-      params ',' param;
+      params ',' param{
+        sprintf($$,"%s,%s",$1,$3);
+      };
 
     param:
-      NOM{printf("%s",$1);}
+      NOM{
+        sprintf($$,"%s",$1);
+      }
       |
-      ENTIER{printf("%d",$1);};
+      ENTIER{
+        sprintf($$,"%d",$1);
+      };
 
     conditionnelle:
       "si(" expbool')' code sinon "finsi"{
-        printf("conditionelle : si(%s) %s %s finsi",$2,$4,$5);
+        sprintf($$,"si(%s)\n%s\n%s\nfinsi",$2,$4,$5);
       };
 
     sinon:
-      "sinon" code
+      "sinon" code{
+        sprintf($$,"sinon\n%s",$2);
+      }
       |
-      ;
+      {
+        sprintf($$,";");
+      };
 
     boucle:
-      "tantque("expbool")" code FINTQ;
+      "tantque("expbool")" code FINTQ{
+        sprintf($$,"tantque(%s)\n%s\nfintantque",$2,$4);
+      };
 
     expbool:
-      valeur comparateur valeur;
+      valeur comparateur valeur{
+        sprintf($$,"%s %s %s",$1,$2,$3);
+      };
 
     comparateur:
-      INFEG|SUPEG|EGGEGG|INF|SUP;
+      INFEG{
+        sprintf($$,"%s",$1);
+      }
+      |
+      SUPEG{
+        sprintf($$,"%s",$1);
+      }
+      |
+      EGGEGG{
+        sprintf($$,"%s",$1);
+      }
+      |
+      INF{
+        sprintf($$,"%s",$1);
+      }
+      |
+      SUP{
+        sprintf($$,"%s",$1);
+      };
 
 %%
 
@@ -226,18 +325,21 @@ int main(int argc, char* argv[]) {
     exit(EXIT_FAILURE);
   }
   yyin = fd;
+  printf("Parsing %s\n\n",argv[1]);
   yyparse();
   if((fclose(fd))==EOF){
     fprintf(stderr, "Erreur lors de la fermeture du fichier");
   };
-  /* if((yyin=fopen(argv[2],"r"))==NULL){
+  if((fd=fopen(argv[2],"r"))==NULL){
     printf("Erreur lors de l'ouverture du fichier \"%s\"",argv[2]);
     exit(EXIT_FAILURE);
   }
+  yyin = fd;
+  printf("Parsing %s\n\n",argv[2]);
   yyparse();
   if((fclose(yyin))==EOF){
     fprintf(stderr, "Erreur lors de la fermeture du fichier");
-  }; */
+  };
 
   if(plateau->hauteur <= 0){
     fprintf(stderr,"La hauteur du plateau est nulle ou négative.\n");

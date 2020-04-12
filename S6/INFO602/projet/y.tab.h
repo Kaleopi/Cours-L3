@@ -67,20 +67,15 @@ extern int yydebug;
     HAUT = 277,
     DROITE = 278,
     GAUCHE = 279,
-    TYPE = 280,
-    PROC = 281,
-    FUNC = 282,
-    F_AVANCE = 283,
-    F_DROITE = 284,
-    F_GAUCHE = 285,
-    FINTQ = 286,
-    FINPROC = 287,
-    FINFUNC = 288,
-    INFEG = 289,
-    SUPEG = 290,
-    EGGEGG = 291,
-    INF = 292,
-    SUP = 293
+    FUNC = 280,
+    FINPROC = 281,
+    PROC = 282,
+    FINTQ = 283,
+    INFEG = 284,
+    SUPEG = 285,
+    EGGEGG = 286,
+    INF = 287,
+    SUP = 288
   };
 #endif
 /* Tokens.  */
@@ -106,20 +101,15 @@ extern int yydebug;
 #define HAUT 277
 #define DROITE 278
 #define GAUCHE 279
-#define TYPE 280
-#define PROC 281
-#define FUNC 282
-#define F_AVANCE 283
-#define F_DROITE 284
-#define F_GAUCHE 285
-#define FINTQ 286
-#define FINPROC 287
-#define FINFUNC 288
-#define INFEG 289
-#define SUPEG 290
-#define EGGEGG 291
-#define INF 292
-#define SUP 293
+#define FUNC 280
+#define FINPROC 281
+#define PROC 282
+#define FINTQ 283
+#define INFEG 284
+#define SUPEG 285
+#define EGGEGG 286
+#define INF 287
+#define SUP 288
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -129,9 +119,9 @@ union YYSTYPE
 #line 20 "projet.yacc.y" /* yacc.c:1909  */
 
   int intval;
-  char string[100];
+  char *string;
 
-#line 135 "y.tab.h" /* yacc.c:1909  */
+#line 125 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
