@@ -10,6 +10,7 @@ extern FILE *yyin;
 plateau_t *plateau;
 robot_t *robot;
 liste_t liste_cases;
+liste_hachage_t lh;
 
 int yylex();
 void yyerror(const char *erreurMsg);
@@ -26,10 +27,20 @@ void yyerror(const char *erreurMsg);
 %token VRAI FAUX
 %token <string> OPERATEUR
 %token HAUTEUR LARGEUR X Y TYPEJSON BLOC BILLE CAISSE TROU CASE CASES DEBUT DIRECTION BAS HAUT DROITE GAUCHE
-%token TYPE PROC FUNC F_AVANCE F_DROITE F_GAUCHE FINTQ FINPROC FINFUNC INFEG SUPEG EGGEGG INF SUP
+%token TYPE PROC FUNC F_AVANCE F_DROITE F_GAUCHE FINTQ FINPROC FINFUNC
+%token <string> INFEG
+%token <string> SUPEG
+%token <string> EGGEGG
+%token <string> INF
+%token <string> SUP
 
 %type <intval> direction
 %type <intval> type
+%type <string> comparateur
+%type <string> valeur
+%type <string> ligne
+%type <string> expbool
+
 %%
 parser:
     json
@@ -162,7 +173,9 @@ type:
     valeur:
       NOM
       |
-      ENTIER;
+      ENTIER{
+        sprintf($$,"%d",$1);
+      };
 
     appelproc:
       NOM'('params')'
@@ -198,11 +211,6 @@ type:
     comparateur:
       INFEG|SUPEG|EGGEGG|INF|SUP;
 
-
-
-
-
-
 %%
 
 int main(int argc, char* argv[]) {
@@ -222,14 +230,14 @@ int main(int argc, char* argv[]) {
   if((fclose(fd))==EOF){
     fprintf(stderr, "Erreur lors de la fermeture du fichier");
   };
-  if((yyin=fopen(argv[2],"r"))==NULL){
+  /* if((yyin=fopen(argv[2],"r"))==NULL){
     printf("Erreur lors de l'ouverture du fichier \"%s\"",argv[2]);
     exit(EXIT_FAILURE);
   }
   yyparse();
   if((fclose(yyin))==EOF){
     fprintf(stderr, "Erreur lors de la fermeture du fichier");
-  };
+  }; */
 
   if(plateau->hauteur <= 0){
     fprintf(stderr,"La hauteur du plateau est nulle ou négative.\n");
@@ -243,12 +251,39 @@ int main(int argc, char* argv[]) {
   init_plateau(plateau,&liste_cases);
 
   ncurses_initialiser();
-  sokoban = creer_fenetre(hauteur,largeur,1,10);
+  sokoban = creer_fenetre(hauteur,largeur,2,10);
   mvprintw(0,0, "Projet 602 - GIGOUT Thomas - DAUNIQUE Wilfried");
-  legende = creer_fenetre(10,20,1,21);
+  legende = creer_fenetre(10,20,2,21);
+  /* Écriture légendes */
+  mvwprintw(legende,0,6, "Légende");
+  wattron(legende,COLOR_PAIR(2));
+  mvwprintw(legende,2,1," ");
+  wattroff(legende,COLOR_PAIR(2));
+  wattron(legende,COLOR_PAIR(3));
+  mvwprintw(legende,3,1," ");
+  wattroff(legende,COLOR_PAIR(3));
+  wattron(legende,COLOR_PAIR(4));
+  mvwprintw(legende,4,1," ");
+  wattroff(legende,COLOR_PAIR(4));
+  wattron(legende,COLOR_PAIR(5));
+  mvwprintw(legende,5,1," ");
+  wattroff(legende,COLOR_PAIR(5));
+  wattron(legende,COLOR_PAIR(6));
+  mvwprintw(legende,6,1," ");
+  wattroff(legende,COLOR_PAIR(6));
+  wattron(legende,COLOR_PAIR(7));
+  mvwprintw(legende,7,1," ");
+  wattroff(legende,COLOR_PAIR(7));
+  mvwprintw(legende,2,2," Vide");
+  mvwprintw(legende,3,2," Bloc");
+  mvwprintw(legende,4,2," Robot");
+  mvwprintw(legende,5,2," Caisse");
+  mvwprintw(legende,6,2," Bille");
+  mvwprintw(legende,7,2," Trou");
+  wrefresh(legende);
+
   update(sokoban,plateau,robot);
-  refresh();
-  sleep(20);
+  sleep(10);
 
 
   /* fin de l'execution */

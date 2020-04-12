@@ -72,3 +72,37 @@ void afficher_plateau(plateau_t* plateau){
     printf("\n");
   }
 }
+
+/* liste hachage */
+void hach_init_liste(liste_hachage_t* l) {
+  l->tete = NULL;
+}
+
+void hach_ajouter_cellule(liste_hachage_t* l, cell_hachage_t *c) {
+  cell_hachage_t* tmp = malloc(sizeof(cell_hachage_t));
+  if(l->tete==NULL) {
+    l->tete = malloc(sizeof(cell_t));
+    strcpy(l->tete->str,c->str);
+    l->tete->succ = NULL;
+  }else{
+    strcpy(tmp->str,c->str);
+    tmp->succ = l->tete;
+    l->tete = tmp;
+  }
+}
+
+void hach_destroy_liste(liste_hachage_t* l) {
+  cell_hachage_t* tmp=malloc(sizeof(cell_hachage_t));
+  if(l->tete!=NULL) {
+    do {
+      tmp=l->tete;
+      l->tete=tmp->succ;
+      free(tmp);
+      tmp=NULL;
+    }while(l->tete!=NULL);
+    free(tmp);
+    tmp=NULL;
+    free(l->tete);
+    l->tete=NULL;
+  }
+}
