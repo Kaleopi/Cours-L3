@@ -486,22 +486,10 @@ WINDOW *creer_fenetre_points()
 }
 /*test si un poisson se trouve à côté*/
 int poisson_near(coord_t*coord){
-<<<<<<< HEAD
 	
 	if(coord->etang->grille[coord->y-1][coord->x]==HAMMECONSJ1 ){
 		printf("poisson neat bot\n");
 		verif= 1;
-=======
-	if(coord->etang->grille[coord->y-2][coord->x-1]==(HAMMECONSJ1 ||HAMMECONSJ2)
-	||coord->etang->grille[coord->y][coord->x-1]==(HAMMECONSJ1 ||HAMMECONSJ2)
-	||coord->etang->grille[coord->y-1][coord->x]==(HAMMECONSJ1 ||HAMMECONSJ2)
-	||coord->etang->grille[coord->y-1][coord->x-2]==(HAMMECONSJ1 ||HAMMECONSJ2)
-
-	){
-		return 1;
-	}else{
-		return 0;
->>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 	}
 	if(coord->etang->grille[coord->y][coord->x-1]==HAMMECONSJ1 ){
 		printf("poisson near gauche\n");
@@ -512,6 +500,22 @@ int poisson_near(coord_t*coord){
 		verif =1;
 	}
 	if(coord->etang->grille[coord->y][coord->x+1]==HAMMECONSJ1 ){
+		printf("poisson near droit \n");
+		verif=1;
+	}
+	if(coord->etang->grille[coord->y-1][coord->x]==HAMMECONSJ2 ){
+		printf("poisson neat bot\n");
+		verif= 1;
+	}
+	if(coord->etang->grille[coord->y][coord->x-1]==HAMMECONSJ2 ){
+		printf("poisson near gauche\n");
+		verif =1;
+	}
+	if(coord->etang->grille[coord->y+1][coord->x]==HAMMECONSJ2){
+		printf("poisson near top\n");
+		verif =1;
+	}
+	if(coord->etang->grille[coord->y][coord->x+1]==HAMMECONSJ2 ){
 		printf("poisson near droit \n");
 		verif=1;
 	}
@@ -530,27 +534,17 @@ void *routine_poisson(void *arg)
 	struct timeval now;
   	struct timespec timeout;
 	int retcode;
-<<<<<<< HEAD
 	int cpt;
 	
-=======
-
->>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 	/*int j;*/
 
 	srand(time(NULL));
-<<<<<<< HEAD
 	
 
-=======
-
-	pthread_mutex_lock(&grille[coord->y][coord->x].mutex);
->>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 	gettimeofday(&now,NULL);
 	timeout.tv_sec=now.tv_sec + 3;
 	timeout.tv_nsec=now.tv_usec *3000;
 	retcode=0;
-<<<<<<< HEAD
 	cpt=0;
 	
 	while (1)
@@ -571,34 +565,14 @@ void *routine_poisson(void *arg)
 			}
 		
 		
-=======
-	verif=0;
-
-	while (1)
-	{
-		while(poisson_near(coord)==1 && retcode!=ETIMEDOUT){
-
-
-
-			printf("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-			retcode=pthread_cond_timedwait(&grille[coord->y][coord->x].cond,&grille[coord->y][coord->x].mutex,&timeout);
-
-
-
->>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 		}
 		
 		if(retcode==ETIMEDOUT){
 			
 			printf("rekt %d",retcode);
 		}
-<<<<<<< HEAD
 		/*printf("rekt %d",retcode);*/
 		
-=======
-		printf("rekt %d",retcode);
-
->>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 		pos = rand() % 4;
 
 		switch (pos)
