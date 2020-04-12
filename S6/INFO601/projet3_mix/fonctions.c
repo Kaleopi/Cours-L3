@@ -12,7 +12,7 @@
 #include "includes.h"
 #include "fonctions.h"
 
-pthread_t *threads_poissons[MAX_POISSONS]; /* Identifants des threads des poissons de la simulation*/
+pthread_t *threads_poissons[MAX_POISSONS+2]; /* Identifants des threads des poissons de la simulation*/
 WINDOW *fen_sim;						   /* Fenetre de simulation partagee par les poissons*/
 WINDOW *fen_msg;						   /* Fenetre de messages partagee par les poissons*/
 case_t grille[NB_LIGNES_SIM][NB_COL_SIM];  /* Grille de simulation */
@@ -1141,7 +1141,8 @@ void suppr_hammecon(joueur_t *client,grille_t *etang){
 /*lance un items*/
 void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_t* etang,int sockfd,joueur_t * client){
 	MEVENT event;
-
+	int i;
+	coord_t *coord;
 	int nb_hammeconj1=tab[0];
 	int nb_hammeconj2=tab[1];
 	int tempx = client->posxHAMMECON, tempy = client->posyHAMMECON;
@@ -1489,12 +1490,50 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 					}
 					case REQUINJ1:
 						if(client->poireaus>=300) {
+							if (grille[event.y - 1][event.x - 1].element == VIDE) {
+									i = MAX_POISSONS;
+									while (i < MAX_POISSONS+2 && threads_poissons[i] != NULL)
+										i++;
+									if (i < MAX_POISSONS+2) {
+										threads_poissons[i] = (pthread_t *) malloc(sizeof(pthread_t));
+										grille[event.y - 1][event.x - 1].element = POISSON;
+										grille[event.y - 1][event.x - 1].poisson = threads_poissons[i];
+										coord = (coord_t *) malloc(sizeof(coord_t));
+										coord->y = event.y - 1;
+										coord->x = event.x - 1;
+										pthread_create(threads_poissons[i], NULL, routine_poisson, (void *) coord);
+										mvwprintw(fen_sim, event.y - 1, event.x - 1, "@");
+										wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", event.y - 1, event.x - 1);
+									}
+									else {
+										wprintw(fen_msg, "Nombre maximum de poissons atteint\n");
+									}
+								}	
 							}else{
 									wprintw(fen_msg, "NO MONEY\n");
 					}
 					break;
 					case REQUINJ2:
 							if(client->poireaus>=300) {
+								if (grille[event.y - 1][event.x - 1].element == VIDE) {
+									i = MAX_POISSONS;
+									while (i < MAX_POISSONS+2&& threads_poissons[i] != NULL)
+										i++;
+									if (i <MAX_POISSONS+2) {
+										threads_poissons[i] = (pthread_t *) malloc(sizeof(pthread_t));
+										grille[event.y - 1][event.x - 1].element = POISSON;
+										grille[event.y - 1][event.x - 1].poisson = threads_poissons[i];
+										coord = (coord_t *) malloc(sizeof(coord_t));
+										coord->y = event.y - 1;
+										coord->x = event.x - 1;
+										pthread_create(threads_poissons[i], NULL, routine_poisson, (void *) coord);
+										mvwprintw(fen_sim, event.y - 1, event.x - 1, "@");
+										wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", event.y - 1, event.x - 1);
+									}
+									else {
+										wprintw(fen_msg, "Nombre maximum de poissons atteint\n");
+									}
+								}	
 							}else{
 									wprintw(fen_msg, "NO MONEY\n");
 					}
