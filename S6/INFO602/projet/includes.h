@@ -40,6 +40,7 @@ typedef struct cellule {
 }cell_t;
 
 typedef struct cellule_hachage{
+  int val;
   char str[50];
   struct cellule_hachage* succ;
 }cell_hachage_t;
