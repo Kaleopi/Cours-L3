@@ -157,7 +157,7 @@ int main(int argc, char *argv[]) {
         case KEY_MOUSE:
           lancerTruc(item_actif,fen_sim,fen_msg,tab,etang,sockfd,client);
           mvwprintw(fen_points, 0, 0, "Client%d",client->id);
-          mvwprintw(fen_points, 1, 0, "Points : %d                   ",client->points);
+          mvwprintw(fen_points, 1, 0, "Points : %d ",client->points);
           mvwprintw(fen_points, 2, 0, "Poireaus : %d",client->poireaus);
           wrefresh(fen_msg);
           wrefresh(fen_points);

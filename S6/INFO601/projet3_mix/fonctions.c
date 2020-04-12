@@ -956,6 +956,68 @@ void peche(grille_t *etang,joueur_t * client){
 			}
 		}
 	}
+	if(etang->grille[client->posyHAMMECON][client->posxHAMMECON+1]>99){
+		switch(etang->grille[client->posyHAMMECON][client->posxHAMMECON+1]){
+			case 100:
+				pointtemp+= 1;
+			break;
+			case 200:
+				pointtemp += 2;
+			break;
+			case 300:
+				pointtemp += 3;
+			break;
+		}
+	
+		poireaustemp+= client->poireaus+etang->grille[client->posyHAMMECON][client->posxHAMMECON+1];
+		if(grille[client->posyHAMMECON][client->posxHAMMECON+1].element==POISSON){
+			if(pthread_cancel(*grille[client->posyHAMMECON][client->posxHAMMECON+1].poisson)){
+			
+			}
+		}
+	}
+
+	if(etang->grille[client->posyHAMMECON-1][client->posxHAMMECON]>99){
+		switch(etang->grille[client->posyHAMMECON-1][client->posxHAMMECON]){
+			case 100:
+				pointtemp+= 1;
+			break;
+			case 200:
+				pointtemp += 2;
+			break;
+			case 300:
+				pointtemp += 3;
+			break;
+		}
+	
+		poireaustemp+= client->poireaus+etang->grille[client->posyHAMMECON-1][client->posxHAMMECON];
+		if(grille[client->posyHAMMECON-1][client->posxHAMMECON].element==POISSON){
+			if(pthread_cancel(*grille[client->posyHAMMECON-1][client->posxHAMMECON].poisson)){
+			
+			}
+		}
+	}
+
+if(etang->grille[client->posyHAMMECON][client->posxHAMMECON-1]>99){
+		switch(etang->grille[client->posyHAMMECON][client->posxHAMMECON-1]){
+			case 100:
+				pointtemp+= 1;
+			break;
+			case 200:
+				pointtemp += 2;
+			break;
+			case 300:
+				pointtemp += 3;
+			break;
+		}
+	
+		poireaustemp+= client->poireaus+etang->grille[client->posyHAMMECON][client->posxHAMMECON-1];
+		if(grille[client->posyHAMMECON][client->posxHAMMECON-1].element==POISSON){
+			if(pthread_cancel(*grille[client->posyHAMMECON][client->posxHAMMECON-1].poisson)){
+			
+			}
+		}
+	}
 
 }
 void pecheDYNA(grille_t *etang,joueur_t *client,int posy ,int posx){
