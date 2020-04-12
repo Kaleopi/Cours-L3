@@ -546,27 +546,31 @@ void *routine_poisson(void *arg)
 	timeout.tv_nsec=now.tv_usec *3000;
 	retcode=0;
 	cpt=0;
-	
 	while (1)
 	{
 			
 		pthread_mutex_lock(&grille[coord->y][coord->x].mutex);
 		while(poisson_near(coord)==1 ){
-			sleep(1);
+			
 				
 
 			printf("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
 			retcode=pthread_cond_timedwait(&grille[coord->y][coord->x].cond,&grille[coord->y][coord->x].mutex,&timeout);
+			
 			cpt++;
 			if(cpt==3){
 				verif=0;
 				cpt=0;
+			
 				sleep(1);
 			}
+	
+			coord->etang->grille[coord->y ][coord->x]= coord->poisson->val;
 		
 		
 		}
-		
+		pthread_mutex_unlock(&grille[coord->y][coord->x].mutex);
+
 		if(retcode==ETIMEDOUT){
 			
 			printf("rekt %d",retcode);
@@ -895,9 +899,9 @@ void peche(grille_t *etang,joueur_t * client){
 
 
 		client->points = etang->grille[client->posyHAMMECON-1][client->posxHAMMECON]/100;
-		client->poireaus= etang->grille[client->posyHAMMECON-11][client->posxHAMMECON];
+		client->poireaus= etang->grille[client->posyHAMMECON-1][client->posxHAMMECON];
 
-		if(pthread_cancel(*grille[client->posyHAMMECON-4][client->posxHAMMECON].poisson)){
+		if(pthread_cancel(*grille[client->posyHAMMECON-1][client->posxHAMMECON].poisson)){
 			printf("delete");
 		}
 	}
