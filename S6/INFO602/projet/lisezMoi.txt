@@ -5,3 +5,6 @@ make
 ./projet plateau.json code.txt
 
 Pour quitter, appuyez sur CTRL+C ou attendez 10 secondes, car dans l'état actuel, le programme s'éteint au bout de 10 secondes grâce à un sleep.
+
+Si vous ne parvenez pas à ouvrir le Rapport.pdf, voici le lien du google doc : https://docs.google.com/document/d/1tCURZfjT07NHGmwqMI8LeD9sKdQ07Xdp4Fh1rlJtXoM/edit?usp=sharing
+
