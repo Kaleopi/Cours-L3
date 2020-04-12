@@ -614,7 +614,8 @@ void *routine_poisson(void *arg)
 
 			if(retcode==ETIMEDOUT){
 				
-				printf("rekt %d",retcode);
+				/*printf("timeout  %d\n",retcode);*/
+
 			}
 			/*printf("rekt %d",retcode);*/
 			
@@ -679,8 +680,9 @@ void *routine_poisson(void *arg)
 				break;
 			}
 		sleep(1);
-			wrefresh(fen_sim);
-
+		wrefresh(fen_sim);
+		printf("GRILLLE \n\n ------------------------\n");
+    	afficher_grille();	
 		}
 	}
 	pthread_mutex_unlock(&grille[coord->y][coord->x].mutex);
@@ -948,15 +950,43 @@ void peche(grille_t *etang,joueur_t * client){
 		}
 	
 		poireaustemp+= client->poireaus+etang->grille[client->posyHAMMECON+1][client->posxHAMMECON];
-
-		/*if(pthread_cancel(*grille[client->posyHAMMECON+1][client->posxHAMMECON].poisson)){
+		if(grille[client->posyHAMMECON+1][client->posxHAMMECON].element==POISSON){
+			if(pthread_cancel(*grille[client->posyHAMMECON+1][client->posxHAMMECON].poisson)){
 			
-		}*/
+			}
+		}
 	}
-	if(etang->grille[client->posyHAMMECON-1][client->posxHAMMECON]>99){
+
+}
+void pecheDYNA(grille_t *etang,joueur_t *client,int posy ,int posx){
+	int poireaustemp;
+	int pointtemp;
+	poireaustemp=client->poireaus;
+	pointtemp=client->points;
+	if(etang->grille[posy+1][posx]>99){
+		switch(etang->grille[posy+1][posx]){
+			case 100:
+				pointtemp+= 1;
+			break;
+			case 200:
+				pointtemp += 2;
+			break;
+			case 300:
+				pointtemp += 3;
+			break;
+		}
+	
+		poireaustemp+= client->poireaus+etang->grille[posy+1][posx];
+		if(grille[posy+1][posx].element==POISSON){
+			if(pthread_cancel(*grille[posy+1][posx].poisson)){
+			
+			}
+		}
+	}
+	if(etang->grille[posy-1][posx]>99){
 
 
-		switch(etang->grille[client->posyHAMMECON-1][client->posxHAMMECON]){
+		switch(etang->grille[posy-1][posx]){
 			case 100:
 				pointtemp+= 1;
 			break;
@@ -968,15 +998,16 @@ void peche(grille_t *etang,joueur_t * client){
 			break;
 			break;
 		}
-		poireaustemp+=  client->poireaus+etang->grille[client->posyHAMMECON-1][client->posxHAMMECON];
-
-		/*if(pthread_cancel(*grille[client->posyHAMMECON-1][client->posxHAMMECON].poisson)){
+		poireaustemp+=  client->poireaus+etang->grille[posy-1][posx];
+		if(grille[posy][posx-1].element==POISSON){
+			if(pthread_cancel(*grille[posy][posx-1].poisson)){
 			
-		}*/
+			}
+		}
 	}
-	if(etang->grille[client->posyHAMMECON][client->posxHAMMECON+1]>99){
+	if(etang->grille[posy][posx+1]>99){
 
-		switch(etang->grille[client->posyHAMMECON][client->posxHAMMECON+1]){
+		switch(etang->grille[posy][posx+1]){
 			case 100:
 				pointtemp+= 1;
 			break;
@@ -988,16 +1019,17 @@ void peche(grille_t *etang,joueur_t * client){
 			break;
 			
 		}
-		poireaustemp+=  client->poireaus+etang->grille[client->posyHAMMECON][client->posxHAMMECON+1];
+		poireaustemp+=  client->poireaus+etang->grille[posy][posx+1];
 
-		/*if(pthread_cancel(*grille[client->posyHAMMECON][client->posxHAMMECON+1].poisson)){
+			if(grille[posy][posx+1].element==POISSON){
+				if(pthread_cancel(*grille[posy][posx+1].poisson)){
 			
-		}*/
-
+				}
+			}
 	}
-	if(etang->grille[client->posyHAMMECON][client->posxHAMMECON-1]>99){
+	if(etang->grille[posy][posx-1]>99){
 
-		switch(etang->grille[client->posyHAMMECON][client->posxHAMMECON-1]){
+		switch(etang->grille[posy][posx-1]){
 			case 100:
 				pointtemp+= 1;
 			break;
@@ -1008,12 +1040,13 @@ void peche(grille_t *etang,joueur_t * client){
 				pointtemp += 3;
 			break;
 		}
-		poireaustemp+= client->poireaus+etang->grille[client->posyHAMMECON][client->posxHAMMECON-1];
+		poireaustemp+= client->poireaus+etang->grille[posy][posx-1];
 
-		/*if(pthread_cancel(*grille[client->posyHAMMECON][client->posxHAMMECON-1
-		].poisson)){
+		if(grille[posy][posx-1].element==POISSON){
+			if(pthread_cancel(*grille[posy][posx-1].poisson)){
 			
-		}*/
+			}
+		}
 
 	}
 	client->poireaus=poireaustemp;
@@ -1021,6 +1054,17 @@ void peche(grille_t *etang,joueur_t * client){
 	poireaustemp=0;
 	pointtemp=0;
 
+}
+
+void afficher_grille(){
+	int i;
+	int j;
+	for(i=0;i<NB_LIGNES_SIM;i++){
+		for(j=0;j<NB_COL_SIM;j++){
+			printf("%d",grille[i][j].element);
+		}
+		printf("\n");
+	}
 }
 void suppr_hammecon(joueur_t *client,grille_t *etang){
 	
@@ -1161,6 +1205,11 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 							}
 					break;
 				case DYNAJ1:
+								pecheDYNA(etang,client,event.y-2,event.x-2);
+								pecheDYNA(etang,client,event.y-2,event.x);
+								pecheDYNA(etang,client,event.y,event.x);
+								pecheDYNA(etang,client,event.y,event.x-2);
+								
 								etang->grille[event.y-3 ][event.x - 3] = VIDE;
 								etang->grille[event.y - 2][event.x - 3] = VIDE;
 								etang->grille[event.y -1][event.x - 3] = VIDE;
@@ -1225,6 +1274,10 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								mvwprintw(fen_sim, event.y + 1, event.x +1, " ");
 								wattroff(fen_sim, COLOR_PAIR(3));
 				case DYNAJ2:
+								pecheDYNA(etang,client,event.y-2,event.x-2);
+								pecheDYNA(etang,client,event.y-2,event.x);
+								pecheDYNA(etang,client,event.y,event.x);
+								pecheDYNA(etang,client,event.y,event.x-2);
 								etang->grille[event.y-3 ][event.x - 3] = VIDE;
 								etang->grille[event.y - 2][event.x - 3] = VIDE;
 								etang->grille[event.y -1][event.x - 3] = VIDE;

@@ -171,8 +171,9 @@ int main(int argc, char *argv[]) {
 
   while(sock_one > -1 || sock_two > -1){
     simulation_initialiser();
-
+    printf("ETANG \n\n ------------------------\n");
     afficher_etang(etang);
+
      FD_ZERO(&set);
     FD_SET(sock_one, &set);
      FD_SET(sock_two, &set);

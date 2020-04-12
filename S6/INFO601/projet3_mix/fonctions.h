@@ -23,11 +23,13 @@
 /*fonctions*/
 void fusion_etang(grille_t *,grille_t*,grille_t*);/*fusionne létang du j1 et j2*/
 void peche(grille_t *,joueur_t * );/*peche et ajoute les points au client*/
+void pecheDYNA(grille_t *etang,joueur_t *client,int posy ,int posx);/*peche a la dynamite*/
 void init_etang(grille_t*);/*initialise l'étang*/
 void update_sim(WINDOW*,grille_t*);/*raffraichis la simulation*/
 void update_sim_client(WINDOW*,grille_t*,joueur_t *);/*update la simulation du client avesc ses infos seulement*/
 int poisson_near(coord_t*coord); /*regarde si un poisson se trouve à côté*/
 void afficher_etang(grille_t*);/*affiche l'étang dans la console*/
+void afficher_grille();/*affiche la grille de pthread*/
 void recuperation(grille_t*);/*EVITE LA DUPLICATION*/
 void suppr_hammecon(joueur_t *client,grille_t *etang);/*supprime les hammecons en trop*/
 void recuperation_grille(grille_t *);/*recupere la grille via l'étang*/
