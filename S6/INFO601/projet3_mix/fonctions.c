@@ -1231,7 +1231,6 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 			}
 			}
 			update_sim(fen_sim,etang);
-<<<<<<< HEAD
 			if(client->id==1){
 				client->posxHAMMECON=tempx;
 				client->posyHAMMECON=tempy;
@@ -1242,14 +1241,5 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 				tab[1]=nb_hammeconj2;
 			}
 		
-=======
-
-			tab[0]=nb_hammeconj1;
-			tab[2]=tempy;
-			tab[1]=tempx;
-			tab[4]=nb_hammeconj2;
-			tab[5]=tempx2;
-			tab[6]=tempy2;
->>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 			/*return tab;*/
 }
