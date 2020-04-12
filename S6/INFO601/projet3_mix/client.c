@@ -134,7 +134,7 @@ int main(int argc, char *argv[]) {
     perror("Erreur lors de la réception de la grille");
   }
   timeout(250);
-  wprintw(fen_points,"Client%d",client->id);
+  /*wprintw(fen_points,"Client%d",client->id);*/
   wrefresh(fen_points);
   while(verif>-1 && ch!=KEY_F(2)&&client->points<15){
     /*wprintw(fen_msg,"ifverif>%d\n", verif);*/
