@@ -119,6 +119,8 @@ int main(int argc, char *argv[]) {
   fen_outils = creer_fenetre_outils();
   fen_msg = creer_fenetre_msg();
   mvprintw(LINES - 1, 0, "Tapez F2 pour quitter");
+  mvprintw(LINES - 3, 0, "Fleche haut pour changer d'outils vers le haut");
+    mvprintw(LINES - 4, 0, "Fleche bas pour changer d'outils vers le bas");
   wprintw(fen_msg,"initialisation client verif = %d\n",verif);
   refresh();
   wprintw(fen_msg,"after refresh");
@@ -132,7 +134,7 @@ int main(int argc, char *argv[]) {
     perror("Erreur lors de la réception de la grille");
   }
   timeout(250);
-  wprintw(fen_points,"Client%d",client->id);
+  /*wprintw(fen_points,"Client%d",client->id);*/
   wrefresh(fen_points);
   while(verif>-1 && ch!=KEY_F(2)&&client->points<15){
     /*wprintw(fen_msg,"ifverif>%d\n", verif);*/
@@ -196,9 +198,9 @@ int main(int argc, char *argv[]) {
       wprintw(fen_msg,"end\n");
      wrefresh(fen_msg);
      sleep(4);
-    
+
   }
- 
+
    wrefresh(fen_msg);
 
   simulation_stopper();
@@ -211,7 +213,7 @@ int main(int argc, char *argv[]) {
   delwin(fen_box_points);
   delwin(fen_points);
   ncurses_stopper();
- 
+
   /* Fermeture de la socket TCP*/
   if(close(sockfd) == -1) {
     perror("Erreur lors de la fermeture de la socket ");
