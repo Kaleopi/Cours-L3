@@ -63,7 +63,6 @@ typedef struct{
   long type;
   int port;
   int idJOUEUR;
-
 }reponse_t;
 
 /*structure de stockage des positions et des infos poissons à passer au pthread create */
