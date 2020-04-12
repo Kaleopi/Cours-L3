@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   etang = malloc(sizeof(grille_t));
-  tab = malloc(sizeof(int)*7);
+  tab = malloc(sizeof(int)*2);
   init_etang(etang);
   item_actif = HAMMECONS;
   verif = 0;

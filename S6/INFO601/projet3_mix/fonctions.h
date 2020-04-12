@@ -29,6 +29,7 @@ void update_sim_client(WINDOW*,grille_t*,joueur_t *);/*update la simulation du c
 int poisson_near(coord_t*coord); /*regarde si un poisson se trouve à côté*/
 void afficher_etang(grille_t*);/*affiche l'étang dans la console*/
 void recuperation(grille_t*);/*EVITE LA DUPLICATION*/
+void suppr_hammecon(joueur_t *client,grille_t *etang);/*supprime les hammecons en trop*/
 void recuperation_grille(grille_t *);/*recupere la grille via l'étang*/
 void both_send(grille_t*, int, int);/*envoie du serveur au client de l'étang*/
 void one_send(grille_t*, int);/*envoie à l'un des clients de l'étang*/
