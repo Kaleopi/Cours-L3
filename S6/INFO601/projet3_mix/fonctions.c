@@ -1114,12 +1114,12 @@ void pecheDYNA(grille_t *etang,joueur_t *client,int posy ,int posx){
 		}
 
 	}
-	client->poireaus=poireaustemp;
 	client->points=pointtemp;
 	poireaustemp=0;
 	pointtemp=0;
 
 }
+
 
 void afficher_grille(){
 	int i;
@@ -1174,6 +1174,12 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								wprintw(fen_msg, "Ajout d'un Hammecon \n");
 								timer=3;
 							}
+							if (etang->grille[event.y - 1][event.x - 1] == PNEUJ2)
+							{
+								wprintw(fen_msg, "PRANKED!!!!!!!\n");
+								wprintw(fen_msg, "have a nice 5 second sleep\n");
+								sleep(5);
+							}
 						}
 						else
 						{
@@ -1213,6 +1219,13 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								nb_hammeconj2++;
 								wprintw(fen_msg, "Ajout d'un Hammecon \n");
 								timer=3;
+							
+							}
+							if (etang->grille[event.y - 1][event.x - 1] == PNEUJ1)
+							{
+									wprintw(fen_msg, "PRANKED!!!!!!!\n");
+										wprintw(fen_msg, "have a nice 5 second sleep\n");
+								sleep(5);
 							}
 						}
 						else
