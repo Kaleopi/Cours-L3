@@ -24,7 +24,7 @@ OBJETS_O = $(OBJETS) $(EXEC_O)
 #
 
 CC = gcc
-CCFLAGS_STD = -Wall -O3 -Werror -ansi -pedantic -std=c99 
+CCFLAGS_STD = -Wall -g -O3 -Werror -ansi -pedantic -std=c99
 CCFLAGS_DEBUG = -D _DEBUG_
 CCFLAGS = $(CCFLAGS_STD)
 CCLIBS = -lncurses

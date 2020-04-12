@@ -147,7 +147,7 @@ int main(int argc, char *argv[]) {
       wrefresh(fen_msg);
       wrefresh(fen_sim);
       update_sim_client(fen_sim,etang,client);
-      
+
       switch (ch)
 
       {
@@ -166,7 +166,7 @@ int main(int argc, char *argv[]) {
         case KEY_DOWN:
         wprintw(fen_msg, "Switch Item down\n");
         wrefresh(fen_msg);
-       
+
         item_actif=switchDown(item_actif,fen_outils);
         wrefresh(fen_outils);
         break;
@@ -177,7 +177,7 @@ int main(int argc, char *argv[]) {
         wrefresh(fen_outils);
         break;
       }
-     
+
       refresh();
       verif=0;
     }
@@ -202,5 +202,7 @@ int main(int argc, char *argv[]) {
   }
 
   free(etang);
+  free(tab);
+  free(client);
   return EXIT_SUCCESS;
 }
