@@ -512,9 +512,9 @@ static const yytype_uint16 yyrline[] =
        0,    63,    63,    67,    73,    76,    78,    81,    85,    89,
       91,    94,   107,   109,   111,   113,   116,   119,   121,   124,
      134,   138,   142,   146,   152,   156,   161,   166,   171,   175,
-     180,   187,   192,   197,   199,   202,   206,   210,   214,   219,
-     224,   228,   233,   237,   242,   246,   251,   255,   260,   264,
-     269,   274,   278,   283,   288,   293,   297,   301,   305,   309
+     180,   186,   191,   196,   198,   201,   205,   209,   213,   218,
+     223,   227,   232,   236,   241,   245,   250,   254,   259,   263,
+     268,   273,   277,   282,   287,   292,   296,   300,   304,   308
 };
 #endif
 
@@ -1547,7 +1547,7 @@ yyreduce:
   case 29:
 #line 175 "projet.yacc.y" /* yacc.c:1646  */
     {
-        sprintf((yyval.string),"%s %s",(yyvsp[-2].string),(yyvsp[0].string));
+        sprintf((yyval.string),",%s",(yyvsp[-2].string));
       }
 #line 1553 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1555,231 +1555,230 @@ yyreduce:
   case 30:
 #line 180 "projet.yacc.y" /* yacc.c:1646  */
     {
-        /* printf("j'ai un argument %s", $1); */
         sprintf((yyval.string),"%s %s",(yyvsp[-2].string),(yyvsp[0].string));
         printf("%s",(yyval.string));
       }
-#line 1563 "y.tab.c" /* yacc.c:1646  */
+#line 1562 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 187 "projet.yacc.y" /* yacc.c:1646  */
+#line 186 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1571 "y.tab.c" /* yacc.c:1646  */
+#line 1570 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 192 "projet.yacc.y" /* yacc.c:1646  */
+#line 191 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1579 "y.tab.c" /* yacc.c:1646  */
+#line 1578 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 202 "projet.yacc.y" /* yacc.c:1646  */
+#line 201 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1587 "y.tab.c" /* yacc.c:1646  */
+#line 1586 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 206 "projet.yacc.y" /* yacc.c:1646  */
+#line 205 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1595 "y.tab.c" /* yacc.c:1646  */
+#line 1594 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 210 "projet.yacc.y" /* yacc.c:1646  */
+#line 209 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1603 "y.tab.c" /* yacc.c:1646  */
+#line 1602 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 214 "projet.yacc.y" /* yacc.c:1646  */
+#line 213 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1611 "y.tab.c" /* yacc.c:1646  */
+#line 1610 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 219 "projet.yacc.y" /* yacc.c:1646  */
+#line 218 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s = %s",(yyvsp[-2].string),(yyvsp[0].string));
       }
-#line 1619 "y.tab.c" /* yacc.c:1646  */
+#line 1618 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 224 "projet.yacc.y" /* yacc.c:1646  */
+#line 223 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s %s %s",(yyvsp[-2].string),(yyvsp[-1].string),(yyvsp[0].string));
       }
-#line 1627 "y.tab.c" /* yacc.c:1646  */
+#line 1626 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 228 "projet.yacc.y" /* yacc.c:1646  */
+#line 227 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1635 "y.tab.c" /* yacc.c:1646  */
+#line 1634 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 233 "projet.yacc.y" /* yacc.c:1646  */
+#line 232 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1643 "y.tab.c" /* yacc.c:1646  */
+#line 1642 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 237 "projet.yacc.y" /* yacc.c:1646  */
+#line 236 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%d",(yyvsp[0].intval));
       }
-#line 1651 "y.tab.c" /* yacc.c:1646  */
+#line 1650 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 242 "projet.yacc.y" /* yacc.c:1646  */
+#line 241 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s(%s)",(yyvsp[-3].string),(yyvsp[-1].string));
       }
-#line 1659 "y.tab.c" /* yacc.c:1646  */
+#line 1658 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 246 "projet.yacc.y" /* yacc.c:1646  */
+#line 245 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s()",(yyvsp[-1].string));
       }
-#line 1667 "y.tab.c" /* yacc.c:1646  */
+#line 1666 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 251 "projet.yacc.y" /* yacc.c:1646  */
+#line 250 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1675 "y.tab.c" /* yacc.c:1646  */
+#line 1674 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 255 "projet.yacc.y" /* yacc.c:1646  */
+#line 254 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s,%s",(yyvsp[-2].string),(yyvsp[0].string));
       }
-#line 1683 "y.tab.c" /* yacc.c:1646  */
+#line 1682 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 260 "projet.yacc.y" /* yacc.c:1646  */
+#line 259 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1691 "y.tab.c" /* yacc.c:1646  */
+#line 1690 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 264 "projet.yacc.y" /* yacc.c:1646  */
+#line 263 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%d",(yyvsp[0].intval));
       }
-#line 1699 "y.tab.c" /* yacc.c:1646  */
+#line 1698 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 269 "projet.yacc.y" /* yacc.c:1646  */
+#line 268 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"si(%s)\n%s\n%s\nfinsi",(yyvsp[-4].string),(yyvsp[-2].string),(yyvsp[-1].string));
       }
-#line 1707 "y.tab.c" /* yacc.c:1646  */
+#line 1706 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 274 "projet.yacc.y" /* yacc.c:1646  */
+#line 273 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"sinon\n%s",(yyvsp[0].string));
       }
-#line 1715 "y.tab.c" /* yacc.c:1646  */
+#line 1714 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 278 "projet.yacc.y" /* yacc.c:1646  */
+#line 277 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),";");
       }
-#line 1723 "y.tab.c" /* yacc.c:1646  */
+#line 1722 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 283 "projet.yacc.y" /* yacc.c:1646  */
+#line 282 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"tantque(%s)\n%s\nfintantque",(yyvsp[-3].string),(yyvsp[-1].string));
       }
-#line 1731 "y.tab.c" /* yacc.c:1646  */
+#line 1730 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 288 "projet.yacc.y" /* yacc.c:1646  */
+#line 287 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s %s %s",(yyvsp[-2].string),(yyvsp[-1].string),(yyvsp[0].string));
       }
-#line 1739 "y.tab.c" /* yacc.c:1646  */
+#line 1738 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 293 "projet.yacc.y" /* yacc.c:1646  */
+#line 292 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1747 "y.tab.c" /* yacc.c:1646  */
+#line 1746 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 297 "projet.yacc.y" /* yacc.c:1646  */
+#line 296 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1755 "y.tab.c" /* yacc.c:1646  */
+#line 1754 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 301 "projet.yacc.y" /* yacc.c:1646  */
+#line 300 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1763 "y.tab.c" /* yacc.c:1646  */
+#line 1762 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 305 "projet.yacc.y" /* yacc.c:1646  */
+#line 304 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1771 "y.tab.c" /* yacc.c:1646  */
+#line 1770 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 309 "projet.yacc.y" /* yacc.c:1646  */
+#line 308 "projet.yacc.y" /* yacc.c:1646  */
     {
         sprintf((yyval.string),"%s",(yyvsp[0].string));
       }
-#line 1779 "y.tab.c" /* yacc.c:1646  */
+#line 1778 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1783 "y.tab.c" /* yacc.c:1646  */
+#line 1782 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2007,7 +2006,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 313 "projet.yacc.y" /* yacc.c:1906  */
+#line 312 "projet.yacc.y" /* yacc.c:1906  */
 
 
 int main(int argc, char* argv[]) {
@@ -2028,7 +2027,13 @@ int main(int argc, char* argv[]) {
   if((fclose(fd))==EOF){
     fprintf(stderr, "Erreur lors de la fermeture du fichier");
   };
-  if((fd=fopen(argv[2],"r"))==NULL){
+
+  /*
+   *  Parse du pseudocode semi-fonctionnel.
+   *  Du coup nous avons mis en commentaire pour pouvoir quand même exécuter le parse du JSON
+   *  Pour voir les erreurs concernant le parse du pseudo code, décommentez les fopen etc suivant
+   */
+  /* if((fd=fopen(argv[2],"r"))==NULL){
     printf("Erreur lors de l'ouverture du fichier \"%s\"",argv[2]);
     exit(EXIT_FAILURE);
   }
@@ -2037,7 +2042,7 @@ int main(int argc, char* argv[]) {
   yyparse();
   if((fclose(yyin))==EOF){
     fprintf(stderr, "Erreur lors de la fermeture du fichier");
-  };
+  }; */
 
   if(plateau->hauteur <= 0){
     fprintf(stderr,"La hauteur du plateau est nulle ou négative.\n");

@@ -173,12 +173,11 @@ type:
       }
       |
       arguments ',' argument{
-        sprintf($$,"%s %s",$1,$3);
+        sprintf($$,",%s",$1);
       };
 
     argument:
       variable ':' typearg{
-        /* printf("j'ai un argument %s", $1); */
         sprintf($$,"%s %s",$1,$3);
         printf("%s",$$);
       };
@@ -330,7 +329,13 @@ int main(int argc, char* argv[]) {
   if((fclose(fd))==EOF){
     fprintf(stderr, "Erreur lors de la fermeture du fichier");
   };
-  if((fd=fopen(argv[2],"r"))==NULL){
+
+  /*
+   *  Parse du pseudocode semi-fonctionnel.
+   *  Du coup nous avons mis en commentaire pour pouvoir quand même exécuter le parse du JSON
+   *  Pour voir les erreurs concernant le parse du pseudo code, décommentez les fopen etc suivant
+   */
+  /* if((fd=fopen(argv[2],"r"))==NULL){
     printf("Erreur lors de l'ouverture du fichier \"%s\"",argv[2]);
     exit(EXIT_FAILURE);
   }
@@ -339,7 +344,7 @@ int main(int argc, char* argv[]) {
   yyparse();
   if((fclose(yyin))==EOF){
     fprintf(stderr, "Erreur lors de la fermeture du fichier");
-  };
+  }; */
 
   if(plateau->hauteur <= 0){
     fprintf(stderr,"La hauteur du plateau est nulle ou négative.\n");
