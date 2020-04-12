@@ -765,6 +765,8 @@ void generer_poisson(grille_t *etang)
 				nb_poissons++;
 				randomP = rand() % 100;
 
+
+
 				creer_poisson(nb_poissons,randomx,randomy,poisson, randomP,nb_poissons);
 				threads_poissons[nb_poissons] = (pthread_t *)malloc(sizeof(pthread_t));
 				grille[randomy][randomx].element = POISSON;
@@ -1495,6 +1497,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 									while (i < MAX_POISSONS+2 && threads_poissons[i] != NULL)
 										i++;
 									if (i < MAX_POISSONS+2) {
+
 										threads_poissons[i] = (pthread_t *) malloc(sizeof(pthread_t));
 										grille[event.y - 1][event.x - 1].element = POISSON;
 										grille[event.y - 1][event.x - 1].poisson = threads_poissons[i];
@@ -1509,9 +1512,12 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 										wprintw(fen_msg, "Nombre maximum de poissons atteint\n");
 									}
 								}	
+								client->poireaus-=300;
 							}else{
 									wprintw(fen_msg, "NO MONEY\n");
+								
 					}
+					
 					break;
 					case REQUINJ2:
 							if(client->poireaus>=300) {
@@ -1529,6 +1535,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 										pthread_create(threads_poissons[i], NULL, routine_poisson, (void *) coord);
 										mvwprintw(fen_sim, event.y - 1, event.x - 1, "@");
 										wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", event.y - 1, event.x - 1);
+										client->poireaus-=300;
 									}
 									else {
 										wprintw(fen_msg, "Nombre maximum de poissons atteint\n");
@@ -1541,6 +1548,8 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 					case FURTIFJ1:
 							if(client->poireaus>=500) {
 								client->furtif=1;
+								client->poireaus-=500;
+									wprintw(fen_msg, "FURTIF ON\n");
 							}else{
 									wprintw(fen_msg, "NO MONEY\n");
 					}
@@ -1548,6 +1557,8 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 					case FURTIFJ2:
 							if(client->poireaus>=500) {
 								client->furtif=1;
+								client->poireaus-=500;
+								wprintw(fen_msg, "FURTIF ON\n");
 							}else{
 									wprintw(fen_msg, "NO MONEY\n");
 					}
