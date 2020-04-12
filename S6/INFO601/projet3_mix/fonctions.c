@@ -998,7 +998,7 @@ void peche(grille_t *etang,joueur_t * client){
 		}
 	}
 
-if(etang->grille[client->posyHAMMECON][client->posxHAMMECON-1]>99){
+	if(etang->grille[client->posyHAMMECON][client->posxHAMMECON-1]>99){
 		switch(etang->grille[client->posyHAMMECON][client->posxHAMMECON-1]){
 			case 100:
 				pointtemp+= 1;
@@ -1018,7 +1018,10 @@ if(etang->grille[client->posyHAMMECON][client->posxHAMMECON-1]>99){
 			}
 		}
 	}
-
+	client->poireaus=poireaustemp;
+	client->points=pointtemp;
+	poireaustemp=0;
+	pointtemp=0;
 }
 void pecheDYNA(grille_t *etang,joueur_t *client,int posy ,int posx){
 	int poireaustemp;
