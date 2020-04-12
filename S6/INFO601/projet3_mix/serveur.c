@@ -14,7 +14,7 @@
 #include "fonctions.h"
 #include "includes.h"
 #include "message.h"
- 
+
 
 int main(int argc, char *argv[]) {
 
@@ -171,7 +171,7 @@ int main(int argc, char *argv[]) {
 
   while(sock_one > -1 || sock_two > -1){
     simulation_initialiser();
-    
+
     afficher_etang(etang);
      FD_ZERO(&set);
     FD_SET(sock_one, &set);
@@ -236,6 +236,8 @@ int main(int argc, char *argv[]) {
   ();*/
   simulation_stopper();
   free(etang);
+  free(etangj1);
+  free(etangj2);
   printf("Serveur terminé.\n");
 
   return EXIT_SUCCESS;

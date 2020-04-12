@@ -21,7 +21,7 @@ int nb_poissons=0;
 
 void both_send(grille_t *etang, int sock_one, int sock_two)
 {
-	
+
 	one_send(etang, sock_one);
 	one_send(etang, sock_two);
 }
@@ -272,9 +272,9 @@ void update_sim_client(WINDOW *w, grille_t *etang,joueur_t *client){
 			}
 		}
 	}
-			
+
 	refresh();
-		
+
 
 }
 
@@ -486,10 +486,22 @@ WINDOW *creer_fenetre_points()
 }
 /*test si un poisson se trouve à côté*/
 int poisson_near(coord_t*coord){
+<<<<<<< HEAD
 	
 	if(coord->etang->grille[coord->y-1][coord->x]==HAMMECONSJ1 ){
 		printf("poisson neat bot\n");
 		verif= 1;
+=======
+	if(coord->etang->grille[coord->y-2][coord->x-1]==(HAMMECONSJ1 ||HAMMECONSJ2)
+	||coord->etang->grille[coord->y][coord->x-1]==(HAMMECONSJ1 ||HAMMECONSJ2)
+	||coord->etang->grille[coord->y-1][coord->x]==(HAMMECONSJ1 ||HAMMECONSJ2)
+	||coord->etang->grille[coord->y-1][coord->x-2]==(HAMMECONSJ1 ||HAMMECONSJ2)
+
+	){
+		return 1;
+	}else{
+		return 0;
+>>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 	}
 	if(coord->etang->grille[coord->y][coord->x-1]==HAMMECONSJ1 ){
 		printf("poisson near gauche\n");
@@ -518,17 +530,27 @@ void *routine_poisson(void *arg)
 	struct timeval now;
   	struct timespec timeout;
 	int retcode;
+<<<<<<< HEAD
 	int cpt;
 	
+=======
+
+>>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 	/*int j;*/
-	
+
 	srand(time(NULL));
+<<<<<<< HEAD
 	
 
+=======
+
+	pthread_mutex_lock(&grille[coord->y][coord->x].mutex);
+>>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 	gettimeofday(&now,NULL);
 	timeout.tv_sec=now.tv_sec + 3;
 	timeout.tv_nsec=now.tv_usec *3000;
 	retcode=0;
+<<<<<<< HEAD
 	cpt=0;
 	
 	while (1)
@@ -549,16 +571,36 @@ void *routine_poisson(void *arg)
 			}
 		
 		
+=======
+	verif=0;
+
+	while (1)
+	{
+		while(poisson_near(coord)==1 && retcode!=ETIMEDOUT){
+
+
+
+			printf("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+			retcode=pthread_cond_timedwait(&grille[coord->y][coord->x].cond,&grille[coord->y][coord->x].mutex,&timeout);
+
+
+
+>>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 		}
 		
 		if(retcode==ETIMEDOUT){
 			
 			printf("rekt %d",retcode);
 		}
+<<<<<<< HEAD
 		/*printf("rekt %d",retcode);*/
 		
+=======
+		printf("rekt %d",retcode);
+
+>>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 		pos = rand() % 4;
-	
+
 		switch (pos)
 		{
 		case 0:
@@ -619,7 +661,7 @@ void *routine_poisson(void *arg)
 		}
 	sleep(1);
 		wrefresh(fen_sim);
-		
+
 	}
 	pthread_mutex_unlock(&grille[coord->y][coord->x].mutex);
 	update_sim(fen_sim,coord->etang);
@@ -655,8 +697,8 @@ void recuperation_grille(grille_t *etang){
 void creer_poisson(int id, int posx, int posy,poisson_t *poisson,int random,int nb_poissons)
 {
 
-	
-	
+
+
 				if (random < 20)
 				{
 					poisson[nb_poissons].val = 300;
@@ -669,11 +711,11 @@ void creer_poisson(int id, int posx, int posy,poisson_t *poisson,int random,int 
 				{
 					poisson[nb_poissons].val = 100;
 				}
-	
+
 	poisson[nb_poissons].id = nb_poissons;
 	poisson[nb_poissons].posx = posx;
 	poisson[nb_poissons].posy = posy;
-	
+
 
 }
 /*thread*/
@@ -682,11 +724,11 @@ void generer_poisson(grille_t *etang)
 {
 	int randomx, randomy;
 	int randomP;
-	
+
 	poisson_t *poisson;
 	coord_t *coord;
 	poisson = (poisson_t *)malloc(sizeof(poisson_t)*MAX_POISSONS);
-	
+
 		while (nb_poissons < MAX_POISSONS)
 		{
 			randomx = rand() % NB_COL_SIM/1.5+1;
@@ -698,12 +740,12 @@ void generer_poisson(grille_t *etang)
 
 				nb_poissons++;
 				randomP = rand() % 100;
-				
+
 				creer_poisson(nb_poissons,randomx,randomy,poisson, randomP,nb_poissons);
 				threads_poissons[nb_poissons] = (pthread_t *)malloc(sizeof(pthread_t));
 				grille[randomy][randomx].element = POISSON;
-				
-			
+
+
 
 				etang->grille[randomy][randomx]=poisson->val;
 				grille[randomy][randomx].poisson = threads_poissons[nb_poissons];
@@ -711,18 +753,18 @@ void generer_poisson(grille_t *etang)
 				coord->y = randomy;
 				coord->x = randomx;
 				coord->etang=etang;
-				
+
 				coord->poisson=&poisson[nb_poissons];
 				pthread_create(threads_poissons[nb_poissons], NULL, routine_poisson, (void *)coord);
 				/* wprintw(fen_msg, "Ajout d'une poisson a la position %d %d\n", randomy - 1, randomx - 1);*/
-				
+
 				pthread_cond_broadcast(&grille[randomy][randomx].cond);
 				pthread_mutex_unlock(&grille[randomy][randomx].mutex);
 
-				
-				wrefresh(fen_sim);
-				wprintw(fen_msg, "%d %d\n", randomy, randomx);
-			
+
+				/*wrefresh(fen_sim);
+				wprintw(fen_msg, "%d %d\n", randomy, randomx);*/
+
 				}
 			}
 			sleep(0.75);
@@ -850,11 +892,11 @@ int i=0,j=0;
 			if(etang->grille[i][j]<99){
 				if (etangj1->grille[i][j]<99){
 					etang->grille[i][j]=etangj2->grille[i][j];
-					
+
 				}
 				if (etangj2->grille[i][j]==0){
 					etang->grille[i][j]=etangj1->grille[i][j];
-					
+
 				}
 			}
 		}
@@ -1203,7 +1245,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								mvwprintw(fen_sim, event.y , event.x +1, " ");
 								mvwprintw(fen_sim, event.y + 1, event.x +1, " ");
 								wattroff(fen_sim, COLOR_PAIR(4));
-					case REQUINJ1:	
+					case REQUINJ1:
 					break;
 					case REQUINJ2:
 					break;
@@ -1215,6 +1257,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 			}
 			}
 			update_sim(fen_sim,etang);
+<<<<<<< HEAD
 			if(client->id==1){
 				client->posxHAMMECON=tempx;
 				client->posyHAMMECON=tempy;
@@ -1225,5 +1268,14 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 				tab[1]=nb_hammeconj2;
 			}
 		
+=======
+
+			tab[0]=nb_hammeconj1;
+			tab[2]=tempy;
+			tab[1]=tempx;
+			tab[4]=nb_hammeconj2;
+			tab[5]=tempx2;
+			tab[6]=tempy2;
+>>>>>>> 4b8431090c1b5dd46c7edb43dc39c0e2fc96fa34
 			/*return tab;*/
 }

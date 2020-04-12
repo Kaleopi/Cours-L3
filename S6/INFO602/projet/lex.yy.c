@@ -558,7 +558,8 @@ void yyerror(const char *erreurMsg);
 /* global */
 /* json */
 /* pseudo-code */
-#line 562 "lex.yy.c"
+/* easter egg */
+#line 563 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -775,9 +776,9 @@ YY_DECL
 		}
 
 	{
-#line 50 "projet.lex"
+#line 51 "projet.lex"
 
-#line 781 "lex.yy.c"
+#line 782 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -836,201 +837,201 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 51 "projet.lex"
+#line 52 "projet.lex"
 { yylval.intval = atoi(yytext); return ENTIER; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 52 "projet.lex"
+#line 53 "projet.lex"
 { return *yytext; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 53 "projet.lex"
+#line 54 "projet.lex"
 { return VRAI; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 54 "projet.lex"
+#line 55 "projet.lex"
 { return FAUX; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 56 "projet.lex"
+#line 57 "projet.lex"
 { return HAUTEUR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 57 "projet.lex"
+#line 58 "projet.lex"
 { return LARGEUR; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 58 "projet.lex"
+#line 59 "projet.lex"
 { return X; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 59 "projet.lex"
+#line 60 "projet.lex"
 { return Y; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 60 "projet.lex"
+#line 61 "projet.lex"
 { return TYPEJSON; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 61 "projet.lex"
+#line 62 "projet.lex"
 { return BLOC; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 62 "projet.lex"
+#line 63 "projet.lex"
 { return BILLE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 63 "projet.lex"
+#line 64 "projet.lex"
 { return CAISSE; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 64 "projet.lex"
+#line 65 "projet.lex"
 { return TROU; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 65 "projet.lex"
+#line 66 "projet.lex"
 { return CASE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 66 "projet.lex"
+#line 67 "projet.lex"
 { return CASES; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 67 "projet.lex"
+#line 68 "projet.lex"
 { return DEBUT; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 68 "projet.lex"
+#line 69 "projet.lex"
 { return DIRECTION; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 69 "projet.lex"
+#line 70 "projet.lex"
 { return BAS; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 70 "projet.lex"
+#line 71 "projet.lex"
 { return HAUT; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 71 "projet.lex"
+#line 72 "projet.lex"
 { return DROITE; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 72 "projet.lex"
+#line 73 "projet.lex"
 { return GAUCHE; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 74 "projet.lex"
+#line 75 "projet.lex"
 { return *yytext; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 75 "projet.lex"
+#line 76 "projet.lex"
 { return PROC; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 76 "projet.lex"
+#line 77 "projet.lex"
 { return FUNC; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 77 "projet.lex"
+#line 78 "projet.lex"
 { return NOM; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 78 "projet.lex"
+#line 79 "projet.lex"
 { return FINTQ; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 79 "projet.lex"
+#line 80 "projet.lex"
 { return FINPROC; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 80 "projet.lex"
+#line 81 "projet.lex"
 { return FINFUNC; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 81 "projet.lex"
+#line 82 "projet.lex"
 { return F_AVANCE; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 82 "projet.lex"
+#line 83 "projet.lex"
 { return F_DROITE; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 83 "projet.lex"
+#line 84 "projet.lex"
 { return F_GAUCHE; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 84 "projet.lex"
+#line 85 "projet.lex"
 { return INFEG; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 85 "projet.lex"
+#line 86 "projet.lex"
 { return SUPEG; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 86 "projet.lex"
-{ return EGEG; }
+#line 87 "projet.lex"
+{ return EGGEGG; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 87 "projet.lex"
+#line 88 "projet.lex"
 { return INF; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 88 "projet.lex"
+#line 89 "projet.lex"
 { return SUP; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 90 "projet.lex"
+#line 91 "projet.lex"
 { return *yytext; }
 	YY_BREAK
 case 38:
 /* rule 38 can match eol */
 YY_RULE_SETUP
-#line 91 "projet.lex"
+#line 92 "projet.lex"
 ;
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 93 "projet.lex"
+#line 94 "projet.lex"
 ECHO;
 	YY_BREAK
-#line 1034 "lex.yy.c"
+#line 1035 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2035,7 +2036,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 93 "projet.lex"
+#line 94 "projet.lex"
 
 
 void yyerror(const char *erreurMsg) {
