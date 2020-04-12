@@ -71,7 +71,8 @@ int main(int argc, char *argv[]) {
   printf("reponse.type : %ld\n",reponse.type);
   printf("reponse.port : %d\n",reponse.port);
   client->id=reponse.idJOUEUR;
-
+  client->points=0;
+  client->poireaus=0;
   /* Fermeture de la socket */
   if(close(sockfd) == -1) {
     perror("Erreur lors de la fermeture de la socket ");
@@ -107,7 +108,7 @@ int main(int argc, char *argv[]) {
   if(read(sockfd, etang, sizeof(grille_t))==-1){
     perror("Erreur lors de la réception de la grille");
   }
-
+while(client->points<15){
   ncurses_initialiser();
   fen_box_sim = creer_fenetre_box_sim();
   fen_box_points = creer_fenetre_box_points();
@@ -155,6 +156,7 @@ int main(int argc, char *argv[]) {
           lancerTruc(item_actif,fen_sim,fen_msg,tab,etang,sockfd,client);
           mvwprintw(fen_points, 0, 0, "Points : %d",client->points);
           mvwprintw(fen_points, 1, 0, "Poireaus : %d",client->poireaus);
+          wrefresh(fen_msg);
           wrefresh(fen_points);
 
          if(write(sockfd,etang,sizeof(grille_t))==-1){
@@ -195,6 +197,7 @@ int main(int argc, char *argv[]) {
   delwin(fen_box_points);
   delwin(fen_points);
   ncurses_stopper();
+  }
   /* Fermeture de la socket TCP*/
   if(close(sockfd) == -1) {
     perror("Erreur lors de la fermeture de la socket ");
