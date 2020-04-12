@@ -1173,6 +1173,9 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 					break;
 
 				case PNEUJ1:
+					if(client->poireaus>100){
+
+					
 							if ((etang->grille[event.y - 1][event.x - 1] == VIDE)
 								&& (etang->grille[event.y  ][event.x - 1] == VIDE)
 								&&(etang->grille[event.y +1][event.x - 1] == VIDE) )
@@ -1187,8 +1190,14 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								wattroff(fen_sim, COLOR_PAIR(2));
 								wprintw(fen_msg, "Ajout d'un pneu \n");
 							}
+							client->poireaus-=100;
+					}else{
+						wprintw(fen_msg, "NO MONEY\n");
+					}
 					break;
 				case PNEUJ2:
+					if(client->poireaus>100){
+
 							if ((etang->grille[event.y - 1][event.x - 1] == VIDE)
 								&& (etang->grille[event.y  ][event.x - 1] == VIDE)
 								&&(etang->grille[event.y +1][event.x - 1] == VIDE) )
@@ -1202,9 +1211,15 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								mvwprintw(fen_sim, event.y +1 , event.x - 1, " ");
 								wattroff(fen_sim, COLOR_PAIR(2));
 								wprintw(fen_msg, "Ajout d'un pneu \n");
+							
 							}
+							client->poireaus-=100;
+					}else{
+						wprintw(fen_msg, "NO MONEY\n");
+					}
 					break;
 				case DYNAJ1:
+					if(client->poireaus>200) {
 								pecheDYNA(etang,client,event.y-2,event.x-2);
 								pecheDYNA(etang,client,event.y-2,event.x);
 								pecheDYNA(etang,client,event.y,event.x);
@@ -1273,7 +1288,12 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								mvwprintw(fen_sim, event.y , event.x +1, " ");
 								mvwprintw(fen_sim, event.y + 1, event.x +1, " ");
 								wattroff(fen_sim, COLOR_PAIR(3));
-				case DYNAJ2:
+								client->poireaus-=200;
+					}else{
+									wprintw(fen_msg, "NO MONEY\n");
+					}
+				case DYNAJ2:	
+					if(client->poireaus>200) {
 								pecheDYNA(etang,client,event.y-2,event.x-2);
 								pecheDYNA(etang,client,event.y-2,event.x);
 								pecheDYNA(etang,client,event.y,event.x);
@@ -1381,6 +1401,10 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								mvwprintw(fen_sim, event.y , event.x +1, " ");
 								mvwprintw(fen_sim, event.y + 1, event.x +1, " ");
 								wattroff(fen_sim, COLOR_PAIR(4));
+								client->poireaus-=200;
+					}else{
+									wprintw(fen_msg, "NO MONEY\n");
+					}
 					case REQUINJ1:
 					break;
 					case REQUINJ2:
