@@ -930,21 +930,24 @@ void fuite(poisson_t *poisson){
 }
 /*peche*/
 void peche(grille_t *etang,joueur_t * client){
-
+	int poireaustemp;
+	int pointtemp;
+	poireaustemp=client->poireaus;
+	pointtemp=client->points;
 	if(etang->grille[client->posyHAMMECON+1][client->posxHAMMECON]>99){
 		switch(etang->grille[client->posyHAMMECON+1][client->posxHAMMECON]){
 			case 100:
-				client->points += 1;
+				pointtemp+= 1;
 			break;
 			case 200:
-				client->points += 2;
+				pointtemp += 2;
 			break;
 			case 300:
-				client->points += 3;
+				pointtemp += 3;
 			break;
 		}
 	
-		client->poireaus= client->poireaus+etang->grille[client->posyHAMMECON+1][client->posxHAMMECON];
+		poireaustemp+= client->poireaus+etang->grille[client->posyHAMMECON+1][client->posxHAMMECON];
 
 		/*if(pthread_cancel(*grille[client->posyHAMMECON+1][client->posxHAMMECON].poisson)){
 			
@@ -955,16 +958,17 @@ void peche(grille_t *etang,joueur_t * client){
 
 		switch(etang->grille[client->posyHAMMECON-1][client->posxHAMMECON]){
 			case 100:
-				client->points += 1;
+				pointtemp+= 1;
 			break;
 			case 200:
-				client->points += 2;
+				pointtemp += 2;
 			break;
 			case 300:
-				client->points +=3 ;
+				pointtemp += 3;
+			break;
 			break;
 		}
-		client->poireaus= client->poireaus+etang->grille[client->posyHAMMECON-1][client->posxHAMMECON];
+		poireaustemp+=  client->poireaus+etang->grille[client->posyHAMMECON-1][client->posxHAMMECON];
 
 		/*if(pthread_cancel(*grille[client->posyHAMMECON-1][client->posxHAMMECON].poisson)){
 			
@@ -974,16 +978,17 @@ void peche(grille_t *etang,joueur_t * client){
 
 		switch(etang->grille[client->posyHAMMECON][client->posxHAMMECON+1]){
 			case 100:
-				client->points += 1;
+				pointtemp+= 1;
 			break;
 			case 200:
-				client->points += 2;
+				pointtemp += 2;
 			break;
 			case 300:
-				client->points += 3;
+				pointtemp += 3;
 			break;
+			
 		}
-		client->poireaus= client->poireaus+etang->grille[client->posyHAMMECON][client->posxHAMMECON+1];
+		poireaustemp+=  client->poireaus+etang->grille[client->posyHAMMECON][client->posxHAMMECON+1];
 
 		/*if(pthread_cancel(*grille[client->posyHAMMECON][client->posxHAMMECON+1].poisson)){
 			
@@ -994,16 +999,16 @@ void peche(grille_t *etang,joueur_t * client){
 
 		switch(etang->grille[client->posyHAMMECON][client->posxHAMMECON-1]){
 			case 100:
-				client->points += 1;
+				pointtemp+= 1;
 			break;
 			case 200:
-				client->points += 2;
+				pointtemp += 2;
 			break;
 			case 300:
-				client->points +=3 ;
+				pointtemp += 3;
 			break;
 		}
-		client->points= client->poireaus+etang->grille[client->posyHAMMECON][client->posxHAMMECON-1];
+		poireaustemp+= client->poireaus+etang->grille[client->posyHAMMECON][client->posxHAMMECON-1];
 
 		/*if(pthread_cancel(*grille[client->posyHAMMECON][client->posxHAMMECON-1
 		].poisson)){
@@ -1011,6 +1016,10 @@ void peche(grille_t *etang,joueur_t * client){
 		}*/
 
 	}
+	client->poireaus=poireaustemp;
+	client->points=pointtemp;
+	poireaustemp=0;
+	pointtemp=0;
 
 }
 void suppr_hammecon(joueur_t *client,grille_t *etang){
