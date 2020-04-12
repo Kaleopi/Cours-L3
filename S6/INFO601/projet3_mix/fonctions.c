@@ -18,6 +18,9 @@ WINDOW *fen_msg;						   /* Fenetre de messages partagee par les poissons*/
 case_t grille[NB_LIGNES_SIM][NB_COL_SIM];  /* Grille de simulation */
 int verif=0;
 int nb_poissons=0;
+int timer=0;
+int temptimerx=0;
+int temptimery=0;
 
 void both_send(grille_t *etang, int sock_one, int sock_two)
 {
@@ -535,6 +538,9 @@ void *routine_poisson(void *arg)
   	struct timespec timeout;
 	int retcode;
 	int cpt;
+	int directionx;
+	int directiony;
+	int direction;
 	
 	/*int j;*/
 
@@ -546,100 +552,136 @@ void *routine_poisson(void *arg)
 	timeout.tv_nsec=now.tv_usec *3000;
 	retcode=0;
 	cpt=0;
-	while (1)
-	{
+	if(timer==3||timer==2||timer==1){
+		while(timer>0){
+			timer--;
+			directionx=coord->x-temptimerx;
+			directiony=coord->y-temptimery;
+			direction=directionx+directiony;
 			
-		pthread_mutex_lock(&grille[coord->y][coord->x].mutex);
-		while(poisson_near(coord)==1 ){
-			
-				
+			if(direction<0){
+				if (coord->y + 1 < NB_LIGNES_SIM)
+				{
+					if (grille[coord->y + 1][coord->x].element == VIDE)
+					{
+						coord->etang->grille[coord->y + 1][coord->x]= coord->poisson->val;
+						coord->etang->grille[coord->y ][coord->x]= VIDE;
+						grille[coord->y + 1][coord->x].element = POISSON;
+						grille[coord->y][coord->x].element = VIDE;
+						coord->y++;
+					}
 
-			printf("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-			retcode=pthread_cond_timedwait(&grille[coord->y][coord->x].cond,&grille[coord->y][coord->x].mutex,&timeout);
-			
-			cpt++;
-			if(cpt==3){
-				verif=0;
-				cpt=0;
-			
-				sleep(1);
+				}
+			}else{
+				if (coord->y -1 < NB_LIGNES_SIM)
+				{
+					if (grille[coord->y -1 ][coord->x].element == VIDE)
+					{
+						coord->etang->grille[coord->y - 1][coord->x]= coord->poisson->val;
+						coord->etang->grille[coord->y ][coord->x]= VIDE;
+						grille[coord->y - 1][coord->x].element = POISSON;
+						grille[coord->y][coord->x].element = VIDE;
+						coord->y--;
+					}
+
+				}
 			}
-	
-			coord->etang->grille[coord->y ][coord->x]= coord->poisson->val;
-		
-		
-		}
-		pthread_mutex_unlock(&grille[coord->y][coord->x].mutex);
 
-		if(retcode==ETIMEDOUT){
-			
-			printf("rekt %d",retcode);
 		}
-		/*printf("rekt %d",retcode);*/
-		
-		pos = rand() % 4;
-
-		switch (pos)
+	}else{
+		while (1)
 		{
-		case 0:
-			if (coord->y + 1 < NB_LIGNES_SIM)
-			{
-				if (grille[coord->y + 1][coord->x].element == VIDE)
-				{
-					coord->etang->grille[coord->y + 1][coord->x]= coord->poisson->val;
-					coord->etang->grille[coord->y ][coord->x]= VIDE;
-					grille[coord->y + 1][coord->x].element = POISSON;
-					grille[coord->y][coord->x].element = VIDE;
-					coord->y++;
-				}
+				coord->etang->grille[coord->y ][coord->x]= coord->poisson->val;
+				update_sim(fen_sim,coord->etang);
+			pthread_mutex_lock(&grille[coord->y][coord->x].mutex);
+			while(poisson_near(coord)==1 ){
+				
+					retcode=pthread_cond_timedwait(&grille[coord->y][coord->x].cond,&grille[coord->y][coord->x].mutex,&timeout);
 
-			}
-			break;
-		case 1:
-			if (coord->x + 1 < NB_COL_SIM)
-			{
-				if (grille[coord->y][coord->x + 1].element == VIDE)
-				{
-						coord->etang->grille[coord->y][coord->x+1]= coord->poisson->val;
-					coord->etang->grille[coord->y ][coord->x]= VIDE;
-					grille[coord->y][coord->x + 1].element = POISSON;
-					grille[coord->y][coord->x].element = VIDE;
-					coord->x++;
+				
+				cpt++;
+				if(cpt==3){
+					verif=0;
+					cpt=0;
+				
+					
 				}
+		
+			
+			
+			}
+			pthread_mutex_unlock(&grille[coord->y][coord->x].mutex);
 
+			if(retcode==ETIMEDOUT){
+				
+				printf("rekt %d",retcode);
 			}
-			break;
-		case 2:
-			if (coord->y - 1 > 0)
-			{
-				if (grille[coord->y - 1][coord->x].element == VIDE)
-				{
-						coord->etang->grille[coord->y -1 ][coord->x]= coord->poisson->val;
-					coord->etang->grille[coord->y ][coord->x]= VIDE;
-					grille[coord->y - 1][coord->x].element = POISSON;
-					grille[coord->y][coord->x].element = VIDE;
-					coord->y--;
-				}
+			/*printf("rekt %d",retcode);*/
+			
+			pos = rand() % 4;
 
-			}
-			break;
-		case 3:
-			if (coord->x - 1 > 0)
+			switch (pos)
 			{
-				if (grille[coord->y][coord->x - 1].element == VIDE)
+			case 0:
+				if (coord->y + 1 < NB_LIGNES_SIM)
 				{
-					coord->etang->grille[coord->y ][coord->x-1]= coord->poisson->val;
-					coord->etang->grille[coord->y ][coord->x]= VIDE;
-					grille[coord->y][coord->x - 1].element = POISSON;
-					grille[coord->y][coord->x].element = VIDE;
-					coord->x--;
+					if (grille[coord->y + 1][coord->x].element == VIDE)
+					{
+						coord->etang->grille[coord->y + 1][coord->x]= coord->poisson->val;
+						coord->etang->grille[coord->y ][coord->x]= VIDE;
+						grille[coord->y + 1][coord->x].element = POISSON;
+						grille[coord->y][coord->x].element = VIDE;
+						coord->y++;
+					}
+
 				}
+				break;
+			case 1:
+				if (coord->x + 1 < NB_COL_SIM)
+				{
+					if (grille[coord->y][coord->x + 1].element == VIDE)
+					{
+							coord->etang->grille[coord->y][coord->x+1]= coord->poisson->val;
+						coord->etang->grille[coord->y ][coord->x]= VIDE;
+						grille[coord->y][coord->x + 1].element = POISSON;
+						grille[coord->y][coord->x].element = VIDE;
+						coord->x++;
+					}
+
+				}
+				break;
+			case 2:
+				if (coord->y - 1 > 0)
+				{
+					if (grille[coord->y - 1][coord->x].element == VIDE)
+					{
+							coord->etang->grille[coord->y -1 ][coord->x]= coord->poisson->val;
+						coord->etang->grille[coord->y ][coord->x]= VIDE;
+						grille[coord->y - 1][coord->x].element = POISSON;
+						grille[coord->y][coord->x].element = VIDE;
+						coord->y--;
+					}
+
+				}
+				break;
+			case 3:
+				if (coord->x - 1 > 0)
+				{
+					if (grille[coord->y][coord->x - 1].element == VIDE)
+					{
+						coord->etang->grille[coord->y ][coord->x-1]= coord->poisson->val;
+						coord->etang->grille[coord->y ][coord->x]= VIDE;
+						grille[coord->y][coord->x - 1].element = POISSON;
+						grille[coord->y][coord->x].element = VIDE;
+						coord->x--;
+					}
+				}
+				break;
 			}
-			break;
+		sleep(1);
+			wrefresh(fen_sim);
+
 		}
-	sleep(1);
-		wrefresh(fen_sim);
-
 	}
 	pthread_mutex_unlock(&grille[coord->y][coord->x].mutex);
 	update_sim(fen_sim,coord->etang);
@@ -696,6 +738,8 @@ void creer_poisson(int id, int posx, int posy,poisson_t *poisson,int random,int 
 
 
 }
+
+
 /*thread*/
 	/*creer les thread etles poissons*/
 void generer_poisson(grille_t *etang)
@@ -967,6 +1011,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								tempy = event.y - 1;
 								nb_hammeconj1++;
 								wprintw(fen_msg, "Ajout d'un Hammecon \n");
+								timer=3;
 							}
 						}
 						else
@@ -981,6 +1026,8 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 							suppr_hammecon(client,etang);
 							peche(etang,client);
 							wprintw(fen_msg, "retrait\n");
+							sleep(3);
+
 						}
 						wrefresh(fen_sim);
 						wrefresh(fen_msg);
@@ -1001,6 +1048,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								tempy2 = event.y - 1;
 								nb_hammeconj2++;
 								wprintw(fen_msg, "Ajout d'un Hammecon \n");
+								timer=3;
 							}
 						}
 						else
@@ -1015,6 +1063,7 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 							suppr_hammecon(client,etang);
 							peche(etang,client);
 							wprintw(fen_msg, "retrait\n");
+							sleep(3);
 						}
 
 						wrefresh(fen_sim);
