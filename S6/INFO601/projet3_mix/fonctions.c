@@ -1172,7 +1172,9 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								tempy = event.y - 1;
 								nb_hammeconj1++;
 								wprintw(fen_msg, "Ajout d'un Hammecon \n");
+								if(client->furtif==0){
 								timer=3;
+								}
 							}
 							if (etang->grille[event.y - 1][event.x - 1] == PNEUJ2)
 							{
@@ -1218,7 +1220,9 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 								tempy2 = event.y - 1;
 								nb_hammeconj2++;
 								wprintw(fen_msg, "Ajout d'un Hammecon \n");
+								if(client->furtif==0){
 								timer=3;
+								}
 							
 							}
 							if (etang->grille[event.y - 1][event.x - 1] == PNEUJ1)
@@ -1484,12 +1488,30 @@ void lancerTruc(int item_actif,WINDOW *fen_sim,WINDOW *fen_msg,int* tab, grille_
 									wprintw(fen_msg, "NO MONEY\n");
 					}
 					case REQUINJ1:
+						if(client->poireaus>=300) {
+							}else{
+									wprintw(fen_msg, "NO MONEY\n");
+					}
 					break;
 					case REQUINJ2:
+							if(client->poireaus>=300) {
+							}else{
+									wprintw(fen_msg, "NO MONEY\n");
+					}
 					break;
 					case FURTIFJ1:
+							if(client->poireaus>=500) {
+								client->furtif=1;
+							}else{
+									wprintw(fen_msg, "NO MONEY\n");
+					}
 					break;
 					case FURTIFJ2:
+							if(client->poireaus>=500) {
+								client->furtif=1;
+							}else{
+									wprintw(fen_msg, "NO MONEY\n");
+					}
 					break;
 				}
 			}
