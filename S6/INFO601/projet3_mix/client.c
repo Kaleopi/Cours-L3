@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
   if(read(sockfd, etang, sizeof(grille_t))==-1){
     perror("Erreur lors de la réception de la grille");
   }
-while(client->points<15){
+
   ncurses_initialiser();
   fen_box_sim = creer_fenetre_box_sim();
   fen_box_points = creer_fenetre_box_points();
@@ -134,7 +134,7 @@ while(client->points<15){
   timeout(250);
   wprintw(fen_points,"Client%d",client->id);
   wrefresh(fen_points);
-  while(verif>-1 && ch!=KEY_F(2)){
+  while(verif>-1 && ch!=KEY_F(2)&&client->points<15){
     /*wprintw(fen_msg,"ifverif>%d\n", verif);*/
     verif = read(sockfd, etang, sizeof(grille_t));
     wrefresh(fen_sim);
@@ -185,7 +185,21 @@ while(client->points<15){
     }
     wrefresh(fen_msg);
   }
-  wprintw(fen_msg,"end\n");
+   if(client->points==15){
+     wprintw(fen_msg,"GG\n");
+
+     wprintw(fen_msg,"YOU\n")
+     ;wprintw(fen_msg,"WIN\n");
+     wprintw(fen_msg,"GET \n");
+     wprintw(fen_msg,"OUT \n");
+     wprintw(fen_msg,"NOW \n");
+      wprintw(fen_msg,"end\n");
+     wrefresh(fen_msg);
+     sleep(4);
+    
+  }
+ 
+   wrefresh(fen_msg);
 
   simulation_stopper();
   delwin(fen_box_sim);
@@ -197,7 +211,7 @@ while(client->points<15){
   delwin(fen_box_points);
   delwin(fen_points);
   ncurses_stopper();
-  }
+ 
   /* Fermeture de la socket TCP*/
   if(close(sockfd) == -1) {
     perror("Erreur lors de la fermeture de la socket ");
